@@ -104,12 +104,8 @@ export function HomeContent() {
                 <Button variant="ghost" size="lg" href="/platform" className="text-white hover:text-white hover:bg-white/10">{tc("explorePlatform")}</Button>
               </div>
               <div className="mt-12 pt-8 border-t border-white/10">
-                <p className="text-xs text-navy-500 uppercase tracking-wider mb-4">{tc("trustedBy")}</p>
-                <div className="flex gap-8 items-center">
-                  {[tc("enterpriseReady"), "ISO 27001", "GDPR Compliant", "SOC 2"].map((badge) => (
-                    <span key={badge} className="text-xs font-medium text-navy-400">{badge}</span>
-                  ))}
-                </div>
+                <p className="text-xs text-navy-500 uppercase tracking-wider mb-4">{tc("incubatedAt")}</p>
+                <p className="text-sm text-navy-400">{tc("incubatedAtDescription")}</p>
               </div>
             </div>
             <div className="hidden lg:block"><HeroVisual /></div>
