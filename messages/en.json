@@ -21,13 +21,13 @@
     "security": "Security",
     "footerDescription": "The collaborative platform for logistics ecosystems. Discover, design, and implement optimization across organizations.",
     "operationalApplication": "Operational Application",
-    "expertApplication": "Expert Application",
+    "expertApplication": "Foundation Application",
     "operationalApplications": "Operational Applications",
-    "expertApplications": "Expert Applications — Enabling Capabilities",
+    "expertApplications": "Foundation Applications — Core Technology",
     "poweredBy": "Powered by",
     "expectedOutcomes": "Expected Outcomes",
-    "trustedBy": "Trusted by logistics leaders",
-    "enterpriseReady": "Enterprise Ready"
+    "incubatedAt": "Incubated at CERMICS — École des Ponts et Chaussées",
+    "incubatedAtDescription": "Research project incubated at the CERMICS laboratory of École nationale des ponts et chaussées"
   },
   "Nav": {
     "platform": "Platform",
@@ -39,8 +39,8 @@
     "design4wardDesc": "Analyze flows and discover opportunities",
     "modal4wardDesc": "Simulate multimodal logistics scenarios",
     "cobuild4wardDesc": "Coordinate cross-company initiatives",
-    "compute4wardDesc": "Advanced optimization and analytics",
-    "connect4wardDesc": "Enterprise system connectivity",
+    "compute4wardDesc": "Algorithmic engine developed with CERMICS",
+    "connect4wardDesc": "Data management, connectivity, and security",
     "logisticsOptDesc": "Optimize logistics across networks",
     "collabTransportDesc": "Pool and coordinate transport flows",
     "multimodalDesc": "Evaluate and shift transport modes",
@@ -291,17 +291,17 @@
         "description": "Structure and coordinate collaborative logistics initiatives from opportunity to operational implementation."
       }
     },
-    "expertBadge": "Expert Applications",
-    "expertTitle": "Enabling capabilities that power the platform",
-    "expertDescription": "Expert applications provide the advanced analytical computation and system connectivity that operational applications rely on.",
+    "expertBadge": "Foundation Applications",
+    "expertTitle": "Stable, cutting-edge foundations powering the platform",
+    "expertDescription": "In a world where AI is reshaping SaaS, data management and algorithmics remain essential building blocks. These foundation applications, stable and cutting-edge, openly serve operational applications for co-construction, co-commercialization, and day-to-day operations.",
     "expertApps": {
       "compute4ward": {
-        "description": "Optimization engines, simulation models, scenario computation, and advanced analytical capabilities that power Design4ward, Modal4ward, and Cobuild4ward.",
-        "capabilities": ["Mathematical optimization", "Simulation models", "Scenario computation", "Analytics at scale"]
+        "description": "Algorithmic engine developed in partnership with CERMICS (École des Ponts et Chaussées) — optimization engines, simulation models, and scenario computation.",
+        "capabilities": ["Mathematical optimization", "Simulation models", "Scenario computation", "CERMICS partnership"]
       },
       "connect4ward": {
-        "description": "Enterprise connectors, API framework, and data exchange protocols that link the platform to ERP, TMS, WMS, and partner systems.",
-        "capabilities": ["ERP / TMS / WMS integration", "API framework", "Secure data exchange", "Partner connectivity"]
+        "description": "Foundation layer that connects and consolidates user data — data management, secure exchanges, and controlled sharing between ecosystem partners.",
+        "capabilities": ["Data management", "Security and sharing", "ERP / TMS / WMS integration", "Partner connectivity"]
       }
     },
     "processBadge": "Process",
@@ -318,9 +318,9 @@
     "opAppsBadge": "Operational Applications",
     "opAppsTitle": "Applications that help organizations act",
     "opAppsDescription": "These applications serve users directly — enabling analysis, simulation, and coordination for collaborative logistics initiatives.",
-    "expertBadge": "Expert Applications",
-    "expertTitle": "Enabling capabilities that power the platform",
-    "expertDescription": "Expert applications provide the advanced analytical computation and system connectivity that operational applications rely on.",
+    "expertBadge": "Foundation Applications",
+    "expertTitle": "Stable, cutting-edge foundations powering the platform",
+    "expertDescription": "Data management and algorithmics are essential building blocks. These foundation applications openly serve operational applications for co-construction, co-commercialization, and operations.",
     "archBadge": "Architecture",
     "archTitle": "How products fit into the platform",
     "archDescription": "Every Pool4ward application is part of a layered platform architecture centered on ecosystem collaboration."
@@ -335,8 +335,8 @@
     "interfaceLabel": "{name} Interface",
     "platformContext": "Platform Context",
     "howFits": "How {name} fits into Pool4ward",
-    "expertContextDesc": "{name} is an expert application that provides enabling capabilities to the operational applications — Design4ward, Modal4ward, and Cobuild4ward.",
-    "operationalContextDesc": "{name} is an operational application that directly serves users — powered by expert capabilities from Compute4ward and Connect4ward.",
+    "expertContextDesc": "{name} is a foundation application that provides core technology to the operational applications — Design4ward, Modal4ward, Cobuild4ward, and partner ecosystem applications.",
+    "operationalContextDesc": "{name} is an operational application that directly serves users — powered by the foundation capabilities of Compute4ward and Connect4ward.",
     "ctaTitle": "See {name} in action",
     "ctaDescription": "Discover how {name} can help your organization optimize logistics through collaboration."
   },
@@ -409,13 +409,13 @@
     },
     "compute4ward": {
       "name": "Compute4ward",
-      "tagline": "Powering optimization behind the scenes.",
-      "description": "Expert application providing advanced computation, optimization engines, and analytical models that power the operational capabilities of the platform.",
-      "heroDescription": "Compute4ward is the analytical engine of the Pool4ward platform — providing the optimization models, simulation capabilities, and computational power that enable operational applications.",
-      "problemTitle": "Optimization requires deep analytical capabilities",
-      "problemDescription": "Logistics optimization at ecosystem scale requires sophisticated computation — optimization engines, simulation models, scenario analysis, and analytical capabilities that go far beyond standard business tools.",
-      "solutionTitle": "Enterprise-grade computation for logistics optimization",
-      "solutionDescription": "Compute4ward provides the expert analytical layer that powers Design4ward, Modal4ward, and Cobuild4ward — delivering optimization models, simulation engines, and advanced analytics at scale.",
+      "tagline": "The algorithmic engine, developed with CERMICS.",
+      "description": "Foundation application providing optimization algorithms and simulation models developed in partnership with CERMICS (École des Ponts et Chaussées) — a stable, cutting-edge foundation serving operational applications.",
+      "heroDescription": "Compute4ward is the algorithmic engine of the Pool4ward platform — developed in partnership with the CERMICS laboratory at École des Ponts et Chaussées, it provides the optimization and simulation engines that power operational applications.",
+      "problemTitle": "Optimization requires cutting-edge algorithmic capabilities",
+      "problemDescription": "Logistics optimization at ecosystem scale requires sophisticated algorithms — optimization engines, simulation models, and scenario analysis that go far beyond standard business tools. This is an essential building block that must remain stable and cutting-edge.",
+      "solutionTitle": "Cutting-edge algorithmics from academic research",
+      "solutionDescription": "Compute4ward provides the algorithmic layer developed in partnership with CERMICS — optimization models, simulation engines, and advanced analytics serving Design4ward, Modal4ward, and Cobuild4ward.",
       "capabilities": {
         "0": { "title": "Optimization Engines", "description": "Mathematical optimization models for logistics network and flow problems" },
         "1": { "title": "Simulation Models", "description": "Discrete-event and scenario simulation for logistics operations" },
@@ -431,9 +431,9 @@
     },
     "connect4ward": {
       "name": "Connect4ward",
-      "tagline": "Connecting systems. Enabling interoperability.",
-      "description": "Expert application for enterprise connectivity and interoperability — connecting ERP, TMS, WMS, and partner systems to enable platform use and implementation.",
-      "heroDescription": "Connect4ward ensures the Pool4ward platform integrates seamlessly with enterprise and logistics systems — making data exchange, implementation, and operational connectivity possible.",
+      "tagline": "The data layer. Connect, consolidate, secure.",
+      "description": "Foundation application that connects and consolidates user data — data management, secure exchanges, and controlled sharing between partners. A stable essential building block serving operational applications.",
+      "heroDescription": "Connect4ward is the foundational layer of the Pool4ward platform — it connects and consolidates user data, secures exchanges, and enables controlled sharing between ecosystem partners.",
       "problemTitle": "Disconnected systems block collaboration",
       "problemDescription": "Collaborative logistics requires data from multiple systems across multiple organizations. Without robust connectivity, platform adoption stalls and operational implementation remains manual.",
       "solutionTitle": "Enterprise-grade connectivity for logistics ecosystems",
@@ -773,10 +773,15 @@
     "modal4wardDesc": "Multimodal scenario simulation",
     "cobuild4wardDesc": "Cross-company coordination",
     "poweredBy": "powered by",
-    "expertApplications": "Expert Applications",
-    "enablingCapabilities": "Enabling capabilities",
-    "compute4wardDesc": "Optimization engines, simulation models, analytical computation",
-    "connect4wardDesc": "Enterprise connectors, system integration, data exchange",
+    "expertApplications": "Foundation Applications",
+    "enablingCapabilities": "Core technology",
+    "compute4wardDesc": "Cutting-edge algorithmics — CERMICS partnership",
+    "connect4wardDesc": "Data management, connectivity, security",
+    "ecosystemApps": "Partner & ecosystem applications",
+    "partnerApp1": "Partner app",
+    "partnerApp2": "Partner app",
+    "partnerApp3": "Third-party app",
+    "partnerApp4": "Third-party app",
     "analyze": "Analyze",
     "analyzeDesc": "Map and analyze logistics flows across your network",
     "identify": "Identify",

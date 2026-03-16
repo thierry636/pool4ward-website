@@ -21,13 +21,13 @@
     "security": "Sécurité",
     "footerDescription": "La plateforme collaborative pour les écosystèmes logistiques. Découvrez, concevez et mettez en œuvre l'optimisation inter-organisations.",
     "operationalApplication": "Application opérationnelle",
-    "expertApplication": "Application experte",
+    "expertApplication": "Application socle",
     "operationalApplications": "Applications opérationnelles",
-    "expertApplications": "Applications expertes — Capacités habilitantes",
+    "expertApplications": "Applications socles — Fondations technologiques",
     "poweredBy": "Propulsé par",
     "expectedOutcomes": "Résultats attendus",
-    "trustedBy": "La confiance des leaders logistiques",
-    "enterpriseReady": "Enterprise Ready"
+    "incubatedAt": "Incubé au CERMICS — École des Ponts et Chaussées",
+    "incubatedAtDescription": "Projet de recherche incubé au laboratoire CERMICS de l'École nationale des ponts et chaussées"
   },
   "Nav": {
     "platform": "Plateforme",
@@ -39,8 +39,8 @@
     "design4wardDesc": "Analyser les flux et découvrir les opportunités",
     "modal4wardDesc": "Simuler des scénarios logistiques multimodaux",
     "cobuild4wardDesc": "Coordonner les initiatives inter-entreprises",
-    "compute4wardDesc": "Optimisation et analytique avancées",
-    "connect4wardDesc": "Connectivité des systèmes d'entreprise",
+    "compute4wardDesc": "Brique algorithmique développée avec le CERMICS",
+    "connect4wardDesc": "Gestion des données, connectivité et sécurisation",
     "logisticsOptDesc": "Optimiser la logistique à travers les réseaux",
     "collabTransportDesc": "Mutualiser et coordonner les flux de transport",
     "multimodalDesc": "Évaluer et réorienter les modes de transport",
@@ -291,17 +291,17 @@
         "description": "Structurer et coordonner les initiatives logistiques collaboratives de l'opportunité à la mise en œuvre opérationnelle."
       }
     },
-    "expertBadge": "Applications expertes",
-    "expertTitle": "Des capacités habilitantes qui alimentent la plateforme",
-    "expertDescription": "Les applications expertes fournissent le calcul analytique avancé et la connectivité système dont dépendent les applications opérationnelles.",
+    "expertBadge": "Applications socles",
+    "expertTitle": "Les fondations stables et de pointe de la plateforme",
+    "expertDescription": "Dans un monde où l'IA bouleverse l'univers du SaaS, la gestion des données et l'algorithmie restent des incompressibles. Ces briques socles, stables et de pointe, servent de manière ouverte les applications opérationnelles de co-construction, de co-commercialisation et du run opérationnel.",
     "expertApps": {
       "compute4ward": {
-        "description": "Moteurs d'optimisation, modèles de simulation, calcul de scénarios et capacités analytiques avancées qui alimentent Design4ward, Modal4ward et Cobuild4ward.",
-        "capabilities": ["Optimisation mathématique", "Modèles de simulation", "Calcul de scénarios", "Analytique à l'échelle"]
+        "description": "Brique algorithmique développée en partenariat avec le CERMICS (École des Ponts et Chaussées) — moteurs d'optimisation, modèles de simulation et calcul de scénarios.",
+        "capabilities": ["Optimisation mathématique", "Modèles de simulation", "Calcul de scénarios", "Partenariat CERMICS"]
       },
       "connect4ward": {
-        "description": "Connecteurs d'entreprise, framework API et protocoles d'échange de données qui relient la plateforme aux systèmes ERP, TMS, WMS et partenaires.",
-        "capabilities": ["Intégration ERP / TMS / WMS", "Framework API", "Échange de données sécurisé", "Connectivité partenaires"]
+        "description": "Brique fondamentale qui connecte et regroupe les données des utilisateurs — gestion des données, sécurisation des échanges et partage contrôlé entre partenaires.",
+        "capabilities": ["Gestion des données", "Sécurisation et partage", "Intégration ERP / TMS / WMS", "Connectivité partenaires"]
       }
     },
     "processBadge": "Processus",
@@ -318,9 +318,9 @@
     "opAppsBadge": "Applications opérationnelles",
     "opAppsTitle": "Des applications qui aident les organisations à agir",
     "opAppsDescription": "Ces applications servent directement les utilisateurs — permettant l'analyse, la simulation et la coordination pour les initiatives logistiques collaboratives.",
-    "expertBadge": "Applications expertes",
-    "expertTitle": "Des capacités habilitantes qui alimentent la plateforme",
-    "expertDescription": "Les applications expertes fournissent le calcul analytique avancé et la connectivité système dont dépendent les applications opérationnelles.",
+    "expertBadge": "Applications socles",
+    "expertTitle": "Les fondations stables et de pointe de la plateforme",
+    "expertDescription": "Dans un monde où l'IA bouleverse l'univers du SaaS, la gestion des données et l'algorithmie restent des incompressibles. Ces briques socles servent de manière ouverte les applications opérationnelles.",
     "archBadge": "Architecture",
     "archTitle": "Comment les produits s'intègrent dans la plateforme",
     "archDescription": "Chaque application Pool4ward fait partie d'une architecture de plateforme en couches centrée sur la collaboration d'écosystème."
@@ -335,7 +335,7 @@
     "interfaceLabel": "Interface {name}",
     "platformContext": "Contexte plateforme",
     "howFits": "Comment {name} s'intègre dans Pool4ward",
-    "expertContextDesc": "{name} est une application experte qui fournit des capacités habilitantes aux applications opérationnelles — Design4ward, Modal4ward et Cobuild4ward.",
+    "expertContextDesc": "{name} est une application socle qui fournit les fondations technologiques aux applications opérationnelles — Design4ward, Modal4ward et Cobuild4ward, ainsi qu'aux applications partenaires de l'écosystème.",
     "operationalContextDesc": "{name} est une application opérationnelle qui sert directement les utilisateurs — alimentée par les capacités expertes de Compute4ward et Connect4ward.",
     "ctaTitle": "Voir {name} en action",
     "ctaDescription": "Découvrez comment {name} peut aider votre organisation à optimiser la logistique par la collaboration."
@@ -409,13 +409,13 @@
     },
     "compute4ward": {
       "name": "Compute4ward",
-      "tagline": "Alimenter l'optimisation en coulisses.",
-      "description": "Application experte fournissant le calcul avancé, les moteurs d'optimisation et les modèles analytiques qui alimentent les capacités opérationnelles de la plateforme.",
-      "heroDescription": "Compute4ward est le moteur analytique de la plateforme Pool4ward — fournissant les modèles d'optimisation, les capacités de simulation et la puissance de calcul qui permettent les applications opérationnelles.",
-      "problemTitle": "L'optimisation nécessite des capacités analytiques profondes",
-      "problemDescription": "L'optimisation logistique à l'échelle de l'écosystème nécessite un calcul sophistiqué — moteurs d'optimisation, modèles de simulation, analyse de scénarios et capacités analytiques qui vont bien au-delà des outils métier standard.",
-      "solutionTitle": "Calcul de niveau entreprise pour l'optimisation logistique",
-      "solutionDescription": "Compute4ward fournit la couche analytique experte qui alimente Design4ward, Modal4ward et Cobuild4ward — livrant des modèles d'optimisation, des moteurs de simulation et des analyses avancées à l'échelle.",
+      "tagline": "La brique algorithmique, développée avec le CERMICS.",
+      "description": "Application socle fournissant les algorithmes d'optimisation et les modèles de simulation développés en partenariat avec le CERMICS (École des Ponts et Chaussées) — un socle stable et de pointe au service des applications opérationnelles.",
+      "heroDescription": "Compute4ward est la brique algorithmique de la plateforme Pool4ward — développée en partenariat avec le laboratoire CERMICS de l'École des Ponts et Chaussées, elle fournit les moteurs d'optimisation et de simulation qui alimentent les applications opérationnelles.",
+      "problemTitle": "L'optimisation nécessite des capacités algorithmiques de pointe",
+      "problemDescription": "L'optimisation logistique à l'échelle de l'écosystème nécessite des algorithmes sophistiqués — moteurs d'optimisation, modèles de simulation et analyse de scénarios qui vont bien au-delà des outils métier standard. C'est un incompressible qui doit rester stable et de pointe.",
+      "solutionTitle": "Algorithmie de pointe issue de la recherche académique",
+      "solutionDescription": "Compute4ward fournit la couche algorithmique développée en partenariat avec le CERMICS — des modèles d'optimisation, des moteurs de simulation et des analyses avancées au service de Design4ward, Modal4ward et Cobuild4ward.",
       "capabilities": {
         "0": { "title": "Moteurs d'optimisation", "description": "Modèles d'optimisation mathématique pour les problèmes de réseau et de flux logistiques" },
         "1": { "title": "Modèles de simulation", "description": "Simulation à événements discrets et par scénarios pour les opérations logistiques" },
@@ -431,9 +431,9 @@
     },
     "connect4ward": {
       "name": "Connect4ward",
-      "tagline": "Connecter les systèmes. Permettre l'interopérabilité.",
-      "description": "Application experte pour la connectivité et l'interopérabilité d'entreprise — connectant ERP, TMS, WMS et systèmes partenaires pour permettre l'utilisation et la mise en œuvre de la plateforme.",
-      "heroDescription": "Connect4ward garantit que la plateforme Pool4ward s'intègre de manière transparente avec les systèmes d'entreprise et logistiques — rendant possible l'échange de données, la mise en œuvre et la connectivité opérationnelle.",
+      "tagline": "La brique données. Connecter, regrouper, sécuriser.",
+      "description": "Application socle qui connecte et regroupe les données des utilisateurs — gestion des données, sécurisation des échanges et partage contrôlé entre partenaires. Un incompressible stable au service des applications opérationnelles.",
+      "heroDescription": "Connect4ward est la brique fondamentale de la plateforme Pool4ward — elle connecte et regroupe les données des utilisateurs, sécurise les échanges et permet le partage contrôlé entre partenaires de l'écosystème.",
       "problemTitle": "Des systèmes déconnectés bloquent la collaboration",
       "problemDescription": "La logistique collaborative nécessite des données provenant de plusieurs systèmes à travers plusieurs organisations. Sans connectivité robuste, l'adoption de la plateforme stagne et la mise en œuvre opérationnelle reste manuelle.",
       "solutionTitle": "Connectivité de niveau entreprise pour les écosystèmes logistiques",
@@ -773,10 +773,15 @@
     "modal4wardDesc": "Simulation de scénarios multimodaux",
     "cobuild4wardDesc": "Coordination inter-entreprises",
     "poweredBy": "alimenté par",
-    "expertApplications": "Applications expertes",
-    "enablingCapabilities": "Capacités habilitantes",
-    "compute4wardDesc": "Moteurs d'optimisation, modèles de simulation, calcul analytique",
-    "connect4wardDesc": "Connecteurs d'entreprise, intégration système, échange de données",
+    "expertApplications": "Applications socles",
+    "enablingCapabilities": "Fondations technologiques",
+    "compute4wardDesc": "Algorithmie de pointe — partenariat CERMICS",
+    "connect4wardDesc": "Gestion des données, connectivité, sécurisation",
+    "ecosystemApps": "Applications partenaires & écosystème",
+    "partnerApp1": "App partenaire",
+    "partnerApp2": "App partenaire",
+    "partnerApp3": "App tierce",
+    "partnerApp4": "App tierce",
     "analyze": "Analyser",
     "analyzeDesc": "Cartographier et analyser les flux logistiques de votre réseau",
     "identify": "Identifier",
