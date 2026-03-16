@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 
 interface ButtonProps {
   variant?: "primary" | "secondary" | "ghost" | "white";
@@ -43,7 +43,7 @@ export function Button({
 
   if (href) {
     return (
-      <Link href={href} className={classes}>
+      <Link href={href as "/"} className={classes}>
         {children}
       </Link>
     );

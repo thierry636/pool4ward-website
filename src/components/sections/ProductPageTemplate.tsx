@@ -1,15 +1,41 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Card } from "@/components/ui/Card";
 import { CTABand } from "@/components/ui/CTABand";
-import type { Product } from "@/content/products";
 
 interface ProductPageTemplateProps {
-  product: Product;
+  slug: string;
+  category: "operational" | "expert";
+  color?: string;
+  icon?: string;
 }
 
-export function ProductPageTemplate({ product }: ProductPageTemplateProps) {
-  const isExpert = product.category === "expert";
+export function ProductPageTemplate({ slug, category }: ProductPageTemplateProps) {
+  const t = useTranslations("ProductData");
+  const tt = useTranslations("ProductTemplate");
+  const tc = useTranslations("Common");
+  const isExpert = category === "expert";
+
+  const name = t(`${slug}.name`);
+  const tagline = t(`${slug}.tagline`);
+  const heroDescription = t(`${slug}.heroDescription`);
+  const problemTitle = t(`${slug}.problemTitle`);
+  const problemDescription = t(`${slug}.problemDescription`);
+  const solutionTitle = t(`${slug}.solutionTitle`);
+  const solutionDescription = t(`${slug}.solutionDescription`);
+
+  const capabilities = [0, 1, 2, 3, 4].map((i) => ({
+    title: t(`${slug}.capabilities.${i}.title`),
+    description: t(`${slug}.capabilities.${i}.description`),
+  }));
+
+  const benefits = [0, 1, 2].map((i) => ({
+    title: t(`${slug}.benefits.${i}.title`),
+    description: t(`${slug}.benefits.${i}.description`),
+  }));
 
   return (
     <>
@@ -29,21 +55,21 @@ export function ProductPageTemplate({ product }: ProductPageTemplateProps) {
                     : "bg-brand-500/20 text-brand-300"
                 }`}
               >
-                {isExpert ? "Expert Application" : "Operational Application"}
+                {isExpert ? tc("expertApplication") : tc("operationalApplication")}
               </span>
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-4">
-              {product.name}
+              {name}
             </h1>
             <p className="text-xl lg:text-2xl text-navy-300 font-medium mb-4">
-              {product.tagline}
+              {tagline}
             </p>
             <p className="text-lg text-navy-400 leading-relaxed mb-8 max-w-2xl">
-              {product.heroDescription}
+              {heroDescription}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button variant="primary" size="lg" href="/company#contact">
-                Request a demo
+                {tc("requestDemo")}
               </Button>
               <Button
                 variant="ghost"
@@ -51,7 +77,7 @@ export function ProductPageTemplate({ product }: ProductPageTemplateProps) {
                 href="/platform"
                 className="text-white hover:text-white hover:bg-white/10"
               >
-                View full platform →
+                {tc("viewFullPlatform")}
               </Button>
             </div>
           </div>
@@ -63,12 +89,12 @@ export function ProductPageTemplate({ product }: ProductPageTemplateProps) {
         <div className="container-xl">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div>
-              <span className="badge mb-4">The Challenge</span>
+              <span className="badge mb-4">{tt("theChallenge")}</span>
               <h2 className="text-3xl sm:text-4xl font-bold text-navy-900 tracking-tight mb-6">
-                {product.problemTitle}
+                {problemTitle}
               </h2>
               <p className="text-lg text-navy-500 leading-relaxed">
-                {product.problemDescription}
+                {problemDescription}
               </p>
             </div>
             <div
@@ -77,10 +103,10 @@ export function ProductPageTemplate({ product }: ProductPageTemplateProps) {
               }`}
             >
               <h3 className="text-lg font-bold text-navy-900 mb-4">
-                {product.solutionTitle}
+                {solutionTitle}
               </h3>
               <p className="text-sm text-navy-600 leading-relaxed">
-                {product.solutionDescription}
+                {solutionDescription}
               </p>
             </div>
           </div>
@@ -91,12 +117,12 @@ export function ProductPageTemplate({ product }: ProductPageTemplateProps) {
       <section className="section-padding bg-navy-50">
         <div className="container-xl">
           <SectionHeader
-            badge="Capabilities"
-            title={`What ${product.name} does`}
-            description={`Core capabilities that make ${product.name} a critical part of the Pool4ward platform.`}
+            badge={tt("capabilities")}
+            title={tt("whatDoes", { name })}
+            description={tt("capabilitiesDesc", { name })}
           />
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {product.capabilities.map((cap, i) => (
+            {capabilities.map((cap, i) => (
               <Card key={i} hover={false} padding="md">
                 <div
                   className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${
@@ -123,11 +149,11 @@ export function ProductPageTemplate({ product }: ProductPageTemplateProps) {
       <section className="section-padding bg-white">
         <div className="container-xl">
           <SectionHeader
-            badge="Benefits"
-            title="Why it matters"
+            badge={tt("benefits")}
+            title={tt("whyItMatters")}
           />
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {product.benefits.map((benefit, i) => (
+            {benefits.map((benefit, i) => (
               <Card key={i} hover={false} padding="lg">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-teal-500 flex items-center justify-center mb-4">
                   <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -158,7 +184,7 @@ export function ProductPageTemplate({ product }: ProductPageTemplateProps) {
                   <div className="w-3 h-3 rounded-full bg-green-400/60" />
                 </div>
                 <span className="text-xs text-navy-400 ml-4">
-                  {product.name} — Pool4ward Platform
+                  {name} — Pool4ward Platform
                 </span>
               </div>
               <div className="p-8 lg:p-12">
@@ -172,14 +198,14 @@ export function ProductPageTemplate({ product }: ProductPageTemplateProps) {
                       }`}
                     >
                       <span className="text-lg font-bold">
-                        {product.name.charAt(0)}4
+                        {name.charAt(0)}4
                       </span>
                     </div>
                     <p className="text-sm font-semibold text-navy-600">
-                      {product.name} Interface
+                      {tt("interfaceLabel", { name })}
                     </p>
                     <p className="text-xs text-navy-400 mt-1">
-                      {product.tagline}
+                      {tagline}
                     </p>
                   </div>
                 </div>
@@ -193,24 +219,24 @@ export function ProductPageTemplate({ product }: ProductPageTemplateProps) {
       <section className="section-padding bg-white">
         <div className="container-xl text-center">
           <SectionHeader
-            badge="Platform Context"
-            title={`How ${product.name} fits into Pool4ward`}
+            badge={tt("platformContext")}
+            title={tt("howFits", { name })}
             description={
               isExpert
-                ? `${product.name} is an expert application that provides enabling capabilities to the operational applications — Design4ward, Modal4ward, and Cobuild4ward.`
-                : `${product.name} is an operational application that directly serves users — powered by expert capabilities from Compute4ward and Connect4ward.`
+                ? tt("expertContextDesc", { name })
+                : tt("operationalContextDesc", { name })
             }
           />
           <Button variant="secondary" href="/platform">
-            Explore the full platform →
+            {tc("exploreFullPlatform")}
           </Button>
         </div>
       </section>
 
       {/* CTA */}
       <CTABand
-        title={`See ${product.name} in action`}
-        description={`Discover how ${product.name} can help your organization optimize logistics through collaboration.`}
+        title={tt("ctaTitle", { name })}
+        description={tt("ctaDescription", { name })}
       />
     </>
   );

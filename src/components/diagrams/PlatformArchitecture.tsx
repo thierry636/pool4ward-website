@@ -1,6 +1,10 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 export function PlatformArchitecture({ className = "" }: { className?: string }) {
+  const t = useTranslations("Diagrams");
+
   return (
     <div className={`w-full max-w-4xl mx-auto ${className}`}>
       <div className="relative space-y-4">
@@ -14,12 +18,12 @@ export function PlatformArchitecture({ className = "" }: { className?: string })
                 </svg>
               </div>
               <div>
-                <h3 className="text-lg font-bold">Ecosystem Collaboration</h3>
-                <p className="text-sm text-white/80">The heart of the platform</p>
+                <h3 className="text-lg font-bold">{t("ecosystemCollaboration")}</h3>
+                <p className="text-sm text-white/80">{t("heartOfPlatform")}</p>
               </div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
-              {["Opportunity Discovery", "Initiative Design", "Multi-Actor Coordination", "Operational Alignment"].map((item) => (
+              {[t("opportunityDiscovery"), t("initiativeDesign"), t("multiActorCoordination"), t("operationalAlignment")].map((item) => (
                 <div key={item} className="bg-white/15 rounded-lg px-3 py-2 text-xs font-medium text-white/90 text-center backdrop-blur-sm">
                   {item}
                 </div>
@@ -32,7 +36,7 @@ export function PlatformArchitecture({ className = "" }: { className?: string })
               <svg className="w-4 h-8 text-navy-300" viewBox="0 0 16 32" fill="none">
                 <path d="M8 0v28M4 24l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              <span className="text-[10px] font-medium text-navy-400 -mt-1">enabled by</span>
+              <span className="text-[10px] font-medium text-navy-400 -mt-1">{t("enabledBy")}</span>
             </div>
           </div>
         </div>
@@ -47,15 +51,15 @@ export function PlatformArchitecture({ className = "" }: { className?: string })
                 </svg>
               </div>
               <div>
-                <h3 className="text-lg font-bold text-navy-900">Operational Applications</h3>
-                <p className="text-sm text-navy-500">Applications that help organizations act</p>
+                <h3 className="text-lg font-bold text-navy-900">{t("operationalApplications")}</h3>
+                <p className="text-sm text-navy-500">{t("appsHelpAct")}</p>
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {[
-                { name: "Design4ward", desc: "Flow analysis & opportunity discovery" },
-                { name: "Modal4ward", desc: "Multimodal scenario simulation" },
-                { name: "Cobuild4ward", desc: "Cross-company coordination" },
+                { name: "Design4ward", desc: t("design4wardDesc") },
+                { name: "Modal4ward", desc: t("modal4wardDesc") },
+                { name: "Cobuild4ward", desc: t("cobuild4wardDesc") },
               ].map((app) => (
                 <div key={app.name} className="bg-brand-50/50 border border-brand-100 rounded-xl px-4 py-3">
                   <span className="text-sm font-semibold text-brand-700">{app.name}</span>
@@ -70,7 +74,7 @@ export function PlatformArchitecture({ className = "" }: { className?: string })
               <svg className="w-4 h-8 text-navy-300" viewBox="0 0 16 32" fill="none">
                 <path d="M8 0v28M4 24l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              <span className="text-[10px] font-medium text-navy-400 -mt-1">powered by</span>
+              <span className="text-[10px] font-medium text-navy-400 -mt-1">{t("poweredBy")}</span>
             </div>
           </div>
         </div>
@@ -85,14 +89,14 @@ export function PlatformArchitecture({ className = "" }: { className?: string })
               </svg>
             </div>
             <div>
-              <h3 className="text-lg font-bold text-navy-900">Expert Applications</h3>
-              <p className="text-sm text-navy-500">Enabling capabilities</p>
+              <h3 className="text-lg font-bold text-navy-900">{t("expertApplications")}</h3>
+              <p className="text-sm text-navy-500">{t("enablingCapabilities")}</p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {[
-              { name: "Compute4ward", desc: "Optimization engines, simulation models, analytical computation" },
-              { name: "Connect4ward", desc: "Enterprise connectors, system integration, data exchange" },
+              { name: "Compute4ward", desc: t("compute4wardDesc") },
+              { name: "Connect4ward", desc: t("connect4wardDesc") },
             ].map((app) => (
               <div key={app.name} className="bg-white border border-navy-200 rounded-xl px-4 py-3">
                 <span className="text-sm font-semibold text-navy-700">{app.name}</span>

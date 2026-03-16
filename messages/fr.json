@@ -1,0 +1,811 @@
+{
+  "Metadata": {
+    "title": "Pool4ward — La plateforme collaborative pour les écosystèmes logistiques",
+    "description": "Pool4ward aide les organisations à découvrir, concevoir et mettre en œuvre des initiatives logistiques collaboratives à travers des réseaux d'acteurs. Optimisez au-delà des frontières de l'entreprise."
+  },
+  "Common": {
+    "requestDemo": "Demander une démo",
+    "explorePlatform": "Explorer la plateforme →",
+    "viewFullPlatform": "Voir la plateforme complète →",
+    "deepDive": "Approfondir la plateforme →",
+    "learnMore": "En savoir plus →",
+    "readMore": "Lire la suite →",
+    "learnAboutPlatform": "Découvrir la plateforme",
+    "learnMorePlatform": "En savoir plus sur la plateforme →",
+    "exploreIntegrations": "Explorer les intégrations →",
+    "exploreFullPlatform": "Explorer la plateforme complète →",
+    "seeArchitecture": "Voir l'architecture →",
+    "allRightsReserved": "© {year} Pool4ward. Tous droits réservés.",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "security": "Sécurité",
+    "footerDescription": "La plateforme collaborative pour les écosystèmes logistiques. Découvrez, concevez et mettez en œuvre l'optimisation inter-organisations.",
+    "operationalApplication": "Application opérationnelle",
+    "expertApplication": "Application experte",
+    "operationalApplications": "Applications opérationnelles",
+    "expertApplications": "Applications expertes — Capacités habilitantes",
+    "poweredBy": "Propulsé par",
+    "expectedOutcomes": "Résultats attendus",
+    "trustedBy": "La confiance des leaders logistiques",
+    "enterpriseReady": "Enterprise Ready"
+  },
+  "Nav": {
+    "platform": "Plateforme",
+    "products": "Produits",
+    "solutions": "Solutions",
+    "ecosystem": "Écosystème",
+    "resources": "Ressources",
+    "company": "Entreprise",
+    "design4wardDesc": "Analyser les flux et découvrir les opportunités",
+    "modal4wardDesc": "Simuler des scénarios logistiques multimodaux",
+    "cobuild4wardDesc": "Coordonner les initiatives inter-entreprises",
+    "compute4wardDesc": "Optimisation et analytique avancées",
+    "connect4wardDesc": "Connectivité des systèmes d'entreprise",
+    "logisticsOptDesc": "Optimiser la logistique à travers les réseaux",
+    "collabTransportDesc": "Mutualiser et coordonner les flux de transport",
+    "multimodalDesc": "Évaluer et réorienter les modes de transport",
+    "decarbDesc": "Réduire les émissions par la collaboration",
+    "logisticsOptimization": "Optimisation logistique",
+    "collaborativeTransport": "Transport collaboratif",
+    "multimodalStrategy": "Stratégie multimodale",
+    "supplyChainDecarb": "Décarbonation de la supply chain",
+    "operational": "Opérationnel",
+    "expert": "Expert"
+  },
+  "Footer": {
+    "platform": "Plateforme",
+    "products": "Produits",
+    "solutions": "Solutions",
+    "company": "Entreprise",
+    "overview": "Vue d'ensemble",
+    "architecture": "Architecture",
+    "collaboration": "Collaboration",
+    "security": "Sécurité",
+    "logisticsOptimization": "Optimisation logistique",
+    "collaborativeTransport": "Transport collaboratif",
+    "multimodalStrategy": "Stratégie multimodale",
+    "decarbonization": "Décarbonation",
+    "vision": "Vision",
+    "contact": "Contact",
+    "resources": "Ressources",
+    "privacyPolicy": "Politique de confidentialité",
+    "termsOfService": "Conditions d'utilisation"
+  },
+  "Home": {
+    "heroBadge": "Plateforme logistique collaborative",
+    "heroTitle": "Optimisez la logistique ",
+    "heroTitleHighlight": "au-delà des frontières de l'entreprise",
+    "heroDescription": "Pool4ward aide les organisations à découvrir, concevoir et mettre en œuvre des initiatives logistiques collaboratives à travers des réseaux d'acteurs. Les plus grandes opportunités d'optimisation existent là où les entreprises se connectent.",
+    "problemBadge": "Le défi",
+    "problemTitle": "L'optimisation logistique s'arrête aux frontières de l'entreprise",
+    "problemDescription": "La plupart des organisations optimisent leurs propres flux logistiques. Mais les plus grandes opportunités — consolidation, mutualisation, report modal — existent entre les organisations. Sans visibilité partagée et coordination, elles restent invisibles.",
+    "painPoints": {
+      "fragmentedFlows": {
+        "title": "Flux fragmentés",
+        "description": "Routes de transport qui se chevauchent, envois dupliqués et logistique non coordonnée à travers l'écosystème."
+      },
+      "unusedCapacity": {
+        "title": "Capacité inutilisée",
+        "description": "Camions partiellement chargés, retours à vide et capacité d'entreposage gaspillée à travers les réseaux."
+      },
+      "duplicatedTransport": {
+        "title": "Transport dupliqué",
+        "description": "Plusieurs entreprises expédiant des flux similaires sur les mêmes corridors sans connaissance mutuelle."
+      },
+      "noSharedVisibility": {
+        "title": "Pas de visibilité partagée",
+        "description": "L'absence de données de flux inter-organisationnelles rend impossible l'identification des opportunités au niveau de l'écosystème."
+      },
+      "hardToStructure": {
+        "title": "Collaboration difficile à structurer",
+        "description": "La coordination logistique multi-acteurs est complexe. Sans les bons outils, les bonnes idées restent sur les tableaux blancs."
+      },
+      "avoidableCost": {
+        "title": "Coûts et CO₂ évitables",
+        "description": "L'impact cumulé : des milliards en coûts logistiques inutiles et des millions de tonnes d'émissions évitables."
+      }
+    },
+    "visionBadge": "La vision",
+    "visionTitle": "L'avenir de l'optimisation logistique est ",
+    "visionTitleHighlight": "collaboratif",
+    "visionP1": "Les organisations ont besoin d'un environnement partagé où elles peuvent identifier les synergies, aligner les acteurs, tester des scénarios, structurer des initiatives et transformer les idées en améliorations opérationnelles réelles.",
+    "visionP2": "Pool4ward est cet environnement — une plateforme où les écosystèmes logistiques se réunissent pour optimiser au-delà des frontières de l'entreprise.",
+    "visionItems": {
+      "identifySynergies": {
+        "label": "Identifier les synergies",
+        "desc": "Découvrir les opportunités d'optimisation inter-entreprises cachées dans des données fragmentées"
+      },
+      "alignActors": {
+        "label": "Aligner les acteurs",
+        "desc": "Réunir plusieurs organisations autour de scénarios et d'initiatives partagés"
+      },
+      "testScenarios": {
+        "label": "Tester les scénarios",
+        "desc": "Simuler des alternatives avant d'engager des ressources opérationnelles"
+      },
+      "structureInitiatives": {
+        "label": "Structurer les initiatives",
+        "desc": "Concevoir des initiatives logistiques claires et coordonnées avec des rôles définis"
+      },
+      "implementChanges": {
+        "label": "Mettre en œuvre les changements",
+        "desc": "Passer de l'analyse aux opérations avec des systèmes et des flux de travail connectés"
+      }
+    },
+    "platformBadge": "Architecture de la plateforme",
+    "platformTitle": "Une plateforme en couches centrée sur la collaboration",
+    "platformDescription": "Pool4ward combine la collaboration d'écosystème, les applications opérationnelles et les capacités expertes en une plateforme intégrée. La collaboration est au sommet — là où réside la valeur.",
+    "productsBadge": "Produits",
+    "productsTitle": "Des applications qui rendent la collaboration actionnable",
+    "productsDescription": "Les applications opérationnelles aident les organisations à analyser, simuler et coordonner. Les applications expertes fournissent la puissance analytique et la connectivité en sous-couche.",
+    "howItWorksBadge": "Comment ça marche",
+    "howItWorksTitle": "De l'analyse des flux à la mise en œuvre opérationnelle",
+    "howItWorksDescription": "Pool4ward fournit un chemin clair de la compréhension de votre réseau logistique à la mise en œuvre de l'optimisation collaborative entre organisations.",
+    "collabBadge": "Collaboration",
+    "collabTitle": "Là où les écosystèmes logistiques s'alignent",
+    "collabDescription": "Pool4ward est l'environnement partagé où les organisations se réunissent pour découvrir des opportunités, concevoir des initiatives et coordonner l'action au-delà des frontières de l'entreprise.",
+    "collabItems": {
+      "discoverOpportunities": {
+        "title": "Découvrir les opportunités partagées",
+        "description": "Révéler le potentiel de mutualisation, les flux qui se chevauchent et les opportunités de consolidation qui existent entre les organisations de votre écosystème."
+      },
+      "designInitiatives": {
+        "title": "Concevoir des initiatives communes",
+        "description": "Structurer des initiatives logistiques collaboratives avec un périmètre clair, des rôles définis et des objectifs partagés — pas seulement des conversations informelles."
+      },
+      "coordinateActors": {
+        "title": "Coordonner entre les acteurs",
+        "description": "Aligner plusieurs parties prenantes autour de scénarios, de calendriers et de plans de mise en œuvre. Passer de l'alignement à l'action coordonnée."
+      },
+      "implementConfidence": {
+        "title": "Mettre en œuvre avec confiance",
+        "description": "Connecter les décisions collaboratives aux systèmes opérationnels. Transformer les scénarios partagés en opérations logistiques réelles."
+      }
+    },
+    "solutionsBadge": "Solutions",
+    "solutionsTitle": "Des défis logistiques qui exigent la collaboration",
+    "solutionsDescription": "Pool4ward adresse les opportunités d'optimisation qui existent au-delà des frontières de l'entreprise — là où la collaboration crée le plus de valeur.",
+    "solutionCards": {
+      "collaborativeTransport": {
+        "title": "Transport collaboratif",
+        "description": "Mutualiser les flux, partager la capacité et réduire le gaspillage entre chargeurs et transporteurs."
+      },
+      "multimodalOptimization": {
+        "title": "Optimisation multimodale",
+        "description": "Évaluer et mettre en œuvre des stratégies de report modal appuyées par l'analyse de scénarios."
+      },
+      "networkRedesign": {
+        "title": "Redesign du réseau",
+        "description": "Optimiser les réseaux logistiques inter-organisations en termes de coûts et de performance."
+      },
+      "decarbonization": {
+        "title": "Décarbonation",
+        "description": "Atteindre des réductions d'émissions significatives par la collaboration structurelle, pas seulement le reporting."
+      }
+    },
+    "impactBadge": "Impact",
+    "impactTitle": "Des résultats mesurables pour votre écosystème logistique",
+    "benefits": {
+      "costReduction": {
+        "metric": "10-25%",
+        "label": "Réduction des coûts",
+        "description": "Par la mutualisation des flux et l'optimisation du réseau entre acteurs"
+      },
+      "capacityUtilization": {
+        "metric": "↑",
+        "label": "Utilisation de la capacité",
+        "description": "Meilleurs taux de chargement et moins de kilomètres à vide grâce à la visibilité partagée"
+      },
+      "co2Emissions": {
+        "metric": "↓",
+        "label": "Émissions de CO₂",
+        "description": "Réduction structurelle des émissions par la consolidation et le report modal"
+      },
+      "fasterCoordination": {
+        "metric": "2-3×",
+        "label": "Coordination plus rapide",
+        "description": "De l'identification des opportunités à la mise en œuvre coordonnée"
+      }
+    },
+    "integrationsBadge": "Intégrations",
+    "integrationsTitle": "Se connecte aux systèmes qui font tourner votre logistique",
+    "integrationsDescription": "Pool4ward s'intègre avec les systèmes ERP, TMS, WMS et partenaires pour garantir que les données circulent sans interruption et que les décisions collaboratives se connectent à la réalité opérationnelle.",
+    "integrationSystems": {
+      "erp": "Systèmes ERP",
+      "tms": "TMS",
+      "wms": "WMS",
+      "partnerApis": "API partenaires",
+      "ediB2b": "EDI / B2B",
+      "customConnectors": "Connecteurs personnalisés",
+      "dataLakes": "Data Lakes",
+      "biTools": "Outils BI",
+      "iotPlatforms": "Plateformes IoT"
+    },
+    "ctaTitle": "Les plus grandes opportunités logistiques existent entre les entreprises",
+    "ctaDescription": "Pool4ward vous aide à les trouver, les concevoir et les mettre en œuvre. Voyez-le en action."
+  },
+  "Platform": {
+    "metaTitle": "Plateforme — Pool4ward",
+    "metaDescription": "Explorez l'architecture de la plateforme Pool4ward : collaboration d'écosystème, applications opérationnelles et capacités expertes dans un environnement intégré.",
+    "heroBadge": "Plateforme",
+    "heroTitle": "Une plateforme collaborative pour les ",
+    "heroTitleHighlight": "écosystèmes logistiques",
+    "heroDescription": "Pool4ward réunit collaboration, applications opérationnelles et capacités expertes dans un environnement intégré — conçu pour la façon dont les écosystèmes logistiques fonctionnent réellement.",
+    "problemBadge": "Le problème",
+    "problemTitle": "Pourquoi l'optimisation logistique s'arrête trop tôt",
+    "problemP1": "La plupart des entreprises optimisent en interne — leurs propres routes, leurs propres entrepôts, leurs propres chargements. Cela crée de la valeur réelle, mais manque les plus grandes opportunités.",
+    "problemP2": "L'optimisation la plus impactante — mutualisation des flux, consolidation inter-entreprises, report modal au niveau de l'écosystème — nécessite visibilité, simulation et coordination entre organisations. C'est ce que Pool4ward rend possible.",
+    "internalOpt": {
+      "label": "Optimisation interne",
+      "value": "5-10%",
+      "desc": "Amélioration typique des coûts par l'optimisation interne des routes et des chargements"
+    },
+    "crossCompanyOpt": {
+      "label": "Optimisation inter-entreprises",
+      "value": "15-25%",
+      "desc": "Potentiel supplémentaire par la mutualisation et la coordination d'écosystème"
+    },
+    "ecosystemOpt": {
+      "label": "Optimisation d'écosystème",
+      "value": "25-40%",
+      "desc": "Potentiel total avec des changements structurels et le report modal entre acteurs"
+    },
+    "archBadge": "Architecture",
+    "archTitle": "Trois couches, une plateforme",
+    "archDescription": "Pool4ward est construit comme une plateforme en couches. La collaboration est au sommet, alimentée par les applications opérationnelles, elles-mêmes alimentées par les capacités expertes.",
+    "ecoCollabBadge": "Collaboration d'écosystème",
+    "ecoCollabTitle": "Le cœur de la plateforme",
+    "ecoCollabDescription": "La couche Collaboration d'écosystème est là où les organisations découvrent les opportunités, structurent les initiatives et coordonnent au-delà des frontières de l'entreprise.",
+    "ecoCollabItems": {
+      "opportunityDiscovery": {
+        "title": "Découverte d'opportunités",
+        "description": "Identifier les opportunités d'optimisation partagées — mutualisation, consolidation, report modal — visibles uniquement au niveau de l'écosystème."
+      },
+      "initiativeDesign": {
+        "title": "Conception d'initiatives",
+        "description": "Structurer des initiatives logistiques collaboratives avec un périmètre clair, des rôles définis et des objectifs partagés."
+      },
+      "multiActorCoord": {
+        "title": "Coordination multi-acteurs",
+        "description": "Aligner plusieurs organisations autour de scénarios, de calendriers et de plans de mise en œuvre."
+      },
+      "operationalAlignment": {
+        "title": "Alignement opérationnel",
+        "description": "Connecter les décisions collaboratives à la réalité opérationnelle — systèmes, processus et mise en œuvre."
+      }
+    },
+    "opAppsBadge": "Applications opérationnelles",
+    "opAppsTitle": "Des applications qui aident les organisations à agir",
+    "opAppsDescription": "Les applications opérationnelles servent directement les utilisateurs — permettant l'analyse, la simulation et la coordination qui pilotent les initiatives logistiques collaboratives.",
+    "opApps": {
+      "design4ward": {
+        "tagline": "Analyse des flux et découverte d'opportunités",
+        "description": "Analyser les flux logistiques à travers les réseaux et identifier où l'optimisation collaborative peut créer le plus de valeur."
+      },
+      "modal4ward": {
+        "tagline": "Simulation de scénarios multimodaux",
+        "description": "Simuler et comparer les alternatives de transport en termes de coût, temps, émissions et faisabilité opérationnelle."
+      },
+      "cobuild4ward": {
+        "tagline": "Coordination inter-entreprises",
+        "description": "Structurer et coordonner les initiatives logistiques collaboratives de l'opportunité à la mise en œuvre opérationnelle."
+      }
+    },
+    "expertBadge": "Applications expertes",
+    "expertTitle": "Des capacités habilitantes qui alimentent la plateforme",
+    "expertDescription": "Les applications expertes fournissent le calcul analytique avancé et la connectivité système dont dépendent les applications opérationnelles.",
+    "expertApps": {
+      "compute4ward": {
+        "description": "Moteurs d'optimisation, modèles de simulation, calcul de scénarios et capacités analytiques avancées qui alimentent Design4ward, Modal4ward et Cobuild4ward.",
+        "capabilities": ["Optimisation mathématique", "Modèles de simulation", "Calcul de scénarios", "Analytique à l'échelle"]
+      },
+      "connect4ward": {
+        "description": "Connecteurs d'entreprise, framework API et protocoles d'échange de données qui relient la plateforme aux systèmes ERP, TMS, WMS et partenaires.",
+        "capabilities": ["Intégration ERP / TMS / WMS", "Framework API", "Échange de données sécurisé", "Connectivité partenaires"]
+      }
+    },
+    "processBadge": "Processus",
+    "processTitle": "De l'opportunité à la mise en œuvre",
+    "processDescription": "Pool4ward fournit un chemin clair et structuré de la compréhension de votre paysage logistique à la mise en œuvre de l'optimisation collaborative."
+  },
+  "Products": {
+    "metaTitle": "Produits — Pool4ward",
+    "metaDescription": "Explorez les applications opérationnelles et expertes de Pool4ward : Design4ward, Modal4ward, Cobuild4ward, Compute4ward et Connect4ward.",
+    "heroBadge": "Produits",
+    "heroTitle": "Des applications qui rendent la ",
+    "heroTitleHighlight": "collaboration actionnable",
+    "heroDescription": "Les applications opérationnelles servent directement les utilisateurs. Les applications expertes fournissent la puissance analytique et la connectivité en sous-couche.",
+    "opAppsBadge": "Applications opérationnelles",
+    "opAppsTitle": "Des applications qui aident les organisations à agir",
+    "opAppsDescription": "Ces applications servent directement les utilisateurs — permettant l'analyse, la simulation et la coordination pour les initiatives logistiques collaboratives.",
+    "expertBadge": "Applications expertes",
+    "expertTitle": "Des capacités habilitantes qui alimentent la plateforme",
+    "expertDescription": "Les applications expertes fournissent le calcul analytique avancé et la connectivité système dont dépendent les applications opérationnelles.",
+    "archBadge": "Architecture",
+    "archTitle": "Comment les produits s'intègrent dans la plateforme",
+    "archDescription": "Chaque application Pool4ward fait partie d'une architecture de plateforme en couches centrée sur la collaboration d'écosystème."
+  },
+  "ProductTemplate": {
+    "theChallenge": "Le défi",
+    "capabilities": "Capacités",
+    "whatDoes": "Ce que fait {name}",
+    "capabilitiesDesc": "Capacités clés qui font de {name} une partie essentielle de la plateforme Pool4ward.",
+    "benefits": "Bénéfices",
+    "whyItMatters": "Pourquoi c'est important",
+    "interfaceLabel": "Interface {name}",
+    "platformContext": "Contexte plateforme",
+    "howFits": "Comment {name} s'intègre dans Pool4ward",
+    "expertContextDesc": "{name} est une application experte qui fournit des capacités habilitantes aux applications opérationnelles — Design4ward, Modal4ward et Cobuild4ward.",
+    "operationalContextDesc": "{name} est une application opérationnelle qui sert directement les utilisateurs — alimentée par les capacités expertes de Compute4ward et Connect4ward.",
+    "ctaTitle": "Voir {name} en action",
+    "ctaDescription": "Découvrez comment {name} peut aider votre organisation à optimiser la logistique par la collaboration."
+  },
+  "ProductData": {
+    "design4ward": {
+      "name": "Design4ward",
+      "tagline": "Analyser les flux. Découvrir les opportunités.",
+      "description": "Analyser les flux logistiques à travers votre réseau pour identifier les opportunités d'optimisation, y compris le potentiel de mutualisation entre organisations.",
+      "heroDescription": "Design4ward offre aux organisations une vue analytique claire de leurs flux logistiques — et révèle où l'optimisation collaborative peut créer le plus de valeur.",
+      "problemTitle": "Visibilité fragmentée à travers les réseaux logistiques",
+      "problemDescription": "La plupart des organisations comprennent leurs propres flux logistiques, mais manquent d'outils pour voir où les synergies inter-entreprises existent. L'optimisation s'arrête aux frontières de l'entreprise, laissant une valeur significative inexploitée.",
+      "solutionTitle": "Analyse structurée des flux avec intelligence d'écosystème",
+      "solutionDescription": "Design4ward cartographie les flux logistiques à travers les réseaux, identifie les routes qui se chevauchent, la capacité sous-utilisée et les opportunités de mutualisation — donnant aux décideurs la base analytique pour poursuivre des initiatives collaboratives.",
+      "capabilities": {
+        "0": { "title": "Cartographie des flux", "description": "Visualiser les flux logistiques à travers votre réseau avec une analyse multidimensionnelle" },
+        "1": { "title": "Découverte d'opportunités", "description": "Identifier automatiquement le potentiel d'optimisation, y compris les synergies inter-entreprises" },
+        "2": { "title": "Analytique réseau", "description": "Comprendre les schémas de flux, les densités et les inefficacités structurelles" },
+        "3": { "title": "Analyse de mutualisation", "description": "Détecter où les organisations peuvent partager la capacité, les routes ou les ressources logistiques" },
+        "4": { "title": "Cadrage de scénarios", "description": "Cadrer les scénarios d'optimisation basés sur les opportunités découvertes" }
+      },
+      "benefits": {
+        "0": { "title": "Révéler la valeur cachée", "description": "Découvrir les opportunités d'optimisation invisibles depuis une perspective mono-entreprise" },
+        "1": { "title": "Décisions basées sur les données", "description": "Passer de l'intuition à l'analyse structurée pour l'optimisation du réseau logistique" },
+        "2": { "title": "Accélérer la collaboration", "description": "Donner aux parties prenantes une base analytique partagée pour commencer à travailler ensemble" }
+      }
+    },
+    "modal4ward": {
+      "name": "Modal4ward",
+      "tagline": "Simuler des scénarios. Comparer les alternatives.",
+      "description": "Simuler et comparer des scénarios logistiques multimodaux — évaluer le coût, le CO₂, le niveau de service et la faisabilité des alternatives de modes de transport.",
+      "heroDescription": "Modal4ward permet aux équipes logistiques de modéliser, simuler et comparer des scénarios de transport multimodal avant de s'engager dans des changements opérationnels.",
+      "problemTitle": "Décisions de transport basées sur des hypothèses, pas sur l'analyse",
+      "problemDescription": "Évaluer des modes de transport ou des itinéraires alternatifs est complexe. Sans capacités de simulation, les organisations s'appuient sur des tableurs et des hypothèses — manquant souvent des opportunités significatives de réduction des coûts et des émissions.",
+      "solutionTitle": "Simulation multimodale basée sur les scénarios",
+      "solutionDescription": "Modal4ward fournit un environnement structuré pour simuler des scénarios de transport. Comparer les solutions routières, ferroviaires, fluviales et combinées en termes de coût, temps, émissions et faisabilité opérationnelle.",
+      "capabilities": {
+        "0": { "title": "Modélisation de scénarios", "description": "Construire et configurer des scénarios de transport avec plusieurs modes et itinéraires" },
+        "1": { "title": "Analyse des coûts", "description": "Comparer les coûts logistiques totaux entre scénarios incluant manutention et transit" },
+        "2": { "title": "Estimation CO₂", "description": "Calculer et comparer les émissions carbone pour chaque alternative de transport" },
+        "3": { "title": "Évaluation de faisabilité", "description": "Évaluer les contraintes opérationnelles, l'infrastructure et les exigences de service" },
+        "4": { "title": "Tableau de bord comparatif", "description": "Comparaison côte à côte des scénarios avec les indicateurs de performance clés" }
+      },
+      "benefits": {
+        "0": { "title": "Report modal éclairé", "description": "Prendre des décisions de mode de transport appuyées par une analyse de scénarios complète" },
+        "1": { "title": "Durabilité quantifiée", "description": "Comprendre l'impact réel des émissions des décisions logistiques" },
+        "2": { "title": "Risque réduit", "description": "Tester les alternatives avant la mise en œuvre par une simulation détaillée" }
+      }
+    },
+    "cobuild4ward": {
+      "name": "Cobuild4ward",
+      "tagline": "Coordonner les initiatives. Aligner les parties prenantes.",
+      "description": "Structurer et coordonner les initiatives logistiques collaboratives à travers plusieurs organisations — de l'identification des opportunités à l'alignement opérationnel.",
+      "heroDescription": "Cobuild4ward est là où la collaboration devient opérationnelle. Structurez les initiatives logistiques multi-acteurs, alignez les parties prenantes et passez des opportunités partagées à l'action coordonnée.",
+      "problemTitle": "La collaboration qui ne dépasse jamais la conversation",
+      "problemDescription": "La collaboration logistique entre organisations stagne souvent car il n'existe pas d'environnement structuré pour concevoir des initiatives, partager l'information, s'aligner sur des scénarios et coordonner la mise en œuvre. Les bonnes idées restent des idées.",
+      "solutionTitle": "Un environnement structuré pour la collaboration inter-entreprises",
+      "solutionDescription": "Cobuild4ward fournit l'espace de travail où plusieurs organisations peuvent conjointement concevoir des initiatives logistiques, partager des données pertinentes, s'aligner sur des scénarios, suivre les progrès et coordonner la mise en œuvre opérationnelle.",
+      "capabilities": {
+        "0": { "title": "Conception d'initiatives", "description": "Structurer des initiatives logistiques collaboratives avec un périmètre et des objectifs clairs" },
+        "1": { "title": "Coordination multi-acteurs", "description": "Gérer les rôles, contributions et responsabilités entre organisations" },
+        "2": { "title": "Partage d'information", "description": "Partager de manière sécurisée les données logistiques pertinentes dans le contexte des initiatives" },
+        "3": { "title": "Alignement de scénarios", "description": "Construire le consensus autour des scénarios et des approches de mise en œuvre" },
+        "4": { "title": "Suivi des progrès", "description": "Suivre les jalons des initiatives et coordonner la préparation opérationnelle" }
+      },
+      "benefits": {
+        "0": { "title": "Les idées deviennent action", "description": "Faire passer les opportunités collaboratives de la discussion à la mise en œuvre structurée" },
+        "1": { "title": "Alignement plus rapide", "description": "Réduire le temps entre l'identification des opportunités et l'action coordonnée" },
+        "2": { "title": "Collaboration scalable", "description": "Gérer plusieurs initiatives inter-entreprises avec une structure et une gouvernance claires" }
+      }
+    },
+    "compute4ward": {
+      "name": "Compute4ward",
+      "tagline": "Alimenter l'optimisation en coulisses.",
+      "description": "Application experte fournissant le calcul avancé, les moteurs d'optimisation et les modèles analytiques qui alimentent les capacités opérationnelles de la plateforme.",
+      "heroDescription": "Compute4ward est le moteur analytique de la plateforme Pool4ward — fournissant les modèles d'optimisation, les capacités de simulation et la puissance de calcul qui permettent les applications opérationnelles.",
+      "problemTitle": "L'optimisation nécessite des capacités analytiques profondes",
+      "problemDescription": "L'optimisation logistique à l'échelle de l'écosystème nécessite un calcul sophistiqué — moteurs d'optimisation, modèles de simulation, analyse de scénarios et capacités analytiques qui vont bien au-delà des outils métier standard.",
+      "solutionTitle": "Calcul de niveau entreprise pour l'optimisation logistique",
+      "solutionDescription": "Compute4ward fournit la couche analytique experte qui alimente Design4ward, Modal4ward et Cobuild4ward — livrant des modèles d'optimisation, des moteurs de simulation et des analyses avancées à l'échelle.",
+      "capabilities": {
+        "0": { "title": "Moteurs d'optimisation", "description": "Modèles d'optimisation mathématique pour les problèmes de réseau et de flux logistiques" },
+        "1": { "title": "Modèles de simulation", "description": "Simulation à événements discrets et par scénarios pour les opérations logistiques" },
+        "2": { "title": "Calcul de scénarios", "description": "Calcul de scénarios à grande échelle avec évaluation multicritère" },
+        "3": { "title": "Modèles analytiques", "description": "Analyses logistiques spécialisées incluant les modèles de coûts, d'émissions et d'utilisation" },
+        "4": { "title": "Exécution de modèles", "description": "Infrastructure de calcul scalable pour les charges de travail d'optimisation complexes" }
+      },
+      "benefits": {
+        "0": { "title": "Profondeur analytique", "description": "Optimisation de niveau expert qui va au-delà de l'analytique métier standard" },
+        "1": { "title": "Calcul scalable", "description": "Gérer l'optimisation logistique complexe et multivariable à l'échelle de l'écosystème" },
+        "2": { "title": "Amélioration continue", "description": "Des modèles qui évoluent avec les nouvelles données et l'élargissement du périmètre du réseau" }
+      }
+    },
+    "connect4ward": {
+      "name": "Connect4ward",
+      "tagline": "Connecter les systèmes. Permettre l'interopérabilité.",
+      "description": "Application experte pour la connectivité et l'interopérabilité d'entreprise — connectant ERP, TMS, WMS et systèmes partenaires pour permettre l'utilisation et la mise en œuvre de la plateforme.",
+      "heroDescription": "Connect4ward garantit que la plateforme Pool4ward s'intègre de manière transparente avec les systèmes d'entreprise et logistiques — rendant possible l'échange de données, la mise en œuvre et la connectivité opérationnelle.",
+      "problemTitle": "Des systèmes déconnectés bloquent la collaboration",
+      "problemDescription": "La logistique collaborative nécessite des données provenant de plusieurs systèmes à travers plusieurs organisations. Sans connectivité robuste, l'adoption de la plateforme stagne et la mise en œuvre opérationnelle reste manuelle.",
+      "solutionTitle": "Connectivité de niveau entreprise pour les écosystèmes logistiques",
+      "solutionDescription": "Connect4ward fournit les connecteurs, API et capacités d'intégration qui relient la plateforme Pool4ward aux systèmes d'entreprise où les opérations logistiques fonctionnent réellement.",
+      "capabilities": {
+        "0": { "title": "Connecteurs ERP", "description": "Intégrations pré-construites avec les principaux systèmes ERP pour l'échange de données logistiques" },
+        "1": { "title": "Intégration TMS", "description": "Connecter les systèmes de gestion du transport pour le flux de données opérationnel" },
+        "2": { "title": "Connectivité WMS", "description": "Relier les systèmes de gestion d'entrepôt pour la visibilité des stocks et des flux" },
+        "3": { "title": "Framework API", "description": "Couche API extensible pour les intégrations personnalisées et les systèmes partenaires" },
+        "4": { "title": "Échange de données", "description": "Protocoles d'échange de données sécurisés et structurés à travers les frontières organisationnelles" }
+      },
+      "benefits": {
+        "0": { "title": "Mise en œuvre plus rapide", "description": "Des connecteurs pré-construits réduisent le temps de mise en service opérationnelle de la plateforme" },
+        "1": { "title": "Interopérabilité des systèmes", "description": "Connecter les systèmes qui comptent sans remplacer l'infrastructure existante" },
+        "2": { "title": "Préparation écosystème", "description": "Permettre l'échange de données multi-parties avec la sécurité et la gouvernance appropriées" }
+      }
+    }
+  },
+  "Solutions": {
+    "metaTitle": "Solutions — Pool4ward",
+    "metaDescription": "Optimisation logistique, transport collaboratif, stratégie multimodale et décarbonation de la supply chain — propulsés par Pool4ward.",
+    "heroBadge": "Solutions",
+    "heroTitle": "Des défis logistiques qui exigent la ",
+    "heroTitleHighlight": "collaboration",
+    "heroDescription": "Pool4ward adresse les opportunités d'optimisation qui existent au-delà des frontières de l'entreprise — là où la collaboration crée le plus de valeur.",
+    "ctaTitle": "Quel défi logistique rencontrez-vous ?",
+    "ctaDescription": "Laissez-nous vous montrer comment Pool4ward aide les organisations à relever des défis d'optimisation logistique complexes par la collaboration."
+  },
+  "SolutionTemplate": {
+    "solution": "Solution",
+    "theChallenge": "Le défi",
+    "whyHardToday": "Pourquoi c'est difficile aujourd'hui",
+    "theSolution": "La solution",
+    "howPool4wardHelps": "Comment Pool4ward aide",
+    "outcomes": "Résultats",
+    "expectedImpact": "Impact attendu",
+    "ctaTitle": "Prêt à relever le défi {title} ?",
+    "ctaDescription": "Découvrez comment Pool4ward aide les organisations à collaborer sur l'optimisation logistique à l'échelle de l'écosystème."
+  },
+  "SolutionData": {
+    "logistics-optimization": {
+      "title": "Optimisation logistique",
+      "tagline": "Optimiser la logistique au-delà des frontières d'une organisation",
+      "description": "Découvrir et mettre en œuvre les opportunités d'optimisation logistique qui s'étendent à travers les entreprises, les réseaux et les frontières opérationnelles.",
+      "problemTitle": "Une optimisation qui s'arrête trop tôt",
+      "problemDescription": "La plupart de l'optimisation logistique se fait dans les limites d'une seule entreprise. L'optimisation des itinéraires, la consolidation des chargements et la conception du réseau sont appliquées en interne — alors que les plus grandes opportunités existent souvent entre les organisations.",
+      "whyHard": "L'optimisation inter-entreprises nécessite une visibilité partagée sur les flux, la capacité de simuler des scénarios conjoints et une coordination structurée entre des acteurs qui opèrent traditionnellement de manière indépendante. Aucune entreprise ne peut le faire seule.",
+      "howPool4ward": "Pool4ward fournit l'environnement analytique, de simulation et de coordination où plusieurs organisations peuvent conjointement identifier, évaluer et mettre en œuvre l'optimisation logistique à l'échelle de l'écosystème — de l'analyse des flux à la mise en œuvre opérationnelle.",
+      "outcomes": {
+        "0": { "title": "10-25% de réduction des coûts", "description": "Par la mutualisation, la consolidation et l'optimisation du réseau entre acteurs" },
+        "1": { "title": "Meilleure utilisation des actifs", "description": "Réduire les trajets à vide et la capacité inutilisée en coordonnant entre organisations" },
+        "2": { "title": "Mise en œuvre plus rapide", "description": "Processus structuré de la découverte d'opportunités au changement opérationnel" }
+      }
+    },
+    "collaborative-transport": {
+      "title": "Transport collaboratif",
+      "tagline": "Mutualiser les flux. Partager la capacité. Réduire le gaspillage.",
+      "description": "Permettre aux chargeurs, transporteurs et opérateurs logistiques de mutualiser les flux de transport, partager la capacité et réduire le gaspillage logistique par la collaboration structurée.",
+      "problemTitle": "Capacité de transport gaspillée à grande échelle",
+      "problemDescription": "À travers les réseaux logistiques, les camions roulent partiellement chargés, les itinéraires se chevauchent entre chargeurs et les retours sont à vide. Les entreprises individuelles ne peuvent pas résoudre cela — la solution nécessite une coordination au-delà des frontières organisationnelles.",
+      "whyHard": "La collaboration transport nécessite d'identifier les flux compatibles, d'aligner les exigences opérationnelles, de construire la confiance entre les parties et de gérer la complexité de la coordination multi-acteurs. Sans les bons outils, elle passe rarement à l'échelle.",
+      "howPool4ward": "Pool4ward aide les organisations à découvrir les flux qui se chevauchent, modéliser les scénarios de mutualisation et coordonner les initiatives de transport partagé — transformant la capacité fragmentée en efficacité collaborative.",
+      "outcomes": {
+        "0": { "title": "Réduction des kilomètres à vide", "description": "Mutualiser les flux pour remplir les camions et éliminer les trajets de transport inutiles" },
+        "1": { "title": "Coûts unitaires réduits", "description": "Partager les coûts de transport entre organisations par la mutualisation des flux" },
+        "2": { "title": "Réduction mesurable du CO₂", "description": "Moins de camions sur la route signifie moins d'émissions par unité expédiée" }
+      }
+    },
+    "multimodal-strategy": {
+      "title": "Stratégie multimodale",
+      "tagline": "Évaluer les alternatives. Reporter intelligemment.",
+      "description": "Analyser, simuler et mettre en œuvre des stratégies de transport multimodal — passer de la route au rail, à la voie d'eau ou aux solutions combinées là où c'est pertinent opérationnellement et économiquement.",
+      "problemTitle": "Le report modal sans analyse est un pari",
+      "problemDescription": "Les organisations savent qu'elles devraient explorer des alternatives au transport routier exclusif, mais évaluer les options multimodales est complexe. Les structures de coûts, les exigences de service, la disponibilité des infrastructures et les impacts sur les émissions doivent être comparés rigoureusement.",
+      "whyHard": "Les décisions multimodales impliquent des compromis entre coût, vitesse, fiabilité, émissions et contraintes d'infrastructure. Sans outils de simulation appropriés, les organisations évitent le report modal ou prennent des décisions basées sur une analyse incomplète.",
+      "howPool4ward": "Pool4ward permet aux organisations de modéliser leurs flux logistiques actuels, de simuler des alternatives multimodales, de comparer les scénarios sur toutes les dimensions pertinentes et de prendre des décisions confiantes appuyées par les données.",
+      "outcomes": {
+        "0": { "title": "Report modal éclairé", "description": "Décisions appuyées par les données sur quand et où reporter les modes de transport" },
+        "1": { "title": "Compromis équilibrés", "description": "Compréhension claire de l'impact coût, service et émissions pour chaque scénario" },
+        "2": { "title": "Préparation opérationnelle", "description": "De l'analyse de scénarios à la planification de la mise en œuvre dans un seul environnement" }
+      }
+    },
+    "supply-chain-decarbonization": {
+      "title": "Décarbonation de la supply chain",
+      "tagline": "Réduire les émissions par la collaboration opérationnelle",
+      "description": "Atteindre des réductions significatives des émissions logistiques par l'optimisation collaborative, le report modal et l'efficacité du réseau — pas seulement le reporting.",
+      "problemTitle": "Des objectifs de décarbonation sans leviers opérationnels",
+      "problemDescription": "De nombreuses organisations ont des objectifs de décarbonation ambitieux pour leurs opérations logistiques, mais peinent à trouver des leviers opérationnels au-delà des améliorations d'efficacité incrémentales. Le reporting n'est pas la même chose que la réduction.",
+      "whyHard": "Des réductions significatives des émissions logistiques nécessitent des changements structurels — report modal, consolidation des flux, redesign du réseau et coordination inter-entreprises. Cela dépasse ce qu'une seule organisation peut mettre en œuvre seule.",
+      "howPool4ward": "Pool4ward permet aux organisations de quantifier l'impact des émissions des décisions logistiques, d'identifier les opportunités de réduction collaborative, de simuler des scénarios alternatifs et de mettre en œuvre des changements structurels qui produisent des résultats mesurables.",
+      "outcomes": {
+        "0": { "title": "Impact quantifié", "description": "Mesurer la réduction des émissions pour chaque scénario d'optimisation" },
+        "1": { "title": "Réduction structurelle", "description": "Aller au-delà des gains incrémentaux avec le report modal et la mutualisation des flux" },
+        "2": { "title": "Échelle collaborative", "description": "Atteindre les objectifs de réduction par l'optimisation au niveau de l'écosystème" }
+      }
+    }
+  },
+  "Company": {
+    "metaTitle": "Entreprise — Pool4ward",
+    "metaDescription": "Pool4ward existe parce que les plus grandes opportunités d'optimisation logistique sont collaboratives. Découvrez notre vision.",
+    "heroBadge": "Entreprise",
+    "heroTitle": "Nous croyons que l'avenir de la logistique est ",
+    "heroTitleHighlight": "collaboratif",
+    "heroDescription": "Pool4ward existe parce que les plus grandes opportunités d'optimisation logistique ne sont pas à l'intérieur d'une entreprise — elles sont entre les entreprises.",
+    "visionBadge": "Notre vision",
+    "visionTitle": "Des écosystèmes logistiques qui optimisent ensemble",
+    "visionP1": "Pendant des décennies, l'optimisation logistique a été un exercice interne. Les entreprises optimisent leurs propres routes, leurs propres entrepôts, leurs propres chaînes d'approvisionnement. Et elles le font bien.",
+    "visionP2": "Mais les plus grandes opportunités inexploitées — mutualisation des flux, consolidation inter-entreprises, report modal au niveau de l'écosystème — restent invisibles et inactionnables car elles nécessitent une coordination au-delà des frontières organisationnelles.",
+    "visionP3": "Pool4ward a été construit pour changer cela. Nous fournissons la plateforme où les écosystèmes logistiques peuvent découvrir des opportunités partagées, concevoir des initiatives collaboratives et mettre en œuvre une optimisation qu'aucune entreprise ne pourrait atteindre seule.",
+    "visionP4": "Nous croyons que la logistique collaborative n'est pas un plus — c'est la prochaine frontière de la performance logistique, de la durabilité et de la résilience.",
+    "whyBadge": "Pourquoi nous existons",
+    "whyTitle": "Les convictions derrière Pool4ward",
+    "beliefs": {
+      "collaborationProblem": {
+        "title": "L'optimisation a un problème de collaboration",
+        "description": "Les outils existent pour optimiser au sein d'une entreprise. Mais aucun outil n'existait pour optimiser entre les entreprises. Pool4ward comble ce vide."
+      },
+      "moreThanCommunication": {
+        "title": "La collaboration nécessite plus que la communication",
+        "description": "Les emails et les réunions ne suffisent pas. La logistique collaborative nécessite une analyse partagée, des scénarios partagés et une coordination structurée."
+      },
+      "outsizedValue": {
+        "title": "Les écosystèmes créent une valeur démesurée",
+        "description": "Quand les organisations s'alignent autour d'opportunités logistiques partagées, la valeur créée dépasse ce que toute optimisation individuelle peut atteindre."
+      },
+      "implementationMatters": {
+        "title": "La mise en œuvre compte le plus",
+        "description": "Les insights sans action ne sont que des rapports. Pool4ward est construit pour passer de la découverte d'opportunités à la mise en œuvre opérationnelle."
+      }
+    },
+    "contactBadge": "Contact",
+    "contactTitle": "Nous contacter",
+    "contactDescription": "Prêt à explorer comment Pool4ward peut aider votre organisation à optimiser la logistique par la collaboration ? Demandez une démo ou contactez notre équipe.",
+    "nameLabel": "Nom",
+    "namePlaceholder": "Votre nom",
+    "emailLabel": "Email professionnel",
+    "emailPlaceholder": "vous@entreprise.com",
+    "companyLabel": "Entreprise",
+    "companyPlaceholder": "Votre organisation",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Parlez-nous de vos objectifs de collaboration logistique",
+    "responseTime": "Nous répondons généralement dans un délai d'un jour ouvrable."
+  },
+  "Ecosystem": {
+    "metaTitle": "Écosystème — Pool4ward",
+    "metaDescription": "Pool4ward connecte chargeurs, transporteurs, opérateurs logistiques et partenaires d'écosystème dans un environnement de collaboration structuré.",
+    "heroBadge": "Écosystème",
+    "heroTitle": "Un environnement structuré pour la ",
+    "heroTitleHighlight": "collaboration d'écosystème",
+    "heroDescription": "Pool4ward connecte chargeurs, transporteurs, opérateurs logistiques et partenaires d'écosystème dans une plateforme partagée pour découvrir et mettre en œuvre l'optimisation collaborative.",
+    "challengeBadge": "Le défi",
+    "challengeTitle": "Pourquoi la collaboration inter-organisationnelle est difficile",
+    "challengeDescription": "La collaboration logistique entre entreprises est précieuse en théorie et difficile en pratique. Les barrières sont structurelles, pas seulement relationnelles.",
+    "challenges": {
+      "noSharedVisibility": {
+        "title": "Pas de visibilité partagée",
+        "description": "Les organisations opèrent sur des systèmes séparés sans vue unifiée des flux, capacités ou opportunités."
+      },
+      "noStructuredProcess": {
+        "title": "Pas de processus structuré",
+        "description": "Les tentatives de collaboration passent par les emails et les réunions, sans cadre clair pour la conception d'initiatives."
+      },
+      "competingInterests": {
+        "title": "Intérêts concurrents",
+        "description": "Les acteurs doivent voir clairement le bénéfice mutuel avant de s'engager dans des initiatives logistiques partagées."
+      },
+      "dataSensitivity": {
+        "title": "Sensibilité des données",
+        "description": "Partager des données logistiques entre organisations nécessite un échange sécurisé, gouverné et à finalité spécifique."
+      },
+      "complexityAtScale": {
+        "title": "Complexité à l'échelle",
+        "description": "La coordination multi-acteurs avec des flux interdépendants est trop complexe pour les tableurs et les présentations."
+      },
+      "implementationGap": {
+        "title": "Écart de mise en œuvre",
+        "description": "Même les bonnes idées collaboratives échouent souvent à atteindre la mise en œuvre opérationnelle sans les bons outils."
+      }
+    },
+    "solutionBadge": "La solution",
+    "solutionTitle": "Comment Pool4ward structure la collaboration d'écosystème",
+    "solutionDescription": "Pool4ward fournit l'environnement analytique et de coordination partagé qui rend la collaboration logistique inter-entreprises opérationnelle — pas seulement conversationnelle.",
+    "solutionItems": [
+      "Espace de travail analytique partagé pour l'analyse des flux au niveau de l'écosystème",
+      "Conception d'initiatives structurée avec des rôles et des objectifs",
+      "Partage d'information sécurisé et à finalité spécifique entre acteurs",
+      "Alignement de scénarios entre plusieurs organisations",
+      "Suivi des progrès et coordination opérationnelle"
+    ],
+    "infoSharingBadge": "Partage d'information",
+    "infoSharingTitle": "Échange de données sécurisé et gouverné",
+    "infoSharingDescription": "Pool4ward permet aux organisations de partager des données logistiques pertinentes dans le contexte d'initiatives spécifiques — avec la sécurité, la gouvernance et la limitation de finalité appropriées.",
+    "infoSharingItems": {
+      "purposeSpecific": {
+        "title": "Partage à finalité spécifique",
+        "description": "Les données sont partagées dans le contexte d'initiatives définies, pas en accès ouvert."
+      },
+      "roleBased": {
+        "title": "Visibilité basée sur les rôles",
+        "description": "Chaque acteur ne voit que ce qui est pertinent pour son rôle dans la collaboration."
+      },
+      "auditGovernance": {
+        "title": "Audit et gouvernance",
+        "description": "Traçabilité complète de l'échange de données avec des contrôles de sécurité de niveau entreprise."
+      }
+    },
+    "integrationsBadge": "Intégrations",
+    "integrationsTitle": "Se connecte aux systèmes qui comptent",
+    "integrationsDescription": "Via Connect4ward, la plateforme s'intègre avec les systèmes d'entreprise et logistiques pour garantir que les flux de données et les décisions collaboratives se connectent aux opérations.",
+    "actorsBadge": "Acteurs de l'écosystème",
+    "actorsTitle": "Qui participe à l'écosystème",
+    "actorsDescription": "Pool4ward sert l'ensemble des acteurs impliqués dans la collaboration logistique — des chargeurs aux transporteurs en passant par les coordinateurs d'écosystème.",
+    "actors": {
+      "shippers": {
+        "title": "Chargeurs",
+        "description": "Organisations qui ont besoin de déplacer des marchandises et souhaitent optimiser leurs réseaux logistiques par la collaboration."
+      },
+      "carriers": {
+        "title": "Transporteurs",
+        "description": "Entreprises de transport qui peuvent optimiser l'utilisation de la capacité et le service en coordonnant avec d'autres acteurs."
+      },
+      "logisticsOperators": {
+        "title": "Opérateurs logistiques",
+        "description": "3PL et prestataires de services logistiques orchestrant les flux à travers plusieurs clients et modes."
+      },
+      "multimodalActors": {
+        "title": "Acteurs multimodaux",
+        "description": "Opérateurs ferroviaires, compagnies de voie d'eau intérieure et terminaux intermodaux permettant le report modal."
+      },
+      "ecosystemCoordinators": {
+        "title": "Coordinateurs d'écosystème",
+        "description": "Organisations sectorielles, clusters et plateformes qui facilitent la collaboration entre acteurs."
+      },
+      "techPartners": {
+        "title": "Partenaires technologiques",
+        "description": "Fournisseurs de systèmes et intégrateurs qui connectent l'écosystème par les données et la technologie."
+      }
+    },
+    "ctaTitle": "Construisez votre écosystème logistique sur Pool4ward",
+    "ctaDescription": "Découvrez comment les organisations utilisent Pool4ward pour structurer et mettre en œuvre des initiatives logistiques collaboratives."
+  },
+  "Resources": {
+    "metaTitle": "Ressources — Pool4ward",
+    "metaDescription": "Insights, études de cas et documentation de la plateforme pour l'optimisation logistique collaborative.",
+    "heroBadge": "Ressources",
+    "heroTitle": "Insights et ressources",
+    "heroDescription": "Leadership éclairé, guides de la plateforme et études de cas sur l'optimisation logistique collaborative.",
+    "insightsBadge": "Insights",
+    "insightsTitle": "Dernières réflexions sur la logistique collaborative",
+    "insights": {
+      "0": {
+        "category": "Leadership éclairé",
+        "title": "Pourquoi l'optimisation logistique doit aller au-delà des frontières de l'entreprise",
+        "description": "Une analyse de pourquoi les plus grandes opportunités d'optimisation logistique existent au niveau de l'écosystème — et ce qu'il faut pour les saisir.",
+        "readTime": "8 min de lecture"
+      },
+      "1": {
+        "category": "Guide plateforme",
+        "title": "L'architecture de la plateforme Pool4ward expliquée",
+        "description": "Un parcours détaillé du modèle à trois couches de Pool4ward : Collaboration d'écosystème, Applications opérationnelles et Applications expertes.",
+        "readTime": "12 min de lecture"
+      },
+      "2": {
+        "category": "Analyse sectorielle",
+        "title": "Le transport collaboratif en Europe : état des lieux",
+        "description": "Comment les organisations logistiques leaders en Europe structurent les initiatives de transport inter-entreprises — et ce que nous pouvons en apprendre.",
+        "readTime": "10 min de lecture"
+      },
+      "3": {
+        "category": "Leadership éclairé",
+        "title": "De l'optimisation à la collaboration : la prochaine frontière",
+        "description": "Pourquoi le passage de l'optimisation interne à la collaboration d'écosystème est la transformation logistique déterminante de cette décennie.",
+        "readTime": "6 min de lecture"
+      },
+      "4": {
+        "category": "Guide technique",
+        "title": "Simulation de scénarios multimodaux avec Modal4ward",
+        "description": "Comment les organisations utilisent Modal4ward pour évaluer et comparer les alternatives de transport en termes de coût, émissions et faisabilité opérationnelle.",
+        "readTime": "9 min de lecture"
+      },
+      "5": {
+        "category": "Guide plateforme",
+        "title": "Démarrer avec la collaboration d'écosystème",
+        "description": "Un guide pratique pour structurer votre première initiative logistique inter-entreprises sur Pool4ward.",
+        "readTime": "7 min de lecture"
+      }
+    },
+    "caseStudiesBadge": "Études de cas",
+    "caseStudiesTitle": "Impact réel de la logistique collaborative",
+    "caseStudies": {
+      "0": {
+        "title": "Un consortium européen de chargeurs réduit les coûts de transport de 18%",
+        "description": "Comment un groupe de chargeurs européens a utilisé Pool4ward pour identifier et mettre en œuvre des opportunités de mutualisation des flux à travers leurs réseaux.",
+        "tags": ["Transport collaboratif", "Réduction des coûts"]
+      },
+      "1": {
+        "title": "Une initiative de report modal économise 12 000 tonnes de CO₂ par an",
+        "description": "Une initiative logistique multimodale conçue et coordonnée sur Pool4ward, transférant le fret de la route vers le rail à travers trois pays.",
+        "tags": ["Stratégie multimodale", "Décarbonation"]
+      },
+      "2": {
+        "title": "Un cluster logistique structure 5 initiatives collaboratives en 6 mois",
+        "description": "Comment un cluster logistique régional a utilisé Pool4ward comme plateforme de coordination pour identifier et lancer des projets d'optimisation collaborative.",
+        "tags": ["Écosystème", "Coordination"]
+      }
+    },
+    "docsBadge": "Documentation",
+    "docsTitle": "Vue d'ensemble et guides de la plateforme",
+    "docs": {
+      "0": {
+        "title": "Architecture de la plateforme",
+        "description": "Comprendre le modèle à trois couches et comment les composants Pool4ward fonctionnent ensemble."
+      },
+      "1": {
+        "title": "Guide produit",
+        "description": "Documentation détaillée pour chaque application Pool4ward — de Design4ward à Connect4ward."
+      },
+      "2": {
+        "title": "Guide d'intégration",
+        "description": "Vue d'ensemble technique des capacités Connect4ward et des systèmes d'entreprise supportés."
+      }
+    },
+    "ctaTitle": "Vous voulez voir la logistique collaborative en pratique ?",
+    "ctaDescription": "Demandez une démo pour voir comment Pool4ward aide les organisations à optimiser au-delà des frontières de l'entreprise."
+  },
+  "Diagrams": {
+    "ecosystemCollaboration": "Collaboration d'écosystème",
+    "heartOfPlatform": "Le cœur de la plateforme",
+    "opportunityDiscovery": "Découverte d'opportunités",
+    "initiativeDesign": "Conception d'initiatives",
+    "multiActorCoordination": "Coordination multi-acteurs",
+    "operationalAlignment": "Alignement opérationnel",
+    "enabledBy": "rendu possible par",
+    "operationalApplications": "Applications opérationnelles",
+    "appsHelpAct": "Des applications qui aident les organisations à agir",
+    "design4wardDesc": "Analyse des flux et découverte d'opportunités",
+    "modal4wardDesc": "Simulation de scénarios multimodaux",
+    "cobuild4wardDesc": "Coordination inter-entreprises",
+    "poweredBy": "alimenté par",
+    "expertApplications": "Applications expertes",
+    "enablingCapabilities": "Capacités habilitantes",
+    "compute4wardDesc": "Moteurs d'optimisation, modèles de simulation, calcul analytique",
+    "connect4wardDesc": "Connecteurs d'entreprise, intégration système, échange de données",
+    "analyze": "Analyser",
+    "analyzeDesc": "Cartographier et analyser les flux logistiques de votre réseau",
+    "identify": "Identifier",
+    "identifyDesc": "Découvrir les synergies et les opportunités d'optimisation",
+    "design": "Concevoir",
+    "designDesc": "Concevoir des scénarios et initiatives collaboratifs",
+    "simulate": "Simuler",
+    "simulateDesc": "Simuler les alternatives et comparer les résultats",
+    "coordinate": "Coordonner",
+    "coordinateDesc": "Aligner les parties prenantes et coordonner entre acteurs",
+    "implement": "Mettre en œuvre",
+    "implementDesc": "Se connecter aux opérations et mettre en œuvre les changements",
+    "shippers": "Chargeurs",
+    "carriers": "Transporteurs",
+    "logisticsOperators": "Opérateurs logistiques",
+    "multimodalActors": "Acteurs multimodaux",
+    "coordinators": "Coordinateurs",
+    "partners": "Partenaires",
+    "collaborationPlatform": "Plateforme de collaboration",
+    "collaborationZone": "Zone de collaboration"
+  },
+  "CTABand": {
+    "defaultTitle": "Prêt à transformer votre écosystème logistique ?",
+    "defaultDescription": "Découvrez comment Pool4ward aide les organisations à découvrir et mettre en œuvre des initiatives logistiques collaboratives.",
+    "defaultPrimaryCTA": "Demander une démo",
+    "defaultSecondaryCTA": "Explorer la plateforme"
+  },
+  "LanguageSwitcher": {
+    "en": "EN",
+    "fr": "FR"
+  }
+}

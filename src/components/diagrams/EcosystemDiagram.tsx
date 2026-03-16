@@ -1,13 +1,17 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 export function EcosystemDiagram({ className = "" }: { className?: string }) {
+  const t = useTranslations("Diagrams");
+
   const actors = [
-    { label: "Shippers", angle: 0 },
-    { label: "Carriers", angle: 60 },
-    { label: "Logistics Operators", angle: 120 },
-    { label: "Multimodal Actors", angle: 180 },
-    { label: "Coordinators", angle: 240 },
-    { label: "Partners", angle: 300 },
+    { label: t("shippers"), angle: 0 },
+    { label: t("carriers"), angle: 60 },
+    { label: t("logisticsOperators"), angle: 120 },
+    { label: t("multimodalActors"), angle: 180 },
+    { label: t("coordinators"), angle: 240 },
+    { label: t("partners"), angle: 300 },
   ];
 
   return (
@@ -70,7 +74,7 @@ export function EcosystemDiagram({ className = "" }: { className?: string }) {
           <div className="w-28 h-28 rounded-full bg-gradient-to-br from-brand-600 to-teal-500 flex items-center justify-center shadow-glow">
             <div className="text-center">
               <span className="text-white font-bold text-sm">Pool4ward</span>
-              <p className="text-white/70 text-[8px] mt-0.5">Collaboration Platform</p>
+              <p className="text-white/70 text-[8px] mt-0.5">{t("collaborationPlatform")}</p>
             </div>
           </div>
         </div>

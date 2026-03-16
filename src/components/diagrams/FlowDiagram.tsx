@@ -1,45 +1,49 @@
 "use client";
 
-const steps = [
-  {
-    number: "01",
-    title: "Analyze",
-    description: "Map and analyze logistics flows across your network",
-    color: "from-brand-500 to-brand-600",
-  },
-  {
-    number: "02",
-    title: "Identify",
-    description: "Discover synergies and optimization opportunities",
-    color: "from-brand-600 to-brand-700",
-  },
-  {
-    number: "03",
-    title: "Design",
-    description: "Design collaborative scenarios and initiatives",
-    color: "from-brand-700 to-teal-600",
-  },
-  {
-    number: "04",
-    title: "Simulate",
-    description: "Simulate alternatives and compare outcomes",
-    color: "from-teal-600 to-teal-500",
-  },
-  {
-    number: "05",
-    title: "Coordinate",
-    description: "Align stakeholders and coordinate across actors",
-    color: "from-teal-500 to-teal-400",
-  },
-  {
-    number: "06",
-    title: "Implement",
-    description: "Connect to operations and implement changes",
-    color: "from-teal-400 to-teal-300",
-  },
-];
+import { useTranslations } from "next-intl";
 
 export function FlowDiagram({ className = "" }: { className?: string }) {
+  const t = useTranslations("Diagrams");
+
+  const steps = [
+    {
+      number: "01",
+      title: t("analyze"),
+      description: t("analyzeDesc"),
+      color: "from-brand-500 to-brand-600",
+    },
+    {
+      number: "02",
+      title: t("identify"),
+      description: t("identifyDesc"),
+      color: "from-brand-600 to-brand-700",
+    },
+    {
+      number: "03",
+      title: t("design"),
+      description: t("designDesc"),
+      color: "from-brand-700 to-teal-600",
+    },
+    {
+      number: "04",
+      title: t("simulate"),
+      description: t("simulateDesc"),
+      color: "from-teal-600 to-teal-500",
+    },
+    {
+      number: "05",
+      title: t("coordinate"),
+      description: t("coordinateDesc"),
+      color: "from-teal-500 to-teal-400",
+    },
+    {
+      number: "06",
+      title: t("implement"),
+      description: t("implementDesc"),
+      color: "from-teal-400 to-teal-300",
+    },
+  ];
+
   return (
     <div className={`w-full ${className}`}>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
