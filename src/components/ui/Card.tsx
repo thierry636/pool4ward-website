@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 
 interface CardProps {
   children: React.ReactNode;
@@ -27,7 +27,7 @@ export function Card({
 
   if (href) {
     return (
-      <Link href={href} className={`block ${baseClasses}`}>
+      <Link href={href as "/"} className={`block ${baseClasses}`}>
         {children}
       </Link>
     );

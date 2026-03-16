@@ -1,11 +1,17 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
-import { navigation } from "@/content/navigation";
+import { useTranslations } from "next-intl";
+import { Link, usePathname, useRouter } from "@/i18n/routing";
+import { useLocale } from "next-intl";
 import { Button } from "@/components/ui/Button";
 
 export function Header() {
+  const t = useTranslations("Nav");
+  const tc = useTranslations("Common");
+  const locale = useLocale();
+  const pathname = usePathname();
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -25,6 +31,79 @@ export function Header() {
   const handleMouseLeave = () => {
     dropdownTimeout.current = setTimeout(() => setActiveDropdown(null), 150);
   };
+
+  const switchLocale = (newLocale: "en" | "fr") => {
+    router.replace(pathname, { locale: newLocale });
+  };
+
+  const navigation = [
+    { label: t("platform"), href: "/platform" as const },
+    {
+      label: t("products"),
+      href: "/products" as const,
+      children: [
+        {
+          label: "Design4ward",
+          href: "/products/design4ward" as const,
+          description: t("design4wardDesc"),
+          category: t("operational"),
+        },
+        {
+          label: "Modal4ward",
+          href: "/products/modal4ward" as const,
+          description: t("modal4wardDesc"),
+          category: t("operational"),
+        },
+        {
+          label: "Cobuild4ward",
+          href: "/products/cobuild4ward" as const,
+          description: t("cobuild4wardDesc"),
+          category: t("operational"),
+        },
+        {
+          label: "Compute4ward",
+          href: "/products/compute4ward" as const,
+          description: t("compute4wardDesc"),
+          category: t("expert"),
+        },
+        {
+          label: "Connect4ward",
+          href: "/products/connect4ward" as const,
+          description: t("connect4wardDesc"),
+          category: t("expert"),
+        },
+      ],
+    },
+    {
+      label: t("solutions"),
+      href: "/solutions" as const,
+      children: [
+        {
+          label: t("logisticsOptimization"),
+          href: "/solutions/logistics-optimization" as const,
+          description: t("logisticsOptDesc"),
+        },
+        {
+          label: t("collaborativeTransport"),
+          href: "/solutions/collaborative-transport" as const,
+          description: t("collabTransportDesc"),
+        },
+        {
+          label: t("multimodalStrategy"),
+          href: "/solutions/multimodal-strategy" as const,
+          description: t("multimodalDesc"),
+        },
+        {
+          label: t("supplyChainDecarb"),
+          href: "/solutions/supply-chain-decarbonization" as const,
+          description: t("decarbDesc"),
+        },
+      ],
+    },
+    { label: t("ecosystem"), href: "/ecosystem" as const },
+    { label: t("resources"), href: "/resources" as const },
+    { label: t("company"), href: "/company" as const },
+  ];
 
   return (
     <header
@@ -48,7 +127,7 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
-            {navigation.main.map((item) => (
+            {navigation.map((item) => (
               <div
                 key={item.label}
                 className="relative"
@@ -95,7 +174,7 @@ export function Header() {
                             {"category" in child && (
                               <span
                                 className={`ml-2 text-[10px] px-1.5 py-0.5 rounded font-medium ${
-                                  child.category === "Expert"
+                                  child.category === t("expert")
                                     ? "bg-navy-100 text-navy-500"
                                     : "bg-brand-50 text-brand-600"
                                 }`}
@@ -118,13 +197,37 @@ export function Header() {
 
           {/* Right side */}
           <div className="flex items-center gap-3">
+            {/* Language Switcher */}
+            <div className="hidden sm:flex items-center border border-navy-200 rounded-lg overflow-hidden">
+              <button
+                onClick={() => switchLocale("en")}
+                className={`px-2 py-1 text-xs font-semibold transition-colors ${
+                  locale === "en"
+                    ? "bg-brand-600 text-white"
+                    : "text-navy-500 hover:text-navy-900"
+                }`}
+              >
+                EN
+              </button>
+              <button
+                onClick={() => switchLocale("fr")}
+                className={`px-2 py-1 text-xs font-semibold transition-colors ${
+                  locale === "fr"
+                    ? "bg-brand-600 text-white"
+                    : "text-navy-500 hover:text-navy-900"
+                }`}
+              >
+                FR
+              </button>
+            </div>
+
             <Button
               variant="primary"
               size="sm"
               href="/company#contact"
               className="hidden sm:inline-flex"
             >
-              Request a demo
+              {tc("requestDemo")}
             </Button>
 
             {/* Mobile hamburger */}
@@ -163,7 +266,7 @@ export function Header() {
         {mobileOpen && (
           <div className="lg:hidden bg-white border-t border-navy-100 animate-fade-in">
             <nav className="py-4 space-y-1">
-              {navigation.main.map((item) => (
+              {navigation.map((item) => (
                 <div key={item.label}>
                   <Link
                     href={item.href}
@@ -188,13 +291,38 @@ export function Header() {
                   )}
                 </div>
               ))}
+
+              {/* Mobile Language Switcher */}
+              <div className="px-4 pt-2 flex gap-2">
+                <button
+                  onClick={() => { switchLocale("en"); setMobileOpen(false); }}
+                  className={`px-3 py-1.5 text-sm font-semibold rounded-lg transition-colors ${
+                    locale === "en"
+                      ? "bg-brand-600 text-white"
+                      : "text-navy-500 border border-navy-200"
+                  }`}
+                >
+                  EN
+                </button>
+                <button
+                  onClick={() => { switchLocale("fr"); setMobileOpen(false); }}
+                  className={`px-3 py-1.5 text-sm font-semibold rounded-lg transition-colors ${
+                    locale === "fr"
+                      ? "bg-brand-600 text-white"
+                      : "text-navy-500 border border-navy-200"
+                  }`}
+                >
+                  FR
+                </button>
+              </div>
+
               <div className="px-4 pt-4">
                 <Button
                   variant="primary"
                   href="/company#contact"
                   className="w-full"
                 >
-                  Request a demo
+                  {tc("requestDemo")}
                 </Button>
               </div>
             </nav>

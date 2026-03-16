@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Button } from "./Button";
 
 interface CTABandProps {
@@ -11,14 +14,21 @@ interface CTABandProps {
 }
 
 export function CTABand({
-  title = "Ready to transform your logistics ecosystem?",
-  description = "See how Pool4ward helps organizations discover and implement collaborative logistics initiatives.",
-  primaryCTA = "Request a demo",
+  title,
+  description,
+  primaryCTA,
   primaryHref = "/company#contact",
-  secondaryCTA = "Explore the platform",
+  secondaryCTA,
   secondaryHref = "/platform",
   dark = true,
 }: CTABandProps) {
+  const t = useTranslations("CTABand");
+
+  const displayTitle = title ?? t("defaultTitle");
+  const displayDescription = description ?? t("defaultDescription");
+  const displayPrimaryCTA = primaryCTA ?? t("defaultPrimaryCTA");
+  const displaySecondaryCTA = secondaryCTA ?? t("defaultSecondaryCTA");
+
   return (
     <section
       className={`relative overflow-hidden ${
@@ -33,14 +43,14 @@ export function CTABand({
 
       <div className="relative container-xl py-20 md:py-24 text-center">
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-6 text-balance">
-          {title}
+          {displayTitle}
         </h2>
         <p className="text-lg text-navy-300 max-w-2xl mx-auto mb-10">
-          {description}
+          {displayDescription}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button variant="white" size="lg" href={primaryHref}>
-            {primaryCTA}
+            {displayPrimaryCTA}
           </Button>
           <Button
             variant="ghost"
@@ -48,7 +58,7 @@ export function CTABand({
             href={secondaryHref}
             className="text-white hover:text-white hover:bg-white/10"
           >
-            {secondaryCTA} →
+            {displaySecondaryCTA} →
           </Button>
         </div>
       </div>

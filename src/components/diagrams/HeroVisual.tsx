@@ -1,6 +1,10 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 export function HeroVisual({ className = "" }: { className?: string }) {
+  const t = useTranslations("Diagrams");
+
   return (
     <div className={`relative w-full max-w-2xl mx-auto ${className}`}>
       <div className="relative aspect-[4/3]">
@@ -126,7 +130,7 @@ export function HeroVisual({ className = "" }: { className?: string }) {
             strokeDasharray="4 4"
           />
           <text x="300" y="210" textAnchor="middle" fontSize="10" fontWeight="600" fill="#4263eb" opacity="0.7">
-            Collaboration Zone
+            {t("collaborationZone")}
           </text>
 
           {/* Opportunity indicators */}

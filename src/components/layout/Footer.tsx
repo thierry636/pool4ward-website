@@ -1,7 +1,51 @@
-import Link from "next/link";
-import { navigation } from "@/content/navigation";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 
 export function Footer() {
+  const t = useTranslations("Footer");
+  const tc = useTranslations("Common");
+
+  const footerSections = [
+    {
+      title: t("platform"),
+      links: [
+        { label: t("overview"), href: "/platform" },
+        { label: t("architecture"), href: "/platform#architecture" },
+        { label: t("collaboration"), href: "/platform#collaboration" },
+        { label: t("security"), href: "/platform#security" },
+      ],
+    },
+    {
+      title: t("products"),
+      links: [
+        { label: "Design4ward", href: "/products/design4ward" },
+        { label: "Modal4ward", href: "/products/modal4ward" },
+        { label: "Cobuild4ward", href: "/products/cobuild4ward" },
+        { label: "Compute4ward", href: "/products/compute4ward" },
+        { label: "Connect4ward", href: "/products/connect4ward" },
+      ],
+    },
+    {
+      title: t("solutions"),
+      links: [
+        { label: t("logisticsOptimization"), href: "/solutions/logistics-optimization" },
+        { label: t("collaborativeTransport"), href: "/solutions/collaborative-transport" },
+        { label: t("multimodalStrategy"), href: "/solutions/multimodal-strategy" },
+        { label: t("decarbonization"), href: "/solutions/supply-chain-decarbonization" },
+      ],
+    },
+    {
+      title: t("company"),
+      links: [
+        { label: t("vision"), href: "/company" },
+        { label: t("contact"), href: "/company#contact" },
+        { label: t("resources"), href: "/resources" },
+        { label: t("privacyPolicy"), href: "#" },
+        { label: t("termsOfService"), href: "#" },
+      ],
+    },
+  ];
+
   return (
     <footer className="bg-navy-900 text-white">
       <div className="container-xl py-16 lg:py-20">
@@ -17,105 +61,52 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-sm text-navy-400 leading-relaxed max-w-xs">
-              The collaborative platform for logistics ecosystems. Discover,
-              design, and implement optimization across organizations.
+              {tc("footerDescription")}
             </p>
           </div>
 
-          {/* Platform */}
-          <div>
-            <h3 className="text-sm font-semibold text-white mb-4">Platform</h3>
-            <ul className="space-y-3">
-              {navigation.footer.platform.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-navy-400 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Products */}
-          <div>
-            <h3 className="text-sm font-semibold text-white mb-4">Products</h3>
-            <ul className="space-y-3">
-              {navigation.footer.products.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-navy-400 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Solutions */}
-          <div>
-            <h3 className="text-sm font-semibold text-white mb-4">
-              Solutions
-            </h3>
-            <ul className="space-y-3">
-              {navigation.footer.solutions.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-navy-400 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h3 className="text-sm font-semibold text-white mb-4">Company</h3>
-            <ul className="space-y-3">
-              {navigation.footer.company.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-navy-400 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {footerSections.map((section) => (
+            <div key={section.title}>
+              <h3 className="text-sm font-semibold text-white mb-4">{section.title}</h3>
+              <ul className="space-y-3">
+                {section.links.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href as "/"}
+                      className="text-sm text-navy-400 hover:text-white transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         {/* Bottom bar */}
         <div className="mt-16 pt-8 border-t border-navy-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-navy-500">
-            © {new Date().getFullYear()} Pool4ward. All rights reserved.
+            {tc("allRightsReserved", { year: new Date().getFullYear() })}
           </p>
           <div className="flex gap-6">
             <Link
-              href="#"
+              href={"#" as "/"}
               className="text-sm text-navy-500 hover:text-white transition-colors"
             >
-              Privacy
+              {tc("privacy")}
             </Link>
             <Link
-              href="#"
+              href={"#" as "/"}
               className="text-sm text-navy-500 hover:text-white transition-colors"
             >
-              Terms
+              {tc("terms")}
             </Link>
             <Link
-              href="#"
+              href={"#" as "/"}
               className="text-sm text-navy-500 hover:text-white transition-colors"
             >
-              Security
+              {tc("security")}
             </Link>
           </div>
         </div>
