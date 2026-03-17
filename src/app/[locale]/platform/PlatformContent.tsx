@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/Card";
 import { CTABand } from "@/components/ui/CTABand";
 import { PlatformArchitecture } from "@/components/diagrams/PlatformArchitecture";
 import { FlowDiagram } from "@/components/diagrams/FlowDiagram";
+import { ProductIcon } from "@/components/ui/ProductIcon";
 
 export function PlatformContent() {
   const t = useTranslations("Platform");
@@ -107,7 +108,7 @@ export function PlatformContent() {
             {opAppSlugs.map((slug) => (
               <Card key={slug} href={`/products/${slug}`} padding="lg">
                 <div className="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center text-brand-600 mb-4">
-                  <span className="text-sm font-bold">{slug.charAt(0).toUpperCase()}4</span>
+                  <ProductIcon slug={slug} size={24} />
                 </div>
                 <h3 className="text-lg font-bold text-navy-900 mb-1">{slug.charAt(0).toUpperCase() + slug.slice(1)}</h3>
                 <p className="text-sm text-brand-600 font-medium mb-3">{t(`opApps.${slug}.tagline`)}</p>

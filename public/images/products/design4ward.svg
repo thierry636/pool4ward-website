@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Rounded square border -->
+  <rect x="4" y="4" width="112" height="112" rx="24" ry="24" stroke="#2563EB" stroke-width="6" fill="none"/>
+  <!-- Trend line (zigzag going up) -->
+  <path d="M24 78 L42 60 L56 72 L78 44" stroke="#2563EB" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Small branch going right-down from end -->
+  <path d="M78 44 L92 56" stroke="#2563EB" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Green dot at junction -->
+  <circle cx="78" cy="44" r="8" fill="#34D399"/>
+  <!-- Bottom horizontal bar -->
+  <rect x="32" y="90" width="56" height="7" rx="3.5" fill="#2563EB"/>
+</svg>
