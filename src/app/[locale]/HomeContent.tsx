@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Card } from "@/components/ui/Card";
 import { CTABand } from "@/components/ui/CTABand";
+import { ProductIcon } from "@/components/ui/ProductIcon";
 import { PlatformArchitecture } from "@/components/diagrams/PlatformArchitecture";
 import { EcosystemDiagram } from "@/components/diagrams/EcosystemDiagram";
 import { FlowDiagram } from "@/components/diagrams/FlowDiagram";
@@ -17,13 +18,6 @@ export function HomeContent() {
 
   const operationalSlugs = ["design4ward", "modal4ward", "cobuild4ward"];
   const expertSlugs = ["compute4ward", "connect4ward"];
-  const iconMap: Record<string, string> = {
-    design4ward: "Search",
-    modal4ward: "GitBranch",
-    cobuild4ward: "Users",
-    compute4ward: "Cpu",
-    connect4ward: "Link",
-  };
 
   const painPointKeys = [
     "fragmentedFlows",
@@ -182,11 +176,7 @@ export function HomeContent() {
               {operationalSlugs.map((slug) => (
                 <Card key={slug} href={`/products/${slug}`} padding="lg">
                   <div className="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center text-brand-600 mb-5">
-                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      {iconMap[slug] === "Search" && <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />}
-                      {iconMap[slug] === "GitBranch" && <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 3v12m0 0a3 3 0 103 3M6 15a3 3 0 01-3 3m9-15a3 3 0 013 3v6a3 3 0 01-3 3M18 6a3 3 0 00-3-3" />}
-                      {iconMap[slug] === "Users" && <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />}
-                    </svg>
+                    <ProductIcon slug={slug} size={24} />
                   </div>
                   <h3 className="text-lg font-bold text-navy-900 mb-1">{tp(`${slug}.name`)}</h3>
                   <p className="text-sm text-brand-600 font-medium mb-3">{tp(`${slug}.tagline`)}</p>
@@ -202,10 +192,7 @@ export function HomeContent() {
                 <Card key={slug} href={`/products/${slug}`} padding="md">
                   <div className="flex gap-4">
                     <div className="w-10 h-10 rounded-xl bg-navy-100 flex items-center justify-center text-navy-500 shrink-0">
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        {iconMap[slug] === "Cpu" && <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />}
-                        {iconMap[slug] === "Link" && <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />}
-                      </svg>
+                      <ProductIcon slug={slug} size={20} />
                     </div>
                     <div>
                       <h3 className="text-base font-bold text-navy-900 mb-1">{tp(`${slug}.name`)}</h3>

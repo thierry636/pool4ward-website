@@ -14,7 +14,7 @@ export const navigation = {
         {
           label: "Modal4ward",
           href: "/products/modal4ward",
-          description: "Simulate multimodal logistics scenarios",
+          description: "Manage and distribute multimodal services",
           category: "Operational",
         },
         {

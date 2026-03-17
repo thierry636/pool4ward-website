@@ -37,7 +37,7 @@
     "resources": "Ressources",
     "company": "Entreprise",
     "design4wardDesc": "Analyser les flux et découvrir les opportunités",
-    "modal4wardDesc": "Simuler des scénarios logistiques multimodaux",
+    "modal4wardDesc": "Gérer et distribuer les services multimodaux",
     "cobuild4wardDesc": "Coordonner les initiatives inter-entreprises",
     "compute4wardDesc": "Brique algorithmique développée avec le CERMICS",
     "connect4wardDesc": "Gestion des données, connectivité et sécurisation",
@@ -276,15 +276,15 @@
     },
     "opAppsBadge": "Applications opérationnelles",
     "opAppsTitle": "Des applications qui aident les organisations à agir",
-    "opAppsDescription": "Les applications opérationnelles servent directement les utilisateurs — permettant l'analyse, la simulation et la coordination qui pilotent les initiatives logistiques collaboratives.",
+    "opAppsDescription": "Les applications opérationnelles servent directement les utilisateurs — permettant l'analyse, la gestion de services et la coordination qui pilotent les initiatives logistiques collaboratives.",
     "opApps": {
       "design4ward": {
         "tagline": "Analyse des flux et découverte d'opportunités",
         "description": "Analyser les flux logistiques à travers les réseaux et identifier où l'optimisation collaborative peut créer le plus de valeur."
       },
       "modal4ward": {
-        "tagline": "Simulation de scénarios multimodaux",
-        "description": "Simuler et comparer les alternatives de transport en termes de coût, temps, émissions et faisabilité opérationnelle."
+        "tagline": "Gestion et distribution de services multimodaux",
+        "description": "Aider les opérateurs à gérer, structurer et distribuer les services ferroviaires, fluviaux et shortsea via une plateforme unifiée et une API partenaire."
       },
       "cobuild4ward": {
         "tagline": "Coordination inter-entreprises",
@@ -310,7 +310,7 @@
   },
   "Products": {
     "metaTitle": "Produits — Pool4ward",
-    "metaDescription": "Explorez les applications opérationnelles et expertes de Pool4ward : Design4ward, Modal4ward, Cobuild4ward, Compute4ward et Connect4ward.",
+    "metaDescription": "Explorez les applications opérationnelles et expertes de Pool4ward : Design4ward pour l'analyse des flux, Modal4ward pour la gestion des services multimodaux, Cobuild4ward pour la coordination, et plus.",
     "heroBadge": "Produits",
     "heroTitle": "Des applications qui rendent la ",
     "heroTitleHighlight": "collaboration actionnable",
@@ -335,7 +335,7 @@
     "interfaceLabel": "Interface {name}",
     "platformContext": "Contexte plateforme",
     "howFits": "Comment {name} s'intègre dans Pool4ward",
-    "expertContextDesc": "{name} est une application socle qui fournit les fondations technologiques aux applications opérationnelles — Design4ward, Modal4ward et Cobuild4ward, ainsi qu'aux applications partenaires de l'écosystème.",
+    "expertContextDesc": "{name} est une application socle qui fournit les fondations technologiques aux applications opérationnelles — Design4ward, Cobuild4ward et Modal4ward, ainsi qu'aux applications partenaires de l'écosystème.",
     "operationalContextDesc": "{name} est une application opérationnelle qui sert directement les utilisateurs — alimentée par les capacités expertes de Compute4ward et Connect4ward.",
     "ctaTitle": "Voir {name} en action",
     "ctaDescription": "Découvrez comment {name} peut aider votre organisation à optimiser la logistique par la collaboration."
@@ -365,24 +365,24 @@
     },
     "modal4ward": {
       "name": "Modal4ward",
-      "tagline": "Simuler des scénarios. Comparer les alternatives.",
-      "description": "Simuler et comparer des scénarios logistiques multimodaux — évaluer le coût, le CO₂, le niveau de service et la faisabilité des alternatives de modes de transport.",
-      "heroDescription": "Modal4ward permet aux équipes logistiques de modéliser, simuler et comparer des scénarios de transport multimodal avant de s'engager dans des changements opérationnels.",
-      "problemTitle": "Décisions de transport basées sur des hypothèses, pas sur l'analyse",
-      "problemDescription": "Évaluer des modes de transport ou des itinéraires alternatifs est complexe. Sans capacités de simulation, les organisations s'appuient sur des tableurs et des hypothèses — manquant souvent des opportunités significatives de réduction des coûts et des émissions.",
-      "solutionTitle": "Simulation multimodale basée sur les scénarios",
-      "solutionDescription": "Modal4ward fournit un environnement structuré pour simuler des scénarios de transport. Comparer les solutions routières, ferroviaires, fluviales et combinées en termes de coût, temps, émissions et faisabilité opérationnelle.",
+      "tagline": "Gérer et distribuer les services de transport multimodaux.",
+      "description": "Gérer et distribuer les services de transport multimodaux via une plateforme opérateur structurée et une API partenaire.",
+      "heroDescription": "Modal4ward aide les opérateurs à structurer, publier et distribuer les services de transport ferroviaire, fluvial et shortsea via une expérience produit unifiée et une API partenaire.",
+      "problemTitle": "Les services multimodaux sont difficiles à structurer, maintenir et rendre accessibles",
+      "problemDescription": "Les offres de transport multimodal sont souvent fragmentées, mal formatées et difficiles à distribuer dans l'écosystème. Modal4ward donne aux opérateurs un moyen structuré de gérer leurs services et les rend plus facilement accessibles via une API partenaire.",
+      "solutionTitle": "Une seule plateforme pour gérer et exposer les services multimodaux",
+      "solutionDescription": "Modal4ward offre aux opérateurs un moyen pratique de gérer leurs services de transport, d'améliorer la qualité de leurs données d'offre et d'augmenter leur visibilité sur le marché — avec une API partenaire pour la distribution des services.",
       "capabilities": {
-        "0": { "title": "Modélisation de scénarios", "description": "Construire et configurer des scénarios de transport avec plusieurs modes et itinéraires" },
-        "1": { "title": "Analyse des coûts", "description": "Comparer les coûts logistiques totaux entre scénarios incluant manutention et transit" },
-        "2": { "title": "Estimation CO₂", "description": "Calculer et comparer les émissions carbone pour chaque alternative de transport" },
-        "3": { "title": "Évaluation de faisabilité", "description": "Évaluer les contraintes opérationnelles, l'infrastructure et les exigences de service" },
-        "4": { "title": "Tableau de bord comparatif", "description": "Comparaison côte à côte des scénarios avec les indicateurs de performance clés" }
+        "0": { "title": "Gestion des services", "description": "Créer et maintenir une offre structurée de services ferroviaires, fluviaux et shortsea" },
+        "1": { "title": "Données de service structurées", "description": "Organiser les informations clés : terminaux, lead times, fréquences et équipements" },
+        "2": { "title": "API partenaire", "description": "Distribuer les services vers des plateformes et partenaires de confiance" },
+        "3": { "title": "Profil opérateur", "description": "Mettre en valeur l'entreprise, ses capacités et son offre de transport" },
+        "4": { "title": "Visibilité de l'offre", "description": "Augmenter la découvrabilité des services dans l'écosystème" }
       },
       "benefits": {
-        "0": { "title": "Report modal éclairé", "description": "Prendre des décisions de mode de transport appuyées par une analyse de scénarios complète" },
-        "1": { "title": "Durabilité quantifiée", "description": "Comprendre l'impact réel des émissions des décisions logistiques" },
-        "2": { "title": "Risque réduit", "description": "Tester les alternatives avant la mise en œuvre par une simulation détaillée" }
+        "0": { "title": "Offre structurée", "description": "Maintenir des services multimodaux à jour dans un format cohérent et structuré" },
+        "1": { "title": "Portée élargie", "description": "Distribuer les services aux partenaires et éditeurs via une API dédiée" },
+        "2": { "title": "Visibilité marché", "description": "Présenter l'entreprise et son offre plus clairement sur le marché" }
       }
     },
     "cobuild4ward": {
@@ -415,7 +415,7 @@
       "problemTitle": "L'optimisation nécessite des capacités algorithmiques de pointe",
       "problemDescription": "L'optimisation logistique à l'échelle de l'écosystème nécessite des algorithmes sophistiqués — moteurs d'optimisation, modèles de simulation et analyse de scénarios qui vont bien au-delà des outils métier standard. C'est un incompressible qui doit rester stable et de pointe.",
       "solutionTitle": "Algorithmie de pointe issue de la recherche académique",
-      "solutionDescription": "Compute4ward fournit la couche algorithmique développée en partenariat avec le CERMICS — des modèles d'optimisation, des moteurs de simulation et des analyses avancées au service de Design4ward, Modal4ward et Cobuild4ward.",
+      "solutionDescription": "Compute4ward fournit la couche algorithmique développée en partenariat avec le CERMICS — des modèles d'optimisation, des moteurs de simulation et des analyses avancées au service de Design4ward et Cobuild4ward.",
       "capabilities": {
         "0": { "title": "Moteurs d'optimisation", "description": "Modèles d'optimisation mathématique pour les problèmes de réseau et de flux logistiques" },
         "1": { "title": "Modèles de simulation", "description": "Simulation à événements discrets et par scénarios pour les opérations logistiques" },
@@ -480,8 +480,8 @@
       "description": "Découvrir et mettre en œuvre les opportunités d'optimisation logistique qui s'étendent à travers les entreprises, les réseaux et les frontières opérationnelles.",
       "problemTitle": "Une optimisation qui s'arrête trop tôt",
       "problemDescription": "La plupart de l'optimisation logistique se fait dans les limites d'une seule entreprise. L'optimisation des itinéraires, la consolidation des chargements et la conception du réseau sont appliquées en interne — alors que les plus grandes opportunités existent souvent entre les organisations.",
-      "whyHard": "L'optimisation inter-entreprises nécessite une visibilité partagée sur les flux, la capacité de simuler des scénarios conjoints et une coordination structurée entre des acteurs qui opèrent traditionnellement de manière indépendante. Aucune entreprise ne peut le faire seule.",
-      "howPool4ward": "Pool4ward fournit l'environnement analytique, de simulation et de coordination où plusieurs organisations peuvent conjointement identifier, évaluer et mettre en œuvre l'optimisation logistique à l'échelle de l'écosystème — de l'analyse des flux à la mise en œuvre opérationnelle.",
+      "whyHard": "L'optimisation inter-entreprises nécessite une visibilité partagée sur les flux, une coordination structurée entre des acteurs qui opèrent traditionnellement de manière indépendante et l'accès à des informations structurées sur les services multimodaux. Aucune entreprise ne peut le faire seule.",
+      "howPool4ward": "Pool4ward fournit l'environnement analytique et de coordination où plusieurs organisations peuvent conjointement identifier, évaluer et mettre en œuvre l'optimisation logistique à l'échelle de l'écosystème — de l'analyse des flux à la mise en œuvre opérationnelle.",
       "outcomes": {
         "0": { "title": "10-25% de réduction des coûts", "description": "Par la mutualisation, la consolidation et l'optimisation du réseau entre acteurs" },
         "1": { "title": "Meilleure utilisation des actifs", "description": "Réduire les trajets à vide et la capacité inutilisée en coordonnant entre organisations" },
@@ -495,7 +495,7 @@
       "problemTitle": "Capacité de transport gaspillée à grande échelle",
       "problemDescription": "À travers les réseaux logistiques, les camions roulent partiellement chargés, les itinéraires se chevauchent entre chargeurs et les retours sont à vide. Les entreprises individuelles ne peuvent pas résoudre cela — la solution nécessite une coordination au-delà des frontières organisationnelles.",
       "whyHard": "La collaboration transport nécessite d'identifier les flux compatibles, d'aligner les exigences opérationnelles, de construire la confiance entre les parties et de gérer la complexité de la coordination multi-acteurs. Sans les bons outils, elle passe rarement à l'échelle.",
-      "howPool4ward": "Pool4ward aide les organisations à découvrir les flux qui se chevauchent, modéliser les scénarios de mutualisation et coordonner les initiatives de transport partagé — transformant la capacité fragmentée en efficacité collaborative.",
+      "howPool4ward": "Pool4ward aide les organisations à découvrir les flux qui se chevauchent, accéder à des informations structurées sur les services multimodaux et coordonner les initiatives de transport partagé — transformant la capacité fragmentée en efficacité collaborative.",
       "outcomes": {
         "0": { "title": "Réduction des kilomètres à vide", "description": "Mutualiser les flux pour remplir les camions et éliminer les trajets de transport inutiles" },
         "1": { "title": "Coûts unitaires réduits", "description": "Partager les coûts de transport entre organisations par la mutualisation des flux" },
@@ -505,15 +505,15 @@
     "multimodal-strategy": {
       "title": "Stratégie multimodale",
       "tagline": "Évaluer les alternatives. Reporter intelligemment.",
-      "description": "Analyser, simuler et mettre en œuvre des stratégies de transport multimodal — passer de la route au rail, à la voie d'eau ou aux solutions combinées là où c'est pertinent opérationnellement et économiquement.",
-      "problemTitle": "Le report modal sans analyse est un pari",
-      "problemDescription": "Les organisations savent qu'elles devraient explorer des alternatives au transport routier exclusif, mais évaluer les options multimodales est complexe. Les structures de coûts, les exigences de service, la disponibilité des infrastructures et les impacts sur les émissions doivent être comparés rigoureusement.",
-      "whyHard": "Les décisions multimodales impliquent des compromis entre coût, vitesse, fiabilité, émissions et contraintes d'infrastructure. Sans outils de simulation appropriés, les organisations évitent le report modal ou prennent des décisions basées sur une analyse incomplète.",
-      "howPool4ward": "Pool4ward permet aux organisations de modéliser leurs flux logistiques actuels, de simuler des alternatives multimodales, de comparer les scénarios sur toutes les dimensions pertinentes et de prendre des décisions confiantes appuyées par les données.",
+      "description": "Évaluer et mettre en œuvre des stratégies de transport multimodal — en s'appuyant sur des informations de services structurées pour le rail, le fluvial et le shortsea, afin de reporter depuis la route là où c'est pertinent.",
+      "problemTitle": "Le report modal sans information structurée sur les services est un pari",
+      "problemDescription": "Les organisations savent qu'elles devraient explorer des alternatives au transport routier exclusif, mais accéder à des informations fiables sur les services multimodaux est difficile. Les offres de services, terminaux, lead times et fréquences sont dispersés et difficiles à comparer.",
+      "whyHard": "Les décisions multimodales nécessitent l'accès à des données de services structurées et à jour des opérateurs ferroviaires, fluviaux et shortsea. Sans source fiable d'information sur les services, les organisations évitent le report modal ou prennent des décisions basées sur des données incomplètes.",
+      "howPool4ward": "Pool4ward donne aux organisations accès à des informations structurées sur les services multimodaux via Modal4ward, des outils analytiques via Design4ward et des capacités de coordination via Cobuild4ward — permettant des décisions confiantes appuyées par des données réelles.",
       "outcomes": {
         "0": { "title": "Report modal éclairé", "description": "Décisions appuyées par les données sur quand et où reporter les modes de transport" },
-        "1": { "title": "Compromis équilibrés", "description": "Compréhension claire de l'impact coût, service et émissions pour chaque scénario" },
-        "2": { "title": "Préparation opérationnelle", "description": "De l'analyse de scénarios à la planification de la mise en œuvre dans un seul environnement" }
+        "1": { "title": "Compromis équilibrés", "description": "Compréhension claire de l'impact coût, service et émissions pour chaque alternative de transport" },
+        "2": { "title": "Préparation opérationnelle", "description": "De la découverte de services à la planification de la mise en œuvre dans un seul environnement" }
       }
     },
     "supply-chain-decarbonization": {
@@ -523,7 +523,7 @@
       "problemTitle": "Des objectifs de décarbonation sans leviers opérationnels",
       "problemDescription": "De nombreuses organisations ont des objectifs de décarbonation ambitieux pour leurs opérations logistiques, mais peinent à trouver des leviers opérationnels au-delà des améliorations d'efficacité incrémentales. Le reporting n'est pas la même chose que la réduction.",
       "whyHard": "Des réductions significatives des émissions logistiques nécessitent des changements structurels — report modal, consolidation des flux, redesign du réseau et coordination inter-entreprises. Cela dépasse ce qu'une seule organisation peut mettre en œuvre seule.",
-      "howPool4ward": "Pool4ward permet aux organisations de quantifier l'impact des émissions des décisions logistiques, d'identifier les opportunités de réduction collaborative, de simuler des scénarios alternatifs et de mettre en œuvre des changements structurels qui produisent des résultats mesurables.",
+      "howPool4ward": "Pool4ward permet aux organisations de quantifier l'impact des émissions des décisions logistiques, d'identifier les opportunités de réduction collaborative, d'accéder à des données structurées de services multimodaux et de mettre en œuvre des changements structurels qui produisent des résultats mesurables.",
       "outcomes": {
         "0": { "title": "Impact quantifié", "description": "Mesurer la réduction des émissions pour chaque scénario d'optimisation" },
         "1": { "title": "Réduction structurelle", "description": "Aller au-delà des gains incrémentaux avec le report modal et la mutualisation des flux" },
@@ -710,8 +710,8 @@
       },
       "4": {
         "category": "Guide technique",
-        "title": "Simulation de scénarios multimodaux avec Modal4ward",
-        "description": "Comment les organisations utilisent Modal4ward pour évaluer et comparer les alternatives de transport en termes de coût, émissions et faisabilité opérationnelle.",
+        "title": "Gérer les services multimodaux avec Modal4ward",
+        "description": "Comment les opérateurs utilisent Modal4ward pour structurer, publier et distribuer les services de transport ferroviaire, fluvial et shortsea via une plateforme unifiée.",
         "readTime": "9 min de lecture"
       },
       "5": {
@@ -770,7 +770,7 @@
     "operationalApplications": "Applications opérationnelles",
     "appsHelpAct": "Des applications qui aident les organisations à agir",
     "design4wardDesc": "Analyse des flux et découverte d'opportunités",
-    "modal4wardDesc": "Simulation de scénarios multimodaux",
+    "modal4wardDesc": "Gestion et distribution de services multimodaux",
     "cobuild4wardDesc": "Coordination inter-entreprises",
     "poweredBy": "alimenté par",
     "expertApplications": "Applications socles",

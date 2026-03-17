@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Card } from "@/components/ui/Card";
 import { CTABand } from "@/components/ui/CTABand";
+import { ProductIcon } from "@/components/ui/ProductIcon";
 
 interface ProductPageTemplateProps {
   slug: string;
@@ -197,9 +198,7 @@ export function ProductPageTemplate({ slug, category }: ProductPageTemplateProps
                           : "bg-brand-100 text-brand-600"
                       }`}
                     >
-                      <span className="text-lg font-bold">
-                        {name.charAt(0)}4
-                      </span>
+                      <ProductIcon slug={slug} size={40} />
                     </div>
                     <p className="text-sm font-semibold text-navy-600">
                       {tt("interfaceLabel", { name })}
