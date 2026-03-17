@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
+import Image from "next/image";
 
 export function Footer() {
   const t = useTranslations("Footer");
@@ -52,13 +53,14 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 lg:gap-12">
           {/* Brand column */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1 mb-4 lg:mb-0">
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-teal-400 flex items-center justify-center">
-                <span className="text-white font-bold text-sm">P4</span>
-              </div>
-              <span className="text-xl font-bold">
-                Pool<span className="text-brand-400">4ward</span>
-              </span>
+            <Link href="/" className="inline-block mb-4">
+              <Image
+                src="/images/brand/logo-full-dark.svg"
+                alt="Pool4ward"
+                width={180}
+                height={36}
+                className="h-8 w-auto"
+              />
             </Link>
             <p className="text-sm text-navy-400 leading-relaxed max-w-xs">
               {tc("footerDescription")}

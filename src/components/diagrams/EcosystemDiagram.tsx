@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 export function EcosystemDiagram({ className = "" }: { className?: string }) {
   const t = useTranslations("Diagrams");
@@ -71,11 +72,15 @@ export function EcosystemDiagram({ className = "" }: { className?: string }) {
 
         {/* Center - Pool4ward */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-          <div className="w-28 h-28 rounded-full bg-gradient-to-br from-brand-600 to-teal-500 flex items-center justify-center shadow-glow">
-            <div className="text-center">
-              <span className="text-white font-bold text-sm">Pool4ward</span>
-              <p className="text-white/70 text-[8px] mt-0.5">{t("collaborationPlatform")}</p>
-            </div>
+          <div className="w-28 h-28 rounded-full bg-gradient-to-br from-brand-600 to-teal-500 flex flex-col items-center justify-center shadow-glow">
+            <Image
+              src="/images/brand/logo-icon-light.svg"
+              alt="Pool4ward"
+              width={48}
+              height={48}
+              className="w-10 h-10 rounded-lg"
+            />
+            <p className="text-white/70 text-[8px] mt-1">{t("collaborationPlatform")}</p>
           </div>
         </div>
 
