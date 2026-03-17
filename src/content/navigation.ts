@@ -32,7 +32,7 @@ export const navigation = {
         {
           label: "Connect4ward",
           href: "/products/connect4ward",
-          description: "Enterprise system connectivity",
+          description: "Data standardization, normalization and validation",
           category: "Expert",
         },
       ],

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Rounded square border -->
+  <rect x="6" y="6" width="108" height="108" rx="22" ry="22" stroke="#F97316" stroke-width="5" fill="none"/>
+  <!-- Train body (rounded rectangle) -->
+  <rect x="30" y="24" width="60" height="52" rx="10" ry="10" stroke="#F97316" stroke-width="5" fill="none"/>
+  <!-- Horizontal divider (window/body split) -->
+  <line x1="30" y1="52" x2="90" y2="52" stroke="#F97316" stroke-width="5"/>
+  <!-- Vertical divider (windows) -->
+  <line x1="60" y1="24" x2="60" y2="52" stroke="#F97316" stroke-width="5"/>
+  <!-- Left headlight -->
+  <circle cx="46" cy="64" r="5" fill="#F97316"/>
+  <!-- Right headlight -->
+  <circle cx="74" cy="64" r="5" fill="#F97316"/>
+  <!-- Left rail/leg -->
+  <line x1="42" y1="76" x2="34" y2="92" stroke="#F97316" stroke-width="5" stroke-linecap="round"/>
+  <!-- Right rail/leg -->
+  <line x1="78" y1="76" x2="86" y2="92" stroke="#F97316" stroke-width="5" stroke-linecap="round"/>
+</svg>

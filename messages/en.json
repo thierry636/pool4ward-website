@@ -40,7 +40,7 @@
     "modal4wardDesc": "Manage and distribute multimodal services",
     "cobuild4wardDesc": "Coordinate cross-company initiatives",
     "compute4wardDesc": "Algorithmic engine developed with CERMICS",
-    "connect4wardDesc": "Data management, connectivity, and security",
+    "connect4wardDesc": "Data standardization, normalization and validation",
     "logisticsOptDesc": "Optimize logistics across networks",
     "collabTransportDesc": "Pool and coordinate transport flows",
     "multimodalDesc": "Evaluate and shift transport modes",
@@ -300,8 +300,8 @@
         "capabilities": ["Mathematical optimization", "Simulation models", "Scenario computation", "CERMICS partnership"]
       },
       "connect4ward": {
-        "description": "Foundation layer that connects and consolidates user data — data management, secure exchanges, and controlled sharing between ecosystem partners.",
-        "capabilities": ["Data management", "Security and sharing", "ERP / TMS / WMS integration", "Partner connectivity"]
+        "description": "Logistics data platform that connects, standardizes and validates transport data from heterogeneous systems — intelligent normalization, data quality and a unified logistics data model.",
+        "capabilities": ["Intelligent normalization", "Data validation", "Unified data model", "System connectivity"]
       }
     },
     "processBadge": "Process",
@@ -431,24 +431,24 @@
     },
     "connect4ward": {
       "name": "Connect4ward",
-      "tagline": "The data layer. Connect, consolidate, secure.",
-      "description": "Foundation application that connects and consolidates user data — data management, secure exchanges, and controlled sharing between partners. A stable essential building block serving operational applications.",
-      "heroDescription": "Connect4ward is the foundational layer of the Pool4ward platform — it connects and consolidates user data, secures exchanges, and enables controlled sharing between ecosystem partners.",
-      "problemTitle": "Disconnected systems block collaboration",
-      "problemDescription": "Collaborative logistics requires data from multiple systems across multiple organizations. Without robust connectivity, platform adoption stalls and operational implementation remains manual.",
-      "solutionTitle": "Enterprise-grade connectivity for logistics ecosystems",
-      "solutionDescription": "Connect4ward provides the connectors, APIs, and integration capabilities that link the Pool4ward platform to the enterprise systems where logistics operations actually run.",
+      "tagline": "The logistics data platform.",
+      "description": "Connect, standardize and validate transport data across systems, partners and applications. The reliable data foundation for logistics operations.",
+      "heroDescription": "Connect4ward transforms heterogeneous transport data into a consistent and validated logistics model. It connects systems, normalizes data intelligently and ensures reliability at scale.",
+      "problemTitle": "Logistics data is fragmented and unreliable",
+      "problemDescription": "Transport data is spread across multiple systems, formats and partners. Inconsistent structures and missing information make it difficult to use data reliably for operations and decision-making.",
+      "solutionTitle": "From fragmented data to a reliable logistics data model",
+      "solutionDescription": "Connect4ward uses intelligent normalization mechanisms to map, clean and harmonize heterogeneous transport data — ensuring that data from different systems can be consistently structured and reliably used across the platform.",
       "capabilities": {
-        "0": { "title": "ERP Connectors", "description": "Pre-built integrations with major ERP systems for logistics data exchange" },
-        "1": { "title": "TMS Integration", "description": "Connect transport management systems for operational data flow" },
-        "2": { "title": "WMS Connectivity", "description": "Link warehouse management systems for inventory and flow visibility" },
-        "3": { "title": "API Framework", "description": "Extensible API layer for custom integrations and partner systems" },
-        "4": { "title": "Data Exchange", "description": "Secure, structured data exchange protocols across organizational boundaries" }
+        "0": { "title": "Data Ingestion", "description": "Ingest data from ERP, TMS, files and external partners into a unified pipeline" },
+        "1": { "title": "Intelligent Normalization", "description": "Automatically harmonize transport data across formats, structures and sources using advanced normalization logic" },
+        "2": { "title": "Data Validation and Quality", "description": "Detect inconsistencies, missing values and structural issues to ensure data reliability" },
+        "3": { "title": "Unified Logistics Data Model", "description": "Structure all data into a consistent model usable across the platform" },
+        "4": { "title": "Controlled Data Sharing", "description": "Securely share standardized data across applications and partners with appropriate governance" }
       },
       "benefits": {
-        "0": { "title": "Faster implementation", "description": "Pre-built connectors reduce time to operational platform use" },
-        "1": { "title": "System interoperability", "description": "Connect the systems that matter without replacing existing infrastructure" },
-        "2": { "title": "Ecosystem readiness", "description": "Enable multi-party data exchange with appropriate security and governance" }
+        "0": { "title": "Reliable data foundation", "description": "Reduce data inconsistencies and improve quality across all connected systems" },
+        "1": { "title": "Faster integration", "description": "Accelerate data onboarding from new systems and partners through intelligent normalization" },
+        "2": { "title": "Platform consistency", "description": "Provide a single source of truth for all applications within Pool4ward" }
       }
     }
   },
@@ -642,7 +642,7 @@
     },
     "integrationsBadge": "Integrations",
     "integrationsTitle": "Connects to the systems that matter",
-    "integrationsDescription": "Through Connect4ward, the platform integrates with enterprise and logistics systems to ensure data flows and collaborative decisions connect to operations.",
+    "integrationsDescription": "Through Connect4ward, the platform standardizes and validates transport data from enterprise and logistics systems — ensuring consistency and reliability across applications.",
     "actorsBadge": "Ecosystem Actors",
     "actorsTitle": "Who participates in the ecosystem",
     "actorsDescription": "Pool4ward serves the full range of actors involved in logistics collaboration — from shippers to carriers to ecosystem coordinators.",
@@ -776,7 +776,7 @@
     "expertApplications": "Foundation Applications",
     "enablingCapabilities": "Core technology",
     "compute4wardDesc": "Cutting-edge algorithmics — CERMICS partnership",
-    "connect4wardDesc": "Data management, connectivity, security",
+    "connect4wardDesc": "Data standardization, normalization, validation",
     "ecosystemApps": "Partner & ecosystem applications",
     "partnerApp1": "Partner app",
     "partnerApp2": "Partner app",
