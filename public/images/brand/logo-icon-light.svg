@@ -9,5 +9,5 @@
   <rect width="48" height="48" rx="10" fill="#FFFFFF"/>
   <rect x="0.5" y="0.5" width="47" height="47" rx="9.5" stroke="#E2E8F0"/>
   <!-- Sigma symbol centered -->
-  <path d="M12 10 L36 10 L36 16 L24 24 L36 32 L36 38 L12 38 L12 32 L26 32 L16 24 L26 16 L12 16 Z" fill="url(#sigma-grad)"/>
+  <path d="M36 10 L12 10 L12 16 L24 24 L12 32 L12 38 L36 38 L36 32 L22 32 L32 24 L22 16 L36 16 Z" fill="url(#sigma-grad)"/>
 </svg>
