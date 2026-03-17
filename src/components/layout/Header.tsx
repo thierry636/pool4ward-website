@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import { useLocale } from "next-intl";
+import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 
 export function Header() {
@@ -116,13 +117,15 @@ export function Header() {
       <div className="container-xl">
         <div className="flex items-center justify-between h-16 lg:h-18">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 shrink-0">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-600 to-teal-500 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">P4</span>
-            </div>
-            <span className="text-xl font-bold text-navy-900">
-              Pool<span className="text-brand-600">4ward</span>
-            </span>
+          <Link href="/" className="shrink-0">
+            <Image
+              src="/images/brand/logo-full.svg"
+              alt="Pool4ward"
+              width={180}
+              height={36}
+              className="h-8 w-auto"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
