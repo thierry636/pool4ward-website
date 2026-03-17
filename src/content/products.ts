@@ -49,29 +49,29 @@ export const products: Product[] = [
   {
     slug: "modal4ward",
     name: "Modal4ward",
-    tagline: "Simulate scenarios. Compare alternatives.",
+    tagline: "Manage and distribute multimodal transport services.",
     category: "operational",
     description:
-      "Simulate and compare multimodal logistics scenarios — evaluate cost, CO₂, service level, and feasibility across transport mode alternatives.",
+      "Manage and distribute multimodal transport services through a structured operator platform and partner API.",
     heroDescription:
-      "Modal4ward enables logistics teams to model, simulate, and compare multimodal transport scenarios before committing to operational changes.",
-    problemTitle: "Transport decisions based on assumptions, not analysis",
+      "Modal4ward helps operators structure, publish and distribute rail, river and shortsea transport services through a unified product experience and partner API.",
+    problemTitle: "Multimodal services are hard to structure, maintain and access",
     problemDescription:
-      "Evaluating alternative transport modes or routes is complex. Without simulation capabilities, organizations rely on spreadsheets and assumptions — often missing significant cost and emissions reduction opportunities.",
-    solutionTitle: "Scenario-based multimodal simulation",
+      "Multimodal transport offers are often fragmented, inconsistently formatted and difficult to distribute across the ecosystem. Modal4ward gives operators a structured way to manage their services and makes those services easier to access through a partner API.",
+    solutionTitle: "A single platform to manage and expose multimodal services",
     solutionDescription:
-      "Modal4ward provides a structured environment for simulating transport scenarios. Compare road, rail, inland waterway, and combined solutions across cost, time, emissions, and operational feasibility.",
+      "Modal4ward gives operators a practical way to manage their transport services, improve the quality of their offer data and increase market visibility — with a partner API for service distribution.",
     capabilities: [
-      { title: "Scenario Modeling", description: "Build and configure transport scenarios with multiple modes and routes" },
-      { title: "Cost Analysis", description: "Compare total logistics costs across scenarios including handling and transit" },
-      { title: "CO₂ Estimation", description: "Calculate and compare carbon emissions for each transport alternative" },
-      { title: "Feasibility Assessment", description: "Evaluate operational constraints, infrastructure, and service requirements" },
-      { title: "Comparison Dashboard", description: "Side-by-side comparison of scenarios with key performance indicators" },
+      { title: "Service Management", description: "Create and maintain structured rail, river and shortsea services" },
+      { title: "Standardized Service Data", description: "Organize key service information such as terminals, lead times, frequencies and equipment" },
+      { title: "Partner API Access", description: "Expose services to trusted partners and connected platforms" },
+      { title: "Operator Profile", description: "Showcase company information and transport capabilities" },
+      { title: "Offer Visibility", description: "Increase the discoverability of your services across the ecosystem" },
     ],
     benefits: [
-      { title: "Informed modal shift", description: "Make transport mode decisions backed by comprehensive scenario analysis" },
-      { title: "Quantified sustainability", description: "Understand the real emissions impact of logistics decisions" },
-      { title: "Reduced risk", description: "Test alternatives before implementation through detailed simulation" },
+      { title: "Structured offer", description: "Maintain up-to-date multimodal services in a consistent, structured format" },
+      { title: "Broader reach", description: "Distribute services to partners and publishers through a dedicated API" },
+      { title: "Market visibility", description: "Present the company and its offer more clearly to the market" },
     ],
     color: "teal",
     icon: "GitBranch",
@@ -120,7 +120,7 @@ export const products: Product[] = [
       "Logistics optimization at ecosystem scale requires sophisticated computation — optimization engines, simulation models, scenario analysis, and analytical capabilities that go far beyond standard business tools.",
     solutionTitle: "Enterprise-grade computation for logistics optimization",
     solutionDescription:
-      "Compute4ward provides the expert analytical layer that powers Design4ward, Modal4ward, and Cobuild4ward — delivering optimization models, simulation engines, and advanced analytics at scale.",
+      "Compute4ward provides the expert analytical layer that powers Design4ward and Cobuild4ward — delivering optimization models, simulation engines, and advanced analytics at scale.",
     capabilities: [
       { title: "Optimization Engines", description: "Mathematical optimization models for logistics network and flow problems" },
       { title: "Simulation Models", description: "Discrete-event and scenario simulation for logistics operations" },
