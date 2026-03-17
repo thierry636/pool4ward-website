@@ -1,11 +1,18 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Card } from "@/components/ui/Card";
 import { CTABand } from "@/components/ui/CTABand";
 import { ProductIcon } from "@/components/ui/ProductIcon";
+
+const productScreenshots: Record<string, string> = {
+  design4ward: "/images/products/design4ward-screenshot.svg",
+  modal4ward: "/images/products/modal4ward-screenshot.svg",
+  compute4ward: "/images/products/compute4ward-screenshot.svg",
+};
 
 interface ProductPageTemplateProps {
   slug: string;
@@ -188,26 +195,36 @@ export function ProductPageTemplate({ slug, category }: ProductPageTemplateProps
                   {name} — Pool4ward Platform
                 </span>
               </div>
-              <div className="p-8 lg:p-12">
-                <div className="aspect-video bg-gradient-to-br from-navy-50 to-navy-100 rounded-xl flex items-center justify-center border border-navy-200/40">
-                  <div className="text-center">
-                    <div
-                      className={`w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center ${
-                        isExpert
-                          ? "bg-navy-200 text-navy-500"
-                          : "bg-brand-100 text-brand-600"
-                      }`}
-                    >
-                      <ProductIcon slug={slug} size={40} />
+              <div className={productScreenshots[slug] ? "p-0" : "p-8 lg:p-12"}>
+                {productScreenshots[slug] ? (
+                  <Image
+                    src={productScreenshots[slug]}
+                    alt={tt("interfaceLabel", { name })}
+                    width={1400}
+                    height={840}
+                    className="w-full h-auto"
+                  />
+                ) : (
+                  <div className="aspect-video bg-gradient-to-br from-navy-50 to-navy-100 rounded-xl flex items-center justify-center border border-navy-200/40">
+                    <div className="text-center">
+                      <div
+                        className={`w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center ${
+                          isExpert
+                            ? "bg-navy-200 text-navy-500"
+                            : "bg-brand-100 text-brand-600"
+                        }`}
+                      >
+                        <ProductIcon slug={slug} size={40} />
+                      </div>
+                      <p className="text-sm font-semibold text-navy-600">
+                        {tt("interfaceLabel", { name })}
+                      </p>
+                      <p className="text-xs text-navy-400 mt-1">
+                        {tagline}
+                      </p>
                     </div>
-                    <p className="text-sm font-semibold text-navy-600">
-                      {tt("interfaceLabel", { name })}
-                    </p>
-                    <p className="text-xs text-navy-400 mt-1">
-                      {tagline}
-                    </p>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
