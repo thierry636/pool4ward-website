@@ -40,7 +40,7 @@
     "modal4wardDesc": "Gérer et distribuer les services multimodaux",
     "cobuild4wardDesc": "Coordonner les initiatives inter-entreprises",
     "compute4wardDesc": "Brique algorithmique développée avec le CERMICS",
-    "connect4wardDesc": "Gestion des données, connectivité et sécurisation",
+    "connect4wardDesc": "Standardisation, normalisation et validation des données",
     "logisticsOptDesc": "Optimiser la logistique à travers les réseaux",
     "collabTransportDesc": "Mutualiser et coordonner les flux de transport",
     "multimodalDesc": "Évaluer et réorienter les modes de transport",
@@ -300,8 +300,8 @@
         "capabilities": ["Optimisation mathématique", "Modèles de simulation", "Calcul de scénarios", "Partenariat CERMICS"]
       },
       "connect4ward": {
-        "description": "Brique fondamentale qui connecte et regroupe les données des utilisateurs — gestion des données, sécurisation des échanges et partage contrôlé entre partenaires.",
-        "capabilities": ["Gestion des données", "Sécurisation et partage", "Intégration ERP / TMS / WMS", "Connectivité partenaires"]
+        "description": "Plateforme de données logistiques qui connecte, standardise et valide les données de transport hétérogènes — normalisation intelligente, qualité des données et modèle de données unifié.",
+        "capabilities": ["Normalisation intelligente", "Validation des données", "Modèle de données unifié", "Connectivité systèmes"]
       }
     },
     "processBadge": "Processus",
@@ -431,24 +431,24 @@
     },
     "connect4ward": {
       "name": "Connect4ward",
-      "tagline": "La brique données. Connecter, regrouper, sécuriser.",
-      "description": "Application socle qui connecte et regroupe les données des utilisateurs — gestion des données, sécurisation des échanges et partage contrôlé entre partenaires. Un incompressible stable au service des applications opérationnelles.",
-      "heroDescription": "Connect4ward est la brique fondamentale de la plateforme Pool4ward — elle connecte et regroupe les données des utilisateurs, sécurise les échanges et permet le partage contrôlé entre partenaires de l'écosystème.",
-      "problemTitle": "Des systèmes déconnectés bloquent la collaboration",
-      "problemDescription": "La logistique collaborative nécessite des données provenant de plusieurs systèmes à travers plusieurs organisations. Sans connectivité robuste, l'adoption de la plateforme stagne et la mise en œuvre opérationnelle reste manuelle.",
-      "solutionTitle": "Connectivité de niveau entreprise pour les écosystèmes logistiques",
-      "solutionDescription": "Connect4ward fournit les connecteurs, API et capacités d'intégration qui relient la plateforme Pool4ward aux systèmes d'entreprise où les opérations logistiques fonctionnent réellement.",
+      "tagline": "La plateforme de données logistiques.",
+      "description": "Connecter, standardiser et valider les données de transport à travers les systèmes, partenaires et applications. Le socle de données fiable pour les opérations logistiques.",
+      "heroDescription": "Connect4ward transforme les données de transport hétérogènes en un modèle logistique cohérent et validé. Il connecte les systèmes, normalise les données intelligemment et garantit la fiabilité à grande échelle.",
+      "problemTitle": "Les données logistiques sont fragmentées et peu fiables",
+      "problemDescription": "Les données de transport sont dispersées entre de multiples systèmes, formats et partenaires. Des structures incohérentes et des informations manquantes rendent difficile l'utilisation fiable des données pour les opérations et la prise de décision.",
+      "solutionTitle": "De données fragmentées à un modèle de données logistiques fiable",
+      "solutionDescription": "Connect4ward utilise des mécanismes de normalisation intelligente pour mapper, nettoyer et harmoniser les données de transport hétérogènes — garantissant que les données provenant de différents systèmes sont structurées de manière cohérente et utilisables de manière fiable sur la plateforme.",
       "capabilities": {
-        "0": { "title": "Connecteurs ERP", "description": "Intégrations pré-construites avec les principaux systèmes ERP pour l'échange de données logistiques" },
-        "1": { "title": "Intégration TMS", "description": "Connecter les systèmes de gestion du transport pour le flux de données opérationnel" },
-        "2": { "title": "Connectivité WMS", "description": "Relier les systèmes de gestion d'entrepôt pour la visibilité des stocks et des flux" },
-        "3": { "title": "Framework API", "description": "Couche API extensible pour les intégrations personnalisées et les systèmes partenaires" },
-        "4": { "title": "Échange de données", "description": "Protocoles d'échange de données sécurisés et structurés à travers les frontières organisationnelles" }
+        "0": { "title": "Ingestion de données", "description": "Ingérer les données depuis ERP, TMS, fichiers et partenaires externes dans un pipeline unifié" },
+        "1": { "title": "Normalisation intelligente", "description": "Harmoniser automatiquement les données de transport entre formats, structures et sources grâce à une logique de normalisation avancée" },
+        "2": { "title": "Validation et qualité des données", "description": "Détecter les incohérences, valeurs manquantes et problèmes structurels pour garantir la fiabilité des données" },
+        "3": { "title": "Modèle de données logistique unifié", "description": "Structurer toutes les données en un modèle cohérent utilisable à travers la plateforme" },
+        "4": { "title": "Partage de données contrôlé", "description": "Partager de manière sécurisée les données standardisées entre applications et partenaires avec une gouvernance appropriée" }
       },
       "benefits": {
-        "0": { "title": "Mise en œuvre plus rapide", "description": "Des connecteurs pré-construits réduisent le temps de mise en service opérationnelle de la plateforme" },
-        "1": { "title": "Interopérabilité des systèmes", "description": "Connecter les systèmes qui comptent sans remplacer l'infrastructure existante" },
-        "2": { "title": "Préparation écosystème", "description": "Permettre l'échange de données multi-parties avec la sécurité et la gouvernance appropriées" }
+        "0": { "title": "Socle de données fiable", "description": "Réduire les incohérences et améliorer la qualité des données à travers tous les systèmes connectés" },
+        "1": { "title": "Intégration accélérée", "description": "Accélérer l'intégration de données depuis de nouveaux systèmes et partenaires grâce à la normalisation intelligente" },
+        "2": { "title": "Cohérence plateforme", "description": "Fournir une source de vérité unique pour toutes les applications Pool4ward" }
       }
     }
   },
@@ -642,7 +642,7 @@
     },
     "integrationsBadge": "Intégrations",
     "integrationsTitle": "Se connecte aux systèmes qui comptent",
-    "integrationsDescription": "Via Connect4ward, la plateforme s'intègre avec les systèmes d'entreprise et logistiques pour garantir que les flux de données et les décisions collaboratives se connectent aux opérations.",
+    "integrationsDescription": "Via Connect4ward, la plateforme standardise et valide les données de transport provenant des systèmes d'entreprise et logistiques — garantissant cohérence et fiabilité à travers les applications.",
     "actorsBadge": "Acteurs de l'écosystème",
     "actorsTitle": "Qui participe à l'écosystème",
     "actorsDescription": "Pool4ward sert l'ensemble des acteurs impliqués dans la collaboration logistique — des chargeurs aux transporteurs en passant par les coordinateurs d'écosystème.",
@@ -776,7 +776,7 @@
     "expertApplications": "Applications socles",
     "enablingCapabilities": "Fondations technologiques",
     "compute4wardDesc": "Algorithmie de pointe — partenariat CERMICS",
-    "connect4wardDesc": "Gestion des données, connectivité, sécurisation",
+    "connect4wardDesc": "Standardisation, normalisation, validation des données",
     "ecosystemApps": "Applications partenaires & écosystème",
     "partnerApp1": "App partenaire",
     "partnerApp2": "App partenaire",
