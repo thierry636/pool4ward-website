@@ -119,7 +119,7 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="shrink-0">
             <Image
-              src="/images/brand/logo-full.svg"
+              src={scrolled ? "/images/brand/logo-full.svg" : "/images/brand/logo-full-dark.svg"}
               alt="Pool4ward"
               width={180}
               height={36}
