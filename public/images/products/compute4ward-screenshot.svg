@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 840" fill="none">
+  <!-- Background - Dark theme -->
+  <rect width="1400" height="840" fill="#0F1117" rx="12"/>
+
+  <!-- Sidebar -->
+  <rect width="220" height="840" fill="#161822"/>
+  <rect x="220" y="0" width="1" height="840" fill="#2A2D3A"/>
+
+  <!-- Sidebar Logo -->
+  <rect x="16" y="12" width="36" height="36" rx="8" fill="#6366F1" opacity="0.2"/>
+  <circle cx="34" cy="30" r="10" stroke="#6366F1" stroke-width="1.5" fill="none"/>
+  <text x="60" y="28" font-family="system-ui,sans-serif" font-size="15" font-weight="700" fill="#E2E8F0">Compute4ward</text>
+
+  <!-- Nav items -->
+  <text x="42" y="75" font-family="system-ui,sans-serif" font-size="13" fill="#9CA3AF">Accueil</text>
+  <text x="42" y="108" font-family="system-ui,sans-serif" font-size="13" fill="#9CA3AF">Optimiser</text>
+  <text x="42" y="141" font-family="system-ui,sans-serif" font-size="13" fill="#9CA3AF">Uploads</text>
+  <text x="42" y="174" font-family="system-ui,sans-serif" font-size="13" fill="#9CA3AF">Jobs</text>
+
+  <!-- Modeles - Active -->
+  <rect x="8" y="192" width="204" height="34" rx="6" fill="#6366F1" opacity="0.15"/>
+  <text x="42" y="214" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#818CF8">Modeles</text>
+
+  <text x="42" y="254" font-family="system-ui,sans-serif" font-size="13" fill="#9CA3AF">Mon compte</text>
+  <text x="42" y="287" font-family="system-ui,sans-serif" font-size="13" fill="#9CA3AF">Admin</text>
+  <text x="42" y="320" font-family="system-ui,sans-serif" font-size="13" fill="#9CA3AF">API Docs</text>
+
+  <!-- Sidebar bottom -->
+  <text x="16" y="790" font-family="system-ui,sans-serif" font-size="11" fill="#6B7280">superadmin@pool4ward.com</text>
+  <text x="16" y="820" font-family="system-ui,sans-serif" font-size="9" fill="#4B5563">COMPUTE4WARD SUITE v0.1.0</text>
+
+  <!-- Main content -->
+  <!-- Title -->
+  <text x="260" y="50" font-family="system-ui,sans-serif" font-size="26" font-weight="700" fill="#F1F5F9">Registre des modeles</text>
+
+  <!-- Buttons top-right -->
+  <rect x="1050" y="22" width="150" height="38" rx="8" fill="#6366F1"/>
+  <text x="1085" y="47" font-family="system-ui,sans-serif" font-size="13" fill="#FFFFFF" font-weight="600">+ Nouveau modele</text>
+  <rect x="1215" y="22" width="120" height="38" rx="8" fill="#1E2030" stroke="#2A2D3A"/>
+  <text x="1245" y="47" font-family="system-ui,sans-serif" font-size="13" fill="#D1D5DB">Rafraichir</text>
+
+  <!-- Subtitle -->
+  <text x="260" y="80" font-family="system-ui,sans-serif" font-size="13" fill="#9CA3AF">Modeles d'optimisation disponibles avec leurs schemas d'entree/sortie.</text>
+
+  <!-- Model card -->
+  <rect x="260" y="100" width="1090" height="640" rx="12" fill="#1A1D2B" stroke="#2A2D3A"/>
+
+  <!-- Model header -->
+  <rect x="285" y="125" width="44" height="44" rx="10" fill="#2A2D3A"/>
+  <rect x="296" y="136" width="22" height="22" rx="4" stroke="#6366F1" stroke-width="1.5" fill="none"/>
+
+  <text x="345" y="145" font-family="system-ui,sans-serif" font-size="18" font-weight="700" fill="#F1F5F9">best_flows_pairs</text>
+  <text x="345" y="165" font-family="system-ui,sans-serif" font-size="12" fill="#6B7280">v2</text>
+
+  <!-- Tags -->
+  <rect x="1020" y="130" width="120" height="26" rx="13" fill="#1E3A5F" stroke="#3B82F6" opacity="0.8"/>
+  <text x="1042" y="148" font-family="system-ui,sans-serif" font-size="11" fill="#60A5FA">Greedy Two-Pass</text>
+  <rect x="1150" y="130" width="55" height="26" rx="13" fill="#1E3A5F" stroke="#8B5CF6" opacity="0.8"/>
+  <text x="1162" y="148" font-family="system-ui,sans-serif" font-size="11" fill="#A78BFA">Julia</text>
+  <rect x="1215" y="130" width="40" height="26" rx="13" fill="#14532D" stroke="#22C55E" opacity="0.8"/>
+  <text x="1226" y="148" font-family="system-ui,sans-serif" font-size="11" fill="#4ADE80">Ok</text>
+
+  <!-- Description -->
+  <text x="285" y="200" font-family="system-ui,sans-serif" font-size="12" fill="#D1D5DB">Recherche de boucles routieres optimales (Dedie Aller-Retour). Identifie les meilleures paires de flux (A-&gt;B, B-&gt;A)</text>
+  <text x="285" y="218" font-family="system-ui,sans-serif" font-size="12" fill="#D1D5DB">via un algorithme greedy en deux passes : mono-client puis multi-clients. Modele de cout : affretement 1.5 euro/km vs dedie 1.0 euro/km.</text>
+
+  <!-- Schema d'entree (Input) -->
+  <rect x="285" y="240" width="1040" height="36" rx="8" fill="#1E2030"/>
+  <text x="320" y="264" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#E2E8F0">Schema d'entree (Input)</text>
+  <rect x="990" y="248" width="42" height="20" rx="4" fill="#3B82F6" opacity="0.2"/>
+  <text x="998" y="263" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#60A5FA">CSV</text>
+  <rect x="1040" y="248" width="55" height="20" rx="4" fill="#2A2D3A"/>
+  <text x="1048" y="263" font-family="system-ui,sans-serif" font-size="10" fill="#9CA3AF">Sep=";"</text>
+  <text x="1110" y="263" font-family="system-ui,sans-serif" font-size="11" fill="#6B7280">11 champs</text>
+
+  <!-- Schema de sortie (Output) -->
+  <rect x="285" y="290" width="1040" height="36" rx="8" fill="#1E2030"/>
+  <text x="320" y="314" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#E2E8F0">Schema de sortie (Output)</text>
+  <rect x="940" y="298" width="110" height="20" rx="4" fill="#22C55E" opacity="0.2"/>
+  <text x="948" y="313" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#4ADE80">CSV (Multiple Files)</text>
+  <text x="1070" y="313" font-family="system-ui,sans-serif" font-size="11" fill="#6B7280">3 champs</text>
+
+  <!-- Output description -->
+  <text x="300" y="350" font-family="system-ui,sans-serif" font-size="12" fill="#9CA3AF">Trois fichiers CSV de sortie : boucles optimisees, allocation des flux, et segments pour visualisation.</text>
+
+  <!-- Table header -->
+  <text x="300" y="385" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#6B7280" letter-spacing="0.5">CHAMP</text>
+  <text x="470" y="385" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#6B7280" letter-spacing="0.5">LIBELLE</text>
+  <text x="620" y="385" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#6B7280" letter-spacing="0.5">TYPE</text>
+  <text x="690" y="385" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#6B7280" letter-spacing="0.5">REQUIS</text>
+  <text x="770" y="385" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#6B7280" letter-spacing="0.5">FORMAT</text>
+  <text x="850" y="385" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#6B7280" letter-spacing="0.5">DESCRIPTION</text>
+  <line x1="285" y1="395" x2="1310" y2="395" stroke="#2A2D3A"/>
+
+  <!-- Row 1 -->
+  <text x="300" y="420" font-family="monospace" font-size="11" fill="#60A5FA">out_loops.csv</text>
+  <text x="470" y="415" font-family="system-ui,sans-serif" font-size="11" fill="#D1D5DB">Boucles</text>
+  <text x="470" y="432" font-family="system-ui,sans-serif" font-size="11" fill="#D1D5DB">optimisees</text>
+  <rect x="620" y="406" width="38" height="20" rx="4" fill="#2A2D3A"/>
+  <text x="628" y="420" font-family="system-ui,sans-serif" font-size="10" fill="#9CA3AF">File</text>
+  <rect x="690" y="406" width="36" height="20" rx="4" fill="#22C55E" opacity="0.2"/>
+  <text x="698" y="420" font-family="system-ui,sans-serif" font-size="10" fill="#4ADE80">Oui</text>
+  <text x="770" y="420" font-family="system-ui,sans-serif" font-size="11" fill="#6B7280">-</text>
+  <text x="850" y="415" font-family="system-ui,sans-serif" font-size="11" fill="#9CA3AF">Paires de flux appariees en</text>
+  <text x="850" y="432" font-family="system-ui,sans-serif" font-size="11" fill="#9CA3AF">aller-retour dedie, triees par</text>
+  <text x="850" y="449" font-family="system-ui,sans-serif" font-size="11" fill="#9CA3AF">gain decroissant</text>
+  <line x1="285" y1="462" x2="1310" y2="462" stroke="#2A2D3A" opacity="0.5"/>
+
+  <!-- Row 2 -->
+  <text x="300" y="487" font-family="monospace" font-size="11" fill="#60A5FA">out_flow_allocation.csv</text>
+  <text x="470" y="487" font-family="system-ui,sans-serif" font-size="11" fill="#D1D5DB">Allocation des flux</text>
+  <rect x="620" y="474" width="38" height="20" rx="4" fill="#2A2D3A"/>
+  <text x="628" y="488" font-family="system-ui,sans-serif" font-size="10" fill="#9CA3AF">File</text>
+  <rect x="690" y="474" width="36" height="20" rx="4" fill="#22C55E" opacity="0.2"/>
+  <text x="698" y="488" font-family="system-ui,sans-serif" font-size="10" fill="#4ADE80">Oui</text>
+  <text x="770" y="487" font-family="system-ui,sans-serif" font-size="11" fill="#6B7280">-</text>
+  <text x="850" y="482" font-family="system-ui,sans-serif" font-size="11" fill="#9CA3AF">Repartition de chaque flux entre</text>
+  <text x="850" y="499" font-family="system-ui,sans-serif" font-size="11" fill="#9CA3AF">boucles dediees et affretement</text>
+  <line x1="285" y1="515" x2="1310" y2="515" stroke="#2A2D3A" opacity="0.5"/>
+
+  <!-- Row 3 -->
+  <text x="300" y="540" font-family="monospace" font-size="11" fill="#60A5FA">out_routes_kepler.csv</text>
+  <text x="470" y="540" font-family="system-ui,sans-serif" font-size="11" fill="#D1D5DB">Routes Kepler.gl</text>
+  <rect x="620" y="527" width="38" height="20" rx="4" fill="#2A2D3A"/>
+  <text x="628" y="541" font-family="system-ui,sans-serif" font-size="10" fill="#9CA3AF">File</text>
+  <rect x="690" y="527" width="36" height="20" rx="4" fill="#22C55E" opacity="0.2"/>
+  <text x="698" y="541" font-family="system-ui,sans-serif" font-size="10" fill="#4ADE80">Oui</text>
+  <text x="770" y="540" font-family="system-ui,sans-serif" font-size="11" fill="#6B7280">-</text>
+  <text x="850" y="535" font-family="system-ui,sans-serif" font-size="11" fill="#9CA3AF">Segments de route (legs) pour</text>
+  <text x="850" y="552" font-family="system-ui,sans-serif" font-size="11" fill="#9CA3AF">visualisation cartographique</text>
+  <line x1="285" y1="568" x2="1310" y2="568" stroke="#2A2D3A" opacity="0.5"/>
+
+  <!-- Parametres du modele section -->
+  <rect x="285" y="585" width="1040" height="36" rx="8" fill="#1E2030"/>
+  <text x="320" y="609" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#E2E8F0">Parametres du modele</text>
+  <text x="1110" y="609" font-family="system-ui,sans-serif" font-size="11" fill="#6B7280">3 champs</text>
+
+  <text x="300" y="645" font-family="system-ui,sans-serif" font-size="12" fill="#9CA3AF">Parametres du modele de cout</text>
+
+  <!-- Params table header -->
+  <text x="300" y="675" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#6B7280" letter-spacing="0.5">CHAMP</text>
+  <text x="470" y="675" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#6B7280" letter-spacing="0.5">LIBELLE</text>
+  <text x="620" y="675" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#6B7280" letter-spacing="0.5">TYPE</text>
+  <text x="690" y="675" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#6B7280" letter-spacing="0.5">REQUIS</text>
+  <text x="850" y="675" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#6B7280" letter-spacing="0.5">DESCRIPTION</text>
+  <text x="1060" y="675" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#6B7280" letter-spacing="0.5">EXEMPLE</text>
+  <line x1="285" y1="685" x2="1310" y2="685" stroke="#2A2D3A"/>
+
+  <!-- Param Row 1 -->
+  <text x="300" y="710" font-family="monospace" font-size="11" fill="#F59E0B">COST_PER_KM_AFF</text>
+  <text x="470" y="705" font-family="system-ui,sans-serif" font-size="11" fill="#D1D5DB">Cout affretement</text>
+  <text x="470" y="722" font-family="system-ui,sans-serif" font-size="11" fill="#D1D5DB">(euro/km)</text>
+  <rect x="620" y="697" width="42" height="20" rx="4" fill="#2A2D3A"/>
+  <text x="628" y="711" font-family="system-ui,sans-serif" font-size="10" fill="#A78BFA">Float</text>
+  <rect x="690" y="697" width="36" height="20" rx="4" fill="#DC2626" opacity="0.2"/>
+  <text x="698" y="711" font-family="system-ui,sans-serif" font-size="10" fill="#F87171">Non</text>
+  <text x="850" y="705" font-family="system-ui,sans-serif" font-size="11" fill="#9CA3AF">Cout par km en affretement</text>
+  <text x="850" y="722" font-family="system-ui,sans-serif" font-size="11" fill="#9CA3AF">classique</text>
+  <text x="1060" y="710" font-family="system-ui,sans-serif" font-size="11" fill="#22C55E">1.5</text>
+  <line x1="285" y1="735" x2="1310" y2="735" stroke="#2A2D3A" opacity="0.5"/>
+
+  <!-- Param Row 2 -->
+  <text x="300" y="758" font-family="monospace" font-size="11" fill="#F59E0B">COST_PER_KM_DED</text>
+  <text x="470" y="758" font-family="system-ui,sans-serif" font-size="11" fill="#D1D5DB">Cout dedie (euro/km)</text>
+  <rect x="620" y="745" width="42" height="20" rx="4" fill="#2A2D3A"/>
+  <text x="628" y="759" font-family="system-ui,sans-serif" font-size="10" fill="#A78BFA">Float</text>
+  <rect x="690" y="745" width="36" height="20" rx="4" fill="#DC2626" opacity="0.2"/>
+  <text x="698" y="759" font-family="system-ui,sans-serif" font-size="10" fill="#F87171">Non</text>
+  <text x="850" y="753" font-family="system-ui,sans-serif" font-size="11" fill="#9CA3AF">Cout par km en dedie aller-</text>
+  <text x="850" y="770" font-family="system-ui,sans-serif" font-size="11" fill="#9CA3AF">retour</text>
+  <text x="1060" y="758" font-family="system-ui,sans-serif" font-size="11" fill="#22C55E">1</text>
+</svg>
