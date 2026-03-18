@@ -62,14 +62,15 @@ export function CompanyContent() {
           <SectionHeader
             badge={t("whyBadge")}
             title={t("whyTitle")}
+            description={t("whySubtitle")}
           />
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {beliefKeys.map((key) => (
               <Card key={key} hover={false} padding="lg">
-                <h3 className="text-base font-semibold text-navy-900 mb-3">
+                <h3 className="text-lg font-semibold text-navy-900 mb-2">
                   {t(`beliefs.${key}.title`)}
                 </h3>
-                <p className="text-sm text-navy-500 leading-relaxed">
+                <p className="text-sm text-navy-500 leading-loose">
                   {t(`beliefs.${key}.description`)}
                 </p>
               </Card>

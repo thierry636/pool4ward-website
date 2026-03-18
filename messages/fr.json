@@ -545,23 +545,24 @@
     "visionP3": "Pool4ward a été construit pour changer cela. Nous fournissons la plateforme où les écosystèmes logistiques peuvent découvrir des opportunités partagées, concevoir des initiatives collaboratives et mettre en œuvre une optimisation qu'aucune entreprise ne pourrait atteindre seule.",
     "visionP4": "Nous croyons que la logistique collaborative n'est pas un plus — c'est la prochaine frontière de la performance logistique, de la durabilité et de la résilience.",
     "whyBadge": "Pourquoi nous existons",
-    "whyTitle": "Les convictions derrière Pool4ward",
+    "whyTitle": "Pourquoi Pool4ward existe",
+    "whySubtitle": "Nous construisons Pool4ward à partir de ces principes.",
     "beliefs": {
       "collaborationProblem": {
-        "title": "L'optimisation a un problème de collaboration",
-        "description": "Les outils existent pour optimiser au sein d'une entreprise. Mais aucun outil n'existait pour optimiser entre les entreprises. Pool4ward comble ce vide."
+        "title": "L'optimisation est un problème de collaboration",
+        "description": "Les outils optimisent à l'intérieur d'une entreprise. La logistique se joue entre plusieurs."
       },
       "moreThanCommunication": {
-        "title": "La collaboration nécessite plus que la communication",
-        "description": "Les emails et les réunions ne suffisent pas. La logistique collaborative nécessite une analyse partagée, des scénarios partagés et une coordination structurée."
+        "title": "La donnée sans structure ne sert à rien",
+        "description": "Emails et fichiers ne suffisent pas. Les décisions nécessitent une donnée partagée et structurée."
       },
       "outsizedValue": {
-        "title": "Les écosystèmes créent une valeur démesurée",
-        "description": "Quand les organisations s'alignent autour d'opportunités logistiques partagées, la valeur créée dépasse ce que toute optimisation individuelle peut atteindre."
+        "title": "La valeur est dans les réseaux",
+        "description": "Les gains ne viennent pas d'optimisations locales. Ils viennent de réseaux coordonnés."
       },
       "implementationMatters": {
-        "title": "La mise en œuvre compte le plus",
-        "description": "Les insights sans action ne sont que des rapports. Pool4ward est construit pour passer de la découverte d'opportunités à la mise en œuvre opérationnelle."
+        "title": "L'exécution compte plus que les analyses",
+        "description": "Les rapports ne changent rien. Les décisions doivent devenir opérationnelles."
       }
     },
     "contactBadge": "Contact",

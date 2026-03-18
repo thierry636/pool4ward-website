@@ -545,23 +545,24 @@
     "visionP3": "Pool4ward was built to change that. We provide the platform where logistics ecosystems can discover shared opportunities, design collaborative initiatives, and implement optimization that no single company could achieve alone.",
     "visionP4": "We believe collaborative logistics is not a nice-to-have — it is the next frontier of logistics performance, sustainability, and resilience.",
     "whyBadge": "Why We Exist",
-    "whyTitle": "The beliefs behind Pool4ward",
+    "whyTitle": "Why Pool4ward exists",
+    "whySubtitle": "We build Pool4ward based on these principles.",
     "beliefs": {
       "collaborationProblem": {
-        "title": "Optimization has a collaboration problem",
-        "description": "The tools exist to optimize within one company. But no tool existed to optimize across companies. Pool4ward fills that gap."
+        "title": "Optimization is a collaboration problem",
+        "description": "Tools optimize within a company. Logistics happens between several."
       },
       "moreThanCommunication": {
-        "title": "Collaboration needs more than communication",
-        "description": "Emails and meetings are not enough. Collaborative logistics requires shared analysis, shared scenarios, and structured coordination."
+        "title": "Unstructured data is useless",
+        "description": "Emails and files are not enough. Decisions require shared, structured data."
       },
       "outsizedValue": {
-        "title": "Ecosystems create outsized value",
-        "description": "When organizations align around shared logistics opportunities, the value created exceeds what any individual optimization can achieve."
+        "title": "Value lives in networks",
+        "description": "Gains don't come from local optimizations. They come from coordinated networks."
       },
       "implementationMatters": {
-        "title": "Implementation matters most",
-        "description": "Insights without action are just reports. Pool4ward is built to move from opportunity discovery to operational implementation."
+        "title": "Execution matters more than analysis",
+        "description": "Reports change nothing. Decisions must become operational."
       }
     },
     "contactBadge": "Contact",
