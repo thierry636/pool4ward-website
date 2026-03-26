@@ -64,7 +64,6 @@ export const navigation = {
       ],
     },
     { label: "Ecosystem", href: "/ecosystem" },
-    { label: "Resources", href: "/resources" },
     { label: "Company", href: "/company" },
   ],
   footer: {
@@ -90,7 +89,6 @@ export const navigation = {
     company: [
       { label: "Vision", href: "/company" },
       { label: "Contact", href: "/company#contact" },
-      { label: "Resources", href: "/resources" },
       { label: "Privacy Policy", href: "#" },
       { label: "Terms of Service", href: "#" },
     ],

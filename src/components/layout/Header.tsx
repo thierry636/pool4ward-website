@@ -102,7 +102,6 @@ export function Header() {
       ],
     },
     { label: t("ecosystem"), href: "/ecosystem" as const },
-    { label: t("resources"), href: "/resources" as const },
     { label: t("company"), href: "/company" as const },
   ];
 

@@ -40,7 +40,6 @@ export function Footer() {
       links: [
         { label: t("vision"), href: "/company" },
         { label: t("contact"), href: "/company#contact" },
-        { label: t("resources"), href: "/resources" },
         { label: t("privacyPolicy"), href: "#" },
         { label: t("termsOfService"), href: "#" },
       ],
