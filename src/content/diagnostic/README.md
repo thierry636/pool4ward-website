@@ -1,0 +1,72 @@
+# Diagnostic « Indice de Productivité Transport »
+
+Implémentation de `spec-diagnostic-ipt.md`, servie sur `/diagnostic`
+(redirigé vers `/fr/diagnostic` — v1 française uniquement).
+
+## Découpage
+
+| Rôle | Emplacement |
+|---|---|
+| Banque de questions et barème | `src/content/diagnostic/questions.ts` |
+| Seuils, routage, phrases de sortie | `src/content/diagnostic/scoring.ts` |
+| Règles de leviers | `src/content/diagnostic/levers.ts` |
+| Destinations des CTA | `src/content/diagnostic/destinations.ts` |
+| Copy (objet i18n) | `src/content/diagnostic/copy.fr.ts` |
+| Contrat de la copy | `src/content/diagnostic/copy-types.ts` |
+| Types | `src/lib/diagnostic/types.ts` |
+| Évaluateur de conditions | `src/lib/diagnostic/conditions.ts` |
+| Moteur (branchement, indice, leviers) | `src/lib/diagnostic/engine.ts` |
+| Enregistrement et télémétrie | `src/lib/diagnostic/record.ts`, `telemetry.ts` |
+| Interface | `src/components/diagnostic/` |
+
+Le moteur ne contient ni barème ni libellé ; les composants ne contiennent
+aucune chaîne affichable. Les deux règles sont vérifiées par les tests
+(`npm test`).
+
+## Ajouter une question
+
+1. Ajouter l'entrée dans `BRANCH_QUESTIONS` (ou `GLOBAL_QUESTIONS`), avec ses
+   options et leurs points. Une condition de service facultative se déclare
+   dans `when`.
+2. Ajouter son libellé et ceux de ses options dans `copy.fr.ts`.
+
+Le moteur n'a pas à être touché : le test de couverture de la copy signalera
+tout libellé manquant.
+
+## Changer le barème
+
+Modifier les points dans `questions.ts` et les seuils dans `scoring.ts`.
+`points`, `max_servi` et `indice` sont stockés séparément dans
+l'enregistrement : les réponses brutes permettent de recalculer l'historique
+après un changement de barème.
+
+## Ouvrir la version anglaise
+
+Dupliquer `copy.fr.ts` en `copy.en.ts` et l'enregistrer dans
+`DIAGNOSTIC_COPY` (`copy.ts`). Le type `DiagnosticCopy` refuse une traduction
+incomplète. Retirer alors la redirection forcée vers `/fr` dans
+`next.config.mjs`.
+
+## Variables d'environnement
+
+Toutes facultatives ; sans elles le parcours fonctionne et retombe sur le
+formulaire de contact du site.
+
+| Variable | Effet |
+|---|---|
+| `NEXT_PUBLIC_DIAGNOSTIC_BOOKING_URL` | Lien « Réserver un créneau » |
+| `NEXT_PUBLIC_DIAGNOSTIC_FLOWS_EMAIL` | Adresse de réception des fichiers de flux |
+| `NEXT_PUBLIC_DIAGNOSTIC_ENDPOINT` | Collecte des enregistrements (POST JSON) |
+
+## À arbitrer avant mise en ligne
+
+- **Sortie B** : la mention de l'accord de confidentialité engage Pool4ward
+  (`copy.fr.ts` → `outcomes.flux.note`). Aucun délai de retour n'est annoncé
+  dans la copy livrée ; ne pas en ajouter un que l'équipe ne tient pas.
+- **Rapport détaillé** : si le PDF n'est pas prêt, remplacer `lead.title` par
+  « Recevez votre indice et vos leviers par email » et envoyer un email
+  reprenant l'écran de résultat.
+- **Destinations des CTA** : les deux sorties pointent vers `/company#contact`
+  tant que les variables ci-dessus ne sont pas définies.
+- **Benchmark** : emplacement réservé sur l'écran de résultat,
+  `BENCHMARK_ENABLED` à basculer au-delà de cinquante répondants par branche.
