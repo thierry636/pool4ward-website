@@ -113,9 +113,9 @@ export const copyFr: DiagnosticCopy = {
       label: "Êtes-vous en mesure de comparer deux grilles messagerie entre elles ?",
       help: "Tranches de poids, taxation réelle ou volumétrique, découpage de zones, ad valorem, surcharges.",
       options: {
-        rapprochees: "Oui, nous les rapprochons sur nos flux réels",
-        affiches: "Nous comparons les tarifs affichés",
-        non: "Non, elles ne sont pas comparables en l'état",
+        oui: "Oui",
+        parfois: "Parfois",
+        non: "Non",
       },
     },
 

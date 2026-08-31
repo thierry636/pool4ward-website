@@ -58,7 +58,7 @@ describe("branchement — branche messagerie", () => {
       M1: "deux_cinq", // 25
       M2: "comparaison", // 25
       M3: "moins12mois", // 25
-      M4: "rapprochees", // 25
+      M4: "oui", // 25
       M5: "plus_dix", // 25
       M6: "plusieurs", // 25
     };
@@ -92,7 +92,7 @@ describe("branchement — branche messagerie", () => {
       M1: "unique", // 8
       M2: "zone", // 20
       M3: "plus3ans", // 5
-      M4: "affiches", // 10
+      M4: "parfois", // 10
       M5: "trois_cinq", // 15
       M6: "rarement", // 15
     };
@@ -291,7 +291,7 @@ describe("deux flux classés", () => {
       M1: "deux_cinq",
       M2: "comparaison",
       M3: "moins12mois",
-      M4: "rapprochees",
+      M4: "oui",
       M5: "plus_dix",
       M6: "plusieurs",
       C1: "inconnu", // secondaire : 0 point, ne doit rien coûter
@@ -344,7 +344,7 @@ describe("deux flux classés", () => {
       "grilles_comparables",
     );
     expect(
-      selectSecondaryLever(["complets", "messagerie"], { M4: "rapprochees" }),
+      selectSecondaryLever(["complets", "messagerie"], { M4: "oui" }),
     ).toBeNull();
     expect(selectSecondaryLever(["messagerie"], answers)).toBeNull();
     expect(
@@ -393,7 +393,7 @@ describe("leviers", () => {
     const base: Answers = {
       M2: "comparaison",
       M3: "moins12mois",
-      M4: "rapprochees",
+      M4: "oui",
       M5: "plus_dix",
       M6: "plusieurs",
     };

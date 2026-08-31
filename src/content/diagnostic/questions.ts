@@ -78,8 +78,8 @@ const MESSAGERIE: readonly Question[] = [
     scored: true,
     max: 25,
     options: [
-      { value: "rapprochees", points: 25 },
-      { value: "affiches", points: 10 },
+      { value: "oui", points: 25 },
+      { value: "parfois", points: 10 },
       { value: "non", points: 0 },
     ],
   },

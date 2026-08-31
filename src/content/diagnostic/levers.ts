@@ -20,7 +20,7 @@ export const LEVER_RULES: Readonly<Record<FlowType, readonly LeverRule[]>> = {
   messagerie: [
     {
       id: "grilles_comparables",
-      when: { type: "answerNotIn", question: "M4", values: ["rapprochees"] },
+      when: { type: "answerNotIn", question: "M4", values: ["oui"] },
     },
     {
       id: "ouvrir_nouveaux_entrants",
@@ -136,7 +136,7 @@ export const SECONDARY_LEVER_RULES: Readonly<
   messagerie: [
     {
       id: "grilles_comparables",
-      when: { type: "answerNotIn", question: "M4", values: ["rapprochees"] },
+      when: { type: "answerNotIn", question: "M4", values: ["oui"] },
     },
   ],
   partiels: [
