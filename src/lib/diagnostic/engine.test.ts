@@ -87,7 +87,6 @@ describe("branchement — branche messagerie", () => {
   });
 
   it("continue de poser G1 sur les autres branches", () => {
-    expect(idsOf(["partiels"])).toContain("G1");
     expect(idsOf(["complets"])).toContain("G1");
     // Messagerie classée en second ne retire pas G1 : seule la branche n°1 compte.
     expect(idsOf(["complets", "messagerie"])).toContain("G1");
@@ -148,29 +147,6 @@ describe("branchement — branche messagerie", () => {
       maxServed: 150,
       indice: 53,
     });
-  });
-});
-
-describe("branchement — branche lots partiels", () => {
-  it("saute P4 quand « complets » n'est pas classé", () => {
-    expect(idsOf(["partiels"])).toEqual(["P1", "P3", "G1"]);
-  });
-
-  it("sert P4 dès que « complets » est classé", () => {
-    expect(idsOf(["partiels", "complets"])).toContain("P4");
-  });
-
-  it("normalise sur 100 quand P4 est sautée, sur 125 sinon", () => {
-    const answers: Answers = {
-      P1: "regroupes", // 25
-      P3: "oui_utilise", // 25
-      P4: "meme_ao", // 25
-      G1: "redesign", // 25
-    };
-    expect(computeScore(["partiels"], answers).maxServed).toBe(75);
-    expect(computeScore(["partiels"], answers).indice).toBe(100);
-    // Avec complets classé, P4 est servie ET C1 est servie en secondaire non scorée.
-    expect(computeScore(["partiels", "complets"], answers).maxServed).toBe(100);
   });
 });
 
@@ -253,17 +229,11 @@ describe("deux flux classés", () => {
       "M6",
       "C1",
     ]);
-    expect(idsOf(["complets", "partiels"])).toEqual([
+    expect(idsOf(["complets", "messagerie"])).toEqual([
       "C1",
       "C2",
       "C3",
       "C4",
-      "P1",
-      "G1",
-    ]);
-    expect(idsOf(["partiels", "messagerie"])).toEqual([
-      "P1",
-      "P3",
       "M4",
       "G1",
     ]);
@@ -276,31 +246,17 @@ describe("deux flux classés", () => {
     // longueurs réelles pour qu'aucune ne bouge sans qu'on le voie.
     const longueurs: [Ranking, number][] = [
       [["messagerie"], 6],
-      [["messagerie", "partiels"], 7],
       [["messagerie", "complets"], 7],
-      [["partiels"], 3],
-      [["partiels", "messagerie"], 4],
-      [["partiels", "complets"], 5],
       [["complets"], 5],
       [["complets", "messagerie"], 6],
-      [["complets", "partiels"], 6],
     ];
     for (const [ranking, attendu] of longueurs) {
       expect(idsOf(ranking).length, ranking.join(">")).toBe(attendu);
     }
   });
 
-  it("documente la brièveté de la branche lots partiels", () => {
-    // ⚠️ Depuis le retrait de P2 et le saut de P4 hors contexte complets, la
-    // branche partiels descend nettement sous le plancher des six questions
-    // annoncé par la spec. C'est assumé, mais c'est la branche la plus courte.
-    expect(idsOf(["partiels"])).toHaveLength(3);
-    expect(idsOf(["partiels", "messagerie"])).toHaveLength(4);
-    expect(idsOf(["partiels", "complets"])).toHaveLength(5);
-  });
-
   it("garde un indice dans 0–100 sur toutes les combinaisons de classement", () => {
-    const flows: FlowType[] = ["messagerie", "partiels", "complets"];
+    const flows: FlowType[] = ["messagerie", "complets"];
     const rankings: Ranking[] = [];
     for (const a of flows) {
       rankings.push([a]);
@@ -362,17 +318,13 @@ describe("deux flux classés", () => {
   it("ne sert pas deux fois la même question quand elle est déjà primaire", () => {
     // M4 est la question secondaire de la messagerie ; en branche messagerie
     // elle est déjà servie en primaire et ne doit pas revenir.
-    const ids = idsOf(["messagerie", "partiels"]);
-    expect(ids.filter((id) => id === "P1")).toHaveLength(1);
+    const ids = idsOf(["messagerie", "complets"]);
+    expect(ids.filter((id) => id === "C1")).toHaveLength(1);
     expect(new Set(ids).size).toBe(ids.length);
   });
 
-  it("le troisième flux ne déclenche aucune question mais reste au profil", () => {
-    const deux = idsOf(["complets", "messagerie"]);
-    const trois = idsOf(["complets", "messagerie", "partiels"]);
-    expect(trois).toEqual(deux);
-
-    const result = computeResult(["complets", "messagerie", "partiels"], {
+  it("n'expose aucun flux au-delà du second : il n'y a que deux typologies", () => {
+    const result = computeResult(["complets", "messagerie"], {
       C1: "boucles",
       C2: "en_place",
       C3: "stable",
@@ -380,8 +332,8 @@ describe("deux flux classés", () => {
       M4: "non",
       G1: "redesign",
     });
-    expect(result?.otherFlows).toEqual(["partiels"]);
     expect(result?.secondaryBranch).toBe("messagerie");
+    expect(result?.otherFlows).toEqual([]);
   });
 
   it("déclenche le levier du bloc secondaire depuis la question secondaire", () => {
@@ -394,8 +346,8 @@ describe("deux flux classés", () => {
     ).toBeNull();
     expect(selectSecondaryLever(["messagerie"], answers)).toBeNull();
     expect(
-      selectSecondaryLever(["messagerie", "partiels"], { P1: "chacun_seul" }),
-    ).toBe("regrouper_avant_negocier");
+      selectSecondaryLever(["messagerie", "complets"], { C1: "inconnu" }),
+    ).toBe("retours_vide");
   });
 });
 
@@ -457,17 +409,22 @@ describe("leviers", () => {
   });
 
   it("saute les règles dont la condition est fausse", () => {
-    const levers = selectLevers(["partiels", "complets"], {
-      P1: "regroupes",
-      P3: "oui_pas_utilise",
-      P4: "spot",
-      G1: "redesign",
+    const levers = selectLevers(["complets"], {
+      C1: "boucles", // rien
+      C2: "envisage", // appariement_flux
+      C3: "stable",
+      C4: "ecarte_sans_etude", // eligibilite_modale puis decision_modale_reprise
+      G1: "reconduit", // reouverture_conception, hors des trois premiers
     });
-    expect(levers).toEqual(["actif_existant", "partiels_dans_ao"]);
+    expect(levers).toEqual([
+      "appariement_flux",
+      "eligibilite_modale",
+      "decision_modale_reprise",
+    ]);
   });
 
   it("ne déclenche pas un levier sur une question non servie", () => {
-    // « M4 ≠ rapprochees » ne doit pas être vrai parce que M4 n'a pas été posée.
+    // « M4 ≠ oui » ne doit pas être vrai parce que M4 n'a pas été posée.
     const levers = selectLevers(["complets"], {
       C1: "boucles",
       C2: "en_place",
@@ -540,7 +497,6 @@ describe("leviers", () => {
 describe("routage", () => {
   it("route par ranking[0], jamais par l'indice", () => {
     expect(outcomeFor("messagerie")).toBe("rdv");
-    expect(outcomeFor("partiels")).toBe("rdv");
     expect(outcomeFor("complets")).toBe("flux");
   });
 

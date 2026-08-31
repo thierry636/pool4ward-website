@@ -52,26 +52,6 @@ export const LEVER_RULES: Readonly<Record<FlowType, readonly LeverRule[]>> = {
     },
   ],
 
-  partiels: [
-    {
-      id: "regrouper_avant_negocier",
-      when: { type: "answerIn", question: "P1", values: ["chacun_seul"] },
-    },
-    {
-      id: "actif_existant",
-      when: { type: "answerIn", question: "P3", values: ["oui_pas_utilise"] },
-    },
-    {
-      id: "massification_tiers",
-      when: { type: "answerIn", question: "P3", values: ["non"] },
-    },
-    {
-      id: "partiels_dans_ao",
-      when: { type: "answerIn", question: "P4", values: ["separes", "spot"] },
-    },
-    REOUVERTURE_CONCEPTION,
-  ],
-
   complets: [
     {
       id: "retours_vide",
@@ -127,12 +107,6 @@ export const SECONDARY_LEVER_RULES: Readonly<
       when: { type: "answerNotIn", question: "M4", values: ["oui"] },
     },
   ],
-  partiels: [
-    {
-      id: "regrouper_avant_negocier",
-      when: { type: "answerIn", question: "P1", values: ["chacun_seul"] },
-    },
-  ],
   complets: [
     {
       id: "retours_vide",
@@ -154,10 +128,6 @@ export const LEVER_IDS = [
   "comparaison_systematique",
   "prestataire_unique",
   "consolidation_volumes",
-  "regrouper_avant_negocier",
-  "actif_existant",
-  "massification_tiers",
-  "partiels_dans_ao",
   "retours_vide",
   "appariement_flux",
   "eligibilite_modale",
@@ -176,9 +146,6 @@ export const LEVER_QUESTION_IDS: readonly QuestionId[] = [
   "M4",
   "M5",
   "M6",
-  "P1",
-  "P3",
-  "P4",
   "C1",
   "C2",
   "C3",

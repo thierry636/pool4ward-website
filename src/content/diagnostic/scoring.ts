@@ -28,7 +28,6 @@ export const LEVEL_THRESHOLDS: readonly LevelThreshold[] = [
  */
 export const OUTCOME_BY_BRANCH: Readonly<Record<FlowType, OutcomeId>> = {
   messagerie: "rdv",
-  partiels: "rdv",
   complets: "flux",
 };
 
