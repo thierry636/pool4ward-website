@@ -43,6 +43,7 @@ export const copyFr: DiagnosticCopy = {
     next: "Continuer",
     seeResult: "Voir mon résultat",
     restart: "Recommencer le diagnostic",
+    home: "Pool4ward — retour à l'accueil",
   },
 
   ranking: {
@@ -52,6 +53,8 @@ export const copyFr: DiagnosticCopy = {
     positionAria: "Classé n°{position}. Cliquez pour retirer du classement.",
     unselectedAria: "Non classé. Cliquez pour ajouter au classement.",
     hint: "Un seul type de flux suffit pour continuer.",
+    concerned: "Concerné",
+    notConcerned: "Pas concerné",
   },
 
   flows: {
@@ -82,9 +85,10 @@ export const copyFr: DiagnosticCopy = {
     M1: {
       label: "Combien de prestataires messagerie travaillent pour vous ?",
       options: {
-        deux_trois: "2 à 3",
-        quatre_plus: "4 et plus",
         unique: "Un seul, national",
+        deux_cinq: "2 à 5",
+        six_dix: "6 à 10",
+        plus_dix: "Plus de 10",
         inconnu: "Je ne sais pas exactement",
       },
     },

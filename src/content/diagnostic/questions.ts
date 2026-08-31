@@ -28,14 +28,19 @@ export const MAX_POINTS_PER_QUESTION = 25;
 
 const MESSAGERIE: readonly Question[] = [
   {
+    // Tranches en ordre croissant. Le sommet du barème est au milieu, pas au
+    // bout : deux à cinq prestataires font une vraie mise en compétition, un
+    // seul supprime toute référence, et au-delà de dix les volumes s'éclatent
+    // au point de ne plus peser dans aucune négociation.
     id: "M1",
     branch: "messagerie",
     scored: true,
     max: 25,
     options: [
-      { value: "deux_trois", points: 25 },
-      { value: "quatre_plus", points: 15 },
       { value: "unique", points: 8 },
+      { value: "deux_cinq", points: 25 },
+      { value: "six_dix", points: 15 },
+      { value: "plus_dix", points: 10 },
       { value: "inconnu", points: 0 },
     ],
   },

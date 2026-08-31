@@ -44,7 +44,7 @@ describe("branchement — branche messagerie", () => {
 
   it("normalise sur 125 : quatre questions scorées plus G1", () => {
     const answers: Answers = {
-      M1: "deux_trois", // 25
+      M1: "deux_cinq", // 25
       M2: "competition", // 25
       M3: "moins12mois", // 25
       M4: "rapprochees", // 25
@@ -256,7 +256,7 @@ describe("deux flux classés", () => {
 
   it("n'inclut jamais la question secondaire dans l'indice", () => {
     const answers: Answers = {
-      M1: "deux_trois",
+      M1: "deux_cinq",
       M2: "competition",
       M3: "moins12mois",
       M4: "rapprochees",
@@ -352,6 +352,26 @@ describe("leviers", () => {
       "grilles_comparables",
       "remise_en_competition",
       "reprise_attribution",
+    ]);
+  });
+
+  it("déclenche la consolidation sur les deux tranches hautes de M1", () => {
+    const base: Answers = {
+      M2: "competition",
+      M3: "moins12mois",
+      M4: "rapprochees",
+      G1: "redesign",
+    };
+    expect(selectLevers(["messagerie"], { ...base, M1: "six_dix" })).toEqual([
+      "consolidation_volumes",
+    ]);
+    expect(selectLevers(["messagerie"], { ...base, M1: "plus_dix" })).toEqual([
+      "consolidation_volumes",
+    ]);
+    // La tranche centrale est la bonne réponse : elle ne déclenche rien.
+    expect(selectLevers(["messagerie"], { ...base, M1: "deux_cinq" })).toEqual([]);
+    expect(selectLevers(["messagerie"], { ...base, M1: "unique" })).toEqual([
+      "prestataire_unique",
     ]);
   });
 

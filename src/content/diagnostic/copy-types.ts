@@ -94,6 +94,8 @@ export interface DiagnosticCopy {
     readonly next: string;
     readonly seeResult: string;
     readonly restart: string;
+    /** Nom accessible du logo, qui ramène au site. */
+    readonly home: string;
   };
 
   readonly ranking: {
@@ -103,6 +105,10 @@ export interface DiagnosticCopy {
     readonly positionAria: string;
     readonly unselectedAria: string;
     readonly hint: string;
+    /** État affiché sur une carte classée. */
+    readonly concerned: string;
+    /** État affiché sur une carte laissée de côté. */
+    readonly notConcerned: string;
   };
 
   readonly flows: Readonly<Record<FlowType, FlowCopy>>;

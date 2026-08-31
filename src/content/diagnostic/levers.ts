@@ -34,7 +34,7 @@ export const LEVER_RULES: Readonly<Record<FlowType, readonly LeverRule[]>> = {
     },
     {
       id: "consolidation_volumes",
-      when: { type: "answerIn", question: "M1", values: ["quatre_plus"] },
+      when: { type: "answerIn", question: "M1", values: ["six_dix", "plus_dix"] },
     },
     REOUVERTURE_CONCEPTION,
   ],
