@@ -58,7 +58,7 @@ describe("branchement — branche messagerie", () => {
       M1: "deux_cinq", // 25
       M2: "comparaison", // 25
       M3: "moins12mois", // 25
-      M4: "rapprochees", // 25
+      M4: "oui", // 25
       M5: "plus_dix", // 25
       M6: "plusieurs", // 25
     };
@@ -92,7 +92,7 @@ describe("branchement — branche messagerie", () => {
       M1: "unique", // 8
       M2: "zone", // 20
       M3: "plus3ans", // 5
-      M4: "affiches", // 10
+      M4: "parfois", // 10
       M5: "trois_cinq", // 15
       M6: "rarement", // 15
     };
@@ -107,7 +107,7 @@ describe("branchement — branche messagerie", () => {
 
 describe("branchement — branche lots partiels", () => {
   it("saute P4 quand « complets » n'est pas classé", () => {
-    expect(idsOf(["partiels"])).toEqual(["P1", "P2", "P3", "G1"]);
+    expect(idsOf(["partiels"])).toEqual(["P1", "P3", "G1"]);
   });
 
   it("sert P4 dès que « complets » est classé", () => {
@@ -117,15 +117,14 @@ describe("branchement — branche lots partiels", () => {
   it("normalise sur 100 quand P4 est sautée, sur 125 sinon", () => {
     const answers: Answers = {
       P1: "regroupes", // 25
-      P2: "48h", // 25
       P3: "oui_utilise", // 25
       P4: "meme_ao", // 25
       G1: "redesign", // 25
     };
-    expect(computeScore(["partiels"], answers).maxServed).toBe(100);
+    expect(computeScore(["partiels"], answers).maxServed).toBe(75);
     expect(computeScore(["partiels"], answers).indice).toBe(100);
     // Avec complets classé, P4 est servie ET C1 est servie en secondaire non scorée.
-    expect(computeScore(["partiels", "complets"], answers).maxServed).toBe(125);
+    expect(computeScore(["partiels", "complets"], answers).maxServed).toBe(100);
   });
 });
 
@@ -213,44 +212,45 @@ describe("deux flux classés", () => {
       "C2",
       "C3",
       "C4",
-      "P2",
+      "P1",
       "G1",
     ]);
     expect(idsOf(["partiels", "messagerie"])).toEqual([
       "P1",
-      "P2",
       "P3",
       "M4",
       "G1",
     ]);
   });
 
-  it("garde le questionnaire entre six et huit questions", () => {
-    const combinations: Ranking[] = [
-      ["messagerie", "partiels"],
-      ["messagerie", "complets"],
-      ["partiels", "complets"],
-      ["complets", "messagerie"],
-      ["complets", "partiels", "messagerie"],
+  it("fige la longueur du questionnaire pour chaque classement", () => {
+    // ⚠️ La spec visait 6 à 8 questions. Seule la branche messagerie y est
+    // encore : le retrait de P2, le saut de P4 hors contexte complets et C3
+    // hors score raccourcissent nettement les deux autres. Ce test fige les
+    // longueurs réelles pour qu'aucune ne bouge sans qu'on le voie.
+    const longueurs: [Ranking, number][] = [
+      [["messagerie"], 6],
+      [["messagerie", "partiels"], 7],
+      [["messagerie", "complets"], 7],
+      [["partiels"], 3],
+      [["partiels", "messagerie"], 4],
+      [["partiels", "complets"], 5],
+      [["complets"], 5],
+      [["complets", "messagerie"], 6],
+      [["complets", "partiels"], 6],
     ];
-    for (const ranking of combinations) {
-      const count = idsOf(ranking).length;
-      expect(count, ranking.join(">")).toBeGreaterThanOrEqual(6);
-      expect(count, ranking.join(">")).toBeLessThanOrEqual(8);
+    for (const [ranking, attendu] of longueurs) {
+      expect(idsOf(ranking).length, ranking.join(">")).toBe(attendu);
     }
   });
 
-  it("descend à cinq questions dans le seul cas où P4 est sautée", () => {
-    // Branche partiels sans complets classé : P4 n'a pas de sens, on la saute.
-    // C'est la seule combinaison sous le plancher des six questions, et elle est
-    // assumée — poser une question hors sujet coûterait plus cher.
-    expect(idsOf(["partiels", "messagerie"])).toEqual([
-      "P1",
-      "P2",
-      "P3",
-      "M4",
-      "G1",
-    ]);
+  it("documente la brièveté de la branche lots partiels", () => {
+    // ⚠️ Depuis le retrait de P2 et le saut de P4 hors contexte complets, la
+    // branche partiels descend nettement sous le plancher des six questions
+    // annoncé par la spec. C'est assumé, mais c'est la branche la plus courte.
+    expect(idsOf(["partiels"])).toHaveLength(3);
+    expect(idsOf(["partiels", "messagerie"])).toHaveLength(4);
+    expect(idsOf(["partiels", "complets"])).toHaveLength(5);
   });
 
   it("garde un indice dans 0–100 sur toutes les combinaisons de classement", () => {
@@ -291,7 +291,7 @@ describe("deux flux classés", () => {
       M1: "deux_cinq",
       M2: "comparaison",
       M3: "moins12mois",
-      M4: "rapprochees",
+      M4: "oui",
       M5: "plus_dix",
       M6: "plusieurs",
       C1: "inconnu", // secondaire : 0 point, ne doit rien coûter
@@ -317,7 +317,7 @@ describe("deux flux classés", () => {
     // M4 est la question secondaire de la messagerie ; en branche messagerie
     // elle est déjà servie en primaire et ne doit pas revenir.
     const ids = idsOf(["messagerie", "partiels"]);
-    expect(ids.filter((id) => id === "P2")).toHaveLength(1);
+    expect(ids.filter((id) => id === "P1")).toHaveLength(1);
     expect(new Set(ids).size).toBe(ids.length);
   });
 
@@ -344,12 +344,12 @@ describe("deux flux classés", () => {
       "grilles_comparables",
     );
     expect(
-      selectSecondaryLever(["complets", "messagerie"], { M4: "rapprochees" }),
+      selectSecondaryLever(["complets", "messagerie"], { M4: "oui" }),
     ).toBeNull();
     expect(selectSecondaryLever(["messagerie"], answers)).toBeNull();
     expect(
-      selectSecondaryLever(["messagerie", "partiels"], { P2: "aucun" }),
-    ).toBe("verifier_exigence_client");
+      selectSecondaryLever(["messagerie", "partiels"], { P1: "chacun_seul" }),
+    ).toBe("regrouper_avant_negocier");
   });
 });
 
@@ -393,7 +393,7 @@ describe("leviers", () => {
     const base: Answers = {
       M2: "comparaison",
       M3: "moins12mois",
-      M4: "rapprochees",
+      M4: "oui",
       M5: "plus_dix",
       M6: "plusieurs",
     };
@@ -413,16 +413,11 @@ describe("leviers", () => {
   it("saute les règles dont la condition est fausse", () => {
     const levers = selectLevers(["partiels", "complets"], {
       P1: "regroupes",
-      P2: "depend_client",
       P3: "oui_pas_utilise",
       P4: "spot",
       G1: "redesign",
     });
-    expect(levers).toEqual([
-      "delai_matiere_premiere",
-      "actif_existant",
-      "partiels_dans_ao",
-    ]);
+    expect(levers).toEqual(["actif_existant", "partiels_dans_ao"]);
   });
 
   it("ne déclenche pas un levier sur une question non servie", () => {

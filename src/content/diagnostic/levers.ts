@@ -20,7 +20,7 @@ export const LEVER_RULES: Readonly<Record<FlowType, readonly LeverRule[]>> = {
   messagerie: [
     {
       id: "grilles_comparables",
-      when: { type: "answerNotIn", question: "M4", values: ["rapprochees"] },
+      when: { type: "answerNotIn", question: "M4", values: ["oui"] },
     },
     {
       id: "ouvrir_nouveaux_entrants",
@@ -56,18 +56,6 @@ export const LEVER_RULES: Readonly<Record<FlowType, readonly LeverRule[]>> = {
     {
       id: "regrouper_avant_negocier",
       when: { type: "answerIn", question: "P1", values: ["chacun_seul"] },
-    },
-    {
-      id: "delai_matiere_premiere",
-      when: {
-        type: "answerIn",
-        question: "P2",
-        values: ["48h", "24h", "depend_client"],
-      },
-    },
-    {
-      id: "verifier_exigence_client",
-      when: { type: "answerIn", question: "P2", values: ["aucun"] },
     },
     {
       id: "actif_existant",
@@ -136,21 +124,13 @@ export const SECONDARY_LEVER_RULES: Readonly<
   messagerie: [
     {
       id: "grilles_comparables",
-      when: { type: "answerNotIn", question: "M4", values: ["rapprochees"] },
+      when: { type: "answerNotIn", question: "M4", values: ["oui"] },
     },
   ],
   partiels: [
     {
-      id: "delai_matiere_premiere",
-      when: {
-        type: "answerIn",
-        question: "P2",
-        values: ["48h", "24h", "depend_client"],
-      },
-    },
-    {
-      id: "verifier_exigence_client",
-      when: { type: "answerIn", question: "P2", values: ["aucun"] },
+      id: "regrouper_avant_negocier",
+      when: { type: "answerIn", question: "P1", values: ["chacun_seul"] },
     },
   ],
   complets: [
@@ -175,8 +155,6 @@ export const LEVER_IDS = [
   "prestataire_unique",
   "consolidation_volumes",
   "regrouper_avant_negocier",
-  "delai_matiere_premiere",
-  "verifier_exigence_client",
   "actif_existant",
   "massification_tiers",
   "partiels_dans_ao",
@@ -199,7 +177,6 @@ export const LEVER_QUESTION_IDS: readonly QuestionId[] = [
   "M5",
   "M6",
   "P1",
-  "P2",
   "P3",
   "P4",
   "C1",

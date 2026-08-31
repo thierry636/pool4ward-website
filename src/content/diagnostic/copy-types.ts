@@ -121,6 +121,8 @@ export interface DiagnosticCopy {
     readonly outOf: string;
     readonly levelsTitle: string;
     readonly leversTitle: string;
+    /** Titre accordé au nombre de leviers réellement affichés. */
+    readonly leversTitleByCount: Readonly<Record<string, string>>;
     readonly leversIntro: string;
     /** Affiché quand aucune condition de levier n'est vraie — profil déjà mûr. */
     readonly leversEmpty: string;

@@ -78,8 +78,8 @@ const MESSAGERIE: readonly Question[] = [
     scored: true,
     max: 25,
     options: [
-      { value: "rapprochees", points: 25 },
-      { value: "affiches", points: 10 },
+      { value: "oui", points: 25 },
+      { value: "parfois", points: 10 },
       { value: "non", points: 0 },
     ],
   },
@@ -121,6 +121,7 @@ const MESSAGERIE: readonly Question[] = [
 
 const PARTIELS: readonly Question[] = [
   {
+    // Sert aussi de question de branche secondaire.
     id: "P1",
     branch: "partiels",
     scored: true,
@@ -129,20 +130,6 @@ const PARTIELS: readonly Question[] = [
       { value: "regroupes", points: 25 },
       { value: "opportuniste", points: 12 },
       { value: "chacun_seul", points: 0 },
-    ],
-  },
-  {
-    // P2 est le pivot du cross-dock : le délai de rétention est la matière
-    // première de la massification. Sert aussi de question secondaire.
-    id: "P2",
-    branch: "partiels",
-    scored: true,
-    max: 25,
-    options: [
-      { value: "48h", points: 25 },
-      { value: "24h", points: 18 },
-      { value: "depend_client", points: 12 },
-      { value: "aucun", points: 5 },
     ],
   },
   {
@@ -271,7 +258,7 @@ export const GLOBAL_QUESTIONS: readonly Question[] = GLOBAL;
  */
 export const SECONDARY_QUESTION_BY_FLOW: Readonly<Record<FlowType, QuestionId>> = {
   messagerie: "M4",
-  partiels: "P2",
+  partiels: "P1",
   complets: "C1",
 };
 
