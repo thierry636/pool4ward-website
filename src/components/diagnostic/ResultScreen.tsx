@@ -68,10 +68,17 @@ export function ResultScreen({
           id="diagnostic-leviers"
           className="text-lg font-semibold text-navy-900"
         >
-          {copy.result.leversTitle}
+          {/* Le titre s'accorde au nombre réellement affiché : annoncer trois
+              leviers quand un seul sort décrédibilise la restitution. */}
+          {copy.result.leversTitleByCount[String(levers.length)] ??
+            copy.result.leversTitle}
         </h2>
         <p className="mt-1 text-sm text-navy-500">
-          {levers.length > 0 ? copy.result.leversIntro : copy.result.leversEmpty}
+          {levers.length > 1
+            ? copy.result.leversIntro
+            : levers.length === 0
+              ? copy.result.leversEmpty
+              : null}
         </p>
 
         <ol className="mt-5 space-y-3">

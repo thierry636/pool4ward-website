@@ -58,18 +58,6 @@ export const LEVER_RULES: Readonly<Record<FlowType, readonly LeverRule[]>> = {
       when: { type: "answerIn", question: "P1", values: ["chacun_seul"] },
     },
     {
-      id: "delai_matiere_premiere",
-      when: {
-        type: "answerIn",
-        question: "P2",
-        values: ["48h", "24h", "depend_client"],
-      },
-    },
-    {
-      id: "verifier_exigence_client",
-      when: { type: "answerIn", question: "P2", values: ["aucun"] },
-    },
-    {
       id: "actif_existant",
       when: { type: "answerIn", question: "P3", values: ["oui_pas_utilise"] },
     },
@@ -141,16 +129,8 @@ export const SECONDARY_LEVER_RULES: Readonly<
   ],
   partiels: [
     {
-      id: "delai_matiere_premiere",
-      when: {
-        type: "answerIn",
-        question: "P2",
-        values: ["48h", "24h", "depend_client"],
-      },
-    },
-    {
-      id: "verifier_exigence_client",
-      when: { type: "answerIn", question: "P2", values: ["aucun"] },
+      id: "regrouper_avant_negocier",
+      when: { type: "answerIn", question: "P1", values: ["chacun_seul"] },
     },
   ],
   complets: [
@@ -175,8 +155,6 @@ export const LEVER_IDS = [
   "prestataire_unique",
   "consolidation_volumes",
   "regrouper_avant_negocier",
-  "delai_matiere_premiere",
-  "verifier_exigence_client",
   "actif_existant",
   "massification_tiers",
   "partiels_dans_ao",
@@ -199,7 +177,6 @@ export const LEVER_QUESTION_IDS: readonly QuestionId[] = [
   "M5",
   "M6",
   "P1",
-  "P2",
   "P3",
   "P4",
   "C1",

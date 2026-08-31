@@ -154,16 +154,6 @@ export const copyFr: DiagnosticCopy = {
         chacun_seul: "Chacun part seul",
       },
     },
-    P2: {
-      label:
-        "Combien de temps pouvez-vous retenir une expédition pour la regrouper avec une autre ?",
-      options: {
-        "48h": "48 heures ou plus",
-        "24h": "24 heures",
-        depend_client: "Ça dépend du client destinataire",
-        aucun: "Aucun délai, départ le jour même",
-      },
-    },
     P3: {
       label: "Disposez-vous d'un point de massification sur vos axes principaux ?",
       options: {
@@ -242,7 +232,15 @@ export const copyFr: DiagnosticCopy = {
     indexLabel: "Indice de productivité — flux {flow}",
     outOf: "sur 100",
     levelsTitle: "Niveau",
-    leversTitle: "Vos trois leviers",
+    leversTitle: "Vos leviers",
+    // Le nombre de leviers dépend des réponses : annoncer « trois » quand un
+    // seul s'affiche décrédibilise la restitution.
+    leversTitleByCount: {
+      "0": "Ce qu'il reste à ouvrir",
+      "1": "Votre levier",
+      "2": "Vos deux leviers",
+      "3": "Vos trois leviers",
+    },
     leversIntro: "Dans l'ordre de ce qui rapporte le plus, chez vous.",
     // ⚠️ Copy hors spécification : cas d'un répondant qui ne déclenche aucune
     // condition de levier. Rare, mais l'écran ne peut pas rester vide.
@@ -301,7 +299,7 @@ export const copyFr: DiagnosticCopy = {
     // ⚠️ Copy hors spécification : leviers des questions M2, M5 et M6.
     ouvrir_nouveaux_entrants: {
       title: "Faire entrer des transporteurs neufs dans la consultation.",
-      body: "Un panel qui ne se renouvelle pas connaît vos prix mieux que vous.",
+      body: "Ceux qui vous répondent depuis des années savent déjà à quel prix vous achetez. Un nouvel entrant, non.",
     },
     elargir_panel: {
       title: "Élargir le panel consulté.",
@@ -322,15 +320,6 @@ export const copyFr: DiagnosticCopy = {
     regrouper_avant_negocier: {
       title: "Regrouper avant de négocier.",
       body: "Un appel d'offres lancé sur des envois isolés fige l'isolement pour trois ans.",
-    },
-    delai_matiere_premiere: {
-      title: "Vous avez du délai",
-      body: "— c'est la matière première d'un schéma cross-dock.",
-    },
-    verifier_exigence_client: {
-      title:
-        "Vérifier si le départ le jour même est une exigence client ou une habitude interne.",
-      body: "La réponse diffère souvent selon le destinataire.",
     },
     actif_existant: {
       title: "L'actif existe déjà.",
