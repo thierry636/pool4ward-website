@@ -53,6 +53,11 @@ const MESSAGERIE: readonly Question[] = [
     branch: "messagerie",
     scored: true,
     max: 25,
+    // Sautée quand le répondant n'a qu'un seul prestataire : il n'y a rien à
+    // attribuer. La condition est écrite en « non-exclusion » et pas en
+    // « answerNotIn » pour que la question soit servie par défaut, y compris
+    // avant que M1 n'ait été répondue.
+    when: { type: "not", of: { type: "answerIn", question: "M1", values: ["unique"] } },
     options: [
       { value: "comparaison", points: 25 },
       { value: "zone", points: 20 },

@@ -40,6 +40,52 @@ describe("branchement — branche messagerie", () => {
     expect(idsOf(ranking)).not.toContain("G1");
   });
 
+  it("saute l'attribution quand le répondant n'a qu'un seul prestataire", () => {
+    // Un prestataire unique : il n'y a rien à attribuer, la question n'a pas
+    // de sens. Le maximum servi tombe de 150 à 125 et la normalisation absorbe
+    // l'écart — c'est précisément ce pour quoi elle est là.
+    expect(idsOf(ranking, { M1: "unique" })).toEqual([
+      "M1",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+    ]);
+    expect(idsOf(ranking, { M1: "deux_cinq" })).toContain("M2");
+    // Servie par défaut tant que M1 n'a pas été répondue : sans quoi la barre
+    // de progression annoncerait cinq questions avant la première réponse.
+    expect(idsOf(ranking, {})).toContain("M2");
+
+    const answers: Answers = {
+      M1: "unique", // 8
+      M3: "moins12mois", // 25
+      M4: "oui", // 25
+      M5: "plus_dix", // 25
+      M6: "plusieurs", // 25
+    };
+    expect(computeScore(ranking, answers)).toEqual({
+      points: 108,
+      maxServed: 125,
+      indice: 86,
+    });
+  });
+
+  it("ne compte pas une réponse à M2 devenue caduque", () => {
+    // Le répondant a répondu à M2, puis est revenu changer M1 en « un seul ».
+    const answers: Answers = {
+      M1: "unique",
+      M2: "zone", // 20 points qui ne doivent plus compter
+      M3: "jamais",
+      M4: "non",
+      M5: "moins_trois",
+      M6: "aucun",
+    };
+    expect(scoredIdsOf(ranking, answers)).not.toContain("M2");
+    expect(computeScore(ranking, answers).maxServed).toBe(125);
+    expect(computeScore(ranking, answers).points).toBe(28);
+    expect(pruneAnswers(ranking, answers)).not.toHaveProperty("M2");
+  });
+
   it("continue de poser G1 sur les autres branches", () => {
     expect(idsOf(["partiels"])).toContain("G1");
     expect(idsOf(["complets"])).toContain("G1");
@@ -89,18 +135,18 @@ describe("branchement — branche messagerie", () => {
 
   it("arrondit l'indice normalisé", () => {
     const answers: Answers = {
-      M1: "unique", // 8
+      M1: "six_dix", // 15
       M2: "zone", // 20
       M3: "plus3ans", // 5
       M4: "parfois", // 10
       M5: "trois_cinq", // 15
       M6: "rarement", // 15
     };
-    // 73 / 150 = 48,67 %
+    // 80 / 150 = 53,33 %
     expect(computeScore(ranking, answers)).toEqual({
-      points: 73,
+      points: 80,
       maxServed: 150,
-      indice: 49,
+      indice: 53,
     });
   });
 });
@@ -557,19 +603,19 @@ describe("garde-fous", () => {
 
   it("purge les réponses orphelines après un changement de classement", () => {
     const answers: Answers = {
-      M1: "unique",
+      M1: "six_dix",
       M2: "zone",
       C1: "boucles",
       G1: "reconduit",
     };
     // G1 n'étant pas servie en messagerie, elle est purgée comme C1.
     expect(pruneAnswers(["messagerie"], answers)).toEqual({
-      M1: "unique",
+      M1: "six_dix",
       M2: "zone",
     });
     // C1 redevient légitime dès que complets est classé en second.
     expect(pruneAnswers(["messagerie", "complets"], answers)).toEqual({
-      M1: "unique",
+      M1: "six_dix",
       M2: "zone",
       C1: "boucles",
     });
