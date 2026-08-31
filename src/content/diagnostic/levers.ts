@@ -15,18 +15,32 @@ const REOUVERTURE_CONCEPTION: LeverRule = {
 };
 
 export const LEVER_RULES: Readonly<Record<FlowType, readonly LeverRule[]>> = {
+  // G1 n'étant pas posée en messagerie, REOUVERTURE_CONCEPTION n'y figure pas :
+  // ce sont les deux règles sur les appels d'offres qui portent la conception.
   messagerie: [
     {
       id: "grilles_comparables",
       when: { type: "answerNotIn", question: "M4", values: ["rapprochees"] },
     },
     {
+      id: "ouvrir_nouveaux_entrants",
+      when: { type: "answerIn", question: "M6", values: ["aucun", "rarement"] },
+    },
+    {
+      id: "elargir_panel",
+      when: {
+        type: "answerIn",
+        question: "M5",
+        values: ["moins_trois", "trois_cinq"],
+      },
+    },
+    {
       id: "remise_en_competition",
       when: { type: "answerIn", question: "M3", values: ["plus3ans", "jamais"] },
     },
     {
-      id: "reprise_attribution",
-      when: { type: "answerIn", question: "M2", values: ["habitudes"] },
+      id: "comparaison_systematique",
+      when: { type: "answerIn", question: "M2", values: ["zone"] },
     },
     {
       id: "prestataire_unique",
@@ -34,9 +48,8 @@ export const LEVER_RULES: Readonly<Record<FlowType, readonly LeverRule[]>> = {
     },
     {
       id: "consolidation_volumes",
-      when: { type: "answerIn", question: "M1", values: ["quatre_plus"] },
+      when: { type: "answerIn", question: "M1", values: ["six_dix", "plus_dix"] },
     },
-    REOUVERTURE_CONCEPTION,
   ],
 
   partiels: [
@@ -156,7 +169,9 @@ export const SECONDARY_LEVER_RULES: Readonly<
 export const LEVER_IDS = [
   "grilles_comparables",
   "remise_en_competition",
-  "reprise_attribution",
+  "ouvrir_nouveaux_entrants",
+  "elargir_panel",
+  "comparaison_systematique",
   "prestataire_unique",
   "consolidation_volumes",
   "regrouper_avant_negocier",
@@ -181,6 +196,8 @@ export const LEVER_QUESTION_IDS: readonly QuestionId[] = [
   "M2",
   "M3",
   "M4",
+  "M5",
+  "M6",
   "P1",
   "P2",
   "P3",

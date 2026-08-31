@@ -28,27 +28,34 @@ export const MAX_POINTS_PER_QUESTION = 25;
 
 const MESSAGERIE: readonly Question[] = [
   {
+    // Tranches en ordre croissant. Le sommet du barème est au milieu, pas au
+    // bout : deux à cinq prestataires font une vraie mise en compétition, un
+    // seul supprime toute référence, et au-delà de dix les volumes s'éclatent
+    // au point de ne plus peser dans aucune négociation.
     id: "M1",
     branch: "messagerie",
     scored: true,
     max: 25,
     options: [
-      { value: "deux_trois", points: 25 },
-      { value: "quatre_plus", points: 15 },
       { value: "unique", points: 8 },
+      { value: "deux_cinq", points: 25 },
+      { value: "six_dix", points: 15 },
+      { value: "plus_dix", points: 10 },
       { value: "inconnu", points: 0 },
     ],
   },
   {
+    // L'attribution n'a que deux modes réels : par zone, ou par comparaison
+    // systématique. ⚠️ Conséquence de barème : le plus bas des deux vaut 20
+    // sur 25, la question ne peut donc plus faire descendre l'indice de plus de
+    // quatre points. Elle documente une pratique plus qu'elle ne la note.
     id: "M2",
     branch: "messagerie",
     scored: true,
     max: 25,
     options: [
-      { value: "competition", points: 25 },
-      { value: "attitre_zone", points: 20 },
-      { value: "unique", points: 8 },
-      { value: "habitudes", points: 0 },
+      { value: "comparaison", points: 25 },
+      { value: "zone", points: 20 },
     ],
   },
   {
@@ -74,6 +81,36 @@ const MESSAGERIE: readonly Question[] = [
       { value: "rapprochees", points: 25 },
       { value: "affiches", points: 10 },
       { value: "non", points: 0 },
+    ],
+  },
+  {
+    // Largeur du panel consulté. Barème à plancher : même le pire cas vaut 40 %
+    // du maximum. Consulter peu n'est pas une faute de gestion — c'est un
+    // gisement — et un zéro rendrait le verdict accusatoire.
+    id: "M5",
+    branch: "messagerie",
+    scored: true,
+    max: 25,
+    options: [
+      { value: "plus_dix", points: 25 },
+      { value: "six_dix", points: 20 },
+      { value: "trois_cinq", points: 15 },
+      { value: "moins_trois", points: 10 },
+    ],
+  },
+  {
+    // Renouvellement du panel. Même plancher à 40 % que M5 : c'est le couple
+    // « panel large × entrants nouveaux » qui fait le haut du barème, pas l'une
+    // ou l'autre prise seule.
+    id: "M6",
+    branch: "messagerie",
+    scored: true,
+    max: 25,
+    options: [
+      { value: "plusieurs", points: 25 },
+      { value: "un_deux", points: 20 },
+      { value: "rarement", points: 15 },
+      { value: "aucun", points: 10 },
     ],
   },
 ];
@@ -199,12 +236,16 @@ const COMPLETS: readonly Question[] = [
 
 const GLOBAL: readonly Question[] = [
   {
-    // Question la plus discriminante, tous profils confondus. Posée à tout le
-    // monde, elle ne bouge jamais.
+    // Question la plus discriminante sur les branches partiels et complets :
+    // elle sépare ceux qui renégocient des prix de ceux qui reconçoivent un
+    // schéma. Elle n'est pas posée en messagerie, où la façon dont le plan a été
+    // construit — 4PL, commissionnaire — ne dit rien d'utile : ce sont les deux
+    // questions sur les appels d'offres qui y tiennent le rôle de clôture.
     id: "G1",
     branch: "global",
     scored: true,
     max: 25,
+    when: { type: "not", of: { type: "primaryBranch", flow: "messagerie" } },
     options: [
       { value: "redesign", points: 25 },
       { value: "4pl", points: 15 },

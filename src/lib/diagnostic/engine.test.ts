@@ -32,8 +32,19 @@ const scoredIdsOf = (ranking: Ranking, answers: Answers = {}) =>
 describe("branchement — branche messagerie", () => {
   const ranking: Ranking = ["messagerie"];
 
-  it("sert les quatre questions de la branche puis la clôture", () => {
-    expect(idsOf(ranking)).toEqual(["M1", "M2", "M3", "M4", "G1"]);
+  it("sert les six questions de la branche, sans la clôture G1", () => {
+    // En messagerie, ce sont les deux questions sur les appels d'offres qui
+    // tiennent le rôle de clôture : la façon dont le plan a été construit
+    // (4PL, commissionnaire) n'y dit rien d'utile.
+    expect(idsOf(ranking)).toEqual(["M1", "M2", "M3", "M4", "M5", "M6"]);
+    expect(idsOf(ranking)).not.toContain("G1");
+  });
+
+  it("continue de poser G1 sur les autres branches", () => {
+    expect(idsOf(["partiels"])).toContain("G1");
+    expect(idsOf(["complets"])).toContain("G1");
+    // Messagerie classée en second ne retire pas G1 : seule la branche n°1 compte.
+    expect(idsOf(["complets", "messagerie"])).toContain("G1");
   });
 
   it("ne sert aucune question des autres branches", () => {
@@ -42,34 +53,54 @@ describe("branchement — branche messagerie", () => {
     expect(idsOf(ranking).some((id) => id.startsWith("P"))).toBe(false);
   });
 
-  it("normalise sur 125 : quatre questions scorées plus G1", () => {
+  it("normalise sur 150 : six questions scorées", () => {
     const answers: Answers = {
-      M1: "deux_trois", // 25
-      M2: "competition", // 25
+      M1: "deux_cinq", // 25
+      M2: "comparaison", // 25
       M3: "moins12mois", // 25
       M4: "rapprochees", // 25
-      G1: "redesign", // 25
+      M5: "plus_dix", // 25
+      M6: "plusieurs", // 25
     };
     expect(computeScore(ranking, answers)).toEqual({
-      points: 125,
-      maxServed: 125,
+      points: 150,
+      maxServed: 150,
       indice: 100,
+    });
+  });
+
+  it("applique le plancher de 40 % aux deux questions sur les appels d'offres", () => {
+    // Consulter peu n'est pas une faute de gestion, c'est un gisement : le pire
+    // cas vaut 10 sur 25 et non zéro, pour que le verdict n'accuse pas.
+    const pire: Answers = {
+      M1: "inconnu", // 0
+      M2: "zone", // 20 — l'attribution ne peut pas descendre plus bas
+      M3: "jamais", // 0
+      M4: "non", // 0
+      M5: "moins_trois", // 10
+      M6: "aucun", // 10
+    };
+    expect(computeScore(ranking, pire)).toEqual({
+      points: 40,
+      maxServed: 150,
+      indice: 27,
     });
   });
 
   it("arrondit l'indice normalisé", () => {
     const answers: Answers = {
       M1: "unique", // 8
-      M2: "unique", // 8
+      M2: "zone", // 20
       M3: "plus3ans", // 5
       M4: "affiches", // 10
-      G1: "ao_periodique", // 12
+      M5: "trois_cinq", // 15
+      M6: "rarement", // 15
     };
-    // 43 / 125 = 34,4 %
+    // 73 / 150 = 48,67 %
     expect(computeScore(ranking, answers)).toEqual({
-      points: 43,
-      maxServed: 125,
-      indice: 34,
+      points: 73,
+      maxServed: 150,
+      indice: 49,
     });
   });
 });
@@ -173,8 +204,9 @@ describe("deux flux classés", () => {
       "M2",
       "M3",
       "M4",
+      "M5",
+      "M6",
       "C1",
-      "G1",
     ]);
     expect(idsOf(["complets", "partiels"])).toEqual([
       "C1",
@@ -256,18 +288,19 @@ describe("deux flux classés", () => {
 
   it("n'inclut jamais la question secondaire dans l'indice", () => {
     const answers: Answers = {
-      M1: "deux_trois",
-      M2: "competition",
+      M1: "deux_cinq",
+      M2: "comparaison",
       M3: "moins12mois",
       M4: "rapprochees",
+      M5: "plus_dix",
+      M6: "plusieurs",
       C1: "inconnu", // secondaire : 0 point, ne doit rien coûter
-      G1: "redesign",
     };
     const seul = computeScore(["messagerie"], answers);
     const avecSecondaire = computeScore(["messagerie", "complets"], answers);
 
     expect(scoredIdsOf(["messagerie", "complets"], answers)).not.toContain("C1");
-    expect(avecSecondaire.maxServed).toBe(125);
+    expect(avecSecondaire.maxServed).toBe(150);
     expect(avecSecondaire).toEqual(seul);
     expect(avecSecondaire.indice).toBe(100);
   });
@@ -343,15 +376,37 @@ describe("leviers", () => {
   it("prend au plus trois leviers, dans l'ordre de priorité", () => {
     const levers = selectLevers(["messagerie"], {
       M1: "unique",
-      M2: "habitudes",
+      M2: "zone",
       M3: "jamais",
       M4: "non",
-      G1: "reconduit",
+      M5: "moins_trois",
+      M6: "aucun",
     });
     expect(levers).toEqual([
       "grilles_comparables",
-      "remise_en_competition",
-      "reprise_attribution",
+      "ouvrir_nouveaux_entrants",
+      "elargir_panel",
+    ]);
+  });
+
+  it("déclenche la consolidation sur les deux tranches hautes de M1", () => {
+    const base: Answers = {
+      M2: "comparaison",
+      M3: "moins12mois",
+      M4: "rapprochees",
+      M5: "plus_dix",
+      M6: "plusieurs",
+    };
+    expect(selectLevers(["messagerie"], { ...base, M1: "six_dix" })).toEqual([
+      "consolidation_volumes",
+    ]);
+    expect(selectLevers(["messagerie"], { ...base, M1: "plus_dix" })).toEqual([
+      "consolidation_volumes",
+    ]);
+    // La tranche centrale est la bonne réponse : elle ne déclenche rien.
+    expect(selectLevers(["messagerie"], { ...base, M1: "deux_cinq" })).toEqual([]);
+    expect(selectLevers(["messagerie"], { ...base, M1: "unique" })).toEqual([
+      "prestataire_unique",
     ]);
   });
 
@@ -496,10 +551,11 @@ describe("garde-fous", () => {
     expect(
       isComplete(["messagerie"], {
         M1: "unique",
-        M2: "habitudes",
+        M2: "zone",
         M3: "jamais",
         M4: "non",
-        G1: "reconduit",
+        M5: "moins_trois",
+        M6: "aucun",
       }),
     ).toBe(true);
   });
@@ -507,17 +563,21 @@ describe("garde-fous", () => {
   it("purge les réponses orphelines après un changement de classement", () => {
     const answers: Answers = {
       M1: "unique",
-      M2: "habitudes",
+      M2: "zone",
       C1: "boucles",
       G1: "reconduit",
     };
+    // G1 n'étant pas servie en messagerie, elle est purgée comme C1.
     expect(pruneAnswers(["messagerie"], answers)).toEqual({
       M1: "unique",
-      M2: "habitudes",
-      G1: "reconduit",
+      M2: "zone",
     });
     // C1 redevient légitime dès que complets est classé en second.
-    expect(pruneAnswers(["messagerie", "complets"], answers)).toEqual(answers);
+    expect(pruneAnswers(["messagerie", "complets"], answers)).toEqual({
+      M1: "unique",
+      M2: "zone",
+      C1: "boucles",
+    });
   });
 
   it("évalue les conditions composées", () => {

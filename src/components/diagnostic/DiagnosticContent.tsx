@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { format, getDiagnosticCopy } from "@/content/diagnostic/copy";
 import { useDiagnostic } from "@/lib/diagnostic/useDiagnostic";
 import { ConversionBlock } from "./ConversionBlock";
+import { DiagnosticHeader } from "./DiagnosticHeader";
 import { FlowRanking } from "./FlowRanking";
 import { LeadForm } from "./LeadForm";
 import { ProgressBar } from "./ProgressBar";
@@ -47,7 +48,9 @@ export function DiagnosticContent({ locale }: { locale: string }) {
     // Bandeau sombre en haut de page : c'est la convention du site, et c'est ce
     // sur quoi l'en-tête fixe transparent est lisible.
     <div className="min-h-[100svh] bg-navy-900">
-      <div className="mx-auto w-full max-w-xl px-4 pb-16 pt-24 sm:px-6 sm:pt-28">
+      <div className="mx-auto w-full max-w-xl px-4 pb-16 pt-8 sm:px-6 sm:pt-10">
+        <DiagnosticHeader homeLabel={copy.nav.home} />
+
         {/* Cible de focus au changement d'écran. */}
         <div ref={headingRef} tabIndex={-1} className="sr-only" aria-live="polite">
           {screen === "question" && current

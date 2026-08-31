@@ -8,9 +8,10 @@ import type { FlowType, Ranking } from "@/lib/diagnostic/types";
 /**
  * Écran 1 — le classement.
  *
- * Au clic, la carte prend un badge 1, puis 2, puis 3 dans l'ordre des clics.
- * Un second clic la retire et renumérote les suivantes. Les cartes non cliquées
- * valent « non concerné ».
+ * Une carte a deux états lisibles au premier coup d'œil : « concerné », en
+ * couleur, avec son rang ; « pas concerné », grisée. Le premier clic classe la
+ * carte, le second la retire et renumérote les suivantes — le rang porte
+ * l'ordre d'importance, la couleur porte le fait d'être concerné ou non.
  *
  * Cibles tactiles confortables au pouce : plus de la moitié du trafic est mobile.
  */
@@ -45,7 +46,8 @@ export function FlowRanking({
                 className={`flex w-full items-center gap-4 rounded-2xl border p-4 text-left transition-all duration-200 sm:p-5 ${
                   selected
                     ? "border-brand-500 bg-brand-50/60 shadow-premium"
-                    : "border-navy-200 bg-white hover:border-navy-300 hover:bg-navy-50/60"
+                    : // Pas concerné : la carte s'efface sans disparaître.
+                      "border-navy-200 bg-navy-50/70 opacity-60 hover:opacity-100 hover:border-navy-300"
                 } focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2`}
               >
                 <span
@@ -53,16 +55,37 @@ export function FlowRanking({
                   className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-base font-bold transition-colors duration-200 ${
                     selected
                       ? "bg-brand-600 text-white"
-                      : "border-2 border-dashed border-navy-300"
+                      : "border-2 border-dashed border-navy-300 text-navy-300"
                   }`}
                 >
                   {selected ? position + 1 : null}
                 </span>
-                <span className="min-w-0">
-                  <span className="block text-base font-semibold text-navy-900">
-                    {flowCopy.label}
+
+                <span className="min-w-0 flex-1">
+                  {/* L'état voyage avec le titre : sur une largeur de pouce, un
+                      badge en bout de ligne écraserait le libellé. */}
+                  <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <span
+                      className={`text-base font-semibold ${
+                        selected ? "text-navy-900" : "text-navy-500"
+                      }`}
+                    >
+                      {flowCopy.label}
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide transition-colors duration-200 ${
+                        selected
+                          ? "bg-brand-600 text-white"
+                          : "bg-navy-200/70 text-navy-500"
+                      }`}
+                    >
+                      {selected
+                        ? copy.ranking.concerned
+                        : copy.ranking.notConcerned}
+                    </span>
                   </span>
-                  <span className="mt-0.5 block text-sm text-navy-500">
+                  <span className="mt-1 block text-sm leading-snug text-navy-500">
                     {flowCopy.hint}
                   </span>
                 </span>

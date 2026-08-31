@@ -43,6 +43,7 @@ export const copyFr: DiagnosticCopy = {
     next: "Continuer",
     seeResult: "Voir mon résultat",
     restart: "Recommencer le diagnostic",
+    home: "Pool4ward — retour à l'accueil",
   },
 
   ranking: {
@@ -52,6 +53,8 @@ export const copyFr: DiagnosticCopy = {
     positionAria: "Classé n°{position}. Cliquez pour retirer du classement.",
     unselectedAria: "Non classé. Cliquez pour ajouter au classement.",
     hint: "Un seul type de flux suffit pour continuer.",
+    concerned: "Concerné",
+    notConcerned: "Pas concerné",
   },
 
   flows: {
@@ -82,19 +85,18 @@ export const copyFr: DiagnosticCopy = {
     M1: {
       label: "Combien de prestataires messagerie travaillent pour vous ?",
       options: {
-        deux_trois: "2 à 3",
-        quatre_plus: "4 et plus",
         unique: "Un seul, national",
+        deux_cinq: "2 à 5",
+        six_dix: "6 à 10",
+        plus_dix: "Plus de 10",
         inconnu: "Je ne sais pas exactement",
       },
     },
     M2: {
       label: "Comment vos envois leur sont-ils attribués ?",
       options: {
-        competition: "Mise en compétition à l'envoi",
-        attitre_zone: "Un prestataire attitré par zone",
-        unique: "Un prestataire unique, tout confondu",
-        habitudes: "Selon les habitudes de chaque expéditeur",
+        comparaison: "Comparaison systématique à chaque envoi",
+        zone: "Un prestataire attitré par zone",
       },
     },
     M3: {
@@ -114,6 +116,29 @@ export const copyFr: DiagnosticCopy = {
         rapprochees: "Oui, nous les rapprochons sur nos flux réels",
         affiches: "Nous comparons les tarifs affichés",
         non: "Non, elles ne sont pas comparables en l'état",
+      },
+    },
+
+    // ⚠️ Copy hors spécification : les deux questions sur les appels d'offres.
+    M5: {
+      label:
+        "Combien de transporteurs invitez-vous à chaque appel d'offres messagerie ?",
+      options: {
+        plus_dix: "Plus de 10",
+        six_dix: "6 à 10",
+        trois_cinq: "3 à 5",
+        moins_trois: "Moins de 3",
+      },
+    },
+    M6: {
+      label:
+        "Parmi eux, combien n'avaient jamais été consultés jusque-là ?",
+      help: "Un panel qui ne se renouvelle pas finit par négocier contre lui-même.",
+      options: {
+        plusieurs: "Plusieurs à chaque consultation",
+        un_deux: "Un ou deux",
+        rarement: "Rarement, le panel bouge peu",
+        aucun: "Aucun, toujours les mêmes",
       },
     },
 
@@ -273,9 +298,18 @@ export const copyFr: DiagnosticCopy = {
       title: "Remettre en compétition sur vos flux réels,",
       body: "pas sur un tarif de référence.",
     },
-    reprise_attribution: {
-      title: "Reprendre la main sur l'attribution.",
-      body: "Ce que chaque expéditeur décide seul ne se pilote pas.",
+    // ⚠️ Copy hors spécification : leviers des questions M2, M5 et M6.
+    ouvrir_nouveaux_entrants: {
+      title: "Faire entrer des transporteurs neufs dans la consultation.",
+      body: "Un panel qui ne se renouvelle pas connaît vos prix mieux que vous.",
+    },
+    elargir_panel: {
+      title: "Élargir le panel consulté.",
+      body: "En dessous de cinq offres, ce n'est plus une mise en concurrence, c'est une confirmation.",
+    },
+    comparaison_systematique: {
+      title: "Comparer à l'envoi plutôt qu'attribuer par zone.",
+      body: "Le découpage géographique fige l'attribution sur une carte, pas sur un prix.",
     },
     prestataire_unique: {
       title: "Un prestataire unique n'est pas d'abord un problème de prix,",
