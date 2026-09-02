@@ -12,6 +12,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { computeResult, pruneAnswers, servedQuestions } from "./engine";
 import { buildRecord, EMPTY_LEAD, EMPTY_UTM, readUtm } from "./record";
 import { newRecordId, persistRecord, trackEvent } from "./telemetry";
+import type { ContactAttachment } from "./contact";
 import type {
   Answers,
   DiagnosticResult,
@@ -25,6 +26,15 @@ import type {
 
 export type Screen = "intro" | "ranking" | "question" | "result";
 
+/** État de l'envoi du formulaire de contact. */
+export type SubmitState = "idle" | "sending" | "sent" | "error";
+
+/** Messages d'erreur, fournis par la copy : le hook n'en connaît aucun. */
+export interface SubmitMessages {
+  readonly network: string;
+  readonly notConfigured: string;
+}
+
 export interface DiagnosticState {
   readonly screen: Screen;
   readonly ranking: Ranking;
@@ -33,7 +43,8 @@ export interface DiagnosticState {
   readonly currentIndex: number;
   readonly current: ServedQuestion | null;
   readonly result: DiagnosticResult | null;
-  readonly leadSubmitted: boolean;
+  readonly submitState: SubmitState;
+  readonly submitError: string | null;
   /** Numéro d'écran de question affiché (1-based), pour la barre de progression. */
   readonly step: number;
   readonly totalSteps: number;
@@ -44,16 +55,21 @@ export interface DiagnosticState {
   next: () => void;
   back: () => void;
   restart: () => void;
-  submitLead: (lead: LeadFields) => void;
+  submitLead: (
+    lead: LeadFields,
+    attachments: readonly ContactAttachment[],
+    messages: SubmitMessages,
+  ) => void;
   trackCta: () => void;
 }
 
-export function useDiagnostic(): DiagnosticState {
+export function useDiagnostic(locale: string): DiagnosticState {
   const [screen, setScreen] = useState<Screen>("intro");
   const [ranking, setRanking] = useState<Ranking>([]);
   const [answers, setAnswers] = useState<Answers>({});
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [leadSubmitted, setLeadSubmitted] = useState(false);
+  const [submitState, setSubmitState] = useState<SubmitState>("idle");
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const startedAt = useRef<number | null>(null);
   const recordId = useRef<string | null>(null);
@@ -119,6 +135,7 @@ export function useDiagnostic(): DiagnosticState {
         id: recordId.current,
         createdAt: new Date(),
         durationSeconds: duration,
+        locale,
         lead: EMPTY_LEAD,
         utm: utm.current,
       }),
@@ -131,7 +148,7 @@ export function useDiagnostic(): DiagnosticState {
       outcome: result.outcome,
       duration_seconds: duration,
     });
-  }, [screen, result, ranking, answers]);
+  }, [screen, result, ranking, answers, locale]);
 
   /* --------------------------------------------------------------------- */
   /* Actions                                                               */
@@ -209,41 +226,82 @@ export function useDiagnostic(): DiagnosticState {
     setRanking([]);
     setAnswers({});
     setCurrentIndex(0);
-    setLeadSubmitted(false);
+    setSubmitState("idle");
+    setSubmitError(null);
     setScreen("ranking");
   }, []);
 
   const submitLead = useCallback(
-    (lead: LeadFields) => {
+    (
+      lead: LeadFields,
+      attachments: readonly ContactAttachment[],
+      messages: SubmitMessages,
+    ) => {
       if (!result || !recordId.current) return;
       const duration = startedAt.current
         ? Math.round((Date.now() - startedAt.current) / 1000)
         : 0;
 
-      persistRecord(
-        buildRecord({
-          result,
-          // Une réponse devenue caduque — M2 après un retour sur M1,
-          // par exemple — ne compte pas dans l'indice et n'a rien à
-          // faire dans l'enregistrement.
-          answers: pruneAnswers(ranking, answers),
-          id: recordId.current,
-          createdAt: new Date(),
-          durationSeconds: duration,
-          lead,
-          utm: utm.current,
-        }),
-      );
-
-      trackEvent("lead_submitted", {
-        branch: result.branch,
-        role: lead.role,
-        perimetre: lead.perimetre,
-        budget: lead.budget,
+      const record = buildRecord({
+        result,
+        answers: pruneAnswers(ranking, answers),
+        id: recordId.current,
+        createdAt: new Date(),
+        durationSeconds: duration,
+        locale,
+        lead,
+        utm: utm.current,
       });
-      setLeadSubmitted(true);
+
+      persistRecord(record);
+      setSubmitState("sending");
+      setSubmitError(null);
+
+      void (async () => {
+        try {
+          const reponse = await fetch("/api/diagnostic/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: lead.email,
+              societe: lead.societe,
+              role: lead.role,
+              perimetre: lead.perimetre,
+              budget: lead.budget,
+              creneauDate: lead.creneau_date,
+              creneauHeure: lead.creneau_heure,
+              message: lead.message,
+              attachments,
+              record,
+            }),
+          });
+
+          if (reponse.ok) {
+            trackEvent("lead_submitted", {
+              branch: result.branch,
+              role: lead.role,
+              perimetre: lead.perimetre,
+              budget: lead.budget,
+              creneau: lead.creneau_date,
+              fichiers: lead.fichiers.length,
+            });
+            setSubmitState("sent");
+            return;
+          }
+
+          // 503 : l'envoi n'est pas configuré sur cet environnement. Le dire
+          // plutôt que d'afficher un succès qui n'a envoyé nulle part.
+          setSubmitError(
+            reponse.status === 503 ? messages.notConfigured : messages.network,
+          );
+          setSubmitState("error");
+        } catch {
+          setSubmitError(messages.network);
+          setSubmitState("error");
+        }
+      })();
     },
-    [result, ranking, answers],
+    [result, ranking, answers, locale],
   );
 
   const trackCta = useCallback(() => {
@@ -259,7 +317,8 @@ export function useDiagnostic(): DiagnosticState {
     currentIndex,
     current,
     result,
-    leadSubmitted,
+    submitState,
+    submitError,
     step: currentIndex + 1,
     totalSteps: questions.length,
     start,

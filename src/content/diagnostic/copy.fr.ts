@@ -279,7 +279,6 @@ export const copyFr: DiagnosticCopy = {
     rdv: {
       title: "On reprend vos leviers avec vous.",
       body: "Un expert transport reprend les points que votre diagnostic a fait ressortir et vous dit comment chacun se traite : ce qui se règle en interne, ce qui passe par un appel d'offres, ce qui demande de revoir le schéma. Quarante-cinq minutes, pas une démonstration d'outil.",
-      cta: "Réserver un créneau",
     },
     flux: {
       title: "Le bouclage ne se discute pas à vide.",
@@ -292,8 +291,6 @@ export const copyFr: DiagnosticCopy = {
         "régularité",
       ],
       note: "Un fichier plat, aucun accès à vos systèmes. Nous signons un accord de confidentialité avant tout échange si vous le souhaitez.",
-      cta: "Envoyer mes flux",
-      alternate: "Vous préférez commencer par en parler ? Réserver 30 minutes →",
     },
   },
 
@@ -307,10 +304,10 @@ export const copyFr: DiagnosticCopy = {
       "Même sur des flux irréguliers, la matrice fait apparaître la part stable : c'est par là qu'on commence.",
   },
 
-  lead: {
-    title: "Recevez votre diagnostic détaillé",
+  contact: {
+    title: "Parlons-en quarante-cinq minutes",
     subtitle:
-      "Votre indice question par question, vos leviers développés, et le comparatif avec les autres chargeurs de votre profil.",
+      "Laissez-nous de quoi vous rappeler et choisissez un créneau. Un expert transport reprend vos réponses avant l'échange : vous n'aurez pas à les répéter.",
     email: {
       label: "Email professionnel",
       placeholder: "prenom.nom@societe.com",
@@ -351,16 +348,59 @@ export const copyFr: DiagnosticCopy = {
         { value: "non_communique", label: "Je préfère ne pas répondre" },
       ],
     },
+    creneauTitle: "Quand vous arrange-t-il ?",
+    creneauHelp:
+      "Nous confirmons le créneau par retour d'email. Si aucun ne convient, laissez vide et nous vous proposerons autre chose.",
+    creneauDate: {
+      label: "Jour souhaité",
+      placeholder: "Sélectionnez un jour",
+      // Les jours sont générés à partir de la date du répondant : seule la
+      // valeur vide a un libellé fixe.
+      options: [],
+    },
+    creneauHeure: {
+      label: "Moment de la journée",
+      placeholder: "Sélectionnez un moment",
+      options: [
+        { value: "matin", label: "Matin (9 h – 12 h)" },
+        { value: "apres_midi", label: "Après-midi (14 h – 17 h)" },
+        { value: "fin_journee", label: "Fin de journée (17 h – 19 h)" },
+      ],
+    },
+    message: {
+      label: "Un point à aborder en particulier",
+      placeholder: "Facultatif",
+    },
+    files: {
+      title: "Vos ordres de transport",
+      label: "Ajouter des fichiers",
+      help: "CSV, Excel, PDF ou texte. Trois fichiers au plus, 3,5 Mo en tout. Un fichier plat suffit : origine, destination, nombre d'envois, tonnage ou palettes, régularité. Aucun accès à vos systèmes n'est demandé.",
+      button: "Choisir des fichiers",
+      remove: "Retirer",
+    },
     optional: "facultatif",
-    submit: "Recevoir mon diagnostic",
+    submit: "Envoyer ma demande",
     submitting: "Envoi en cours…",
-    success:
-      "C'est noté. Votre diagnostic détaillé part par email dans les prochaines minutes.",
+    success: {
+      title: "C'est envoyé.",
+      body: "Nous revenons vers vous pour confirmer le créneau. Un accusé de réception vient de partir sur votre adresse.",
+    },
+    confirmation: {
+      subject: "Votre diagnostic Pool4ward — nous revenons vers vous",
+      body: "Merci d'avoir pris le temps de ce diagnostic. Nous avons bien reçu votre demande et revenons vers vous pour confirmer le créneau. À bientôt.",
+    },
     privacy:
-      "Vos réponses servent à préparer votre rendez-vous. Aucune donnée de flux ne vous a été demandée.",
+      "Vos réponses servent à préparer votre rendez-vous. Aucune donnée de flux ne vous a été demandée pendant le questionnaire.",
     errors: {
-      required: "Ce champ est nécessaire pour vous envoyer le rapport.",
+      required: "Ce champ est nécessaire pour vous recontacter.",
       email: "Merci d'indiquer une adresse email professionnelle valide.",
+      filesTooMany: "Trois fichiers au maximum.",
+      filesTooLarge: "L'ensemble des fichiers ne doit pas dépasser 3,5 Mo.",
+      fileType: "Formats acceptés : CSV, TSV, TXT, Excel ou PDF.",
+      network:
+        "L'envoi n'a pas abouti. Réessayez dans un instant, ou écrivez-nous directement.",
+      notConfigured:
+        "L'envoi n'est pas encore actif sur cette page. Écrivez-nous directement en attendant.",
     },
   },
 };

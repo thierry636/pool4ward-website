@@ -39,20 +39,6 @@ export const OUTCOME_BY_BRANCH: Readonly<Record<FlowType, OutcomeId>> = {
 };
 
 /**
- * Sortie proposée en lien secondaire discret sous le CTA principal, quand elle
- * a du sens.
- *
- * Un profil camions complets se voit proposer d'en parler plutôt que d'envoyer
- * ses flux : c'est une porte plus facile. L'inverse n'est pas vrai — envoyer
- * une matrice origine-destination n'a rien à dire d'un achat messagerie, et
- * proposer cette porte ne ferait qu'affaiblir le rendez-vous.
- */
-export const ALTERNATE_OUTCOME: Readonly<Record<OutcomeId, OutcomeId | null>> = {
-  rdv: null,
-  flux: "rdv",
-};
-
-/**
  * Phrases ajoutées au bloc de conversion, sélectionnées par condition.
  *
  * Un profil complets à flux aléatoires part malgré tout en demande de flux —

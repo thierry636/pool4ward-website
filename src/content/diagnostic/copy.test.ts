@@ -2,12 +2,9 @@ import { describe, expect, it } from "vitest";
 
 import { DIAGNOSTIC_COPY, format, getDiagnosticCopy } from "./copy";
 import { LEVER_IDS } from "./levers";
-import {
-  ALTERNATE_OUTCOME,
-  LEVEL_THRESHOLDS,
-  OUTCOME_BY_BRANCH,
-} from "./scoring";
+import { LEVEL_THRESHOLDS, OUTCOME_BY_BRANCH } from "./scoring";
 import { FLOW_TYPES, QUESTION_BANK } from "./questions";
+import { SLOT_TIMES } from "@/lib/diagnostic/slots";
 
 /**
  * La copy est en données, pas dans le markup : ces tests garantissent qu'aucune
@@ -37,6 +34,28 @@ describe.each(Object.entries(DIAGNOSTIC_COPY))("copy « %s »", (locale, copy) =
         expect(known.has(value), `${locale} → ${id}.${value}`).toBe(true);
       }
     }
+  });
+
+  it("couvre le formulaire de contact et ses erreurs", () => {
+    expect(copy.contact.title).toBeTruthy();
+    expect(copy.contact.submit).toBeTruthy();
+    expect(copy.contact.success.title).toBeTruthy();
+    expect(copy.contact.confirmation.subject).toBeTruthy();
+    for (const cle of [
+      "required",
+      "email",
+      "filesTooMany",
+      "filesTooLarge",
+      "fileType",
+      "network",
+      "notConfigured",
+    ] as const) {
+      expect(copy.contact.errors[cle], `${locale} → ${cle}`).toBeTruthy();
+    }
+    // Les moments de la journée doivent correspondre aux créneaux du moteur.
+    expect(copy.contact.creneauHeure.options.map((o) => o.value)).toEqual([
+      ...SLOT_TIMES,
+    ]);
   });
 
   it("couvre chaque levier déclaré en configuration", () => {
@@ -69,14 +88,7 @@ describe.each(Object.entries(DIAGNOSTIC_COPY))("copy « %s »", (locale, copy) =
     );
     for (const outcome of outcomes) {
       expect(copy.outcomes[outcome].title, `${locale} → ${outcome}`).toBeTruthy();
-      expect(copy.outcomes[outcome].cta).toBeTruthy();
-      // Le lien vers l'autre sortie est facultatif, mais s'il est déclaré dans
-      // la configuration il doit avoir un libellé, et inversement.
-      const alterne = ALTERNATE_OUTCOME[outcome];
-      expect(
-        Boolean(copy.outcomes[outcome].alternate),
-        `${locale} → ${outcome}.alternate`,
-      ).toBe(alterne !== null);
+      expect(copy.outcomes[outcome].body, `${locale} → ${outcome}`).toBeTruthy();
     }
   });
 

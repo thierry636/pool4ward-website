@@ -50,9 +50,6 @@ export interface OutcomeCopy {
   /** Détail facultatif — les cinq colonnes du fichier de flux, par exemple. */
   readonly details?: readonly string[];
   readonly note?: string;
-  readonly cta: string;
-  /** Lien discret vers l'autre sortie. Absent quand la sortie n'en propose pas. */
-  readonly alternate?: string;
 }
 
 export interface SelectFieldCopy {
@@ -145,7 +142,11 @@ export interface DiagnosticCopy {
   /** Phrases d'accompagnement, indexées par identifiant de règle. */
   readonly outcomeNotes: Readonly<Record<OutcomeNoteId, string>>;
 
-  readonly lead: {
+  /**
+   * Formulaire unique de fin de parcours : contact, créneau souhaité, et — pour
+   * un profil camions complets — dépôt d'ordres de transport.
+   */
+  readonly contact: {
     readonly title: string;
     readonly subtitle: string;
     readonly email: TextFieldCopy;
@@ -153,14 +154,39 @@ export interface DiagnosticCopy {
     readonly role: SelectFieldCopy;
     readonly perimetre: SelectFieldCopy;
     readonly budget: SelectFieldCopy;
+    readonly creneauTitle: string;
+    readonly creneauHelp: string;
+    readonly creneauDate: SelectFieldCopy;
+    readonly creneauHeure: SelectFieldCopy;
+    readonly message: TextFieldCopy;
+    /** Dépôt de fichiers, servi uniquement aux branches qui le déclarent. */
+    readonly files: {
+      readonly title: string;
+      readonly label: string;
+      readonly help: string;
+      readonly button: string;
+      readonly remove: string;
+    };
     readonly optional: string;
     readonly submit: string;
     readonly submitting: string;
-    readonly success: string;
+    readonly success: {
+      readonly title: string;
+      readonly body: string;
+    };
+    readonly confirmation: {
+      readonly subject: string;
+      readonly body: string;
+    };
     readonly privacy: string;
     readonly errors: {
       readonly required: string;
       readonly email: string;
+      readonly filesTooMany: string;
+      readonly filesTooLarge: string;
+      readonly fileType: string;
+      readonly network: string;
+      readonly notConfigured: string;
     };
   };
 }

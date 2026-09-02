@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  alternateOutcomeFor,
   computeResult,
   computeScore,
   isComplete,
@@ -584,15 +583,6 @@ describe("routage", () => {
     expect(nul?.outcome).toBe("flux");
   });
 
-  it("ne propose l'autre sortie que là où elle a du sens", () => {
-    // Un profil complets se voit proposer d'en parler plutôt que d'envoyer ses
-    // flux. L'inverse n'est pas vrai : envoyer une matrice origine-destination
-    // n'a rien à dire d'un achat messagerie.
-    expect(alternateOutcomeFor("flux")).toBe("rdv");
-    expect(alternateOutcomeFor("rdv")).toBeNull();
-    expect(computeResult(["messagerie"], {})?.alternateOutcome).toBeNull();
-    expect(computeResult(["complets"], {})?.alternateOutcome).toBe("rdv");
-  });
 });
 
 /* -------------------------------------------------------------------------- */

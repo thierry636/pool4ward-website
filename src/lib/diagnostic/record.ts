@@ -22,6 +22,10 @@ export const EMPTY_LEAD: LeadFields = {
   role: null,
   perimetre: null,
   budget: null,
+  creneau_date: null,
+  creneau_heure: null,
+  message: null,
+  fichiers: [],
 };
 
 export const EMPTY_UTM: UtmFields = {
@@ -46,6 +50,7 @@ export interface BuildRecordInput {
   readonly id: string;
   readonly createdAt: Date;
   readonly durationSeconds: number;
+  readonly locale: string;
   readonly lead?: LeadFields;
   readonly utm?: UtmFields;
 }
@@ -56,12 +61,14 @@ export function buildRecord({
   id,
   createdAt,
   durationSeconds,
+  locale,
   lead = EMPTY_LEAD,
   utm = EMPTY_UTM,
 }: BuildRecordInput): DiagnosticRecord {
   return {
     id,
     created_at: createdAt.toISOString(),
+    locale,
     ranking: result.ranking,
     branch: result.branch,
     answers: definedAnswers(answers),

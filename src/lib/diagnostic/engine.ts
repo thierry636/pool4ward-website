@@ -14,7 +14,6 @@ import {
 } from "@/content/diagnostic/questions";
 import { LEVER_RULES, SECONDARY_LEVER_RULES } from "@/content/diagnostic/levers";
 import {
-  ALTERNATE_OUTCOME,
   LEVEL_THRESHOLDS,
   MAX_LEVERS,
   OUTCOME_BY_BRANCH,
@@ -213,11 +212,6 @@ export function outcomeFor(branch: FlowType): OutcomeId {
   return OUTCOME_BY_BRANCH[branch];
 }
 
-/** L'autre sortie, en lien secondaire discret — `null` quand il n'y en a pas. */
-export function alternateOutcomeFor(outcome: OutcomeId): OutcomeId | null {
-  return ALTERNATE_OUTCOME[outcome];
-}
-
 /** Phrases d'accompagnement de la sortie, sélectionnées par condition. */
 export function selectOutcomeNotes(
   ranking: Ranking,
@@ -255,7 +249,6 @@ export function computeResult(
     levers: selectLevers(ranking, answers),
     secondaryLever: selectSecondaryLever(ranking, answers),
     outcome,
-    alternateOutcome: alternateOutcomeFor(outcome),
     outcomeNotes: selectOutcomeNotes(ranking, answers),
   };
 }
