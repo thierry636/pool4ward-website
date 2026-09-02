@@ -98,17 +98,14 @@ export interface DiagnosticCopy {
     readonly home: string;
   };
 
+  /**
+   * Écran de choix du flux principal. Les états sélectionné / non sélectionné
+   * sont portés par les boutons radio natifs : aucune chaîne à prévoir pour
+   * les lecteurs d'écran.
+   */
   readonly ranking: {
     readonly title: string;
     readonly help: string;
-    /** Gabarit avec {position}, lu par les lecteurs d'écran. */
-    readonly positionAria: string;
-    readonly unselectedAria: string;
-    readonly hint: string;
-    /** État affiché sur une carte classée. */
-    readonly concerned: string;
-    /** État affiché sur une carte laissée de côté. */
-    readonly notConcerned: string;
   };
 
   readonly flows: Readonly<Record<FlowType, FlowCopy>>;

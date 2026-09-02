@@ -38,8 +38,8 @@ export interface DiagnosticState {
   readonly step: number;
   readonly totalSteps: number;
   start: () => void;
-  toggleFlow: (flow: FlowType) => void;
-  submitRanking: () => void;
+  selectFlow: (flow: FlowType) => void;
+  submitRanking: (flow?: FlowType) => void;
   answer: (id: QuestionId, value: OptionValue) => void;
   next: () => void;
   back: () => void;
@@ -143,23 +143,34 @@ export function useDiagnostic(): DiagnosticState {
     setScreen("ranking");
   }, []);
 
-  /** Un clic classe la carte ; un second la retire et renumérote les suivantes. */
-  const toggleFlow = useCallback((flow: FlowType) => {
-    setRanking((previous) =>
-      previous.includes(flow)
-        ? previous.filter((entry) => entry !== flow)
-        : [...previous, flow],
-    );
+  /**
+   * Deux typologies seulement : on choisit l'une ou l'autre. `ranking` reste un
+   * tableau — c'est la forme attendue par le moteur et par l'enregistrement —
+   * mais il ne contient qu'une entrée.
+   */
+  const selectFlow = useCallback((flow: FlowType) => {
+    setRanking([flow]);
   }, []);
 
-  const submitRanking = useCallback(() => {
-    if (ranking.length === 0) return;
-    // Un changement de classement peut rendre des réponses orphelines.
-    setAnswers((previous) => pruneAnswers(ranking, previous));
-    setCurrentIndex(0);
-    setScreen("question");
-    trackEvent("ranking_submitted", { ranking });
-  }, [ranking]);
+  /**
+   * `flow` est passé explicitement quand la sélection et la validation ont lieu
+   * dans le même geste — un clic sur une carte sélectionne puis avance. Sans
+   * cela, la validation lirait le flux d'avant le clic et ne partirait jamais.
+   */
+  const submitRanking = useCallback(
+    (flow?: FlowType) => {
+      const choisi: Ranking = flow ? [flow] : ranking;
+      if (choisi.length === 0) return;
+
+      setRanking(choisi);
+      // Un changement de flux peut rendre des réponses orphelines.
+      setAnswers((previous) => pruneAnswers(choisi, previous));
+      setCurrentIndex(0);
+      setScreen("question");
+      trackEvent("ranking_submitted", { ranking: choisi });
+    },
+    [ranking],
+  );
 
   const answer = useCallback((id: QuestionId, value: OptionValue) => {
     setAnswers((previous) => ({ ...previous, [id]: value }));
@@ -252,7 +263,7 @@ export function useDiagnostic(): DiagnosticState {
     step: currentIndex + 1,
     totalSteps: questions.length,
     start,
-    toggleFlow,
+    selectFlow,
     submitRanking,
     answer,
     next,

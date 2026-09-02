@@ -276,7 +276,13 @@ describe("branchement — branche camions complets", () => {
 /* Deux flux classés                                                           */
 /* -------------------------------------------------------------------------- */
 
-describe("deux flux classés", () => {
+/**
+ * ⚠️ Depuis le passage de l'écran 1 en choix unique, l'interface ne produit
+ * plus qu'un seul flux classé : ces cas ne sont plus atteignables par un
+ * répondant. Le moteur reste général et testé — rouvrir un second flux ne
+ * demanderait que de rétablir la sélection multiple à l'écran 1.
+ */
+describe("deux flux classés — capacité du moteur, hors parcours actuel", () => {
   it("sert une seule question de la branche secondaire, à la bonne place", () => {
     // Branche n°1, puis l'unique question de la branche n°2, puis la clôture.
     expect(idsOf(["messagerie", "complets"])).toEqual([
