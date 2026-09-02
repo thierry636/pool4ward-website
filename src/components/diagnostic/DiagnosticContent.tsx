@@ -7,6 +7,7 @@ import { useDiagnostic } from "@/lib/diagnostic/useDiagnostic";
 import { ConversionBlock } from "./ConversionBlock";
 import { DiagnosticHeader } from "./DiagnosticHeader";
 import { FlowChoice } from "./FlowChoice";
+import { LanguageChoice } from "./LanguageChoice";
 import { ContactForm } from "./ContactForm";
 import { ProgressBar } from "./ProgressBar";
 import { QuestionScreen } from "./QuestionScreen";
@@ -79,7 +80,11 @@ export function DiagnosticContent({ locale }: { locale: string }) {
           {/* ---------------------------------------------------------- */}
           {screen === "intro" ? (
             <section className="flex min-h-[55svh] flex-col justify-center">
-              <p className="text-xs font-semibold uppercase tracking-wider text-brand-600">
+              {/* Le choix de la langue n'existe qu'ici : plus loin, il ferait
+                  perdre les réponses déjà données. */}
+              <LanguageChoice current={copy.locale} />
+
+              <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-brand-600">
                 {copy.intro.eyebrow}
               </p>
               <h1 className="mt-3 text-3xl font-bold leading-tight tracking-tight text-navy-900 sm:text-4xl">

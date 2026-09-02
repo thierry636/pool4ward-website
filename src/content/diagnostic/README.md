@@ -82,12 +82,26 @@ Modifier les points dans `questions.ts` et les seuils dans `scoring.ts`.
 l'enregistrement : les réponses brutes permettent de recalculer l'historique
 après un changement de barème.
 
-## Ouvrir la version anglaise
+## Langues
 
-Dupliquer `copy.fr.ts` en `copy.en.ts` et l'enregistrer dans
-`DIAGNOSTIC_COPY` (`copy.ts`). Le type `DiagnosticCopy` refuse une traduction
-incomplète. Retirer alors la redirection forcée vers `/fr` dans
-`next.config.mjs`.
+Français et anglais. Le répondant choisit sa langue sur l'écran d'accueil ; le
+sélecteur navigue vers `/fr/diagnostic` ou `/en/diagnostic` plutôt que de
+basculer un état interne, pour que l'URL reste vraie et la page partageable. Il
+ne s'affiche qu'à l'accueil : plus loin, changer de langue relancerait la page
+et perdrait les réponses.
+
+`/diagnostic` redirige vers le français — c'est l'URL de la campagne.
+
+Ajouter une langue : dupliquer `copy.fr.ts`, l'enregistrer dans
+`DIAGNOSTIC_COPY` et l'ajouter à `DIAGNOSTIC_LOCALES` (`copy.ts`). Le type
+`DiagnosticCopy` refuse une traduction incomplète, et un test vérifie que les
+deux listes coïncident — un sélecteur qui offrirait une langue sans copy
+afficherait du français sous un drapeau anglais.
+
+**Langue des emails.** La notification interne est toujours en français : c'est
+la langue de l'équipe qui la lit, et une structure stable se dépouille plus vite.
+La langue du répondant y est indiquée en pied. Son accusé de réception, lui,
+part dans sa langue.
 
 ## Variables d'environnement
 

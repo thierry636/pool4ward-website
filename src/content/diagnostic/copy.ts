@@ -1,18 +1,21 @@
 /**
  * Registre des objets i18n du diagnostic.
  *
- * v1 : FR uniquement. La version EN s'ouvrira sur `/en/diagnostic` une fois le
- * taux de conversion FR mesuré — deux langues au lancement, c'est deux fois
- * moins de données pour itérer. En attendant, toute autre locale retombe sur la
- * copy FR plutôt que d'afficher des clés brutes.
+ * Une entrée par langue réellement traduite. Toute locale absente retombe sur
+ * le français plutôt que d'afficher des clés brutes.
  */
 
 import type { DiagnosticCopy } from "./copy-types";
+import { copyEn } from "./copy.en";
 import { copyFr } from "./copy.fr";
 
 export const DIAGNOSTIC_COPY: Readonly<Record<string, DiagnosticCopy>> = {
   fr: copyFr,
+  en: copyEn,
 };
+
+/** Langues proposées au répondant, dans l'ordre d'affichage. */
+export const DIAGNOSTIC_LOCALES = ["fr", "en"] as const;
 
 export const DEFAULT_DIAGNOSTIC_LOCALE = "fr";
 

@@ -14,9 +14,15 @@ export async function generateMetadata({
   return {
     title: copy.meta.title,
     description: copy.meta.description,
-    // v1 : le diagnostic n'existe qu'en français. La version EN s'ouvrira sur
-    // /en/diagnostic une fois le taux de conversion FR mesuré.
-    alternates: { canonical: "/fr/diagnostic" },
+    alternates: {
+      // La page canonique est celle de la langue effectivement servie : la copy
+      // retombe sur le français pour toute locale non traduite.
+      canonical: `/${copy.locale}/diagnostic`,
+      languages: {
+        fr: "/fr/diagnostic",
+        en: "/en/diagnostic",
+      },
+    },
   };
 }
 

@@ -28,6 +28,14 @@ export const runtime = "nodejs";
 const RESEND_ENDPOINT =
   process.env.RESEND_API_URL ?? "https://api.resend.com/emails";
 
+/**
+ * La notification interne est toujours rédigée en français : c'est la langue de
+ * l'équipe qui la lit, et une structure stable se dépouille plus vite qu'une
+ * langue qui change d'un email à l'autre. La langue du répondant y est indiquée,
+ * et son accusé de réception part, lui, dans sa langue.
+ */
+const INTERNAL_LOCALE = "fr";
+
 /** Messages de validation côté serveur : techniques, jamais affichés tels quels. */
 const SERVER_MESSAGES = {
   required: "champ obligatoire",
@@ -103,6 +111,8 @@ function reponsesLisibles(demande: ContactRequest, locale: string): string[] {
 }
 
 function corpsHtml(demande: ContactRequest, locale: string): string {
+  // `locale` est celle de l'email, pas celle du répondant : le corps interne se
+  // lit en français même quand le questionnaire a été rempli en anglais.
   const copy = getDiagnosticCopy(locale);
   const r = demande.record;
   const branche = copy.flows[r.branch].indexLabel;
@@ -167,6 +177,7 @@ function corpsHtml(demande: ContactRequest, locale: string): string {
     }
     <hr>
     <p style="color:#64748b;font-size:12px">
+      Langue du répondant : ${echapper(r.locale.toUpperCase())} ·
       Diagnostic ${echapper(r.id)} · ${echapper(r.created_at)} ·
       ${r.duration_seconds} s ·
       utm ${echapper(
@@ -214,7 +225,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "invalid", fields: erreurs }, { status: 400 });
   }
 
-  const locale = demande.record.locale ?? "fr";
+  // Langue du répondant, pour son accusé de réception uniquement.
+  const locale = demande.record.locale ?? INTERNAL_LOCALE;
   const copy = getDiagnosticCopy(locale);
 
   const envoi = await envoyer(cfg, {
@@ -222,7 +234,7 @@ export async function POST(request: Request) {
     to: cfg.to,
     reply_to: demande.email,
     subject: `Diagnostic IPT — ${demande.societe} — ${demande.record.indice}/100 (${demande.record.branch})`,
-    html: corpsHtml(demande, locale),
+    html: corpsHtml(demande, INTERNAL_LOCALE),
     attachments: demande.attachments.map((f) => ({
       filename: f.filename,
       content: f.content,
