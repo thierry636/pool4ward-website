@@ -37,12 +37,43 @@ const SERVER_MESSAGES = {
   fileType: "type de fichier refusé",
 };
 
+/**
+ * Une adresse d'expéditeur ou de destinataire — `nom@domaine.fr` ou
+ * `Pool4ward <nom@domaine.fr>`. Le domaine seul est l'erreur de configuration
+ * la plus facile à faire : c'est lui qu'on vérifie chez Resend, mais ce n'est
+ * pas lui qu'on envoie.
+ */
+function isMailbox(valeur: string): boolean {
+  const adresse = valeur.includes("<")
+    ? (valeur.match(/<([^>]+)>/)?.[1] ?? "")
+    : valeur;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(adresse.trim());
+}
+
 function config() {
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.DIAGNOSTIC_EMAIL_TO;
   const from = process.env.DIAGNOSTIC_EMAIL_FROM;
   if (!apiKey || !to || !from) return null;
-  return { apiKey, to: to.split(",").map((a) => a.trim()), from };
+
+  const destinataires = to
+    .split(",")
+    .map((adresse) => adresse.trim())
+    .filter(Boolean);
+
+  const invalides = [from, ...destinataires].filter(
+    (adresse) => !isMailbox(adresse),
+  );
+  if (invalides.length > 0 || destinataires.length === 0) {
+    console.error(
+      "[diagnostic] adresses mal formées — attendu « nom@domaine.fr » ou " +
+        "« Nom <nom@domaine.fr> », reçu :",
+      invalides.join(", ") || "(aucun destinataire)",
+    );
+    return null;
+  }
+
+  return { apiKey, to: destinataires, from };
 }
 
 function echapper(valeur: string): string {
