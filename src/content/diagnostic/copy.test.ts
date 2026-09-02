@@ -4,6 +4,7 @@ import { DIAGNOSTIC_COPY, format, getDiagnosticCopy } from "./copy";
 import { LEVER_IDS } from "./levers";
 import { LEVEL_THRESHOLDS, OUTCOME_BY_BRANCH } from "./scoring";
 import { FLOW_TYPES, QUESTION_BANK } from "./questions";
+import { SLOT_TIMES } from "@/lib/diagnostic/slots";
 
 /**
  * La copy est en données, pas dans le markup : ces tests garantissent qu'aucune
@@ -33,6 +34,28 @@ describe.each(Object.entries(DIAGNOSTIC_COPY))("copy « %s »", (locale, copy) =
         expect(known.has(value), `${locale} → ${id}.${value}`).toBe(true);
       }
     }
+  });
+
+  it("couvre le formulaire de contact et ses erreurs", () => {
+    expect(copy.contact.title).toBeTruthy();
+    expect(copy.contact.submit).toBeTruthy();
+    expect(copy.contact.success.title).toBeTruthy();
+    expect(copy.contact.confirmation.subject).toBeTruthy();
+    for (const cle of [
+      "required",
+      "email",
+      "filesTooMany",
+      "filesTooLarge",
+      "fileType",
+      "network",
+      "notConfigured",
+    ] as const) {
+      expect(copy.contact.errors[cle], `${locale} → ${cle}`).toBeTruthy();
+    }
+    // Les moments de la journée doivent correspondre aux créneaux du moteur.
+    expect(copy.contact.creneauHeure.options.map((o) => o.value)).toEqual([
+      ...SLOT_TIMES,
+    ]);
   });
 
   it("couvre chaque levier déclaré en configuration", () => {
@@ -65,8 +88,7 @@ describe.each(Object.entries(DIAGNOSTIC_COPY))("copy « %s »", (locale, copy) =
     );
     for (const outcome of outcomes) {
       expect(copy.outcomes[outcome].title, `${locale} → ${outcome}`).toBeTruthy();
-      expect(copy.outcomes[outcome].cta).toBeTruthy();
-      expect(copy.outcomes[outcome].alternate).toBeTruthy();
+      expect(copy.outcomes[outcome].body, `${locale} → ${outcome}`).toBeTruthy();
     }
   });
 

@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  alternateOutcomeFor,
   computeResult,
   computeScore,
   isComplete,
@@ -584,11 +583,6 @@ describe("routage", () => {
     expect(nul?.outcome).toBe("flux");
   });
 
-  it("propose toujours l'autre sortie en lien secondaire", () => {
-    expect(alternateOutcomeFor("rdv")).toBe("flux");
-    expect(alternateOutcomeFor("flux")).toBe("rdv");
-    expect(computeResult(["messagerie"], {})?.alternateOutcome).toBe("flux");
-  });
 });
 
 /* -------------------------------------------------------------------------- */

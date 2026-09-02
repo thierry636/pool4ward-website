@@ -10,13 +10,13 @@ Implémentation de `spec-diagnostic-ipt.md`, servie sur `/diagnostic`
 | Banque de questions et barème | `src/content/diagnostic/questions.ts` |
 | Seuils, routage, phrases de sortie | `src/content/diagnostic/scoring.ts` |
 | Règles de leviers | `src/content/diagnostic/levers.ts` |
-| Destinations des CTA | `src/content/diagnostic/destinations.ts` |
 | Copy (objet i18n) | `src/content/diagnostic/copy.fr.ts` |
 | Contrat de la copy | `src/content/diagnostic/copy-types.ts` |
 | Types | `src/lib/diagnostic/types.ts` |
 | Évaluateur de conditions | `src/lib/diagnostic/conditions.ts` |
 | Moteur (branchement, indice, leviers) | `src/lib/diagnostic/engine.ts` |
 | Enregistrement et télémétrie | `src/lib/diagnostic/record.ts`, `telemetry.ts` |
+| Formulaire de fin et envoi | `src/components/diagnostic/ContactForm.tsx`, `src/app/api/diagnostic/contact/route.ts` |
 | Interface | `src/components/diagnostic/` |
 
 Le moteur ne contient ni barème ni libellé ; les composants ne contiennent

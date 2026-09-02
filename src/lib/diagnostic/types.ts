@@ -133,8 +133,6 @@ export interface DiagnosticResult extends ScoreBreakdown {
   /** Levier déclenché par la question de branche secondaire, s'il y en a un. */
   readonly secondaryLever: LeverId | null;
   readonly outcome: OutcomeId;
-  /** Sortie proposée en lien secondaire — personne ne doit se sentir aiguillé. */
-  readonly alternateOutcome: OutcomeId;
   /** Phrases ajoutées au bloc de conversion, sélectionnées par condition. */
   readonly outcomeNotes: readonly string[];
 }
@@ -145,6 +143,12 @@ export interface LeadFields {
   readonly role: string | null;
   readonly perimetre: string | null;
   readonly budget: string | null;
+  /** Créneau souhaité, `AAAA-MM-JJ`. Facultatif : on peut écrire sans réserver. */
+  readonly creneau_date: string | null;
+  readonly creneau_heure: string | null;
+  readonly message: string | null;
+  /** Noms des ordres de transport joints, pour retrouver l'envoi. */
+  readonly fichiers: readonly string[];
 }
 
 export interface UtmFields {
@@ -158,6 +162,8 @@ export interface UtmFields {
 export interface DiagnosticRecord {
   readonly id: string;
   readonly created_at: string;
+  /** Langue du parcours, pour reformuler les réponses dans l'email. */
+  readonly locale: string;
   readonly ranking: Ranking;
   readonly branch: FlowType;
   readonly answers: Record<QuestionId, OptionValue>;

@@ -39,15 +39,6 @@ export const OUTCOME_BY_BRANCH: Readonly<Record<FlowType, OutcomeId>> = {
 };
 
 /**
- * L'autre sortie reste toujours accessible en lien secondaire discret sous le
- * CTA principal. Personne ne doit se sentir aiguillé.
- */
-export const ALTERNATE_OUTCOME: Readonly<Record<OutcomeId, OutcomeId>> = {
-  rdv: "flux",
-  flux: "rdv",
-};
-
-/**
  * Phrases ajoutées au bloc de conversion, sélectionnées par condition.
  *
  * Un profil complets à flux aléatoires part malgré tout en demande de flux —

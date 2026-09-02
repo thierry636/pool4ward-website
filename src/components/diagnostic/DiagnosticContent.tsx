@@ -7,7 +7,7 @@ import { useDiagnostic } from "@/lib/diagnostic/useDiagnostic";
 import { ConversionBlock } from "./ConversionBlock";
 import { DiagnosticHeader } from "./DiagnosticHeader";
 import { FlowChoice } from "./FlowChoice";
-import { LeadForm } from "./LeadForm";
+import { ContactForm } from "./ContactForm";
 import { ProgressBar } from "./ProgressBar";
 import { QuestionScreen } from "./QuestionScreen";
 import { ResultScreen } from "./ResultScreen";
@@ -21,7 +21,7 @@ import { ResultScreen } from "./ResultScreen";
  */
 export function DiagnosticContent({ locale }: { locale: string }) {
   const copy = getDiagnosticCopy(locale);
-  const diagnostic = useDiagnostic();
+  const diagnostic = useDiagnostic(locale);
   const headingRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -32,7 +32,8 @@ export function DiagnosticContent({ locale }: { locale: string }) {
     result,
     step,
     totalSteps,
-    leadSubmitted,
+    submitState,
+    submitError,
   } = diagnostic;
 
   // Un changement d'écran doit être annoncé : sans cela, un lecteur d'écran
@@ -173,10 +174,20 @@ export function DiagnosticContent({ locale }: { locale: string }) {
                 onCtaClick={diagnostic.trackCta}
               />
 
-              <LeadForm
+              <ContactForm
                 copy={copy}
-                submitted={leadSubmitted}
-                onSubmit={diagnostic.submitLead}
+                locale={locale}
+                // Les ordres de transport n'ont de sens que là où la sortie
+                // demande une matrice origine-destination.
+                withFiles={result.outcome === "flux"}
+                state={submitState}
+                errorMessage={submitError}
+                onSubmit={(lead, attachments) =>
+                  diagnostic.submitLead(lead, attachments, {
+                    network: copy.contact.errors.network,
+                    notConfigured: copy.contact.errors.notConfigured,
+                  })
+                }
               />
 
               <div className="flex justify-center gap-6 pt-2">
