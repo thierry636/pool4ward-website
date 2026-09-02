@@ -17,9 +17,19 @@ import type {
  * Les verdicts, eux, sont écrits par branche (voir la copy).
  */
 export const LEVEL_THRESHOLDS: readonly LevelThreshold[] = [
-  { id: "plan_subi", min: 0, max: 39 },
-  { id: "plan_pilote", min: 40, max: 69 },
-  { id: "plan_optimise", min: 70, max: 100 },
+  // Avec un barème binaire à plancher, l'indice ne descend jamais sous 40 :
+  // les seuils de la spec (0–39 / 40–69 / 70–100) rendraient « Plan subi »
+  // inatteignable.
+  //
+  // Les bornes sont calées pour que le niveau dépende du NOMBRE de points
+  // d'amélioration et non du nombre de questions servies — sans quoi trois
+  // points valent « piloté » à six questions et « subi » à cinq :
+  //   0 ou 1 point  → 100, 90, 88  → plan optimisé
+  //   2 points      → 80, 76       → plan piloté
+  //   3 points et + → 70, 64, …    → plan subi
+  { id: "plan_subi", min: 0, max: 75 },
+  { id: "plan_pilote", min: 76, max: 84 },
+  { id: "plan_optimise", min: 85, max: 100 },
 ];
 
 /**
