@@ -6,7 +6,7 @@ import { format, getDiagnosticCopy } from "@/content/diagnostic/copy";
 import { useDiagnostic } from "@/lib/diagnostic/useDiagnostic";
 import { ConversionBlock } from "./ConversionBlock";
 import { DiagnosticHeader } from "./DiagnosticHeader";
-import { FlowRanking } from "./FlowRanking";
+import { FlowChoice } from "./FlowChoice";
 import { LeadForm } from "./LeadForm";
 import { ProgressBar } from "./ProgressBar";
 import { QuestionScreen } from "./QuestionScreen";
@@ -118,20 +118,12 @@ export function DiagnosticContent({ locale }: { locale: string }) {
           {/* ---------------------------------------------------------- */}
           {screen === "ranking" ? (
             <section className="flex min-h-[55svh] flex-col">
-              <h1 className="text-xl font-semibold leading-snug text-navy-900 sm:text-2xl">
-                {copy.ranking.title}
-              </h1>
-              <p className="mt-2 text-sm leading-relaxed text-navy-500">
-                {copy.ranking.help}
-              </p>
-
-              <div className="mt-7">
-                <FlowRanking
-                  copy={copy}
-                  ranking={ranking}
-                  onToggle={diagnostic.toggleFlow}
-                />
-              </div>
+              <FlowChoice
+                copy={copy}
+                ranking={ranking}
+                onSelect={diagnostic.selectFlow}
+                onAdvance={diagnostic.submitRanking}
+              />
 
               <NavBar
                 backLabel={copy.nav.back}

@@ -47,14 +47,8 @@ export const copyFr: DiagnosticCopy = {
   },
 
   ranking: {
-    title:
-      "Vos envois, dans l'ordre : lequel pèse le plus dans votre budget transport ?",
-    help: "Cliquez dans l'ordre d'importance. Laissez de côté ce qui ne vous concerne pas.",
-    positionAria: "Classé n°{position}. Cliquez pour retirer du classement.",
-    unselectedAria: "Non classé. Cliquez pour ajouter au classement.",
-    hint: "Un seul type de flux suffit pour continuer.",
-    concerned: "Concerné",
-    notConcerned: "Pas concerné",
+    title: "Lequel de vos flux pèse le plus dans votre budget transport ?",
+    help: "Le questionnaire s'adapte à votre réponse : vous ne répondrez qu'à ce qui vous concerne.",
   },
 
   flows: {
@@ -216,6 +210,9 @@ export const copyFr: DiagnosticCopy = {
     // condition de levier. Rare, mais l'écran ne peut pas rester vide.
     leversEmpty:
       "Aucun angle mort ne ressort de vos réponses. Ce qu'il reste à ouvrir ne se lit pas dans un questionnaire — cela se regarde sur vos flux.",
+    // ⚠️ Ces trois clés ne sont plus atteignables : l'écran 1 est passé en
+    // choix unique, il n'y a donc plus de deuxième flux classé. Elles restent
+    // en place pour le jour où la sélection multiple reviendrait.
     secondaryTitle: "Vous faites aussi {flow}.",
     secondaryEmpty: "On le regardera en rendez-vous.",
     otherFlows:
@@ -308,9 +305,12 @@ export const copyFr: DiagnosticCopy = {
   },
 
   outcomes: {
+    // La sortie RDV ne promet aucun livrable : elle propose un échange sur les
+    // points que le diagnostic a fait ressortir et sur la façon de les traiter.
+    // Rien qui engage un travail sur les grilles ou sur les données.
     rdv: {
-      title: "On rapproche vos grilles sur vos flux réels.",
-      body: "Un expert transport reprend vos grilles et vos volumes, les remet sur une base comparable, et vous montre l'écart. Quarante-cinq minutes, pas une démonstration d'outil.",
+      title: "On reprend vos leviers avec vous.",
+      body: "Un expert transport reprend les points que votre diagnostic a fait ressortir et vous dit comment chacun se traite : ce qui se règle en interne, ce qui passe par un appel d'offres, ce qui demande de revoir le schéma. Quarante-cinq minutes, pas une démonstration d'outil.",
       cta: "Réserver un créneau",
       alternate: "Vous préférez qu'on parte de vos données ? Envoyez-nous vos flux →",
     },
