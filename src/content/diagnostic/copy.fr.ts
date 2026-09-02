@@ -280,7 +280,6 @@ export const copyFr: DiagnosticCopy = {
       title: "On reprend vos leviers avec vous.",
       body: "Un expert transport reprend les points que votre diagnostic a fait ressortir et vous dit comment chacun se traite : ce qui se règle en interne, ce qui passe par un appel d'offres, ce qui demande de revoir le schéma. Quarante-cinq minutes, pas une démonstration d'outil.",
       cta: "Réserver un créneau",
-      alternate: "Vous préférez qu'on parte de vos données ? Envoyez-nous vos flux →",
     },
     flux: {
       title: "Le bouclage ne se discute pas à vide.",

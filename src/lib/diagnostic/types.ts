@@ -133,8 +133,12 @@ export interface DiagnosticResult extends ScoreBreakdown {
   /** Levier déclenché par la question de branche secondaire, s'il y en a un. */
   readonly secondaryLever: LeverId | null;
   readonly outcome: OutcomeId;
-  /** Sortie proposée en lien secondaire — personne ne doit se sentir aiguillé. */
-  readonly alternateOutcome: OutcomeId;
+  /**
+   * Sortie proposée en lien secondaire sous le CTA, ou `null` quand il n'y en a
+   * pas de pertinente : offrir une porte qui ne mène nulle part d'utile est
+   * pire que de n'en offrir qu'une.
+   */
+  readonly alternateOutcome: OutcomeId | null;
   /** Phrases ajoutées au bloc de conversion, sélectionnées par condition. */
   readonly outcomeNotes: readonly string[];
 }

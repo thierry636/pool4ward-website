@@ -31,7 +31,10 @@ export function ConversionBlock({
   const outcome = { ...base, ...override };
 
   const href = OUTCOME_HREF[result.outcome];
-  const alternateHref = OUTCOME_HREF[result.alternateOutcome];
+  // La sortie secondaire n'existe que là où elle a du sens.
+  const alternateHref = result.alternateOutcome
+    ? OUTCOME_HREF[result.alternateOutcome]
+    : null;
 
   const notes = result.outcomeNotes as readonly OutcomeNoteId[];
 
@@ -88,13 +91,15 @@ export function ConversionBlock({
           {outcome.cta}
         </OutcomeLink>
 
-        <OutcomeLink
-          href={alternateHref}
-          onClick={onCtaClick}
-          className="block text-sm text-navy-400 underline underline-offset-4 transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900"
-        >
-          {outcome.alternate}
-        </OutcomeLink>
+        {alternateHref && outcome.alternate ? (
+          <OutcomeLink
+            href={alternateHref}
+            onClick={onCtaClick}
+            className="block text-sm text-navy-400 underline underline-offset-4 transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900"
+          >
+            {outcome.alternate}
+          </OutcomeLink>
+        ) : null}
       </div>
     </section>
   );

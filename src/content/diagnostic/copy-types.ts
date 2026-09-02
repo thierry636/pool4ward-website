@@ -51,8 +51,8 @@ export interface OutcomeCopy {
   readonly details?: readonly string[];
   readonly note?: string;
   readonly cta: string;
-  /** Lien discret vers l'autre sortie. */
-  readonly alternate: string;
+  /** Lien discret vers l'autre sortie. Absent quand la sortie n'en propose pas. */
+  readonly alternate?: string;
 }
 
 export interface SelectFieldCopy {

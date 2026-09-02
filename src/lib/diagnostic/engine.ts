@@ -213,8 +213,8 @@ export function outcomeFor(branch: FlowType): OutcomeId {
   return OUTCOME_BY_BRANCH[branch];
 }
 
-/** L'autre sortie, toujours accessible en lien secondaire discret. */
-export function alternateOutcomeFor(outcome: OutcomeId): OutcomeId {
+/** L'autre sortie, en lien secondaire discret — `null` quand il n'y en a pas. */
+export function alternateOutcomeFor(outcome: OutcomeId): OutcomeId | null {
   return ALTERNATE_OUTCOME[outcome];
 }
 

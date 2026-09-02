@@ -2,7 +2,11 @@ import { describe, expect, it } from "vitest";
 
 import { DIAGNOSTIC_COPY, format, getDiagnosticCopy } from "./copy";
 import { LEVER_IDS } from "./levers";
-import { LEVEL_THRESHOLDS, OUTCOME_BY_BRANCH } from "./scoring";
+import {
+  ALTERNATE_OUTCOME,
+  LEVEL_THRESHOLDS,
+  OUTCOME_BY_BRANCH,
+} from "./scoring";
 import { FLOW_TYPES, QUESTION_BANK } from "./questions";
 
 /**
@@ -66,7 +70,13 @@ describe.each(Object.entries(DIAGNOSTIC_COPY))("copy « %s »", (locale, copy) =
     for (const outcome of outcomes) {
       expect(copy.outcomes[outcome].title, `${locale} → ${outcome}`).toBeTruthy();
       expect(copy.outcomes[outcome].cta).toBeTruthy();
-      expect(copy.outcomes[outcome].alternate).toBeTruthy();
+      // Le lien vers l'autre sortie est facultatif, mais s'il est déclaré dans
+      // la configuration il doit avoir un libellé, et inversement.
+      const alterne = ALTERNATE_OUTCOME[outcome];
+      expect(
+        Boolean(copy.outcomes[outcome].alternate),
+        `${locale} → ${outcome}.alternate`,
+      ).toBe(alterne !== null);
     }
   });
 
