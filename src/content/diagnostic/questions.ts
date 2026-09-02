@@ -13,11 +13,7 @@
 import type { FlowType, Question, QuestionId } from "@/lib/diagnostic/types";
 
 /** Les trois typologies de flux, dans l'ordre d'affichage de l'écran 1. */
-export const FLOW_TYPES: readonly FlowType[] = [
-  "complets",
-  "partiels",
-  "messagerie",
-] as const;
+export const FLOW_TYPES: readonly FlowType[] = ["complets", "messagerie"] as const;
 
 /** Barème de référence : points maximum d'une question scorée. */
 export const MAX_POINTS_PER_QUESTION = 25;
@@ -53,6 +49,11 @@ const MESSAGERIE: readonly Question[] = [
     branch: "messagerie",
     scored: true,
     max: 25,
+    // Sautée quand le répondant n'a qu'un seul prestataire : il n'y a rien à
+    // attribuer. La condition est écrite en « non-exclusion » et pas en
+    // « answerNotIn » pour que la question soit servie par défaut, y compris
+    // avant que M1 n'ait été répondue.
+    when: { type: "not", of: { type: "answerIn", question: "M1", values: ["unique"] } },
     options: [
       { value: "comparaison", points: 25 },
       { value: "zone", points: 20 },
@@ -111,51 +112,6 @@ const MESSAGERIE: readonly Question[] = [
       { value: "un_deux", points: 20 },
       { value: "rarement", points: 15 },
       { value: "aucun", points: 10 },
-    ],
-  },
-];
-
-/* -------------------------------------------------------------------------- */
-/* Branche LOTS PARTIELS                                                       */
-/* -------------------------------------------------------------------------- */
-
-const PARTIELS: readonly Question[] = [
-  {
-    // Sert aussi de question de branche secondaire.
-    id: "P1",
-    branch: "partiels",
-    scored: true,
-    max: 25,
-    options: [
-      { value: "regroupes", points: 25 },
-      { value: "opportuniste", points: 12 },
-      { value: "chacun_seul", points: 0 },
-    ],
-  },
-  {
-    id: "P3",
-    branch: "partiels",
-    scored: true,
-    max: 25,
-    options: [
-      { value: "oui_utilise", points: 25 },
-      { value: "prestataire", points: 18 },
-      { value: "oui_pas_utilise", points: 8 },
-      { value: "non", points: 5 },
-    ],
-  },
-  {
-    // Sautée si « complets » n'est pas classé : la question n'aurait pas de sens.
-    // Le maximum servi baisse d'autant, la normalisation absorbe l'écart.
-    id: "P4",
-    branch: "partiels",
-    scored: true,
-    max: 25,
-    when: { type: "flowRanked", flow: "complets" },
-    options: [
-      { value: "meme_ao", points: 25 },
-      { value: "separes", points: 12 },
-      { value: "spot", points: 0 },
     ],
   },
 ];
@@ -223,11 +179,11 @@ const COMPLETS: readonly Question[] = [
 
 const GLOBAL: readonly Question[] = [
   {
-    // Question la plus discriminante sur les branches partiels et complets :
-    // elle sépare ceux qui renégocient des prix de ceux qui reconçoivent un
-    // schéma. Elle n'est pas posée en messagerie, où la façon dont le plan a été
-    // construit — 4PL, commissionnaire — ne dit rien d'utile : ce sont les deux
-    // questions sur les appels d'offres qui y tiennent le rôle de clôture.
+    // Question la plus discriminante sur la branche complets : elle sépare ceux
+    // qui renégocient des prix de ceux qui reconçoivent un schéma. Elle n'est
+    // pas posée en messagerie, où la façon dont le plan a été construit — 4PL,
+    // commissionnaire — ne dit rien d'utile : ce sont les deux questions sur les
+    // appels d'offres qui y tiennent le rôle de clôture.
     id: "G1",
     branch: "global",
     scored: true,
@@ -245,7 +201,6 @@ const GLOBAL: readonly Question[] = [
 /** Questions de branche, dans l'ordre de service. */
 export const BRANCH_QUESTIONS: Readonly<Record<FlowType, readonly Question[]>> = {
   messagerie: MESSAGERIE,
-  partiels: PARTIELS,
   complets: COMPLETS,
 };
 
@@ -258,13 +213,12 @@ export const GLOBAL_QUESTIONS: readonly Question[] = GLOBAL;
  */
 export const SECONDARY_QUESTION_BY_FLOW: Readonly<Record<FlowType, QuestionId>> = {
   messagerie: "M4",
-  partiels: "P1",
   complets: "C1",
 };
 
 /** Toutes les questions de la banque, indexées par identifiant. */
 export const QUESTION_BANK: Readonly<Record<QuestionId, Question>> = Object.freeze(
-  [...MESSAGERIE, ...PARTIELS, ...COMPLETS, ...GLOBAL].reduce<
+  [...MESSAGERIE, ...COMPLETS, ...GLOBAL].reduce<
     Record<QuestionId, Question>
   >((bank, question) => {
     bank[question.id] = question;

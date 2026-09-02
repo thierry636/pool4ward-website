@@ -112,7 +112,10 @@ export function useDiagnostic(): DiagnosticState {
     persistRecord(
       buildRecord({
         result,
-        answers,
+        // Une réponse devenue caduque — M2 après un retour sur M1,
+        // par exemple — ne compte pas dans l'indice et n'a rien à
+        // faire dans l'enregistrement.
+        answers: pruneAnswers(ranking, answers),
         id: recordId.current,
         createdAt: new Date(),
         durationSeconds: duration,
@@ -128,7 +131,7 @@ export function useDiagnostic(): DiagnosticState {
       outcome: result.outcome,
       duration_seconds: duration,
     });
-  }, [screen, result, answers]);
+  }, [screen, result, ranking, answers]);
 
   /* --------------------------------------------------------------------- */
   /* Actions                                                               */
@@ -209,7 +212,10 @@ export function useDiagnostic(): DiagnosticState {
       persistRecord(
         buildRecord({
           result,
-          answers,
+          // Une réponse devenue caduque — M2 après un retour sur M1,
+          // par exemple — ne compte pas dans l'indice et n'a rien à
+          // faire dans l'enregistrement.
+          answers: pruneAnswers(ranking, answers),
           id: recordId.current,
           createdAt: new Date(),
           durationSeconds: duration,
@@ -226,7 +232,7 @@ export function useDiagnostic(): DiagnosticState {
       });
       setLeadSubmitted(true);
     },
-    [result, answers],
+    [result, ranking, answers],
   );
 
   const trackCta = useCallback(() => {

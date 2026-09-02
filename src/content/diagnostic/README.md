@@ -23,6 +23,20 @@ Le moteur ne contient ni barème ni libellé ; les composants ne contiennent
 aucune chaîne affichable. Les deux règles sont vérifiées par les tests
 (`npm test`).
 
+## Deux branches
+
+Le diagnostic ne connaît que deux typologies de flux :
+
+| Flux classé n°1 | Questions servies | Sortie |
+|---|---|---|
+| `messagerie` — messagerie **et** lots partiels | M1 à M6 (M2 sautée si prestataire unique) | RDV direct |
+| `complets` — camions complets | C1 à C4 puis G1 | Demande de flux |
+
+Messagerie et lots partiels partagent une carte, un jeu de questions, un
+verdict et une sortie : les deux se vendent de la même façon. L'identifiant
+du flux reste `messagerie` parce que ce sont bien les questions M1 à M6 qui
+sont servies ; seul le libellé couvre les deux.
+
 ## Ajouter une question
 
 1. Ajouter l'entrée dans `BRANCH_QUESTIONS` (ou `GLOBAL_QUESTIONS`), avec ses
@@ -60,6 +74,13 @@ formulaire de contact du site.
 
 ## À arbitrer avant mise en ligne
 
+- **Discours cross-dock** : la variante de sortie « on regarde si un schéma
+  cross-dock tient chez vous » a disparu avec la branche lots partiels. Les
+  deux typologies partagent désormais le discours messagerie — rapprochement
+  des grilles. Le mécanisme `outcomeByBranch` reste en place pour la rétablir.
+- **Verdicts** : ceux de la branche fusionnée sont écrits pour la messagerie
+  (grilles, structure tarifaire). Ils s'appliquent tels quels aux lots
+  partiels, ce qui est à relire.
 - **Sortie B** : la mention de l'accord de confidentialité engage Pool4ward
   (`copy.fr.ts` → `outcomes.flux.note`). Aucun délai de retour n'est annoncé
   dans la copy livrée ; ne pas en ajouter un que l'équipe ne tient pas.

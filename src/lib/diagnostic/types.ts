@@ -7,8 +7,16 @@
  * i18n (`src/content/diagnostic/copy.*.ts`).
  */
 
-/** Les trois typologies de flux classables à l'écran 1. */
-export type FlowType = "messagerie" | "partiels" | "complets";
+/**
+ * Les deux typologies de flux classables à l'écran 1.
+ *
+ * `messagerie` couvre la messagerie ET les lots partiels : les deux se vendent
+ * de la même façon — mise en compétition, comparaison des grilles — et sortent
+ * toutes deux en RDV direct. Seuls les camions complets ont un discours et une
+ * sortie propres. L'identifiant reste `messagerie` parce que ce sont bien les
+ * questions M1 à M6 qui sont servies ; c'est le libellé qui couvre les deux.
+ */
+export type FlowType = "messagerie" | "complets";
 
 /** Ordre d'importance déclaré par le répondant. `ranking[0]` fait la branche. */
 export type Ranking = FlowType[];

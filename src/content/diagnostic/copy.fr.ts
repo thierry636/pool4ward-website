@@ -64,17 +64,13 @@ export const copyFr: DiagnosticCopy = {
       indexLabel: "camions complets",
       alsoLabel: "du camion complet",
     },
-    partiels: {
-      label: "Lots partiels",
-      hint: "Quelques palettes, groupage possible",
-      indexLabel: "lots partiels",
-      alsoLabel: "du lot partiel",
-    },
     messagerie: {
-      label: "Messagerie / colis",
-      hint: "Envois unitaires, réseau de distribution",
-      indexLabel: "messagerie",
-      alsoLabel: "de la messagerie",
+      // Messagerie et lots partiels sont regroupés : même discours de vente,
+      // même sortie. Seuls les camions complets font bande à part.
+      label: "Messagerie et lots partiels",
+      hint: "Colis, palettes, envois groupés",
+      indexLabel: "messagerie et lots partiels",
+      alsoLabel: "de la messagerie ou du lot partiel",
     },
   },
 
@@ -145,32 +141,6 @@ export const copyFr: DiagnosticCopy = {
     /* ---------------------------------------------------------------- */
     /* Branche lots partiels                                            */
     /* ---------------------------------------------------------------- */
-    P1: {
-      label:
-        "Vos lots partiels partent-ils tels quels, ou sont-ils regroupés avant départ ?",
-      options: {
-        regroupes: "Regroupés dès que c'est possible",
-        opportuniste: "Quand ça tombe bien",
-        chacun_seul: "Chacun part seul",
-      },
-    },
-    P3: {
-      label: "Disposez-vous d'un point de massification sur vos axes principaux ?",
-      options: {
-        oui_utilise: "Oui, utilisé pour ça",
-        prestataire: "Celui d'un prestataire",
-        oui_pas_utilise: "Oui, mais pas utilisé pour ça",
-        non: "Non",
-      },
-    },
-    P4: {
-      label: "Vos lots partiels sont-ils achetés dans le même cadre que vos complets ?",
-      options: {
-        meme_ao: "Même appel d'offres, mêmes contrats",
-        separes: "Contrats séparés",
-        spot: "Au coup par coup, au spot",
-      },
-    },
 
     /* ---------------------------------------------------------------- */
     /* Branche camions complets                                         */
@@ -269,14 +239,6 @@ export const copyFr: DiagnosticCopy = {
       plan_optimise:
         "Vous maîtrisez votre achat messagerie. Ce qu'il reste à gagner ne se trouve plus dans la négociation, mais dans la façon dont vos envois sont préparés en amont.",
     },
-    partiels: {
-      plan_subi:
-        "Vos lots partiels partent seuls. C'est le poste où le coût à la tonne est le plus élevé de tout votre plan de transport, et c'est aussi celui où un schéma de massification change l'ordre de grandeur, pas le pourcentage.",
-      plan_pilote:
-        "Vous regroupez quand l'occasion se présente. Passer de l'opportunisme à un schéma organisé — axes, points de massification, fenêtres de départ — est un exercice de conception, pas de négociation.",
-      plan_optimise:
-        "Votre schéma de massification tient. La question suivante est de savoir avec qui vous pourriez le partager pour en remplir les creux.",
-    },
     complets: {
       plan_subi:
         "Vos camions repartent à vide et le retour est traité comme le problème du transporteur. Il est facturé dans vos prix, simplement pas sur une ligne visible.",
@@ -316,22 +278,6 @@ export const copyFr: DiagnosticCopy = {
     consolidation_volumes: {
       title: "Consolider les volumes.",
       body: "Éclatés, ils ne pèsent dans aucune négociation.",
-    },
-    regrouper_avant_negocier: {
-      title: "Regrouper avant de négocier.",
-      body: "Un appel d'offres lancé sur des envois isolés fige l'isolement pour trois ans.",
-    },
-    actif_existant: {
-      title: "L'actif existe déjà.",
-      body: "Il reste à le placer sur le bon axe.",
-    },
-    massification_tiers: {
-      title: "Évaluer un point de massification tiers",
-      body: "avant d'envisager d'en construire un.",
-    },
-    partiels_dans_ao: {
-      title: "Faire entrer les partiels dans le même appel d'offres que les complets.",
-      body: "Deux cadres d'achat séparés produisent deux schémas séparés.",
     },
     retours_vide: {
       title: "Mesurer ce que vous payez pour des retours à vide.",
@@ -382,12 +328,10 @@ export const copyFr: DiagnosticCopy = {
     },
   },
 
-  outcomeByBranch: {
-    partiels: {
-      title: "On regarde si un schéma cross-dock tient chez vous.",
-      body: "Vos axes, vos délais, vos points de massification existants. Un expert transport vous dit en quarante-cinq minutes si le schéma tient — et s'il ne tient pas, pourquoi.",
-    },
-  },
+  // ⚠️ La variante cross-dock de la sortie A' disparaît avec la branche lots
+  // partiels : les deux typologies partagent désormais le discours messagerie.
+  // Le mécanisme reste en place pour une future variante par branche.
+  outcomeByBranch: {},
 
   outcomeNotes: {
     irregular_flows:
