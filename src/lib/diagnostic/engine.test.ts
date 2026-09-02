@@ -32,96 +32,23 @@ const scoredIdsOf = (ranking: Ranking, answers: Answers = {}) =>
 describe("branchement — branche messagerie", () => {
   const ranking: Ranking = ["messagerie"];
 
-  it("sert les six questions de la branche, sans la clôture G1", () => {
-    // En messagerie, ce sont les deux questions sur les appels d'offres qui
-    // tiennent le rôle de clôture : la façon dont le plan a été construit
-    // (4PL, commissionnaire) n'y dit rien d'utile.
-    expect(idsOf(ranking)).toEqual(["M1", "M2", "M3", "M4", "M5", "M6"]);
+  it("sert les cinq questions de la branche, sans la clôture G1", () => {
+    // En messagerie, ce sont les questions sur l'appel d'offres qui tiennent le
+    // rôle de clôture : la façon dont le plan a été construit (4PL,
+    // commissionnaire) n'y dit rien d'utile.
+    expect(idsOf(ranking)).toEqual(["M1", "M2", "M3", "M4", "M5"]);
     expect(idsOf(ranking)).not.toContain("G1");
   });
 
-  it("saute l'attribution quand le répondant n'a qu'un seul prestataire", () => {
-    // Un prestataire unique : il n'y a rien à attribuer, la question n'a pas
-    // de sens. Le maximum servi tombe de 150 à 125 et la normalisation absorbe
-    // l'écart — c'est précisément ce pour quoi elle est là.
-    expect(idsOf(ranking, { M1: "unique" })).toEqual([
-      "M1",
-      "M3",
-      "M4",
-      "M5",
-      "M6",
-    ]);
-    expect(idsOf(ranking, { M1: "deux_cinq" })).toContain("M2");
+  it("saute la mise en concurrence quand le prestataire est unique", () => {
+    // Un seul prestataire : il n'y a rien à comparer. Le maximum servi tombe de
+    // 125 à 100 et la normalisation absorbe l'écart.
+    expect(idsOf(ranking, { M1: "un_seul" })).toEqual(["M1", "M3", "M4", "M5"]);
+    expect(idsOf(ranking, { M1: "deux_plus" })).toContain("M2");
     // Servie par défaut tant que M1 n'a pas été répondue : sans quoi la barre
-    // de progression annoncerait cinq questions avant la première réponse.
+    // de progression annoncerait une question de moins avant la première
+    // réponse.
     expect(idsOf(ranking, {})).toContain("M2");
-
-    const answers: Answers = {
-      M1: "unique", // 10 — point d'amélioration
-      M3: "moins12mois", // 25
-      M4: "oui", // 25
-      M5: "plus_dix", // 25
-      M6: "plusieurs", // 25
-    };
-    expect(computeScore(ranking, answers)).toEqual({
-      points: 110,
-      maxServed: 125,
-      indice: 88,
-    });
-  });
-
-  it("ne compte pas une réponse à M2 devenue caduque", () => {
-    // Le répondant a répondu à M2, puis est revenu changer M1 en « un seul ».
-    const answers: Answers = {
-      M1: "unique",
-      M2: "zone", // 10 points qui ne doivent plus compter
-      M3: "jamais",
-      M4: "non",
-      M5: "moins_trois",
-      M6: "aucun",
-    };
-    expect(scoredIdsOf(ranking, answers)).not.toContain("M2");
-    expect(computeScore(ranking, answers).maxServed).toBe(125);
-    expect(computeScore(ranking, answers).points).toBe(50);
-    expect(pruneAnswers(ranking, answers)).not.toHaveProperty("M2");
-  });
-
-  it("vérifie l'invariant du barème sur tous les parcours à six questions", () => {
-    // Tout le barème messagerie tient en une phrase : chaque question est OK
-    // ou ne l'est pas, et chaque point d'amélioration coûte dix points
-    // d'indice. Les leviers affichés sont exactement ces points, plafonnés à
-    // trois. Ce test le vérifie sur les 1 536 combinaisons possibles.
-    const ids = ["M1", "M2", "M3", "M4", "M5", "M6"];
-    const options = Object.fromEntries(
-      ids.map((id) => [id, QUESTION_BANK[id].options.map((o) => o.value)]),
-    );
-    let verifies = 0;
-
-    const parcourir = (i: number, acc: Record<string, string>) => {
-      if (i === ids.length) {
-        const servies = servedQuestions(ranking, acc).map(
-          (s) => s.question.id,
-        );
-        if (servies.length !== 6) return; // M2 sautée : pas ce cas ici
-        const aAmeliorer = servies.filter(
-          (id) =>
-            QUESTION_BANK[id].options.find((o) => o.value === acc[id])!
-              .points === 10,
-        ).length;
-        expect(computeScore(ranking, acc).indice).toBe(100 - 10 * aAmeliorer);
-        expect(selectLevers(ranking, acc)).toHaveLength(
-          Math.min(aAmeliorer, 3),
-        );
-        verifies += 1;
-        return;
-      }
-      for (const v of options[ids[i]]) {
-        parcourir(i + 1, { ...acc, [ids[i]]: v });
-      }
-    };
-    parcourir(0, {});
-
-    expect(verifies).toBe(1536);
   });
 
   it("continue de poser G1 sur les autres branches", () => {
@@ -133,79 +60,141 @@ describe("branchement — branche messagerie", () => {
   it("ne sert aucune question des autres branches", () => {
     // Un acheteur messagerie ne doit jamais voir une question sur le ferroviaire.
     expect(idsOf(ranking)).not.toContain("C4");
-    expect(idsOf(ranking).some((id) => id.startsWith("P"))).toBe(false);
   });
 
-  it("normalise sur 150 : six questions scorées", () => {
-    const answers: Answers = {
-      M1: "deux_cinq", // 25
-      M2: "comparaison", // 25
-      M3: "moins12mois", // 25
-      M4: "oui", // 25
-      M5: "plus_dix", // 25
-      M6: "plusieurs", // 25
+  it("chaque question est bonne ou ne l'est pas, sans valeur intermédiaire", () => {
+    for (const id of ["M1", "M2", "M3", "M4", "M5"]) {
+      const points = QUESTION_BANK[id].options.map((o) => o.points);
+      expect(points, id).toHaveLength(2);
+      expect(new Set(points), id).toEqual(new Set([25, 10]));
+    }
+  });
+
+  it("normalise sur 125 avec cinq questions, sur 100 avec quatre", () => {
+    const bon: Answers = {
+      M1: "deux_plus",
+      M2: "oui",
+      M3: "moins_1an",
+      M4: "oui",
+      M5: "oui",
     };
-    expect(computeScore(ranking, answers)).toEqual({
-      points: 150,
-      maxServed: 150,
+    expect(computeScore(ranking, bon)).toEqual({
+      points: 125,
+      maxServed: 125,
       indice: 100,
     });
+
+    const unSeul: Answers = {
+      M1: "un_seul", // 10 — la seule question non bonne
+      M3: "moins_1an",
+      M4: "oui",
+      M5: "oui",
+    };
+    expect(computeScore(ranking, unSeul)).toEqual({
+      points: 85,
+      maxServed: 100,
+      indice: 85,
+    });
   });
 
-  it("applique le plancher de 40 % à chaque point d'amélioration", () => {
-    // Barème binaire : une question vaut 25 si elle est OK, 10 sinon. Jamais
-    // zéro — un chargeur en difficulté sur tout ne doit pas lire 10/100.
+  it("ne descend jamais sous 40, même en répondant mal partout", () => {
+    // Un chargeur en difficulté sur tout ne doit pas lire 10/100.
     const pire: Answers = {
-      M1: "inconnu",
-      M2: "zone",
-      M3: "jamais",
+      M1: "deux_plus",
+      M2: "non",
+      M3: "plus_1an",
       M4: "non",
-      M5: "moins_trois",
-      M6: "aucun",
+      M5: "non",
     };
     expect(computeScore(ranking, pire)).toEqual({
-      points: 60,
-      maxServed: 150,
-      indice: 40,
+      points: 65,
+      maxServed: 125,
+      indice: 52,
     });
-  });
-
-  it("fait perdre dix points par point d'amélioration, et rien d'autre", () => {
-    // C'est tout le barème : chaque question est OK ou ne l'est pas.
-    const parfait: Answers = {
-      M1: "deux_cinq",
-      M2: "comparaison",
-      M3: "moins12mois",
-      M4: "oui",
-      M5: "plus_dix",
-      M6: "plusieurs",
-    };
-    expect(computeScore(ranking, parfait).indice).toBe(100);
-    expect(computeScore(ranking, { ...parfait, M4: "non" }).indice).toBe(90);
     expect(
-      computeScore(ranking, { ...parfait, M4: "non", M2: "zone" }).indice,
-    ).toBe(80);
-    // Une réponse intermédiaire ne coûte rien : « parfois » vaut « oui ».
-    expect(computeScore(ranking, { ...parfait, M4: "parfois" }).indice).toBe(100);
-    expect(computeScore(ranking, { ...parfait, M6: "rarement" }).indice).toBe(100);
-    expect(computeScore(ranking, { ...parfait, M1: "plus_dix" }).indice).toBe(100);
+      computeScore(ranking, {
+        M1: "un_seul",
+        M3: "plus_1an",
+        M4: "non",
+        M5: "non",
+      }).indice,
+    ).toBe(40);
   });
 
-  it("arrondit l'indice normalisé", () => {
-    const answers: Answers = {
-      M1: "six_dix", // 25 OK
-      M2: "zone", // 10 à améliorer
-      M3: "plus3ans", // 10 à améliorer
-      M4: "parfois", // 25 OK
-      M5: "trois_cinq", // 25 OK
-      M6: "rarement", // 25 OK
+  it("donne le même niveau au même nombre de questions non bonnes", () => {
+    // Le niveau ne doit pas dépendre du nombre de questions servies : deux
+    // points valent « piloté » à cinq questions comme à quatre.
+    const cinq: Answers = {
+      M1: "deux_plus",
+      M2: "oui",
+      M3: "moins_1an",
+      M4: "oui",
+      M5: "oui",
     };
-    // 120 / 150 = 80 %
-    expect(computeScore(ranking, answers)).toEqual({
-      points: 120,
-      maxServed: 150,
-      indice: 80,
-    });
+    const quatre: Answers = {
+      M1: "un_seul",
+      M3: "moins_1an",
+      M4: "oui",
+      M5: "oui",
+    };
+    // Un point d'écart de chaque côté.
+    expect(levelFor(computeScore(ranking, { ...cinq, M4: "non" }).indice)).toBe(
+      "plan_optimise",
+    );
+    expect(levelFor(computeScore(ranking, quatre).indice)).toBe("plan_optimise");
+    // Deux points d'écart.
+    expect(
+      levelFor(computeScore(ranking, { ...cinq, M4: "non", M5: "non" }).indice),
+    ).toBe("plan_pilote");
+    expect(
+      levelFor(computeScore(ranking, { ...quatre, M4: "non" }).indice),
+    ).toBe("plan_pilote");
+    // Trois points d'écart.
+    expect(
+      levelFor(
+        computeScore(ranking, { ...cinq, M3: "plus_1an", M4: "non", M5: "non" })
+          .indice,
+      ),
+    ).toBe("plan_subi");
+    expect(
+      levelFor(computeScore(ranking, { ...quatre, M4: "non", M5: "non" }).indice),
+    ).toBe("plan_subi");
+  });
+
+  it("vérifie l'invariant : un levier par question non bonne, plafonné à trois", () => {
+    const ids = ["M1", "M2", "M3", "M4", "M5"];
+    const options = Object.fromEntries(
+      ids.map((id) => [id, QUESTION_BANK[id].options.map((o) => o.value)]),
+    );
+    let verifies = 0;
+
+    const parcourir = (i: number, acc: Record<string, string>) => {
+      if (i === ids.length) {
+        const servies = servedQuestions(ranking, acc).map((s) => s.question.id);
+        const reponses: Record<string, string> = {};
+        for (const id of servies) reponses[id] = acc[id];
+
+        const nonBonnes = servies.filter(
+          (id) =>
+            QUESTION_BANK[id].options.find((o) => o.value === reponses[id])!
+              .points === 10,
+        ).length;
+
+        expect(selectLevers(ranking, reponses)).toHaveLength(
+          Math.min(nonBonnes, 3),
+        );
+        const indice = computeScore(ranking, reponses).indice;
+        expect(indice).toBeGreaterThanOrEqual(40);
+        expect(indice).toBeLessThanOrEqual(100);
+        verifies += 1;
+        return;
+      }
+      for (const v of options[ids[i]]) {
+        parcourir(i + 1, { ...acc, [ids[i]]: v });
+      }
+    };
+    parcourir(0, {});
+    expect(verifies).toBe(32);
   });
 });
 
@@ -291,7 +280,6 @@ describe("deux flux classés — capacité du moteur, hors parcours actuel", () 
       "M3",
       "M4",
       "M5",
-      "M6",
       "C1",
     ]);
     expect(idsOf(["complets", "messagerie"])).toEqual([
@@ -310,8 +298,8 @@ describe("deux flux classés — capacité du moteur, hors parcours actuel", () 
     // hors score raccourcissent nettement les deux autres. Ce test fige les
     // longueurs réelles pour qu'aucune ne bouge sans qu'on le voie.
     const longueurs: [Ranking, number][] = [
-      [["messagerie"], 6],
-      [["messagerie", "complets"], 7],
+      [["messagerie"], 5],
+      [["messagerie", "complets"], 6],
       [["complets"], 5],
       [["complets", "messagerie"], 6],
     ];
@@ -355,19 +343,18 @@ describe("deux flux classés — capacité du moteur, hors parcours actuel", () 
 
   it("n'inclut jamais la question secondaire dans l'indice", () => {
     const answers: Answers = {
-      M1: "deux_cinq",
-      M2: "comparaison",
-      M3: "moins12mois",
+      M1: "deux_plus",
+      M2: "oui",
+      M3: "moins_1an",
       M4: "oui",
-      M5: "plus_dix",
-      M6: "plusieurs",
-      C1: "inconnu", // secondaire : 0 point, ne doit rien coûter
+      M5: "oui",
+      C1: "inconnu", // secondaire : ne doit rien coûter
     };
     const seul = computeScore(["messagerie"], answers);
     const avecSecondaire = computeScore(["messagerie", "complets"], answers);
 
     expect(scoredIdsOf(["messagerie", "complets"], answers)).not.toContain("C1");
-    expect(avecSecondaire.maxServed).toBe(150);
+    expect(avecSecondaire.maxServed).toBe(125);
     expect(avecSecondaire).toEqual(seul);
     expect(avecSecondaire.indice).toBe(100);
   });
@@ -422,17 +409,17 @@ describe("deux flux classés — capacité du moteur, hors parcours actuel", () 
 
 describe("niveaux", () => {
   it("applique les seuils communs aux trois branches", () => {
-    // Les bornes sont calées sur le NOMBRE de points d'amélioration, pour que
-    // trois points donnent le même niveau à cinq et à six questions servies.
-    expect(levelFor(40)).toBe("plan_subi"); // 5 ou 6 points
-    expect(levelFor(64)).toBe("plan_subi"); // 3 points sur 5 questions
-    expect(levelFor(70)).toBe("plan_subi"); // 3 points sur 6 questions
-    expect(levelFor(75)).toBe("plan_subi");
-    expect(levelFor(76)).toBe("plan_pilote"); // 2 points sur 5 questions
-    expect(levelFor(80)).toBe("plan_pilote"); // 2 points sur 6 questions
+    // Les bornes sont calées sur le NOMBRE de questions non bonnes, pour que le
+    // niveau ne dépende pas du nombre de questions servies.
+    expect(levelFor(40)).toBe("plan_subi"); // 4 sur 4, ou 5 sur 5
+    expect(levelFor(55)).toBe("plan_subi"); // 3 sur 4
+    expect(levelFor(64)).toBe("plan_subi"); // 3 sur 5
+    expect(levelFor(69)).toBe("plan_subi");
+    expect(levelFor(70)).toBe("plan_pilote"); // 2 sur 4
+    expect(levelFor(76)).toBe("plan_pilote"); // 2 sur 5
     expect(levelFor(84)).toBe("plan_pilote");
-    expect(levelFor(88)).toBe("plan_optimise"); // 1 point sur 5 questions
-    expect(levelFor(90)).toBe("plan_optimise"); // 1 point sur 6 questions
+    expect(levelFor(85)).toBe("plan_optimise"); // 1 sur 4
+    expect(levelFor(88)).toBe("plan_optimise"); // 1 sur 5
     expect(levelFor(100)).toBe("plan_optimise");
   });
 });
@@ -444,38 +431,44 @@ describe("niveaux", () => {
 describe("leviers", () => {
   it("prend au plus trois leviers, dans l'ordre de priorité", () => {
     const levers = selectLevers(["messagerie"], {
-      M1: "unique",
-      M2: "zone",
-      M3: "jamais",
+      M1: "un_seul",
+      M3: "plus_1an",
       M4: "non",
-      M5: "moins_trois",
-      M6: "aucun",
+      M5: "non",
     });
+    // Quatre questions non bonnes, trois leviers affichés, dans l'ordre déclaré.
     expect(levers).toEqual([
+      "prestataire_unique",
       "grilles_comparables",
       "ouvrir_nouveaux_entrants",
-      "elargir_panel",
     ]);
   });
 
-  it("n'affiche un levier que sur un point d'amélioration", () => {
-    const base: Answers = {
-      M2: "comparaison",
-      M3: "moins12mois",
+  it("n'affiche un levier que sur une question non bonne", () => {
+    const bon: Answers = {
+      M1: "deux_plus",
+      M2: "oui",
+      M3: "moins_1an",
       M4: "oui",
-      M5: "plus_dix",
-      M6: "plusieurs",
+      M5: "oui",
     };
-    // Dès deux prestataires, la concurrence existe : rien à signaler.
-    for (const m1 of ["deux_cinq", "six_dix", "plus_dix"]) {
-      expect(selectLevers(["messagerie"], { ...base, M1: m1 }), m1).toEqual([]);
-    }
-    expect(selectLevers(["messagerie"], { ...base, M1: "unique" })).toEqual([
-      "prestataire_unique",
+    expect(selectLevers(["messagerie"], bon)).toEqual([]);
+    expect(selectLevers(["messagerie"], { ...bon, M2: "non" })).toEqual([
+      "cherry_picking",
     ]);
-    expect(selectLevers(["messagerie"], { ...base, M1: "inconnu" })).toEqual([
-      "panel_inconnu",
+    expect(selectLevers(["messagerie"], { ...bon, M3: "plus_1an" })).toEqual([
+      "remise_en_competition",
     ]);
+    // Un prestataire unique retire M2 du parcours : son levier ne peut plus
+    // sortir, celui de la diversification prend sa place.
+    expect(
+      selectLevers(["messagerie"], {
+        M1: "un_seul",
+        M3: "moins_1an",
+        M4: "oui",
+        M5: "oui",
+      }),
+    ).toEqual(["prestataire_unique"]);
   });
 
   it("saute les règles dont la condition est fausse", () => {

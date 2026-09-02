@@ -75,66 +75,42 @@ export const copyFr: DiagnosticCopy = {
     M1: {
       label: "Combien de prestataires messagerie travaillent pour vous ?",
       options: {
-        unique: "Un seul, national",
-        deux_cinq: "2 à 5",
-        six_dix: "6 à 10",
-        plus_dix: "Plus de 10",
-        inconnu: "Je ne sais pas exactement",
+        un_seul: "Un seul",
+        deux_plus: "Deux ou plus",
       },
     },
     M2: {
-      label: "Comment vos envois leur sont-ils attribués ?",
+      label: "Les mettez-vous en concurrence à chaque envoi ?",
+      help: "Comparer les prix envoi par envoi, plutôt que d'attribuer par habitude ou par zone.",
       options: {
-        comparaison: "Comparaison systématique à chaque envoi",
-        zone: "Un prestataire attitré par zone",
-      },
-    },
-    M3: {
-      label:
-        "Quand vos grilles ont-elles été remises en compétition pour la dernière fois ?",
-      options: {
-        moins12mois: "Moins de 12 mois",
-        un_trois_ans: "1 à 3 ans",
-        plus3ans: "Plus de 3 ans",
-        jamais: "Jamais, elles sont reconduites",
-      },
-    },
-    M4: {
-      label: "Êtes-vous en mesure de comparer deux grilles messagerie entre elles ?",
-      help: "Tranches de poids, taxation réelle ou volumétrique, découpage de zones, ad valorem, surcharges.",
-      options: {
-        oui: "Oui",
-        parfois: "Parfois",
+        oui: "Oui, systématiquement",
         non: "Non",
       },
     },
-
-    // ⚠️ Copy hors spécification : les deux questions sur les appels d'offres.
+    M3: {
+      label: "Quand avez-vous lancé votre dernier appel d'offres messagerie ?",
+      options: {
+        moins_1an: "Il y a moins d'un an",
+        plus_1an: "Il y a plus d'un an, ou jamais",
+      },
+    },
+    M4: {
+      label:
+        "Lors de vos appels d'offres, comparez-vous les grilles dans le détail ?",
+      help: "Tranches de poids, taxation réelle ou volumétrique, découpage de zones, surcharge gazole, ad valorem, surcoûts de livraison.",
+      options: {
+        oui: "Oui",
+        non: "Non",
+      },
+    },
     M5: {
       label:
-        "Combien de transporteurs invitez-vous à chaque appel d'offres messagerie ?",
+        "Consultez-vous des transporteurs que vous n'aviez jamais consultés ?",
       options: {
-        plus_dix: "Plus de 10",
-        six_dix: "6 à 10",
-        trois_cinq: "3 à 5",
-        moins_trois: "Moins de 3",
+        oui: "Oui",
+        non: "Non",
       },
     },
-    M6: {
-      label:
-        "Parmi eux, combien n'avaient jamais été consultés jusque-là ?",
-      help: "Un panel qui ne se renouvelle pas finit par négocier contre lui-même.",
-      options: {
-        plusieurs: "Plusieurs à chaque consultation",
-        un_deux: "Un ou deux",
-        rarement: "Rarement, le panel bouge peu",
-        aucun: "Aucun, toujours les mêmes",
-      },
-    },
-
-    /* ---------------------------------------------------------------- */
-    /* Branche lots partiels                                            */
-    /* ---------------------------------------------------------------- */
 
     /* ---------------------------------------------------------------- */
     /* Branche camions complets                                         */
@@ -251,32 +227,24 @@ export const copyFr: DiagnosticCopy = {
   // propose sans avoir à relire la question qui l'a déclenché.
   levers: {
     grilles_comparables: {
-      title: "Rendre vos grilles comparables avant de renégocier",
-      body: "Deux grilles messagerie ne se comparent pas en l'état : tranches de poids, taxation réelle ou volumétrique, découpage de zones, ad valorem et surcharges diffèrent d'un transporteur à l'autre. Tant qu'elles ne sont pas ramenées sur vos envois réels, une remise annoncée ne se vérifie sur rien.",
+      title: "Comparer les grilles dans le détail avant de trancher",
+      body: "Un prix affiché ne dit rien tant que les grilles ne sont pas ramenées sur la même base : tranches de poids, taxation réelle ou volumétrique, découpage de zones, surcharge gazole, ad valorem, surcoûts de livraison. Sans ce travail, l'offre retenue n'est pas la moins chère — c'est celle qui affichait le mieux.",
+    },
+    cherry_picking: {
+      title: "Faire jouer la concurrence envoi par envoi",
+      body: "Aucune grille n'est la meilleure partout : chaque transporteur a ses tranches de poids et ses zones où il est bon, et d'autres où il ne l'est pas. Comparer à chaque envoi revient à ne prendre chez chacun que ce qu'il vend le moins cher.",
     },
     remise_en_competition: {
-      title: "Remettre vos grilles en compétition dans l'année",
-      body: "Le marché messagerie bouge vite : capacités, surcharges gazole, réorganisation des réseaux. Au-delà de douze mois, l'écart entre votre grille et le marché n'est plus mesurable de l'intérieur — il faut rouvrir la consultation pour le voir.",
+      title: "Relancer votre appel d'offres",
+      body: "Au-delà d'un an, l'écart entre votre grille et le marché n'est plus mesurable de l'intérieur : capacités, surcharge gazole et réseaux ont bougé. Seule une nouvelle consultation le fait apparaître.",
     },
     ouvrir_nouveaux_entrants: {
-      title: "Faire entrer au moins un transporteur neuf à chaque consultation",
-      body: "Vos prestataires actuels vous répondent depuis des années : ils connaissent votre niveau de prix et calibrent leur offre juste en dessous. Un transporteur qui ne l'a jamais vu chiffre sur ses propres coûts — c'est lui qui fait apparaître l'écart réel.",
-    },
-    elargir_panel: {
-      title: "Consulter au moins cinq transporteurs",
-      body: "En dessous de trois offres, le résultat dépend entièrement de qui vous avez invité. Élargir le panel ne coûte que l'envoi du dossier, et c'est la seule façon de savoir si votre prix actuel est bon ou seulement habituel.",
-    },
-    comparaison_systematique: {
-      title: "Comparer à l'envoi plutôt qu'attribuer par zone",
-      body: "Un prestataire attitré par zone prend tous les envois de sa zone, quels que soient le poids et la destination exacte. Or les grilles se croisent : le moins cher sur une zone ne l'est pas sur toutes les tranches de poids.",
+      title: "Faire entrer des transporteurs que vous ne consultez jamais",
+      body: "Vos prestataires habituels connaissent votre niveau de prix et calibrent leur offre juste en dessous. Il existe des centaines de transporteurs messagerie, dont beaucoup sont forts précisément là où vous payez cher : c'est parmi eux que se trouve l'écart.",
     },
     prestataire_unique: {
       title: "Ouvrir votre plan à un deuxième transporteur",
-      body: "Avec un prestataire unique, rien ne vous dit si votre grille est bonne : vous n'avez aucun point de comparaison. Un second transporteur, même sur une partie du flux, crée la référence qui manque.",
-    },
-    panel_inconnu: {
-      title: "Commencer par recenser vos transporteurs",
-      body: "Ne pas connaître le nombre de prestataires signifie généralement que les envois sont commandés site par site, ou service par service. Le premier gain est le recensement : il fait apparaître les doublons et les volumes qu'on peut regrouper.",
+      body: "Avec un prestataire unique, rien ne vous dit si votre grille est bonne : vous n'avez aucun point de comparaison, et aucun levier le jour où il faut renégocier. Un second transporteur, même sur une partie du flux, crée la référence qui manque.",
     },
     retours_vide: {
       title: "Chiffrer ce que vous coûtent les retours à vide",
