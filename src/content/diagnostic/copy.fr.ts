@@ -249,59 +249,61 @@ export const copyFr: DiagnosticCopy = {
     },
   },
 
+  // Chaque levier se lit seul : un titre qui dit l'action, un corps qui dit
+  // pourquoi, en termes concrets. Le répondant doit comprendre ce qu'on lui
+  // propose sans avoir à relire la question qui l'a déclenché.
   levers: {
     grilles_comparables: {
-      title: "Rendre vos grilles comparables avant de renégocier.",
-      body: "Une remise sur une grille non normalisée ne se mesure pas.",
+      title: "Rendre vos grilles comparables avant de renégocier",
+      body: "Deux grilles messagerie ne se comparent pas en l'état : tranches de poids, taxation réelle ou volumétrique, découpage de zones, ad valorem et surcharges diffèrent d'un transporteur à l'autre. Tant qu'elles ne sont pas ramenées sur vos envois réels, une remise annoncée ne se vérifie sur rien.",
     },
     remise_en_competition: {
-      title: "Remettre en compétition sur vos flux réels,",
-      body: "pas sur un tarif de référence.",
+      title: "Remettre vos grilles en compétition dans l'année",
+      body: "Le marché messagerie bouge vite : capacités, surcharges gazole, réorganisation des réseaux. Au-delà de douze mois, l'écart entre votre grille et le marché n'est plus mesurable de l'intérieur — il faut rouvrir la consultation pour le voir.",
     },
-    // ⚠️ Copy hors spécification : leviers des questions M2, M5 et M6.
     ouvrir_nouveaux_entrants: {
-      title: "Faire entrer des transporteurs neufs dans la consultation.",
-      body: "Ceux qui vous répondent depuis des années savent déjà à quel prix vous achetez. Un nouvel entrant, non.",
+      title: "Faire entrer au moins un transporteur neuf à chaque consultation",
+      body: "Vos prestataires actuels vous répondent depuis des années : ils connaissent votre niveau de prix et calibrent leur offre juste en dessous. Un transporteur qui ne l'a jamais vu chiffre sur ses propres coûts — c'est lui qui fait apparaître l'écart réel.",
     },
     elargir_panel: {
-      title: "Élargir le panel consulté.",
-      body: "En dessous de cinq offres, ce n'est plus une mise en concurrence, c'est une confirmation.",
+      title: "Consulter au moins cinq transporteurs",
+      body: "En dessous de trois offres, le résultat dépend entièrement de qui vous avez invité. Élargir le panel ne coûte que l'envoi du dossier, et c'est la seule façon de savoir si votre prix actuel est bon ou seulement habituel.",
     },
     comparaison_systematique: {
-      title: "Comparer à l'envoi plutôt qu'attribuer par zone.",
-      body: "Le découpage géographique fige l'attribution sur une carte, pas sur un prix.",
+      title: "Comparer à l'envoi plutôt qu'attribuer par zone",
+      body: "Un prestataire attitré par zone prend tous les envois de sa zone, quels que soient le poids et la destination exacte. Or les grilles se croisent : le moins cher sur une zone ne l'est pas sur toutes les tranches de poids.",
     },
     prestataire_unique: {
-      title: "Un prestataire unique n'est pas d'abord un problème de prix,",
-      body: "c'est une absence de référence.",
+      title: "Ouvrir votre plan à un deuxième transporteur",
+      body: "Avec un prestataire unique, rien ne vous dit si votre grille est bonne : vous n'avez aucun point de comparaison. Un second transporteur, même sur une partie du flux, crée la référence qui manque.",
     },
     panel_inconnu: {
-      title: "Commencer par compter vos prestataires.",
-      body: "On ne met pas en concurrence un panel qu'on ne connaît pas.",
+      title: "Commencer par recenser vos transporteurs",
+      body: "Ne pas connaître le nombre de prestataires signifie généralement que les envois sont commandés site par site, ou service par service. Le premier gain est le recensement : il fait apparaître les doublons et les volumes qu'on peut regrouper.",
     },
     retours_vide: {
-      title: "Mesurer ce que vous payez pour des retours à vide.",
-      body: "Ce n'est pas sur la facture, c'est dans le prix.",
+      title: "Chiffrer ce que vous coûtent les retours à vide",
+      body: "Un camion qui rentre vide est payé par vous, mais sur aucune ligne visible : le transporteur l'intègre à son prix aller. Mettre un chiffre sur ces retours est le point de départ de toute discussion sur le bouclage.",
     },
     appariement_flux: {
-      title: "Chercher le chargeur dont l'aller est votre retour.",
-      body: "C'est un travail d'appariement de flux, pas de négociation.",
+      title: "Chercher le chargeur dont l'aller est votre retour",
+      body: "Sur vos axes réguliers, il existe presque toujours une entreprise qui expédie dans le sens inverse. Mettre les deux plans de transport bout à bout supprime un trajet à vide pour chacun : c'est un travail d'appariement de flux, pas de négociation tarifaire.",
     },
     eligibilite_modale: {
-      title: "Vos flux sont éligibles au report modal ;",
-      body: "l'évaluation, elle, ne l'a pas été.",
+      title: "Chiffrer le ferroviaire ou le fluvial sur vos corridors longs",
+      body: "Vos flux sont réguliers, et c'est la régularité — bien plus que la distance — qui rend le report modal viable. L'évaluation, elle, n'a pas été refaite récemment : les conditions actuelles ne sont plus celles de votre dernier calcul.",
     },
     decision_modale_reprise: {
-      title: "Une décision modale prise sans chiffrage se reprend.",
-      body: "Les conditions de 2023 ne sont plus celles d'aujourd'hui.",
+      title: "Reprendre la décision modale, chiffres à l'appui",
+      body: "Le ferroviaire ou le fluvial ont été écartés sans étude chiffrée. Les prix routiers, les capacités et les offres combinées ont changé depuis : une décision prise sans calcul se rouvre sans avoir à se dédire.",
     },
     part_stable: {
-      title: "Commencer par la part stable de vos flux.",
-      body: "Un flux aléatoire dans sa globalité contient presque toujours un socle régulier.",
+      title: "Commencer par la part stable de vos flux",
+      body: "Un flux décrit comme aléatoire contient presque toujours un socle régulier : les mêmes origines-destinations qui reviennent chaque mois. C'est sur ce socle que se construisent les boucles, pas sur la totalité du volume.",
     },
     reouverture_conception: {
-      title: "Rouvrir la conception du plan,",
-      body: "pas seulement les tarifs.",
+      title: "Rouvrir la conception du plan, pas seulement les tarifs",
+      body: "Un plan reconduit d'année en année a été conçu pour une organisation qui a changé depuis : sites, volumes, clients, délais. Renégocier les prix sur un schéma périmé fige ce schéma pour trois ans de plus.",
     },
   },
 

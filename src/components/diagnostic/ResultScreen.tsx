@@ -85,22 +85,22 @@ export function ResultScreen({
           {levers.map((lever, index) => (
             <li
               key={lever}
-              className="flex gap-4 rounded-2xl border border-navy-200/60 bg-white p-5 shadow-premium"
+              className="rounded-2xl border border-navy-200/60 bg-white p-5 shadow-premium"
             >
-              <span
-                aria-hidden="true"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-50 text-sm font-bold text-brand-700"
-              >
-                {index + 1}
-              </span>
-              <span className="min-w-0">
-                <span className="block font-semibold text-navy-900">
-                  {copy.levers[lever].title}
+              {/* Le numéro reste dans le fil du titre : en colonne séparée, il
+                  amputait le texte d'un tiers de la largeur sur mobile. */}
+              <p className="font-semibold leading-snug text-navy-900">
+                <span
+                  aria-hidden="true"
+                  className="mr-2.5 inline-flex h-6 w-6 shrink-0 translate-y-0.5 items-center justify-center rounded-full bg-brand-50 text-xs font-bold text-brand-700"
+                >
+                  {index + 1}
                 </span>
-                <span className="mt-1 block text-sm leading-relaxed text-navy-600">
-                  {copy.levers[lever].body}
-                </span>
-              </span>
+                {copy.levers[lever].title}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-navy-600">
+                {copy.levers[lever].body}
+              </p>
             </li>
           ))}
         </ol>
@@ -113,11 +113,20 @@ export function ResultScreen({
                 flow: copy.flows[result.secondaryBranch].alsoLabel,
               })}
             </p>
-            <p className="mt-1 text-sm leading-relaxed text-navy-600">
-              {secondaryLever
-                ? `${copy.levers[secondaryLever].title} ${copy.levers[secondaryLever].body}`
-                : copy.result.secondaryEmpty}
-            </p>
+            {secondaryLever ? (
+              <>
+                <p className="mt-2 text-sm font-medium text-navy-800">
+                  {copy.levers[secondaryLever].title}
+                </p>
+                <p className="mt-1 text-sm leading-relaxed text-navy-600">
+                  {copy.levers[secondaryLever].body}
+                </p>
+              </>
+            ) : (
+              <p className="mt-1 text-sm leading-relaxed text-navy-600">
+                {copy.result.secondaryEmpty}
+              </p>
+            )}
           </div>
         ) : null}
 
