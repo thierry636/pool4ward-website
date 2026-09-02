@@ -57,16 +57,16 @@ describe("branchement — branche messagerie", () => {
     expect(idsOf(ranking, {})).toContain("M2");
 
     const answers: Answers = {
-      M1: "unique", // 8
+      M1: "unique", // 10 — point d'amélioration
       M3: "moins12mois", // 25
       M4: "oui", // 25
       M5: "plus_dix", // 25
       M6: "plusieurs", // 25
     };
     expect(computeScore(ranking, answers)).toEqual({
-      points: 108,
+      points: 110,
       maxServed: 125,
-      indice: 86,
+      indice: 88,
     });
   });
 
@@ -74,7 +74,7 @@ describe("branchement — branche messagerie", () => {
     // Le répondant a répondu à M2, puis est revenu changer M1 en « un seul ».
     const answers: Answers = {
       M1: "unique",
-      M2: "zone", // 20 points qui ne doivent plus compter
+      M2: "zone", // 10 points qui ne doivent plus compter
       M3: "jamais",
       M4: "non",
       M5: "moins_trois",
@@ -82,8 +82,46 @@ describe("branchement — branche messagerie", () => {
     };
     expect(scoredIdsOf(ranking, answers)).not.toContain("M2");
     expect(computeScore(ranking, answers).maxServed).toBe(125);
-    expect(computeScore(ranking, answers).points).toBe(28);
+    expect(computeScore(ranking, answers).points).toBe(50);
     expect(pruneAnswers(ranking, answers)).not.toHaveProperty("M2");
+  });
+
+  it("vérifie l'invariant du barème sur tous les parcours à six questions", () => {
+    // Tout le barème messagerie tient en une phrase : chaque question est OK
+    // ou ne l'est pas, et chaque point d'amélioration coûte dix points
+    // d'indice. Les leviers affichés sont exactement ces points, plafonnés à
+    // trois. Ce test le vérifie sur les 1 536 combinaisons possibles.
+    const ids = ["M1", "M2", "M3", "M4", "M5", "M6"];
+    const options = Object.fromEntries(
+      ids.map((id) => [id, QUESTION_BANK[id].options.map((o) => o.value)]),
+    );
+    let verifies = 0;
+
+    const parcourir = (i: number, acc: Record<string, string>) => {
+      if (i === ids.length) {
+        const servies = servedQuestions(ranking, acc).map(
+          (s) => s.question.id,
+        );
+        if (servies.length !== 6) return; // M2 sautée : pas ce cas ici
+        const aAmeliorer = servies.filter(
+          (id) =>
+            QUESTION_BANK[id].options.find((o) => o.value === acc[id])!
+              .points === 10,
+        ).length;
+        expect(computeScore(ranking, acc).indice).toBe(100 - 10 * aAmeliorer);
+        expect(selectLevers(ranking, acc)).toHaveLength(
+          Math.min(aAmeliorer, 3),
+        );
+        verifies += 1;
+        return;
+      }
+      for (const v of options[ids[i]]) {
+        parcourir(i + 1, { ...acc, [ids[i]]: v });
+      }
+    };
+    parcourir(0, {});
+
+    expect(verifies).toBe(1536);
   });
 
   it("continue de poser G1 sur les autres branches", () => {
@@ -114,38 +152,59 @@ describe("branchement — branche messagerie", () => {
     });
   });
 
-  it("applique le plancher de 40 % aux deux questions sur les appels d'offres", () => {
-    // Consulter peu n'est pas une faute de gestion, c'est un gisement : le pire
-    // cas vaut 10 sur 25 et non zéro, pour que le verdict n'accuse pas.
+  it("applique le plancher de 40 % à chaque point d'amélioration", () => {
+    // Barème binaire : une question vaut 25 si elle est OK, 10 sinon. Jamais
+    // zéro — un chargeur en difficulté sur tout ne doit pas lire 10/100.
     const pire: Answers = {
-      M1: "inconnu", // 0
-      M2: "zone", // 20 — l'attribution ne peut pas descendre plus bas
-      M3: "jamais", // 0
-      M4: "non", // 0
-      M5: "moins_trois", // 10
-      M6: "aucun", // 10
+      M1: "inconnu",
+      M2: "zone",
+      M3: "jamais",
+      M4: "non",
+      M5: "moins_trois",
+      M6: "aucun",
     };
     expect(computeScore(ranking, pire)).toEqual({
-      points: 40,
+      points: 60,
       maxServed: 150,
-      indice: 27,
+      indice: 40,
     });
+  });
+
+  it("fait perdre dix points par point d'amélioration, et rien d'autre", () => {
+    // C'est tout le barème : chaque question est OK ou ne l'est pas.
+    const parfait: Answers = {
+      M1: "deux_cinq",
+      M2: "comparaison",
+      M3: "moins12mois",
+      M4: "oui",
+      M5: "plus_dix",
+      M6: "plusieurs",
+    };
+    expect(computeScore(ranking, parfait).indice).toBe(100);
+    expect(computeScore(ranking, { ...parfait, M4: "non" }).indice).toBe(90);
+    expect(
+      computeScore(ranking, { ...parfait, M4: "non", M2: "zone" }).indice,
+    ).toBe(80);
+    // Une réponse intermédiaire ne coûte rien : « parfois » vaut « oui ».
+    expect(computeScore(ranking, { ...parfait, M4: "parfois" }).indice).toBe(100);
+    expect(computeScore(ranking, { ...parfait, M6: "rarement" }).indice).toBe(100);
+    expect(computeScore(ranking, { ...parfait, M1: "plus_dix" }).indice).toBe(100);
   });
 
   it("arrondit l'indice normalisé", () => {
     const answers: Answers = {
-      M1: "six_dix", // 15
-      M2: "zone", // 20
-      M3: "plus3ans", // 5
-      M4: "parfois", // 10
-      M5: "trois_cinq", // 15
-      M6: "rarement", // 15
+      M1: "six_dix", // 25 OK
+      M2: "zone", // 10 à améliorer
+      M3: "plus3ans", // 10 à améliorer
+      M4: "parfois", // 25 OK
+      M5: "trois_cinq", // 25 OK
+      M6: "rarement", // 25 OK
     };
-    // 80 / 150 = 53,33 %
+    // 120 / 150 = 80 %
     expect(computeScore(ranking, answers)).toEqual({
-      points: 80,
+      points: 120,
       maxServed: 150,
-      indice: 53,
+      indice: 80,
     });
   });
 });
@@ -357,11 +416,17 @@ describe("deux flux classés", () => {
 
 describe("niveaux", () => {
   it("applique les seuils communs aux trois branches", () => {
-    expect(levelFor(0)).toBe("plan_subi");
-    expect(levelFor(39)).toBe("plan_subi");
-    expect(levelFor(40)).toBe("plan_pilote");
-    expect(levelFor(69)).toBe("plan_pilote");
-    expect(levelFor(70)).toBe("plan_optimise");
+    // Les bornes sont calées sur le NOMBRE de points d'amélioration, pour que
+    // trois points donnent le même niveau à cinq et à six questions servies.
+    expect(levelFor(40)).toBe("plan_subi"); // 5 ou 6 points
+    expect(levelFor(64)).toBe("plan_subi"); // 3 points sur 5 questions
+    expect(levelFor(70)).toBe("plan_subi"); // 3 points sur 6 questions
+    expect(levelFor(75)).toBe("plan_subi");
+    expect(levelFor(76)).toBe("plan_pilote"); // 2 points sur 5 questions
+    expect(levelFor(80)).toBe("plan_pilote"); // 2 points sur 6 questions
+    expect(levelFor(84)).toBe("plan_pilote");
+    expect(levelFor(88)).toBe("plan_optimise"); // 1 point sur 5 questions
+    expect(levelFor(90)).toBe("plan_optimise"); // 1 point sur 6 questions
     expect(levelFor(100)).toBe("plan_optimise");
   });
 });
@@ -387,7 +452,7 @@ describe("leviers", () => {
     ]);
   });
 
-  it("déclenche la consolidation sur les deux tranches hautes de M1", () => {
+  it("n'affiche un levier que sur un point d'amélioration", () => {
     const base: Answers = {
       M2: "comparaison",
       M3: "moins12mois",
@@ -395,16 +460,15 @@ describe("leviers", () => {
       M5: "plus_dix",
       M6: "plusieurs",
     };
-    expect(selectLevers(["messagerie"], { ...base, M1: "six_dix" })).toEqual([
-      "consolidation_volumes",
-    ]);
-    expect(selectLevers(["messagerie"], { ...base, M1: "plus_dix" })).toEqual([
-      "consolidation_volumes",
-    ]);
-    // La tranche centrale est la bonne réponse : elle ne déclenche rien.
-    expect(selectLevers(["messagerie"], { ...base, M1: "deux_cinq" })).toEqual([]);
+    // Dès deux prestataires, la concurrence existe : rien à signaler.
+    for (const m1 of ["deux_cinq", "six_dix", "plus_dix"]) {
+      expect(selectLevers(["messagerie"], { ...base, M1: m1 }), m1).toEqual([]);
+    }
     expect(selectLevers(["messagerie"], { ...base, M1: "unique" })).toEqual([
       "prestataire_unique",
+    ]);
+    expect(selectLevers(["messagerie"], { ...base, M1: "inconnu" })).toEqual([
+      "panel_inconnu",
     ]);
   });
 

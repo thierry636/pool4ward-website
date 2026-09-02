@@ -24,27 +24,25 @@ export const MAX_POINTS_PER_QUESTION = 25;
 
 const MESSAGERIE: readonly Question[] = [
   {
-    // Tranches en ordre croissant. Le sommet du barème est au milieu, pas au
-    // bout : deux à cinq prestataires font une vraie mise en compétition, un
-    // seul supprime toute référence, et au-delà de dix les volumes s'éclatent
-    // au point de ne plus peser dans aucune négociation.
+    // Barème binaire : un seul prestataire — ou un nombre inconnu — pose un
+    // problème de concurrence. Au-delà, c'est OK. Les tranches ne servent qu'à
+    // ne pas afficher un score écrasant : le point d'amélioration vaut 10 sur
+    // 25, jamais zéro.
     id: "M1",
     branch: "messagerie",
     scored: true,
     max: 25,
     options: [
-      { value: "unique", points: 8 },
+      { value: "unique", points: 10 },
       { value: "deux_cinq", points: 25 },
-      { value: "six_dix", points: 15 },
-      { value: "plus_dix", points: 10 },
-      { value: "inconnu", points: 0 },
+      { value: "six_dix", points: 25 },
+      { value: "plus_dix", points: 25 },
+      { value: "inconnu", points: 10 },
     ],
   },
   {
-    // L'attribution n'a que deux modes réels : par zone, ou par comparaison
-    // systématique. ⚠️ Conséquence de barème : le plus bas des deux vaut 20
-    // sur 25, la question ne peut donc plus faire descendre l'indice de plus de
-    // quatre points. Elle documente une pratique plus qu'elle ne la note.
+    // Attribution par zone : amélioration possible. Comparaison systématique :
+    // OK.
     id: "M2",
     branch: "messagerie",
     scored: true,
@@ -56,7 +54,7 @@ const MESSAGERIE: readonly Question[] = [
     when: { type: "not", of: { type: "answerIn", question: "M1", values: ["unique"] } },
     options: [
       { value: "comparaison", points: 25 },
-      { value: "zone", points: 20 },
+      { value: "zone", points: 10 },
     ],
   },
   {
@@ -66,51 +64,49 @@ const MESSAGERIE: readonly Question[] = [
     max: 25,
     options: [
       { value: "moins12mois", points: 25 },
-      { value: "un_trois_ans", points: 15 },
-      { value: "plus3ans", points: 5 },
-      { value: "jamais", points: 0 },
+      { value: "un_trois_ans", points: 10 },
+      { value: "plus3ans", points: 10 },
+      { value: "jamais", points: 10 },
     ],
   },
   {
-    // M4 est la question qui vend l'offre : elle ne doit jamais être coupée,
-    // même en version courte. Elle sert aussi de question de branche secondaire.
+    // M4 est la question qui vend l'offre : elle ne doit jamais être coupée.
+    // Ne pas comparer du tout est le point d'amélioration ; comparer, même
+    // parfois, est OK. Sert aussi de question de branche secondaire.
     id: "M4",
     branch: "messagerie",
     scored: true,
     max: 25,
     options: [
       { value: "oui", points: 25 },
-      { value: "parfois", points: 10 },
-      { value: "non", points: 0 },
+      { value: "parfois", points: 25 },
+      { value: "non", points: 10 },
     ],
   },
   {
-    // Largeur du panel consulté. Barème à plancher : même le pire cas vaut 40 %
-    // du maximum. Consulter peu n'est pas une faute de gestion — c'est un
-    // gisement — et un zéro rendrait le verdict accusatoire.
+    // Moins de trois transporteurs consultés : ce n'est plus une mise en
+    // concurrence. Au-delà, c'est OK.
     id: "M5",
     branch: "messagerie",
     scored: true,
     max: 25,
     options: [
       { value: "plus_dix", points: 25 },
-      { value: "six_dix", points: 20 },
-      { value: "trois_cinq", points: 15 },
+      { value: "six_dix", points: 25 },
+      { value: "trois_cinq", points: 25 },
       { value: "moins_trois", points: 10 },
     ],
   },
   {
-    // Renouvellement du panel. Même plancher à 40 % que M5 : c'est le couple
-    // « panel large × entrants nouveaux » qui fait le haut du barème, pas l'une
-    // ou l'autre prise seule.
+    // Aucun nouvel entrant : amélioration possible. Dès qu'il y en a, c'est OK.
     id: "M6",
     branch: "messagerie",
     scored: true,
     max: 25,
     options: [
       { value: "plusieurs", points: 25 },
-      { value: "un_deux", points: 20 },
-      { value: "rarement", points: 15 },
+      { value: "un_deux", points: 25 },
+      { value: "rarement", points: 25 },
       { value: "aucun", points: 10 },
     ],
   },

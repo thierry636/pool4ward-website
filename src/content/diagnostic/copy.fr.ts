@@ -275,9 +275,9 @@ export const copyFr: DiagnosticCopy = {
       title: "Un prestataire unique n'est pas d'abord un problème de prix,",
       body: "c'est une absence de référence.",
     },
-    consolidation_volumes: {
-      title: "Consolider les volumes.",
-      body: "Éclatés, ils ne pèsent dans aucune négociation.",
+    panel_inconnu: {
+      title: "Commencer par compter vos prestataires.",
+      body: "On ne met pas en concurrence un panel qu'on ne connaît pas.",
     },
     retours_vide: {
       title: "Mesurer ce que vous payez pour des retours à vide.",

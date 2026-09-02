@@ -17,26 +17,30 @@ const REOUVERTURE_CONCEPTION: LeverRule = {
 export const LEVER_RULES: Readonly<Record<FlowType, readonly LeverRule[]>> = {
   // G1 n'étant pas posée en messagerie, REOUVERTURE_CONCEPTION n'y figure pas :
   // ce sont les deux règles sur les appels d'offres qui portent la conception.
+  // Un levier par point d'amélioration, exactement : une condition de levier
+  // est vraie si et seulement si la question vaut 10 et non 25. Rien à
+  // arbitrer, rien à recalculer — la liste des leviers EST la liste des
+  // questions non OK, dans l'ordre de priorité commerciale.
   messagerie: [
     {
       id: "grilles_comparables",
-      when: { type: "answerNotIn", question: "M4", values: ["oui"] },
+      when: { type: "answerIn", question: "M4", values: ["non"] },
     },
     {
       id: "ouvrir_nouveaux_entrants",
-      when: { type: "answerIn", question: "M6", values: ["aucun", "rarement"] },
+      when: { type: "answerIn", question: "M6", values: ["aucun"] },
     },
     {
       id: "elargir_panel",
-      when: {
-        type: "answerIn",
-        question: "M5",
-        values: ["moins_trois", "trois_cinq"],
-      },
+      when: { type: "answerIn", question: "M5", values: ["moins_trois"] },
     },
     {
       id: "remise_en_competition",
-      when: { type: "answerIn", question: "M3", values: ["plus3ans", "jamais"] },
+      when: {
+        type: "answerIn",
+        question: "M3",
+        values: ["un_trois_ans", "plus3ans", "jamais"],
+      },
     },
     {
       id: "comparaison_systematique",
@@ -47,11 +51,10 @@ export const LEVER_RULES: Readonly<Record<FlowType, readonly LeverRule[]>> = {
       when: { type: "answerIn", question: "M1", values: ["unique"] },
     },
     {
-      id: "consolidation_volumes",
-      when: { type: "answerIn", question: "M1", values: ["six_dix", "plus_dix"] },
+      id: "panel_inconnu",
+      when: { type: "answerIn", question: "M1", values: ["inconnu"] },
     },
   ],
-
   complets: [
     {
       id: "retours_vide",
@@ -127,7 +130,7 @@ export const LEVER_IDS = [
   "elargir_panel",
   "comparaison_systematique",
   "prestataire_unique",
-  "consolidation_volumes",
+  "panel_inconnu",
   "retours_vide",
   "appariement_flux",
   "eligibilite_modale",
