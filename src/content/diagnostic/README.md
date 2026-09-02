@@ -49,34 +49,31 @@ tout libellé manquant.
 
 ## Barème messagerie : binaire
 
-Chaque question vaut **25 si elle est OK**, **10 si elle signale un point
-d'amélioration**. Jamais zéro : un chargeur en difficulté sur tout lit 40/100,
-pas 10/100.
+Chaque question est bonne (**25**) ou ne l'est pas (**10**). Aucune valeur
+intermédiaire. Jamais zéro : un chargeur en difficulté sur tout lit 40/100.
 
-| Question | OK | Point d'amélioration |
+| Question | Bon | Point d'amélioration |
 |---|---|---|
-| M1 prestataires | 2 et plus | un seul, ou nombre inconnu |
-| M2 attribution | comparaison systématique | un prestataire par zone |
-| M3 révision tarifaire | moins de 12 mois | au-delà, ou jamais |
-| M4 comparaison des grilles | oui, ou parfois | non |
-| M5 transporteurs consultés | 3 et plus | moins de 3 |
-| M6 nouveaux entrants | au moins un | aucun |
+| M1 nombre de prestataires | deux ou plus | un seul |
+| M2 concurrence à chaque envoi *(sautée si M1 = un seul)* | oui | non |
+| M3 dernier appel d'offres | moins d'un an | plus d'un an, ou jamais |
+| M4 comparaison détaillée des grilles | oui | non |
+| M5 transporteurs jamais consultés | oui | non |
 
-Un point d'amélioration coûte dix points d'indice, et rien d'autre. Les
-leviers affichés sont exactement les points d'amélioration, plafonnés à trois
-et pris dans l'ordre de priorité de `LEVER_RULES`. Un test vérifie cet
-invariant sur les 1 536 parcours possibles.
+Les leviers affichés sont exactement les questions non bonnes, plafonnés à
+trois et pris dans l'ordre de `LEVER_RULES`. Un test vérifie cet invariant sur
+les 32 parcours possibles.
 
-Les seuils de niveau sont calés sur le NOMBRE de points d'amélioration, pas
-sur des bornes rondes : sans quoi trois points donneraient « piloté » à six
-questions servies et « subi » à cinq.
+Les seuils de niveau sont calés sur le NOMBRE de questions non bonnes, pas sur
+des bornes rondes : la branche sert cinq questions, ou quatre quand le
+prestataire est unique, et le niveau ne doit pas dépendre de ce nombre.
 
-| Points d'amélioration | Indice | Niveau |
-|---|---|---|
-| 0 | 100 | Plan optimisé en interne |
-| 1 | 90 ou 88 | Plan optimisé en interne |
-| 2 | 80 ou 76 | Plan piloté, gisement non ouvert |
-| 3 et plus | 70 et moins | Plan subi |
+| Questions non bonnes | Indice (5 servies) | Indice (4 servies) | Niveau |
+|---|---|---|---|
+| 0 | 100 | 100 | Plan optimisé en interne |
+| 1 | 88 | 85 | Plan optimisé en interne |
+| 2 | 76 | 70 | Plan piloté, gisement non ouvert |
+| 3 et plus | 64 et moins | 55 et moins | Plan subi |
 
 ## Changer le barème
 

@@ -24,90 +24,74 @@ export const MAX_POINTS_PER_QUESTION = 25;
 
 const MESSAGERIE: readonly Question[] = [
   {
-    // Barème binaire : un seul prestataire — ou un nombre inconnu — pose un
-    // problème de concurrence. Au-delà, c'est OK. Les tranches ne servent qu'à
-    // ne pas afficher un score écrasant : le point d'amélioration vaut 10 sur
-    // 25, jamais zéro.
+    // Profondeur du panel. Un prestataire unique est un problème de
+    // concurrence ; à partir de deux, c'est bon. C'est aussi cette réponse qui
+    // décide si la question de la comparaison a un sens.
     id: "M1",
     branch: "messagerie",
     scored: true,
     max: 25,
     options: [
-      { value: "unique", points: 10 },
-      { value: "deux_cinq", points: 25 },
-      { value: "six_dix", points: 25 },
-      { value: "plus_dix", points: 25 },
-      { value: "inconnu", points: 10 },
+      { value: "un_seul", points: 10 },
+      { value: "deux_plus", points: 25 },
     ],
   },
   {
-    // Attribution par zone : amélioration possible. Comparaison systématique :
-    // OK.
+    // Sautée quand il n'y a qu'un prestataire : il n'y a rien à comparer.
+    // La condition est écrite en non-exclusion pour que la question reste
+    // servie tant que M1 n'a pas été répondue — sans quoi la barre de
+    // progression annoncerait une question de moins avant la première réponse.
     id: "M2",
     branch: "messagerie",
     scored: true,
     max: 25,
-    // Sautée quand le répondant n'a qu'un seul prestataire : il n'y a rien à
-    // attribuer. La condition est écrite en « non-exclusion » et pas en
-    // « answerNotIn » pour que la question soit servie par défaut, y compris
-    // avant que M1 n'ait été répondue.
-    when: { type: "not", of: { type: "answerIn", question: "M1", values: ["unique"] } },
+    when: {
+      type: "not",
+      of: { type: "answerIn", question: "M1", values: ["un_seul"] },
+    },
     options: [
-      { value: "comparaison", points: 25 },
-      { value: "zone", points: 10 },
+      { value: "oui", points: 25 },
+      { value: "non", points: 10 },
     ],
   },
   {
+    // Ancienneté du dernier appel d'offres. Moins d'un an : bon. Au-delà, il
+    // faut le refaire.
     id: "M3",
     branch: "messagerie",
     scored: true,
     max: 25,
     options: [
-      { value: "moins12mois", points: 25 },
-      { value: "un_trois_ans", points: 10 },
-      { value: "plus3ans", points: 10 },
-      { value: "jamais", points: 10 },
+      { value: "moins_1an", points: 25 },
+      { value: "plus_1an", points: 10 },
     ],
   },
   {
-    // M4 est la question qui vend l'offre : elle ne doit jamais être coupée.
-    // Ne pas comparer du tout est le point d'amélioration ; comparer, même
-    // parfois, est OK. Sert aussi de question de branche secondaire.
+    // M4 est la question qui vend l'offre : comparer des grilles messagerie
+    // demande de les ramener sur la même base — tranches de poids, taxation
+    // réelle ou volumétrique, zones, surcharge gazole, ad valorem, surcoûts.
+    // Sans ce travail, l'offre retenue n'est pas la moins chère. Elle ne doit
+    // jamais être coupée, et sert aussi de question de branche secondaire.
     id: "M4",
     branch: "messagerie",
     scored: true,
     max: 25,
     options: [
       { value: "oui", points: 25 },
-      { value: "parfois", points: 25 },
       { value: "non", points: 10 },
     ],
   },
   {
-    // Moins de trois transporteurs consultés : ce n'est plus une mise en
-    // concurrence. Au-delà, c'est OK.
+    // Renouvellement du panel. Le nombre d'invités n'est plus demandé — c'est
+    // M1 qui porte la profondeur du panel — mais l'arrivée de transporteurs
+    // neufs reste le signal qui distingue une consultation d'une reconduction.
     id: "M5",
     branch: "messagerie",
     scored: true,
     max: 25,
     options: [
-      { value: "plus_dix", points: 25 },
-      { value: "six_dix", points: 25 },
-      { value: "trois_cinq", points: 25 },
-      { value: "moins_trois", points: 10 },
-    ],
-  },
-  {
-    // Aucun nouvel entrant : amélioration possible. Dès qu'il y en a, c'est OK.
-    id: "M6",
-    branch: "messagerie",
-    scored: true,
-    max: 25,
-    options: [
-      { value: "plusieurs", points: 25 },
-      { value: "un_deux", points: 25 },
-      { value: "rarement", points: 25 },
-      { value: "aucun", points: 10 },
+      { value: "oui", points: 25 },
+      { value: "non", points: 10 },
     ],
   },
 ];

@@ -21,38 +21,29 @@ export const LEVER_RULES: Readonly<Record<FlowType, readonly LeverRule[]>> = {
   // est vraie si et seulement si la question vaut 10 et non 25. Rien à
   // arbitrer, rien à recalculer — la liste des leviers EST la liste des
   // questions non OK, dans l'ordre de priorité commerciale.
+  // Un levier par point d'amélioration, exactement : une condition est vraie
+  // si et seulement si la question vaut 10 et non 25. La liste des leviers EST
+  // la liste des questions qui ne sont pas bonnes.
   messagerie: [
+    {
+      id: "prestataire_unique",
+      when: { type: "answerIn", question: "M1", values: ["un_seul"] },
+    },
     {
       id: "grilles_comparables",
       when: { type: "answerIn", question: "M4", values: ["non"] },
     },
     {
-      id: "ouvrir_nouveaux_entrants",
-      when: { type: "answerIn", question: "M6", values: ["aucun"] },
+      id: "cherry_picking",
+      when: { type: "answerIn", question: "M2", values: ["non"] },
     },
     {
-      id: "elargir_panel",
-      when: { type: "answerIn", question: "M5", values: ["moins_trois"] },
+      id: "ouvrir_nouveaux_entrants",
+      when: { type: "answerIn", question: "M5", values: ["non"] },
     },
     {
       id: "remise_en_competition",
-      when: {
-        type: "answerIn",
-        question: "M3",
-        values: ["un_trois_ans", "plus3ans", "jamais"],
-      },
-    },
-    {
-      id: "comparaison_systematique",
-      when: { type: "answerIn", question: "M2", values: ["zone"] },
-    },
-    {
-      id: "prestataire_unique",
-      when: { type: "answerIn", question: "M1", values: ["unique"] },
-    },
-    {
-      id: "panel_inconnu",
-      when: { type: "answerIn", question: "M1", values: ["inconnu"] },
+      when: { type: "answerIn", question: "M3", values: ["plus_1an"] },
     },
   ],
   complets: [
@@ -127,10 +118,8 @@ export const LEVER_IDS = [
   "grilles_comparables",
   "remise_en_competition",
   "ouvrir_nouveaux_entrants",
-  "elargir_panel",
-  "comparaison_systematique",
+  "cherry_picking",
   "prestataire_unique",
-  "panel_inconnu",
   "retours_vide",
   "appariement_flux",
   "eligibilite_modale",
@@ -148,7 +137,6 @@ export const LEVER_QUESTION_IDS: readonly QuestionId[] = [
   "M3",
   "M4",
   "M5",
-  "M6",
   "C1",
   "C2",
   "C3",

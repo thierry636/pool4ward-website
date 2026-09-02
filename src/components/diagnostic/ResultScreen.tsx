@@ -55,12 +55,14 @@ export function ResultScreen({
           {copy.verdicts[result.branch][result.level]}
         </p>
 
-        {BENCHMARK_ENABLED ? null : (
-          // Emplacement réservé dès la v1, activé quand la base sera suffisante.
+        {/* L'emplacement du benchmark reste réservé dans la maquette mais n'est
+            plus affiché : la conclusion doit tenir en un indice, un niveau et
+            une phrase. `BENCHMARK_ENABLED` le rouvrira le jour venu. */}
+        {BENCHMARK_ENABLED ? (
           <p className="mt-4 rounded-xl border border-dashed border-navy-200 px-4 py-3 text-xs leading-relaxed text-navy-400">
             {copy.result.benchmarkPlaceholder}
           </p>
-        )}
+        ) : null}
       </section>
 
       <section aria-labelledby="diagnostic-leviers">
