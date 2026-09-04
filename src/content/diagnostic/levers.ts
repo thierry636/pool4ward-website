@@ -45,6 +45,10 @@ export const LEVER_RULES: Readonly<Record<FlowType, readonly LeverRule[]>> = {
       id: "remise_en_competition",
       when: { type: "answerIn", question: "M3", values: ["plus_1an"] },
     },
+    {
+      id: "electrification_eligibilite",
+      when: { type: "answerIn", question: "E1", values: ["non"] },
+    },
   ],
   complets: [
     {
@@ -82,6 +86,10 @@ export const LEVER_RULES: Readonly<Record<FlowType, readonly LeverRule[]>> = {
     {
       id: "part_stable",
       when: { type: "answerIn", question: "C3", values: ["aleatoire"] },
+    },
+    {
+      id: "electrification_eligibilite",
+      when: { type: "answerIn", question: "E1", values: ["non"] },
     },
     REOUVERTURE_CONCEPTION,
   ],
@@ -125,6 +133,7 @@ export const LEVER_IDS = [
   "eligibilite_modale",
   "decision_modale_reprise",
   "part_stable",
+  "electrification_eligibilite",
   "reouverture_conception",
 ] as const;
 
@@ -142,4 +151,5 @@ export const LEVER_QUESTION_IDS: readonly QuestionId[] = [
   "C3",
   "C4",
   "G1",
+  "E1",
 ];

@@ -31,18 +31,29 @@ const scoredIdsOf = (ranking: Ranking, answers: Answers = {}) =>
 describe("branchement — branche messagerie", () => {
   const ranking: Ranking = ["messagerie"];
 
-  it("sert les cinq questions de la branche, sans la clôture G1", () => {
-    // En messagerie, ce sont les questions sur l'appel d'offres qui tiennent le
-    // rôle de clôture : la façon dont le plan a été construit (4PL,
-    // commissionnaire) n'y dit rien d'utile.
-    expect(idsOf(ranking)).toEqual(["M1", "M2", "M3", "M4", "M5"]);
+  it("sert les cinq questions de la branche, puis l'électrification", () => {
+    // G1 n'est pas posée en messagerie — la façon dont le plan a été construit
+    // (4PL, commissionnaire) n'y dit rien d'utile. E1 l'est : l'éligibilité à
+    // l'électrification se regarde sur des segments, pas sur une typologie.
+    expect(idsOf(ranking)).toEqual(["M1", "M2", "M3", "M4", "M5", "E1"]);
     expect(idsOf(ranking)).not.toContain("G1");
+  });
+
+  it("pose l'électrification aux deux branches", () => {
+    expect(idsOf(["complets"])).toContain("E1");
+    expect(idsOf(["messagerie"])).toContain("E1");
   });
 
   it("saute la mise en concurrence quand le prestataire est unique", () => {
     // Un seul prestataire : il n'y a rien à comparer. Le maximum servi tombe de
     // 125 à 100 et la normalisation absorbe l'écart.
-    expect(idsOf(ranking, { M1: "un_seul" })).toEqual(["M1", "M3", "M4", "M5"]);
+    expect(idsOf(ranking, { M1: "un_seul" })).toEqual([
+      "M1",
+      "M3",
+      "M4",
+      "M5",
+      "E1",
+    ]);
     expect(idsOf(ranking, { M1: "deux_plus" })).toContain("M2");
     // Servie par défaut tant que M1 n'a pas été répondue : sans quoi la barre
     // de progression annoncerait une question de moins avant la première
@@ -69,17 +80,18 @@ describe("branchement — branche messagerie", () => {
     }
   });
 
-  it("normalise sur 125 avec cinq questions, sur 100 avec quatre", () => {
+  it("normalise sur 150 avec six questions, sur 125 avec cinq", () => {
     const bon: Answers = {
       M1: "deux_plus",
       M2: "oui",
       M3: "moins_1an",
       M4: "oui",
       M5: "oui",
+      E1: "oui",
     };
     expect(computeScore(ranking, bon)).toEqual({
-      points: 125,
-      maxServed: 125,
+      points: 150,
+      maxServed: 150,
       indice: 100,
     });
 
@@ -88,11 +100,12 @@ describe("branchement — branche messagerie", () => {
       M3: "moins_1an",
       M4: "oui",
       M5: "oui",
+      E1: "oui",
     };
     expect(computeScore(ranking, unSeul)).toEqual({
-      points: 85,
-      maxServed: 100,
-      indice: 85,
+      points: 110,
+      maxServed: 125,
+      indice: 88,
     });
   });
 
@@ -104,11 +117,12 @@ describe("branchement — branche messagerie", () => {
       M3: "plus_1an",
       M4: "non",
       M5: "non",
+      E1: "non",
     };
     expect(computeScore(ranking, pire)).toEqual({
-      points: 65,
-      maxServed: 125,
-      indice: 52,
+      points: 75,
+      maxServed: 150,
+      indice: 50,
     });
     expect(
       computeScore(ranking, {
@@ -116,52 +130,49 @@ describe("branchement — branche messagerie", () => {
         M3: "plus_1an",
         M4: "non",
         M5: "non",
+        E1: "non",
       }).indice,
     ).toBe(40);
   });
 
   it("donne le même niveau au même nombre de questions non bonnes", () => {
     // Le niveau ne doit pas dépendre du nombre de questions servies : deux
-    // points valent « piloté » à cinq questions comme à quatre.
-    const cinq: Answers = {
+    // questions non bonnes valent « piloté » à six comme à cinq.
+    const six: Answers = {
       M1: "deux_plus",
       M2: "oui",
       M3: "moins_1an",
       M4: "oui",
       M5: "oui",
+      E1: "oui",
     };
-    const quatre: Answers = {
-      M1: "un_seul",
+    const cinq: Answers = {
+      M1: "un_seul", // déjà une question non bonne
       M3: "moins_1an",
       M4: "oui",
       M5: "oui",
+      E1: "oui",
     };
-    // Un point d'écart de chaque côté.
-    expect(levelFor(computeScore(ranking, { ...cinq, M4: "non" }).indice)).toBe(
-      "plan_optimise",
+    const niveau = (a: Answers) => levelFor(computeScore(ranking, a).indice);
+
+    // Une question non bonne.
+    expect(niveau({ ...six, M4: "non" })).toBe("plan_optimise");
+    expect(niveau(cinq)).toBe("plan_optimise");
+    // Deux.
+    expect(niveau({ ...six, M4: "non", E1: "non" })).toBe("plan_pilote");
+    expect(niveau({ ...cinq, M4: "non" })).toBe("plan_pilote");
+    // Trois.
+    expect(niveau({ ...six, M3: "plus_1an", M4: "non", E1: "non" })).toBe(
+      "plan_subi",
     );
-    expect(levelFor(computeScore(ranking, quatre).indice)).toBe("plan_optimise");
-    // Deux points d'écart.
-    expect(
-      levelFor(computeScore(ranking, { ...cinq, M4: "non", M5: "non" }).indice),
-    ).toBe("plan_pilote");
-    expect(
-      levelFor(computeScore(ranking, { ...quatre, M4: "non" }).indice),
-    ).toBe("plan_pilote");
-    // Trois points d'écart.
-    expect(
-      levelFor(
-        computeScore(ranking, { ...cinq, M3: "plus_1an", M4: "non", M5: "non" })
-          .indice,
-      ),
-    ).toBe("plan_subi");
-    expect(
-      levelFor(computeScore(ranking, { ...quatre, M4: "non", M5: "non" }).indice),
-    ).toBe("plan_subi");
+    expect(niveau({ ...cinq, M4: "non", E1: "non" })).toBe("plan_subi");
   });
 
   it("vérifie l'invariant : un levier par question non bonne, plafonné à trois", () => {
-    const ids = ["M1", "M2", "M3", "M4", "M5"];
+    // Tout le barème messagerie tient en une phrase : chaque question est bonne
+    // ou ne l'est pas, et les leviers affichés sont exactement les questions qui
+    // ne le sont pas. Vérifié sur les 64 combinaisons possibles.
+    const ids = ["M1", "M2", "M3", "M4", "M5", "E1"];
     const options = Object.fromEntries(
       ids.map((id) => [id, QUESTION_BANK[id].options.map((o) => o.value)]),
     );
@@ -182,7 +193,13 @@ describe("branchement — branche messagerie", () => {
         expect(selectLevers(ranking, reponses)).toHaveLength(
           Math.min(nonBonnes, 3),
         );
-        const indice = computeScore(ranking, reponses).indice;
+
+        const { indice, maxServed } = computeScore(ranking, reponses);
+        // Six questions servies : chaque point coûte exactement dix.
+        if (servies.length === 6) {
+          expect(indice).toBe(100 - 10 * nonBonnes);
+        }
+        expect(maxServed).toBe(servies.length * 25);
         expect(indice).toBeGreaterThanOrEqual(40);
         expect(indice).toBeLessThanOrEqual(100);
         verifies += 1;
@@ -193,21 +210,21 @@ describe("branchement — branche messagerie", () => {
       }
     };
     parcourir(0, {});
-    expect(verifies).toBe(32);
+    expect(verifies).toBe(64);
   });
 });
 
 describe("branchement — branche camions complets", () => {
   const ranking: Ranking = ["complets"];
 
-  it("sert C1 à C4 puis la clôture", () => {
-    expect(idsOf(ranking)).toEqual(["C1", "C2", "C3", "C4", "G1"]);
+  it("sert C1 à C4, la clôture, puis l'électrification", () => {
+    expect(idsOf(ranking)).toEqual(["C1", "C2", "C3", "C4", "G1", "E1"]);
   });
 
-  it("exclut C3 du score : maximum servi de 100, pas 125", () => {
+  it("exclut C3 du score : la régularité n'est pas une qualité de gestion", () => {
     // Sans normalisation, un profil complets serait mécaniquement plus bas
     // qu'un profil messagerie à qualité de gestion égale.
-    expect(scoredIdsOf(ranking)).toEqual(["C1", "C2", "C4", "G1"]);
+    expect(scoredIdsOf(ranking)).toEqual(["C1", "C2", "C4", "G1", "E1"]);
     expect(QUESTION_BANK.C3.scored).toBe(false);
 
     const answers: Answers = {
@@ -216,10 +233,11 @@ describe("branchement — branche camions complets", () => {
       C3: "aleatoire", // hors score
       C4: "moins24mois", // 25
       G1: "redesign", // 25
+      E1: "oui", // 25
     };
     expect(computeScore(ranking, answers)).toEqual({
-      points: 100,
-      maxServed: 100,
+      points: 125,
+      maxServed: 125,
       indice: 100,
     });
   });
@@ -243,13 +261,14 @@ describe("branchement — branche camions complets", () => {
       C3: "stable",
       C4: "ecarte_sans_etude", // 5
       G1: "reconduit", // 0
+      E1: "non", // 10 — plancher de l'électrification
       M4: "non", // secondaire, hors score
     };
     const result = computeResult(["complets", "messagerie"], answers);
     expect(result).not.toBeNull();
-    expect(result?.points).toBe(9);
-    expect(result?.maxServed).toBe(100);
-    expect(result?.indice).toBe(9);
+    expect(result?.points).toBe(19);
+    expect(result?.maxServed).toBe(125);
+    expect(result?.indice).toBe(15);
     expect(result?.level).toBe("plan_subi");
     expect(result?.levers).toEqual([
       "retours_vide",
@@ -280,6 +299,7 @@ describe("deux flux classés — capacité du moteur, hors parcours actuel", () 
       "M4",
       "M5",
       "C1",
+      "E1",
     ]);
     expect(idsOf(["complets", "messagerie"])).toEqual([
       "C1",
@@ -288,6 +308,7 @@ describe("deux flux classés — capacité du moteur, hors parcours actuel", () 
       "C4",
       "M4",
       "G1",
+      "E1",
     ]);
   });
 
@@ -297,10 +318,10 @@ describe("deux flux classés — capacité du moteur, hors parcours actuel", () 
     // hors score raccourcissent nettement les deux autres. Ce test fige les
     // longueurs réelles pour qu'aucune ne bouge sans qu'on le voie.
     const longueurs: [Ranking, number][] = [
-      [["messagerie"], 5],
-      [["messagerie", "complets"], 6],
-      [["complets"], 5],
-      [["complets", "messagerie"], 6],
+      [["messagerie"], 6],
+      [["messagerie", "complets"], 7],
+      [["complets"], 6],
+      [["complets", "messagerie"], 7],
     ];
     for (const [ranking, attendu] of longueurs) {
       expect(idsOf(ranking).length, ranking.join(">")).toBe(attendu);
@@ -347,13 +368,14 @@ describe("deux flux classés — capacité du moteur, hors parcours actuel", () 
       M3: "moins_1an",
       M4: "oui",
       M5: "oui",
+      E1: "oui",
       C1: "inconnu", // secondaire : ne doit rien coûter
     };
     const seul = computeScore(["messagerie"], answers);
     const avecSecondaire = computeScore(["messagerie", "complets"], answers);
 
     expect(scoredIdsOf(["messagerie", "complets"], answers)).not.toContain("C1");
-    expect(avecSecondaire.maxServed).toBe(125);
+    expect(avecSecondaire.maxServed).toBe(150);
     expect(avecSecondaire).toEqual(seul);
     expect(avecSecondaire.indice).toBe(100);
   });
@@ -410,15 +432,16 @@ describe("niveaux", () => {
   it("applique les seuils communs aux trois branches", () => {
     // Les bornes sont calées sur le NOMBRE de questions non bonnes, pour que le
     // niveau ne dépende pas du nombre de questions servies.
-    expect(levelFor(40)).toBe("plan_subi"); // 4 sur 4, ou 5 sur 5
-    expect(levelFor(55)).toBe("plan_subi"); // 3 sur 4
-    expect(levelFor(64)).toBe("plan_subi"); // 3 sur 5
-    expect(levelFor(69)).toBe("plan_subi");
-    expect(levelFor(70)).toBe("plan_pilote"); // 2 sur 4
+    expect(levelFor(40)).toBe("plan_subi"); // tout est à améliorer
+    expect(levelFor(64)).toBe("plan_subi"); // 3 questions non bonnes sur 5
+    expect(levelFor(70)).toBe("plan_subi"); // 3 sur 6
+    expect(levelFor(75)).toBe("plan_subi");
     expect(levelFor(76)).toBe("plan_pilote"); // 2 sur 5
+    expect(levelFor(80)).toBe("plan_pilote"); // 2 sur 6
     expect(levelFor(84)).toBe("plan_pilote");
-    expect(levelFor(85)).toBe("plan_optimise"); // 1 sur 4
+    expect(levelFor(85)).toBe("plan_optimise");
     expect(levelFor(88)).toBe("plan_optimise"); // 1 sur 5
+    expect(levelFor(90)).toBe("plan_optimise"); // 1 sur 6
     expect(levelFor(100)).toBe("plan_optimise");
   });
 });
@@ -569,6 +592,7 @@ describe("routage", () => {
       C3: "aleatoire",
       C4: "moins24mois",
       G1: "redesign",
+      E1: "oui",
     });
     const nul = computeResult(["complets"], {
       C1: "inconnu",
@@ -576,9 +600,11 @@ describe("routage", () => {
       C3: "aleatoire",
       C4: "jamais",
       G1: "reconduit",
+      E1: "non",
     });
     expect(parfait?.indice).toBe(100);
-    expect(nul?.indice).toBe(0);
+    // Le plancher de l'électrification empêche le zéro absolu en complets.
+    expect(nul?.indice).toBe(8);
     expect(parfait?.outcome).toBe("flux");
     expect(nul?.outcome).toBe("flux");
   });
@@ -601,15 +627,15 @@ describe("garde-fous", () => {
   });
 
   it("ne considère complet qu'un questionnaire entièrement répondu", () => {
-    expect(isComplete(["messagerie"], { M1: "unique" })).toBe(false);
+    expect(isComplete(["messagerie"], { M1: "deux_plus" })).toBe(false);
     expect(
       isComplete(["messagerie"], {
-        M1: "unique",
-        M2: "zone",
-        M3: "jamais",
+        M1: "deux_plus",
+        M2: "non",
+        M3: "plus_1an",
         M4: "non",
-        M5: "moins_trois",
-        M6: "aucun",
+        M5: "non",
+        E1: "non",
       }),
     ).toBe(true);
   });

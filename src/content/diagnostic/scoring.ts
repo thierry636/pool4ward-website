@@ -17,15 +17,16 @@ import type {
  * Les verdicts, eux, sont écrits par branche (voir la copy).
  */
 export const LEVEL_THRESHOLDS: readonly LevelThreshold[] = [
-  // Chaque question est bonne (25) ou ne l'est pas (10). Les bornes sont calées
-  // sur le NOMBRE de questions non bonnes, pour que le niveau ne dépende pas du
-  // nombre de questions servies — la messagerie en sert cinq, ou quatre quand
-  // le prestataire est unique et que la comparaison n'a plus d'objet :
-  //   0 ou 1  → 100, 88, 85  → plan optimisé
-  //   2       → 76, 70       → plan piloté
-  //   3 et +  → 64, 55, …    → plan subi
-  { id: "plan_subi", min: 0, max: 69 },
-  { id: "plan_pilote", min: 70, max: 84 },
+  // Chaque question de la branche messagerie est bonne (25) ou ne l'est pas
+  // (10). Les bornes sont calées sur le NOMBRE de questions non bonnes, pour
+  // que le niveau ne dépende pas du nombre de questions servies — six, ou cinq
+  // quand le prestataire est unique et que la mise en concurrence n'a plus
+  // d'objet :
+  //   0 ou 1  → 100, 90, 88  → plan optimisé
+  //   2       → 80, 76       → plan piloté
+  //   3 et +  → 70, 64, …    → plan subi
+  { id: "plan_subi", min: 0, max: 75 },
+  { id: "plan_pilote", min: 76, max: 84 },
   { id: "plan_optimise", min: 85, max: 100 },
 ];
 

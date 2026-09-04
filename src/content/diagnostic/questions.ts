@@ -176,6 +176,22 @@ const GLOBAL: readonly Question[] = [
       { value: "reconduit", points: 0 },
     ],
   },
+  {
+    // Électrification : la question n'est pas « avez-vous demandé de
+    // l'électrique », c'est « avez-vous instruit l'éligibilité ». Laisser le
+    // sujet au transporteur revient à lui demander d'absorber seul
+    // l'investissement, l'autonomie et la recharge — ce qui se paie en surcoût
+    // ou se solde par un refus. Posée aux deux branches : l'éligibilité se
+    // regarde sur des segments, pas sur une typologie de flux.
+    id: "E1",
+    branch: "global",
+    scored: true,
+    max: 25,
+    options: [
+      { value: "oui", points: 25 },
+      { value: "non", points: 10 },
+    ],
+  },
 ];
 
 /** Questions de branche, dans l'ordre de service. */

@@ -155,6 +155,15 @@ export const copyFr: DiagnosticCopy = {
     /* ---------------------------------------------------------------- */
     /* Clôture                                                          */
     /* ---------------------------------------------------------------- */
+    E1: {
+      label:
+        "Travaillez-vous l'éligibilité de vos flux à l'électrification avec vos transporteurs ?",
+      help: "Identifier les segments éligibles — distances, rotations, temps d'immobilisation, points de recharge — et construire le dossier avec eux.",
+      options: {
+        oui: "Oui, nous identifions les segments éligibles avec eux",
+        non: "Non, nous le laissons à nos transporteurs",
+      },
+    },
     G1: {
       label: "Comment votre plan de transport actuel a-t-il été construit ?",
       options: {
@@ -265,6 +274,10 @@ export const copyFr: DiagnosticCopy = {
     part_stable: {
       title: "Commencer par la part stable de vos flux",
       body: "Un flux décrit comme aléatoire contient presque toujours un socle régulier : les mêmes origines-destinations qui reviennent chaque mois. C'est sur ce socle que se construisent les boucles, pas sur la totalité du volume.",
+    },
+    electrification_eligibilite: {
+      title: "Instruire vous-même l'éligibilité de vos flux à l'électrification",
+      body: "Demander un véhicule électrique à un transporteur revient à lui demander d'absorber seul l'investissement, l'autonomie et la recharge : la réponse est un surcoût, ou un refus poli. L'éligibilité se construit segment par segment — distances, rotations, temps d'immobilisation, points de recharge — et c'est ce travail commun qui rend l'électrification tenable pour lui et payable pour vous.",
     },
     reouverture_conception: {
       title: "Rouvrir la conception du plan, pas seulement les tarifs",

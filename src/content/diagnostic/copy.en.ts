@@ -152,6 +152,15 @@ export const copyEn: DiagnosticCopy = {
     /* ---------------------------------------------------------------- */
     /* Closing question                                                 */
     /* ---------------------------------------------------------------- */
+    E1: {
+      label:
+        "Do you work out your flows' eligibility for electrification with your carriers?",
+      help: "Identifying eligible segments — distances, rotations, standing time, charging points — and building the case together.",
+      options: {
+        oui: "Yes, we identify eligible segments with them",
+        non: "No, we leave it to our carriers",
+      },
+    },
     G1: {
       label: "How was your current transport plan built?",
       options: {
@@ -258,6 +267,10 @@ export const copyEn: DiagnosticCopy = {
     part_stable: {
       title: "Start with the steady share of your flows",
       body: "A flow described as irregular almost always contains a regular core: the same origin-destination pairs coming back every month. Loops are built on that core, not on the whole volume.",
+    },
+    electrification_eligibilite: {
+      title: "Work out electrification eligibility yourself, with your carriers",
+      body: "Asking a carrier for an electric vehicle means asking them to absorb the investment, the range and the charging on their own: the answer is a surcharge, or a polite refusal. Eligibility is built segment by segment — distances, rotations, standing time, charging points — and it is that joint work that makes electrification viable for them and affordable for you.",
     },
     reouverture_conception: {
       title: "Reopen the design of the plan, not just the rates",
