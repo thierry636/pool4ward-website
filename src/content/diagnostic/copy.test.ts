@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { DIAGNOSTIC_COPY, format, getDiagnosticCopy } from "./copy";
+import {
+  DIAGNOSTIC_COPY,
+  DIAGNOSTIC_LOCALES,
+  format,
+  getDiagnosticCopy,
+} from "./copy";
 import { LEVER_IDS } from "./levers";
 import { LEVEL_THRESHOLDS, OUTCOME_BY_BRANCH } from "./scoring";
 import { FLOW_TYPES, QUESTION_BANK } from "./questions";
@@ -103,9 +108,18 @@ describe.each(Object.entries(DIAGNOSTIC_COPY))("copy « %s »", (locale, copy) =
 });
 
 describe("registre de copy", () => {
-  it("retombe sur le français pour une locale sans copy", () => {
-    expect(getDiagnosticCopy("en")).toBe(getDiagnosticCopy("fr"));
+  it("sert chaque langue traduite, et retombe sur le français sinon", () => {
     expect(getDiagnosticCopy("fr").locale).toBe("fr");
+    expect(getDiagnosticCopy("en").locale).toBe("en");
+    expect(getDiagnosticCopy("de")).toBe(getDiagnosticCopy("fr"));
+  });
+
+  it("propose exactement les langues réellement traduites", () => {
+    // Un sélecteur qui offrirait une langue sans copy afficherait du français
+    // sous un drapeau anglais.
+    expect([...DIAGNOSTIC_LOCALES].sort()).toEqual(
+      Object.keys(DIAGNOSTIC_COPY).sort(),
+    );
   });
 
   it("interpole les gabarits", () => {

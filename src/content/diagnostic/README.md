@@ -29,8 +29,11 @@ Le diagnostic ne connaît que deux typologies de flux :
 
 | Flux classé n°1 | Questions servies | Sortie |
 |---|---|---|
-| `messagerie` — messagerie **et** lots partiels | M1 à M6 (M2 sautée si prestataire unique) | RDV direct |
-| `complets` — camions complets | C1 à C4 puis G1 | Demande de flux |
+| `messagerie` — messagerie **et** lots partiels | M1 à M5 puis E1 (M2 sautée si prestataire unique) | RDV direct |
+| `complets` — camions complets | C1 à C4, G1, puis E1 | Demande de flux |
+
+`E1` — l'éligibilité des flux à l'électrification — est posée aux deux
+branches : elle se regarde sur des segments, pas sur une typologie de flux.
 
 Messagerie et lots partiels partagent une carte, un jeu de questions, un
 verdict et une sortie : les deux se vendent de la même façon. L'identifiant
@@ -59,6 +62,7 @@ intermédiaire. Jamais zéro : un chargeur en difficulté sur tout lit 40/100.
 | M3 dernier appel d'offres | moins d'un an | plus d'un an, ou jamais |
 | M4 comparaison détaillée des grilles | oui | non |
 | M5 transporteurs jamais consultés | oui | non |
+| E1 éligibilité à l'électrification | instruite avec les transporteurs | laissée aux transporteurs |
 
 Les leviers affichés sont exactement les questions non bonnes, plafonnés à
 trois et pris dans l'ordre de `LEVER_RULES`. Un test vérifie cet invariant sur
@@ -68,12 +72,20 @@ Les seuils de niveau sont calés sur le NOMBRE de questions non bonnes, pas sur
 des bornes rondes : la branche sert cinq questions, ou quatre quand le
 prestataire est unique, et le niveau ne doit pas dépendre de ce nombre.
 
-| Questions non bonnes | Indice (5 servies) | Indice (4 servies) | Niveau |
+| Questions non bonnes | Indice (6 servies) | Indice (5 servies) | Niveau |
 |---|---|---|---|
-| 0 | 100 | 100 | Plan optimisé en interne |
-| 1 | 88 | 85 | Plan optimisé en interne |
-| 2 | 76 | 70 | Plan piloté, gisement non ouvert |
-| 3 et plus | 64 et moins | 55 et moins | Plan subi |
+| 0 | 100 | — | Plan optimisé en interne |
+| 1 | 90 | 88 | Plan optimisé en interne |
+| 2 | 80 | 76 | Plan piloté, gisement non ouvert |
+| 3 et plus | 70 et moins | 64 et moins | Plan subi |
+
+⚠️ **La branche complets garde son barème gradué d'origine** (0 à 25 par
+question) alors que la messagerie est binaire à plancher. Les seuils de niveau,
+calés sur la messagerie, y sont donc nettement plus sévères : un profil complets
+moyen — bouclage partiel, boucle envisagée, modal évalué il y a plus de trois
+ans, appel d'offres périodique, électrification instruite — sort à 70/125, soit
+56, et donc « Plan subi ». À arbitrer : appliquer le binaire aux complets, ou
+donner des seuils propres à chaque branche.
 
 ## Changer le barème
 
@@ -82,12 +94,26 @@ Modifier les points dans `questions.ts` et les seuils dans `scoring.ts`.
 l'enregistrement : les réponses brutes permettent de recalculer l'historique
 après un changement de barème.
 
-## Ouvrir la version anglaise
+## Langues
 
-Dupliquer `copy.fr.ts` en `copy.en.ts` et l'enregistrer dans
-`DIAGNOSTIC_COPY` (`copy.ts`). Le type `DiagnosticCopy` refuse une traduction
-incomplète. Retirer alors la redirection forcée vers `/fr` dans
-`next.config.mjs`.
+Français et anglais. Le répondant choisit sa langue sur l'écran d'accueil ; le
+sélecteur navigue vers `/fr/diagnostic` ou `/en/diagnostic` plutôt que de
+basculer un état interne, pour que l'URL reste vraie et la page partageable. Il
+ne s'affiche qu'à l'accueil : plus loin, changer de langue relancerait la page
+et perdrait les réponses.
+
+`/diagnostic` redirige vers le français — c'est l'URL de la campagne.
+
+Ajouter une langue : dupliquer `copy.fr.ts`, l'enregistrer dans
+`DIAGNOSTIC_COPY` et l'ajouter à `DIAGNOSTIC_LOCALES` (`copy.ts`). Le type
+`DiagnosticCopy` refuse une traduction incomplète, et un test vérifie que les
+deux listes coïncident — un sélecteur qui offrirait une langue sans copy
+afficherait du français sous un drapeau anglais.
+
+**Langue des emails.** La notification interne est toujours en français : c'est
+la langue de l'équipe qui la lit, et une structure stable se dépouille plus vite.
+La langue du répondant y est indiquée en pied. Son accusé de réception, lui,
+part dans sa langue.
 
 ## Variables d'environnement
 
