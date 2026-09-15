@@ -6,8 +6,18 @@ import { Link, usePathname, useRouter } from "@/i18n/routing";
 import { useLocale } from "next-intl";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
+import { BLOG_MASQUE } from "@/lib/blog/config";
 
-export function Header() {
+interface HeaderProps {
+  /**
+   * Force l'en-tête opaque dès le haut de page. L'état par défaut est
+   * transparent avec un logo clair, pensé pour les pages qui ouvrent sur un
+   * héros sombre ; une page à fond clair, comme le blog, a besoin du contraire.
+   */
+  solid?: boolean;
+}
+
+export function Header({ solid = false }: HeaderProps) {
   const t = useTranslations("Nav");
   const tc = useTranslations("Common");
   const locale = useLocale();
@@ -17,6 +27,8 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const dropdownTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  const opaque = solid || scrolled;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -103,12 +115,15 @@ export function Header() {
     },
     { label: t("ecosystem"), href: "/ecosystem" as const },
     { label: t("company"), href: "/company" as const },
+    // Le blog est en ligne mais pas annoncé : tant qu'il est masqué, il n'a
+    // pas d'entrée de menu. Le publier, c'est basculer `BLOG_MASQUE`.
+    ...(BLOG_MASQUE ? [] : [{ label: t("blog"), href: "/blog" as const }]),
   ];
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
+        opaque
           ? "bg-white/95 backdrop-blur-md border-b border-navy-100 shadow-sm"
           : "bg-transparent"
       }`}
@@ -117,14 +132,35 @@ export function Header() {
         <div className="flex items-center justify-between h-16 lg:h-18">
           {/* Logo */}
           <Link href="/" className="shrink-0">
-            <Image
-              src={scrolled ? "/images/brand/logo-full.svg" : "/images/brand/logo-full-dark.svg"}
-              alt="Pool4ward"
-              width={180}
-              height={36}
-              className="h-8 w-auto"
-              priority
-            />
+            {solid ? (
+              <>
+                <Image
+                  src="/images/brand/logo-full.svg"
+                  alt="Pool4ward"
+                  width={180}
+                  height={36}
+                  className="h-8 w-auto p4w-logo-ink"
+                  priority
+                />
+                <Image
+                  src="/images/brand/logo-full-dark.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width={180}
+                  height={36}
+                  className="h-8 w-auto p4w-logo-inverse"
+                />
+              </>
+            ) : (
+              <Image
+                src={scrolled ? "/images/brand/logo-full.svg" : "/images/brand/logo-full-dark.svg"}
+                alt="Pool4ward"
+                width={180}
+                height={36}
+                className="h-8 w-auto"
+                priority
+              />
+            )}
           </Link>
 
           {/* Desktop Navigation */}

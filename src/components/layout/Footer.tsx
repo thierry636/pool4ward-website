@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
+import { BLOG_MASQUE } from "@/lib/blog/config";
 
 export function Footer() {
   const t = useTranslations("Footer");
@@ -39,6 +40,8 @@ export function Footer() {
       title: t("company"),
       links: [
         { label: t("vision"), href: "/company" },
+        // Masqué tant que le blog n'est pas annoncé — voir `BLOG_MASQUE`.
+        ...(BLOG_MASQUE ? [] : [{ label: t("blog"), href: "/blog" }]),
         { label: t("contact"), href: "/company#contact" },
         { label: t("privacyPolicy"), href: "#" },
         { label: t("termsOfService"), href: "#" },
@@ -87,25 +90,25 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-16 pt-8 border-t border-navy-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-navy-500">
+          <p className="text-sm text-navy-400">
             {tc("allRightsReserved", { year: new Date().getFullYear() })}
           </p>
           <div className="flex gap-6">
             <Link
               href={"#" as "/"}
-              className="text-sm text-navy-500 hover:text-white transition-colors"
+              className="text-sm text-navy-400 hover:text-white transition-colors"
             >
               {tc("privacy")}
             </Link>
             <Link
               href={"#" as "/"}
-              className="text-sm text-navy-500 hover:text-white transition-colors"
+              className="text-sm text-navy-400 hover:text-white transition-colors"
             >
               {tc("terms")}
             </Link>
             <Link
               href={"#" as "/"}
-              className="text-sm text-navy-500 hover:text-white transition-colors"
+              className="text-sm text-navy-400 hover:text-white transition-colors"
             >
               {tc("security")}
             </Link>
