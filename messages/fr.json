@@ -34,6 +34,7 @@
     "products": "Produits",
     "solutions": "Solutions",
     "ecosystem": "Écosystème",
+    "blog": "Blog",
     "resources": "Ressources",
     "company": "Entreprise",
     "design4wardDesc": "Analyser les flux et découvrir les opportunités",
@@ -65,6 +66,7 @@
     "collaborativeTransport": "Transport collaboratif",
     "multimodalStrategy": "Stratégie multimodale",
     "decarbonization": "Décarbonation",
+    "blog": "Blog",
     "vision": "Vision",
     "contact": "Contact",
     "resources": "Ressources",
@@ -817,5 +819,15 @@
   "LanguageSwitcher": {
     "en": "EN",
     "fr": "FR"
+  },
+  "Blog": {
+    "metaTitle": "Blog — Pool4ward",
+    "metaDescription": "Des analyses sur l'arbitrage make or buy, l'électrification des flottes, le réemploi des emballages et la mutualisation entre chargeurs.",
+    "indexTitle": "Blog",
+    "indexLede": "Des questions que les chargeurs ne se posent plus.",
+    "backToIndex": "Tous les articles",
+    "readNext": "Lire aussi",
+    "readingTime": "{minutes} min de lecture",
+    "empty": "Aucun article pour l'instant."
   }
 }

@@ -1,0 +1,832 @@
+/* Le serif de lecture est la seule police ajoutée au site, et elle est
+   auto-hébergée plutôt que tirée de Google Fonts : une requête tierce
+   bloquante en moins avant le premier rendu du texte, et rien qui parte chez
+   un tiers quand quelqu'un lit un article. Source Serif 4 est sous licence
+   SIL OFL, qui autorise explicitement la redistribution.
+
+   Fichier variable : une seule déclaration couvre toute la plage de graisses.
+   Le sous-ensemble latin-ext n'est téléchargé que si un article contient un de
+   ses caractères — c'est le rôle d'`unicode-range`. L'ordre des deux blocs
+   n'est pas indifférent : leurs plages se recouvrent sur `œ`, et c'est la
+   déclaration la plus tardive qui l'emporte. latin passe donc en second, sans
+   quoi un seul « œ » ferait tomber 100 Ko de latin-ext sur chaque article. */
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("/fonts/SourceSerif4-latin-ext.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+    U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+    U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("/fonts/SourceSerif4-latin.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+    U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Geist Mono dormait déjà dans le repo, inutilisée. Elle sert ici aux labels,
+   aux chiffres et aux légendes — y compris à l'intérieur des SVG. */
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/GeistMonoVF.woff") format("woff");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ------------------------------------------------------------------ tokens */
+/* Les valeurs sont celles des palettes `navy` et `teal` de tailwind.config.ts :
+   le blog n'introduit pas un second système de couleurs, il nomme le premier.
+   Chaque couleur de texte tient le 4,5:1 sur son fond, dans les deux thèmes. */
+
+:root {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f8fafc;   /* navy-50  */
+  --ink: #0f172a;         /* navy-900 — 17,9:1 */
+  --ink-2: #475569;       /* navy-600 —  7,5:1 */
+  --muted: #64748b;       /* navy-500 —  4,8:1 */
+  --rule: #e2e8f0;        /* navy-200 */
+  --rule-soft: #eef2f7;
+  --accent: #0f766e;      /* teal-700 —  4,8:1 sur blanc */
+  --accent-band: rgb(15 118 110 / 0.08);
+  --accent-tint: rgb(15 118 110 / 0.04);
+  --on-accent: #ffffff;
+
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Trois états. Sans attribut, on suit le système ; `data-theme` tranche.
+   Les blocs sombres ne redéfinissent que les tokens — aucune règle de mise en
+   page n'est dupliquée. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #020617;        /* navy-950 */
+    --surface: #0f172a;   /* navy-900 */
+    --surface-2: #131f36;
+    --ink: #f1f5f9;       /* navy-100 */
+    --ink-2: #cbd5e1;     /* navy-300 */
+    --muted: #94a3b8;     /* navy-400 —  7,4:1 sur navy-950 */
+    --rule: #1e293b;      /* navy-800 */
+    --rule-soft: #172033;
+    --accent: #5eead4;    /* teal-300 — 12,9:1 sur navy-950 */
+    --accent-band: rgb(94 234 212 / 0.10);
+    --accent-tint: rgb(94 234 212 / 0.05);
+    --on-accent: #042f2e;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #020617;
+  --surface: #0f172a;
+  --surface-2: #131f36;
+  --ink: #f1f5f9;
+  --ink-2: #cbd5e1;
+  --muted: #94a3b8;
+  --rule: #1e293b;
+  --rule-soft: #172033;
+  --accent: #5eead4;
+  --accent-band: rgb(94 234 212 / 0.10);
+  --accent-tint: rgb(94 234 212 / 0.05);
+  --on-accent: #042f2e;
+}
+
+/* -------------------------------------------------------------- enveloppe */
+
+/* `globals.css` peint le `body` en blanc pour tout le site. La page du blog,
+   elle, est peinte par `.p4w-page` — mais un rebond de défilement (iOS, macOS)
+   découvre le fond du document et ferait apparaître une bande blanche sous un
+   article en thème sombre. Cette feuille n'étant chargée que sur les routes du
+   blog, repeindre `body` ici ne touche aucune autre page. */
+body {
+  background-color: var(--bg);
+}
+
+.p4w-page {
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  /* Le corps de la page ne défile jamais horizontalement : ce qui est trop
+     large défile dans son propre conteneur, jamais dans la fenêtre. */
+  overflow-x: clip;
+}
+
+.p4w-wrap {
+  margin: 0 auto;
+  max-width: 48rem;
+  padding: 0 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .p4w-wrap { padding: 0 2rem; }
+}
+
+.p4w-page a:focus-visible,
+.p4w-page button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ------------------------------------------------- en-tête et pied de page */
+/* Le Header du site est transparent tant qu'on n'a pas scrollé et affiche à ce
+   moment-là son logo clair : il est dessiné pour des pages qui ouvrent sur un
+   héros sombre. Le blog ouvre sur du blanc. On le force donc opaque (prop
+   `solid`), et on le repeint avec les tokens pour qu'il suive le thème.
+
+   Le repeint passe par les classes Tailwind que le Header utilise réellement,
+   et non par un sélecteur large sur `a` et `button` : celui-ci écraserait le
+   texte blanc du bouton de langue actif, posé sur un fond brand-600.
+
+   `> header` et non `header` : l'en-tête du site est l'enfant direct du
+   conteneur, alors qu'un article porte lui aussi un `<header>` pour son titre.
+   Un sélecteur descendant lui collerait le fond et le filet de l'en-tête. */
+
+[data-section="blog"] > header {
+  background: var(--surface) !important;
+  border-bottom: 1px solid var(--rule);
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+[data-section="blog"] > header .bg-white,
+[data-section="blog"] > header .bg-navy-50,
+[data-section="blog"] > header .hover\:bg-navy-50:hover {
+  background-color: var(--surface) !important;
+}
+
+[data-section="blog"] > header .bg-navy-100 { background-color: var(--rule) !important; }
+
+[data-section="blog"] > header .border-navy-100,
+[data-section="blog"] > header .border-navy-200,
+[data-section="blog"] > header .hover\:border-navy-300:hover {
+  border-color: var(--rule) !important;
+}
+
+[data-section="blog"] > header .text-navy-600,
+[data-section="blog"] > header .text-navy-700,
+[data-section="blog"] > header .text-navy-800 {
+  color: var(--ink-2) !important;
+}
+
+[data-section="blog"] > header .text-navy-400,
+[data-section="blog"] > header .text-navy-500 {
+  color: var(--muted) !important;
+}
+
+[data-section="blog"] > header .hover\:text-navy-800:hover,
+[data-section="blog"] > header .hover\:text-navy-900:hover {
+  color: var(--ink) !important;
+}
+
+/* Le logo à encre sombre sert le thème clair, celui à encre claire le sombre.
+   Les deux sont dans le DOM ; c'est le thème qui tranche, pas le JavaScript —
+   le rendu serveur ne connaît pas la préférence du visiteur. */
+[data-section="blog"] .p4w-logo-inverse { display: none; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) [data-section="blog"] .p4w-logo-ink { display: none; }
+  :root:not([data-theme="light"]) [data-section="blog"] .p4w-logo-inverse { display: block; }
+}
+
+:root[data-theme="dark"] [data-section="blog"] .p4w-logo-ink { display: none; }
+:root[data-theme="dark"] [data-section="blog"] .p4w-logo-inverse { display: block; }
+
+/* --------------------------------------------------------- petits éléments */
+
+.p4w-meta {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.p4w-dot { padding: 0 0.5rem; }
+
+.p4w-kicker {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  margin-bottom: 0.875rem;
+}
+
+/* ------------------------------------------------------------------- index */
+
+/* Padding vertical en propriétés longues : la forme raccourcie `padding`
+   remettrait à zéro le padding horizontal de `.p4w-wrap`, qui porte la gouttière
+   de la page — le titre se retrouverait collé au bord de l'écran. */
+.p4w-index-head {
+  padding-top: 8rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 768px) {
+  .p4w-index-head { padding-top: 9.5rem; padding-bottom: 3.5rem; }
+}
+
+.p4w-index-title {
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  color: var(--ink);
+  margin: 0 0 1rem;
+}
+
+.p4w-index-lede {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 34rem;
+  margin: 0;
+}
+
+.p4w-list { padding-bottom: 5rem; }
+
+.p4w-card {
+  display: block;
+  padding: 2.25rem 0;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  color: inherit;
+}
+
+.p4w-card:hover .p4w-card-title { color: var(--accent); }
+
+.p4w-card-title {
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.22;
+  color: var(--ink);
+  margin: 0.75rem 0 0.625rem;
+  transition: color 0.15s ease;
+}
+
+@media (min-width: 768px) {
+  .p4w-card-title { font-size: 1.75rem; }
+}
+
+.p4w-card-desc {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin: 0 0 1rem;
+  max-width: 38rem;
+}
+
+.p4w-empty {
+  font-family: var(--font-serif);
+  color: var(--muted);
+  padding: 3rem 0 6rem;
+}
+
+/* ----------------------------------------------------------------- article */
+
+.p4w-article-head {
+  padding-top: 7rem;
+  padding-bottom: 2.25rem;
+}
+
+@media (min-width: 768px) {
+  .p4w-article-head { padding-top: 8.5rem; padding-bottom: 2.75rem; }
+}
+
+.p4w-back {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-decoration: none;
+  margin-bottom: 2.5rem;
+}
+
+.p4w-back:hover { color: var(--accent); }
+
+.p4w-title {
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 5.5vw, 3.125rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  color: var(--ink);
+  margin: 0.75rem 0 0;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+
+/* ------------------------------------------------------------------- corps */
+
+.p4w-prose {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--ink);
+  padding-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .p4w-prose { font-size: 1.1875rem; line-height: 1.8; }
+}
+
+/* Mesure de lecture : environ 68 signes, calée à gauche sur le titre plutôt
+   que centrée dans l'enveloppe — un corps de texte décalé du H1 se voit. Les
+   figures et les grilles, elles, occupent toute la largeur disponible. */
+.p4w-prose > * {
+  max-width: 36rem;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.p4w-prose > figure,
+.p4w-prose > .p4w-cols,
+.p4w-prose > .p4w-table-scroll { max-width: 100%; }
+
+.p4w-prose > p { margin: 0 0 1.5rem; }
+
+/* Le premier paragraphe fait office de chapô. Il est rendu tel quel dans le
+   markdown : c'est la mise en forme qui le distingue, pas une balise à écrire. */
+.p4w-prose > p:first-child {
+  font-size: 1.1875rem;
+  line-height: 1.68;
+  color: var(--ink-2);
+  padding-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 768px) {
+  .p4w-prose > p:first-child { font-size: 1.375rem; line-height: 1.6; }
+}
+
+.p4w-prose h2 {
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.22;
+  color: var(--ink);
+  margin: 3.5rem 0 1.25rem;
+  max-width: 30ch;
+}
+
+@media (min-width: 768px) {
+  .p4w-prose h2 { font-size: 1.75rem; }
+}
+
+/* rehype-slug pose un id sur chaque titre : une ancre ne doit pas déposer le
+   titre sous l'en-tête fixe. */
+.p4w-prose h2,
+.p4w-prose h3 { scroll-margin-top: 5.5rem; }
+
+.p4w-prose h3 {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 2rem 0 0.625rem;
+}
+
+.p4w-prose strong { font-weight: 600; color: var(--ink); }
+.p4w-prose em { font-style: italic; }
+
+.p4w-prose a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+.p4w-prose a:hover { color: var(--accent); }
+
+.p4w-prose code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--ink-2);
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 0.1em 0.35em;
+}
+
+.p4w-prose hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 3rem 0 1.75rem;
+}
+
+/* Les sources, en pied d'article : petites, en mono. C'est le dernier
+   paragraphe, celui qui suit le filet de fin. */
+.p4w-prose hr + p {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.p4w-prose hr + p strong { color: var(--ink-2); font-weight: 500; }
+.p4w-prose hr + p em { font-style: normal; }
+
+/* ---------------------------------------------------------------- tableaux */
+
+.p4w-table-scroll {
+  overflow-x: auto;
+  margin: 2rem 0 2.25rem;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.p4w-prose table {
+  width: 100%;
+  min-width: 34rem;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.p4w-prose th {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  padding: 0.75rem 1rem 0.75rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.p4w-prose td {
+  padding: 0.875rem 1rem 0.875rem 0;
+  border-bottom: 1px solid var(--rule-soft);
+  color: var(--ink-2);
+  vertical-align: top;
+}
+
+.p4w-prose tr:last-child td { border-bottom: 0; }
+.p4w-prose tr:last-child strong { color: var(--ink); }
+
+/* --------------------------------------------------------- liste numérotée */
+/* Numéro en mono accent dans une colonne étroite, titre, texte. Filet fin
+   entre les items, rien d'autre. */
+
+.p4w-numbered {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 2.5rem;
+}
+
+.p4w-numbered-item {
+  display: grid;
+  grid-template-columns: 2.75rem 1fr;
+  gap: 0 1rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--rule);
+}
+
+.p4w-numbered-item:last-child { border-bottom: 1px solid var(--rule); }
+
+.p4w-numbered-num {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1.85;
+}
+
+.p4w-numbered-body > h3 { margin-top: 0; }
+
+.p4w-numbered-body p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--ink-2);
+  margin: 0 0 0.375rem;
+}
+
+.p4w-numbered-body p:last-child { margin-bottom: 0; }
+
+.p4w-numbered-body em {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+/* ----------------------------------------------------------- trois colonnes */
+/* Grille de trois colonnes égales, bordures partagées, aucune ombre.
+   Une seule colonne sous 640 px. */
+
+.p4w-cols {
+  list-style: none;
+  padding: 0;
+  margin: 2.25rem 0 2.75rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+}
+
+@media (min-width: 640px) {
+  .p4w-cols { grid-template-columns: repeat(3, 1fr); }
+}
+
+.p4w-col-item { padding: 1.5rem 1.375rem; border-top: 1px solid var(--rule); }
+.p4w-col-item:first-child { border-top: 0; }
+
+@media (min-width: 640px) {
+  .p4w-col-item { border-top: 0; border-left: 1px solid var(--rule); }
+  .p4w-col-item:first-child { border-left: 0; }
+}
+
+.p4w-col-num {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 0.625rem;
+}
+
+.p4w-col-body > h3 { margin: 0 0 0.5rem; font-size: 1rem; }
+
+.p4w-col-body p {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin: 0;
+}
+
+/* ------------------------------------------------------- encadré « note » */
+/* Filet vertical gris, texte plus petit, pas de fond coloré. */
+
+.p4w-note {
+  margin: 2.25rem 0 2.5rem;
+  padding: 0.25rem 0 0.25rem 1.5rem;
+  border-left: 2px solid var(--rule);
+}
+
+.p4w-note p {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--ink-2);
+  margin: 0 0 0.75rem;
+}
+
+.p4w-note p:last-child { margin-bottom: 0; }
+
+.p4w-note-title {
+  font-family: var(--font-sans);
+  font-size: 0.75rem !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted) !important;
+}
+
+.p4w-note-title strong { font-weight: 600; color: var(--muted); }
+
+/* --------------------------------------------------- encadré « questions » */
+/* Fond légèrement teinté, filet vertical accent, numéros en accent. */
+
+.p4w-questions {
+  margin: 2.5rem 0 2.75rem;
+  padding: 1.75rem 1.75rem 1.5rem;
+  background: var(--accent-tint);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 3px 3px 0;
+}
+
+.p4w-questions-intro {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0 0 1.25rem;
+}
+
+.p4w-questions-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: p4w-question;
+}
+
+.p4w-questions-list li {
+  counter-increment: p4w-question;
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--ink);
+}
+
+.p4w-questions-list li:last-child { margin-bottom: 0; }
+
+.p4w-questions-list li::before {
+  content: counter(p4w-question);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1.95;
+}
+
+/* --------------------------------------------------------- bloc d'appel */
+/* Fond surface, bordure fine, liseré accent de 2,5 px en haut. */
+
+.p4w-cta {
+  margin: 3rem 0 1rem;
+  padding: 1.875rem 1.75rem 2rem;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-top: 2.5px solid var(--accent);
+  border-radius: 0 0 3px 3px;
+}
+
+.p4w-cta p {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--ink-2);
+  margin: 0 0 0.875rem;
+}
+
+.p4w-cta-title {
+  font-family: var(--font-sans);
+  font-size: 1.125rem !important;
+  line-height: 1.35 !important;
+  color: var(--ink) !important;
+  margin-bottom: 1rem !important;
+}
+
+.p4w-cta-title strong { font-weight: 700; }
+
+.p4w-cta-action { margin: 1.5rem 0 0 !important; }
+
+.p4w-cta-button {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--on-accent) !important;
+  background: var(--accent);
+  padding: 0.75rem 1.5rem;
+  border-radius: 3px;
+  text-decoration: none !important;
+}
+
+.p4w-cta-button:hover { opacity: 0.88; }
+
+/* ----------------------------------------------------------------- figures */
+
+.p4w-figure {
+  margin: 3rem 0 3.25rem;
+  padding: 1.5rem 1.25rem 0;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+}
+
+.p4w-fig-title {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 0.25rem;
+}
+
+.p4w-fig-sub {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 0 0 1.25rem;
+}
+
+/* Les SVG sont larges et écrits à la main : ils défilent dans leur conteneur
+   plutôt que de s'écraser. C'est ce qui garde le corps de page immobile. */
+.p4w-chart-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 0 -1.25rem;
+  padding: 0 1.25rem;
+}
+
+.p4w-chart-scroll svg {
+  display: block;
+  width: 100%;
+  min-width: 560px;
+  height: auto;
+}
+
+.p4w-figure figcaption {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.75;
+  color: var(--muted);
+  border-top: 1px solid var(--rule);
+  margin-top: 1.25rem;
+  padding: 0.875rem 0 1.25rem;
+}
+
+/* Mini-légende : deux traits témoins de 20 px, en ligne. */
+.p4w-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin-bottom: 0.625rem;
+}
+
+.p4w-key > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.p4w-key i {
+  display: inline-block;
+  width: 20px;
+  height: 0;
+  flex: none;
+}
+
+.p4w-key i.dash { border-top: 2px dashed var(--muted); }
+.p4w-key i.solid { border-top: 2px solid var(--accent); }
+
+/* -------------------------------------------------------------- lire aussi */
+
+.p4w-next {
+  border-top: 1px solid var(--rule);
+  margin-top: 3.5rem;
+  padding: 2.5rem 0 5rem;
+}
+
+.p4w-next-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 1.25rem;
+}
+
+.p4w-next-link { display: block; text-decoration: none; color: inherit; }
+
+.p4w-next-title {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0.625rem 0 0.5rem;
+}
+
+.p4w-next-link:hover .p4w-next-title { color: var(--accent); }
+
+.p4w-next-desc {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin: 0;
+  max-width: 34rem;
+}
+
+/* ------------------------------------------------------------- préférences */
+
+@media (prefers-reduced-motion: reduce) {
+  .p4w-page *,
+  [data-section="blog"] * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

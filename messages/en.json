@@ -34,6 +34,7 @@
     "products": "Products",
     "solutions": "Solutions",
     "ecosystem": "Ecosystem",
+    "blog": "Blog",
     "resources": "Resources",
     "company": "Company",
     "design4wardDesc": "Analyze flows and discover opportunities",
@@ -65,6 +66,7 @@
     "collaborativeTransport": "Collaborative Transport",
     "multimodalStrategy": "Multimodal Strategy",
     "decarbonization": "Decarbonization",
+    "blog": "Blog",
     "vision": "Vision",
     "contact": "Contact",
     "resources": "Resources",
@@ -817,5 +819,15 @@
   "LanguageSwitcher": {
     "en": "EN",
     "fr": "FR"
+  },
+  "Blog": {
+    "metaTitle": "Blog — Pool4ward",
+    "metaDescription": "Analysis on the make-or-buy call, fleet electrification, packaging reuse and pooling between shippers.",
+    "indexTitle": "Blog",
+    "indexLede": "Questions shippers have stopped asking.",
+    "backToIndex": "All articles",
+    "readNext": "Read next",
+    "readingTime": "{minutes} min read",
+    "empty": "No articles yet."
   }
 }
