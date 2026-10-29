@@ -174,6 +174,7 @@ export function LeverStage() {
               reducedMotion={reduced}
               mobile={mobile}
               locale={locale}
+              callouts={false}
               calloutText={calloutText}
               ariaLabel={label}
               pad={pad}
@@ -194,6 +195,7 @@ export function LeverStage() {
               playing={playing}
               reducedMotion={reduced}
               locale={locale}
+              callouts={false}
               calloutText={calloutText}
               ariaLabel={label}
               pad={pad}
@@ -210,43 +212,29 @@ export function LeverStage() {
         <div aria-hidden="true" className="lever-fade-y pointer-events-none absolute inset-0" />
       </div>
 
-      {/* Le bandeau : le levier en cours, et les six leviers. */}
-      <div ref={dockEl} className="wrap relative z-10 pb-5 pt-5 lg:pb-7 lg:pt-3">
-        <div className="lever-dock">
-          <div className="flex items-start gap-4 px-4 pb-3 pt-4 sm:px-5">
-            <div key={lever} className="cap-fade min-w-0 flex-1">
-              <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                <span aria-hidden="true" className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: LEVER_COLOR[lever], boxShadow: `0 0 10px ${LEVER_COLOR[lever]}` }} />
-                <span className="text-[1.02rem] font-bold tracking-tight text-white">{name}</span>
-              </p>
-              <p className="mt-1 max-w-3xl text-[0.9rem] leading-snug" style={{ color: "#cbd5e1" }}>
-                {t(`items.${lever}.text`)}
-              </p>
-            </div>
-          </div>
-          <ol className="grid grid-cols-3 border-t md:grid-cols-6" style={{ borderColor: "rgb(148 163 184 / 0.16)" }} aria-label={t("listLabel")}>
+      {/* Les six leviers : de simples pastilles, sous l'image. La légende dit ce qu'est l'illustration. */}
+      <div ref={dockEl} className="wrap relative z-10 pb-5 pt-4 lg:pb-7 lg:pt-2">
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
+          <ol className="flex flex-wrap gap-2" aria-label={t("listLabel")}>
             {LEVER_ORDER.map((id, i) => (
-              <li key={id} className="relative border-b border-r last:border-r-0 md:border-b-0 [&:nth-child(3)]:border-r-0 md:[&:nth-child(3)]:border-r" style={{ borderColor: "rgb(148 163 184 / 0.16)" }}>
-                <button type="button" className="lever-chip" aria-pressed={i === active} onClick={() => pick(i)}>
-                  <span style={{ color: i === active ? LEVER_COLOR[id] : "#94a3b8" }}>
-                    <LeverIcon id={id} size={19} />
-                  </span>
+              <li key={id}>
+                <button type="button" className="lever-chip" aria-pressed={i === active} onClick={() => pick(i)} style={{ ["--c" as string]: LEVER_COLOR[id] }}>
+                  <LeverIcon id={id} size={17} />
                   <span>{t(`items.${id}.name`)}</span>
+                  <span
+                    aria-hidden="true"
+                    ref={(el) => {
+                      bars.current[i] = el;
+                    }}
+                    className="lever-bar"
+                  />
                 </button>
-                <span
-                  aria-hidden="true"
-                  ref={(el) => {
-                    bars.current[i] = el;
-                  }}
-                  className="lever-bar"
-                  style={{ background: LEVER_COLOR[id] }}
-                />
               </li>
             ))}
           </ol>
-          <p className="border-t px-4 py-2 text-[0.72rem] leading-snug sm:px-5" style={{ borderColor: "rgb(148 163 184 / 0.16)", color: "#94a3b8" }}>
+          <p className="text-[0.74rem] leading-snug lg:max-w-[18rem] lg:text-right" style={{ color: "#94a3b8" }}>
             <span className="font-semibold" style={{ color: "#cbd5e1" }}>
-              {t("tag")} · {t("region")}.
+              {t("tag")}.
             </span>{" "}
             {t("note")}
           </p>

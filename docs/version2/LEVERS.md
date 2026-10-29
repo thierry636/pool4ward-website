@@ -18,6 +18,20 @@ part du sud de l'Espagne et va jusqu'en Pologne :
 Sous la couverture, une section de six schémas animés (`LeverSchemas`) compare pour chaque
 levier une situation de départ (gris, pointillé) à ce que le levier permet (couleur).
 
+## La couverture : une image seule
+
+Pas d'encart sur l'image : le titre dit l'idée en une phrase (« 3 500 services rail et fluviaux
+en Europe, une alternative à la route. »), la carte joue le report modal en premier, et six
+pastilles permettent de passer d'un levier à l'autre. Les bulles d'explication existent encore
+dans le code (`callouts`, textes `Home.levers.items.*.callouts`) mais la couverture les
+désactive ; seuls les noms de lieux restent sur la carte. Une légende discrète rappelle que les
+liaisons sont dessinées pour expliquer.
+
+**Le chiffre « 3 500 »** vient de la direction (`src/content/figures.ts`). Il n'a pas été recoupé :
+dans le portail, le référentiel Appel d'Air 2026 compte 2 906 services ferroviaires intermodaux
+(sans le fluvial). À valider contre la base avant toute mise en ligne publique, puis à
+changer au seul endroit où il est écrit.
+
 ## Ce que ce n'est pas
 
 **Une illustration, pas une donnée.** Les lieux sont réels (villes et ports, positions
@@ -25,8 +39,7 @@ arrondies) ; les liaisons sont **dessinées pour expliquer** chaque levier. Les 
 et fluvial du report modal sont des tracés **indicatifs** entre villes, pas des lignes ni des
 voies d'eau relevées, et le service Saragosse → Poznań n'existe pas parce qu'on le dessine.
 Les liaisons n'affirment l'existence d'aucun service, ne portent aucun nom d'opérateur, aucun
-chiffre, aucun gain. L'écran le dit en permanence (« Illustration · Europe. Liaisons dessinées pour
-expliquer chaque levier : ce ne sont pas des services existants. »), et la scène est
+chiffre, aucun gain. L'écran le dit en permanence (« Illustration. Liaisons dessinées pour expliquer, pas des services existants. »), et la scène est
 indépendante de la vitrine (`showcase.json`) et de la base privée : elle n'en lit rien.
 
 > Les noms d'opérateurs visibles sur la carte du portail (capture fournie) ne sont **pas
@@ -42,7 +55,7 @@ indépendante de la vitrine (`showcase.json`) et de la base privée : elle n'en 
 | `src/lib/levers/layout.ts` | Placement sans chevauchement des bulles et des noms de lieux (testé) |
 | `src/components/levers/LeverGlobe.tsx` | Globe MapLibre incliné, sans interaction, piloté image par image ; étiquettes HTML |
 | `src/components/levers/LeverFlat.tsx` | Même scène en SVG (sans WebGL, rendu logiciel, appareil économe) ; animations CSS |
-| `src/components/levers/LeverStage.tsx` | Orchestrateur : choix du rendu, lecture automatique, bandeau des six leviers, mesure du texte |
+| `src/components/levers/LeverStage.tsx` | Orchestrateur : choix du rendu, lecture automatique, pastilles des six leviers, mesure du texte |
 | `src/components/levers/LeverSchemas.tsx` | Les six schémas animés (SVG inline, `reveal-in`) |
 | `messages/*/home.json` → `Home.levers`, `Home.leverSchemas` | Tous les textes, FR et EN (clés vérifiées par `levers.test.ts`) |
 | `scripts/build-levers-poster.ts` | `public/images/levers-poster.svg`, image d'attente de la carte (`npm run poster:levers`) |

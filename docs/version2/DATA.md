@@ -11,6 +11,15 @@
 - Les **positions des sites** de l'exemple : villes et ports réels, arrondis à
   ≈ 1 km. Rien d'autre n'y est réel.
 
+## Un chiffre à valider : « 3 500 services rail et fluviaux en Europe »
+
+Le titre de la couverture annonce ce nombre (`src/content/figures.ts`). Il a été donné par la
+direction ; **il n'est pas recoupé** avec les données du portail consultées (référentiel Appel
+d'Air 2026 : 2 906 services ferroviaires intermodaux, sans le fluvial, voir
+`data/referentiels/appeldair-services-2026/README.md` du dépôt du portail). Règle 6 ci-dessous :
+un nombre de lignes n'est pas un nombre de services qualifiés. À arbitrer avant toute mise en
+ligne publique (source, date, périmètre), ou à remplacer.
+
 ## Ce qui est une démonstration (fictif, explicitement signalé)
 
 - **Le cas du parcours** : « Groupe démonstrateur », quatre sites (Usine Nord,

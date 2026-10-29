@@ -25,6 +25,8 @@ export interface LeverGlobeProps {
   reducedMotion: boolean;
   mobile: boolean;
   locale: "fr" | "en";
+  /** Pose les bulles d'explication sur la carte (la couverture n'en veut pas : l'image reste seule). */
+  callouts: boolean;
   /** Textes d'une bulle (titre, sous-titre) pour un levier et une clé. */
   calloutText(lever: LeverId, key: string): { title: string; sub: string };
   ariaLabel: string;
@@ -298,7 +300,7 @@ export function LeverGlobe(props: LeverGlobeProps) {
 
       /* bulles d'explication */
       const usedLeaders = new Set<string>();
-      for (const co of size.w < NARROW_MAP ? handoff(scene.callouts) : scene.callouts) {
+      for (const co of !p.callouts ? [] : size.w < NARROW_MAP ? handoff(scene.callouts) : scene.callouts) {
         const ramp = Math.min(clamp01((u - co.t0) / 0.05), clamp01((co.t1 - u) / 0.05 + (co.t1 >= 0.97 ? 1 : 0)));
         if (ramp <= 0 || !zoomOk) continue;
         const [lon, lat] = anchorOf(co.at);

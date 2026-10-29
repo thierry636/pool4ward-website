@@ -2,13 +2,8 @@
   "Home": {
     "cover": {
       "eyebrow": "From transport engineering to contracting",
-      "title": "Design transport <em>as close to reality as possible.</em>",
-      "lede": "Faced with the energy transition and pressure on resources, Pool4ward supports companies from engineering to contracting to control their costs, reduce their risks and secure their transport capacity.",
-      "benefits": [
-        "Control costs",
-        "Reduce risks",
-        "Secure capacity"
-      ],
+      "title": "<em>{count} rail and waterway services</em> across Europe, an alternative to the road.",
+      "lede": "Control your costs, reduce your risks, secure your transport capacity.",
       "ctaJourney": "See ground to contract",
       "ctaTalk": "Discuss your transport plan"
     },
@@ -115,7 +110,7 @@
     "levers": {
       "tag": "Illustration",
       "region": "Europe",
-      "note": "Links drawn to explain each lever: they are not existing services.",
+      "note": "Links drawn to explain, not existing services.",
       "mapLabel": "Animated map of Europe. Current lever: {lever}.",
       "listLabel": "The six levers",
       "items": {

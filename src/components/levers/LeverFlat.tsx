@@ -39,12 +39,12 @@ function geoPath(geo: GeoJSON.Feature | GeoJSON.FeatureCollection, close: boolea
   return d;
 }
 
-type FlatProps = Pick<LeverGlobeProps, "levers" | "active" | "playing" | "reducedMotion" | "locale" | "calloutText" | "ariaLabel" | "pad" | "reserved" | "onAdvance" | "onShown" | "onReady"> & {
+type FlatProps = Pick<LeverGlobeProps, "levers" | "active" | "playing" | "reducedMotion" | "locale" | "callouts" | "calloutText" | "ariaLabel" | "pad" | "reserved" | "onAdvance" | "onShown" | "onReady"> & {
   progress: MutableRefObject<number>;
 };
 
 export function LeverFlat(props: FlatProps) {
-  const { levers, active, playing, reducedMotion, locale, calloutText, pad, reserved, onAdvance, onShown, onReady, progress } = props;
+  const { levers, active, playing, reducedMotion, locale, callouts: withCallouts, calloutText, pad, reserved, onAdvance, onShown, onReady, progress } = props;
   const host = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ w: 800, h: 520 });
   const [land, setLand] = useState("");
@@ -107,7 +107,7 @@ export function LeverFlat(props: FlatProps) {
     const taken: Box[] = [...reserved.current];
     const bounds = size;
     const callouts: { key: string; x: number; y: number; w: number; t0: number; t1: number; color: string; title: string; sub: string; ax: number; ay: number; ex: number; ey: number }[] = [];
-    for (const co of size.w < NARROW_MAP ? handoff(scene.callouts) : scene.callouts) {
+    for (const co of !withCallouts ? [] : size.w < NARROW_MAP ? handoff(scene.callouts) : scene.callouts) {
       const [lon, lat] = anchorOf(co.at);
       const a = proj(lon, lat);
       const tx = calloutText(lever, co.key);
@@ -129,7 +129,7 @@ export function LeverFlat(props: FlatProps) {
     }
     return { callouts, places };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scene, lever, size, pad, f, locale]);
+  }, [scene, lever, size, pad, f, locale, withCallouts]);
 
   /* Horloge : avancement du levier (pour la barre de progression) et lecture automatique. */
   const clock = useRef({ u: 0, lever: -1 });

@@ -124,47 +124,50 @@
   }
 }
 
-.lever-dock {
-  overflow: hidden;
-  border: 1px solid rgb(148 163 184 / 0.22);
-  border-radius: 1rem;
-  background: rgb(6 14 32 / 0.8);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 18px 50px -20px rgb(0 0 0 / 0.8);
-}
-
+/* Les six leviers : de simples pastilles. La barre sous la pastille active montre l'avancement. */
 .lever-chip {
-  display: flex;
-  width: 100%;
-  min-height: 3.25rem;
+  position: relative;
+  display: inline-flex;
+  min-height: 2.75rem;
   align-items: center;
-  justify-content: center;
   gap: 0.5rem;
-  padding: 0.55rem 0.5rem 0.65rem;
+  overflow: hidden;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid rgb(148 163 184 / 0.3);
+  border-radius: 9999px;
+  background: rgb(2 6 23 / 0.45);
+  backdrop-filter: blur(6px);
   color: #cbd5e1;
   font-size: 0.82rem;
   font-weight: 600;
-  line-height: 1.15;
-  text-align: left;
-  transition: background 0.15s, color 0.15s;
+  line-height: 1.1;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
 .lever-chip:hover {
-  background: rgb(255 255 255 / 0.05);
+  background: rgb(255 255 255 / 0.08);
   color: #fff;
 }
 .lever-chip[aria-pressed="true"] {
-  background: rgb(66 99 235 / 0.16);
+  border-color: var(--c, #748ffc);
+  background: rgb(66 99 235 / 0.2);
   color: #fff;
+}
+.lever-chip svg {
+  color: #94a3b8;
+}
+.lever-chip[aria-pressed="true"] svg {
+  color: var(--c, #748ffc);
 }
 .lever-bar {
   position: absolute;
   inset: auto 0 0 0;
   height: 3px;
+  background: var(--c, #748ffc);
   transform: scaleX(0);
   transform-origin: left;
   pointer-events: none;
 }
-
 
 /* Un tracé écarté (la liaison directe, une fois le service identifié) s'efface sans disparaître. */
 @keyframes lever-dim {
