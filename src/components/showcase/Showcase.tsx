@@ -57,9 +57,11 @@ export function Showcase({ data }: { data: ShowcaseData }) {
     const els = [stage.current, caption.current, tag.current];
     if (els.some((e) => !e)) return;
     const measure = () => {
-      const st = stage.current!;
-      const c = caption.current!;
-      const g = tag.current!;
+      const st = stage.current;
+      const c = caption.current;
+      const g = tag.current;
+      // L'observateur peut se déclencher pendant le démontage (navigation) : références déjà nulles.
+      if (!st || !c || !g) return;
       const top = c.offsetTop;
       reserved.current = [
         { x: 0, y: top + 40, w: st.clientWidth, h: Math.max(0, c.offsetHeight - 40) },
