@@ -15,9 +15,15 @@ terrain (CrUX / RUM) ne pourront être lus qu'après la mise en ligne.
 - **Les noms d'opérateurs** ont été affichés une fois, avec des noms manifestement
   factices et en local seulement (jeu non versionné), pour vérifier leur placement
   sans chevauchement dans le globe et dans la carte à plat. Aucune publication réelle.
-- **La fluidité du globe 3D sur un GPU réel** : il a été joué en rendu logiciel
-  (SwiftShader), où il fonctionne mais saccade ; les images par seconde ne sont pas
-  mesurées. Le poids téléchargé l'est (section 2).
+- **La fluidité du globe 3D sur un GPU réel** (animation du monde et scène des
+  leviers de la couverture) : joués en rendu logiciel (SwiftShader), où ils
+  fonctionnent mais saccadent ; les images par seconde ne sont pas mesurées. Le poids
+  téléchargé l'est (section 2).
+- **La scène des leviers est une illustration**, pas une donnée : liaisons dessinées,
+  aucun service existant, aucun opérateur, aucun chiffre (LEVERS.md). Le choix de la
+  région et des liaisons est éditorial, à valider.
+- **Les impulsions animées** (carte à plat et schémas) utilisent `offset-path` en CSS :
+  vérifié sous Chromium seulement, pas sous Safari ni Firefox.
 - Pas de lecteur d'écran réel (NVDA, VoiceOver) : l'accessibilité est contrôlée par
   axe-core, au clavier et par l'arbre d'accessibilité, pas à l'oreille.
 - Pas de test sur appareils physiques ni sur Safari/Firefox : Chromium uniquement.
@@ -28,7 +34,7 @@ terrain (CrUX / RUM) ne pourront être lus qu'après la mise en ligne.
 
 ## 1. Tests automatisés (`npm test`)
 
-201 tests dans 16 fichiers, tous réussis. Ils couvrent : parité FR/EN des textes et absence de Cobuild4ward et
+220 tests dans 18 fichiers, tous réussis. Ils couvrent : parité FR/EN des textes et absence de Cobuild4ward et
 des chiffres de la v1 ; typographie française ; état et continuité du parcours
 (jamais « confirmé » ni « contractualisé » dans un cas démonstrateur) ; contact
 (validation, échappement, injection d'en-tête, champ piège, limite) ; blog ; métadonnées
@@ -38,7 +44,8 @@ plafonds, nom d'opérateur interdit en « demo », date de publication ; publica
 colonne non prévue refusée, identifiants de base jamais repris, arrondi, sortie
 déterministe, vitrine livrée = exemple publié) ; **animation** (arcs de grand cercle,
 antiméridien, vol de caméra et recul, dérive, cadrage d'une emprise à toute taille de
-scène).
+scène) ; **scène des leviers** (placement des bulles et des noms de lieux sans
+chevauchement, minutages, emprises, présence des textes FR et EN de chaque bulle).
 
 ## 2. Surface serveur et données reçues par le navigateur
 
@@ -71,27 +78,26 @@ Inspection de ce que reçoit réellement un navigateur sur la page Référentiel
 stockage navigateur: {"local":[],"session":[],"idb":[],"caches":[],"sw":0}
 cookies: [{"name":"NEXT_LOCALE","httpOnly":false,"sameSite":"Lax","path":"/"}]
   2 x /fr/datasets statuts 200
- 19 x /_next/* assets statuts 200
-  1 x /fonts/SourceSerif4-display-latin.woff2 statuts 200
+ 18 x /_next/* assets statuts 200
   1 x /images/terrain.svg statuts 200
   1 x /images/globe-poster.svg statuts 200
   1 x /fr statuts 200
   1 x /fr/approach statuts 200
-  1 x /fr/solutions statuts 200
   1 x /fr/blog statuts 200
+  1 x /fr/solutions statuts 200
   1 x /fr/contact statuts 200
   1 x blob: (worker MapLibre) statuts 200
-  1 x /geo/land-110m.json statuts 200
   1 x /geo/borders-110m.json statuts 200
+  1 x /geo/land-110m.json statuts 200
   1 x /geo/land-50m-europe.json statuts 200
   1 x /geo/borders-50m-europe.json statuts 200
 
 requêtes /api/* émises par la page Référentiels : aucune
 requêtes vers un autre domaine : aucune
-réponses JSON : uniquement le fond géographique public ? oui (/geo/land-110m.json, /geo/borders-110m.json, /geo/land-50m-europe.json, /geo/borders-50m-europe.json)
-fond public (Natural Earth) : /geo/land-110m.json 75 Ko, /geo/borders-110m.json 39 Ko, /geo/land-50m-europe.json 115 Ko, /geo/borders-50m-europe.json 66 Ko
+réponses JSON : uniquement le fond géographique public ? oui (/geo/borders-110m.json, /geo/land-110m.json, /geo/land-50m-europe.json, /geo/borders-50m-europe.json)
+fond public (Natural Earth) : /geo/borders-110m.json 39 Ko, /geo/land-110m.json 75 Ko, /geo/land-50m-europe.json 115 Ko, /geo/borders-50m-europe.json 66 Ko
 la vitrine n’est pas une URL publique : /data/showcase.json → 404 ; /content/showcase.json → 404 ; /src/content/showcase.json → 404 ; /showcase.json → 404
-HTML /fr/datasets : 115514 octets ; 35/35 noms de sites présents (liste textuelle)
+HTML /fr/datasets : 121048 octets ; 35/35 noms de sites présents (liste textuelle)
 mots réservés (secret, token, URL de base…) dans le HTML : aucun
 mention « Exemple illustratif » dans le HTML : cohérente avec le mode demo
 
@@ -103,8 +109,8 @@ scan de .next/static (bundles envoyés au navigateur) :
 Poids transféré de la page Référentiels :
 
 ```
-carte à plat (rendu par défaut ici)      total 378 Ko — document 16 · JS 133 · CSS 8 · polices 91 · images 41 · fond géographique 56
-globe 3D (?renderer=globe)               total 711 Ko — document 16 · JS 404 · CSS 19 · polices 91 · images 41 · fond géographique 96
+carte à plat (rendu par défaut ici)      total 347 Ko — document 17 · JS 138 · CSS 9 · polices 47 · images 41 · fond géographique 56
+globe 3D (?renderer=globe)               total 680 Ko — document 17 · JS 409 · CSS 19 · polices 47 · images 41 · fond géographique 96
 ```
 
 Lecture : la page n'émet **aucune requête `/api/*`** ; les seules réponses JSON
@@ -211,8 +217,8 @@ PASS  « Cobuild4ward » absent des 28 pages du plan du site (HTML servi)  — 2
 
 ## 4. Comportements
 
-Parcours (lecture automatique, pause, clavier, mouvement réduit, curseur de
-couverture) :
+Parcours « du terrain aux engagements » (lecture automatique, pause, clavier,
+mouvement réduit) :
 
 ```
 PASS lecture automatique : avance d’une couche après ~3,4 s — 0
@@ -224,10 +230,7 @@ PASS un clic sur une couche arrête la lecture automatique — 1
 Les flux à servir
 PASS mouvement réduit : la lecture automatique ne démarre pas — 0
 Les sites du groupe
-PASS mouvement réduit : la couverture s’ouvre dans son état final — curseur=100
 PASS mouvement réduit : transitions du plateau coupées
-PASS curseur : accessible au clavier jusqu’aux flux séparés
-PASS flux séparés : la boucle disparaît — opacity=0
 PASS onglets : flèche droite → étape 2
 PASS onglets : Fin → étape 3
 PASS onglets : Début → étape 1
@@ -235,7 +238,95 @@ PASS scénarios : flèche bas change de scénario (boutons radio natifs)
 PASS niveau de connaissance affiché (Détecté pour la boucle ouverte)
 PASS créneau avancé → « étudiée »
 
-15/15 comportements vérifiés
+12/12 comportements vérifiés
+```
+
+Scène des leviers de la couverture et schémas (FR et EN : six leviers listés,
+lecture automatique, pause, choix d'un levier, clavier, mouvement réduit, téléphone
+sans recouvrement ni défilement horizontal, globe 3D forcé, schémas décrits et
+animés à l'entrée dans l'écran, immobiles en mouvement réduit). Le temps d'un
+levier suit l'horloge de l'écran : sur ce poste, sans GPU, il dure un peu plus de
+9 s, et les attentes du script en tiennent compte :
+
+```
+== FR · mouvement normal ==
+PASS six leviers listés, dans l’ordre — Rail | Shortsea côtier | Boucles | Cross-dock | Électrification | Mutualisation
+PASS le premier levier est celui du rail
+PASS mention « Illustration · région » visible
+PASS la carte porte une description accessible — Carte animée de la Méditerranée occidentale. Levier en cours : Rail.
+PASS rendu à plat sans WebGL ou en logiciel : aucun canvas
+PASS bulles et noms de lieux posés sur la carte
+PASS lecture automatique : le levier suivant s’affiche — Shortsea côtier
+PASS la barre de progression du levier en cours avance
+PASS pause : plus aucun changement de levier
+PASS le bouton propose de reprendre
+PASS un levier choisi s’affiche (électrification)
+PASS un choix arrête la lecture automatique
+PASS le levier choisi se joue jusqu’au bout puis reste affiché — progression=1.00
+PASS clavier : Entrée sur un levier le choisit
+PASS clavier : Espace sur le levier suivant le choisit
+PASS aucune erreur JavaScript
+
+== FR · mouvement réduit ==
+PASS pas de lecture automatique
+PASS le bouton propose de lancer la lecture
+PASS le levier s’affiche terminé (progression pleine)
+PASS aucune impulsion ni onde animée — 0 animées
+PASS la lecture peut être lancée à la demande
+
+== FR · téléphone ==
+PASS pas de défilement horizontal
+PASS texte, carte et bandeau s’empilent sans se recouvrir — h1 bas=268 carte=707–1107 bandeau=1127
+PASS cibles tactiles d’au moins 44 px — 0 trop petites
+
+== EN · mouvement normal ==
+PASS six leviers listés, dans l’ordre — Rail | Coastal shortsea | Loops | Cross-dock | Electrification | Pooling
+PASS le premier levier est celui du rail
+PASS mention « Illustration · région » visible
+PASS la carte porte une description accessible — Animated map of the western Mediterranean. Current lever: Rail.
+PASS rendu à plat sans WebGL ou en logiciel : aucun canvas
+PASS bulles et noms de lieux posés sur la carte
+PASS lecture automatique : le levier suivant s’affiche — Coastal shortsea
+PASS la barre de progression du levier en cours avance
+PASS pause : plus aucun changement de levier
+PASS le bouton propose de reprendre
+PASS un levier choisi s’affiche (électrification)
+PASS un choix arrête la lecture automatique
+PASS le levier choisi se joue jusqu’au bout puis reste affiché — progression=1.00
+PASS clavier : Entrée sur un levier le choisit
+PASS clavier : Espace sur le levier suivant le choisit
+PASS aucune erreur JavaScript
+
+== EN · mouvement réduit ==
+PASS pas de lecture automatique
+PASS le bouton propose de lancer la lecture
+PASS le levier s’affiche terminé (progression pleine)
+PASS aucune impulsion ni onde animée — 0 animées
+PASS la lecture peut être lancée à la demande
+
+== EN · téléphone ==
+PASS pas de défilement horizontal
+PASS texte, carte et bandeau s’empilent sans se recouvrir — h1 bas=268 carte=680–1080 bandeau=1100
+PASS cibles tactiles d’au moins 44 px — 0 trop petites
+
+== globe 3D forcé ==
+PASS le globe 3D se monte (canvas)
+PASS un levier choisi sur le globe
+PASS un levier choisi pendant le chargement se joue (bulles posées sur le globe)
+PASS aucune erreur JavaScript avec le globe
+
+== schémas · mouvement normal ==
+PASS six schémas, chacun avec une description
+PASS sous la ligne de flottaison : cartes masquées avant d’entrer à l’écran — 6 masquées
+PASS elles apparaissent en entrant à l’écran — 6 affichées
+PASS les tracés se dessinent (animation CSS) — sch-draw
+
+== schémas · mouvement réduit ==
+PASS six schémas, chacun avec une description
+PASS aucune carte masquée
+PASS aucune impulsion animée — display=none
+
+59/59 comportements vérifiés
 ```
 
 Animation du monde (carte à plat, mouvement réduit, globe 3D) :
@@ -247,7 +338,7 @@ PASS lecture automatique : le chapitre suivant arrive tout seul — 01 → 02
 PASS pause : plus aucun avancement — reste au chapitre 02
 PASS pause : les impulsions sont arrêtées (animations SVG suspendues)
 PASS reprise : l’avancement reprend — 02 → 03
-PASS puce de chapitre : changement immédiat de la légende
+PASS puce de chapitre : changement immédiat de la légende (moins de 2 s)
 PASS la molette sur la scène défile la page (pas de capture du défilement)
 PASS clavier : Tab depuis la pause atteint la puce du chapitre 1 — 01 Rail intermodal
 PASS clavier : Entrée sur une puce choisit le chapitre
@@ -260,7 +351,7 @@ PASS mouvement réduit : les puces changent quand même de chapitre
 PASS globe : un canvas WebGL, aucune carte à plat
 PASS globe : zone de carte décrite (role=img, nom du chapitre)
 PASS globe : la légende suit le chapitre à l’échange (pas au clic)
-PASS globe : des étiquettes de sites sont posées sur la carte — 5 étiquettes
+PASS globe : des étiquettes de sites sont posées sur la carte — 6 étiquettes
 PASS aucune erreur JavaScript (globe)
 
 21/21 comportements vérifiés
@@ -279,15 +370,16 @@ Lighthouse accessibilité : voir le tableau ci-dessous. Contrastes : voir DESIGN
 
 120 pages × largeurs contrôlées, 0 débordement(s)
 
-Contrôle visuel fait sur captures (accueil, chaque étape du parcours, chaque chapitre
-de l'animation en globe et en carte à plat, mobile et bureau, FR et EN) : premier
-écran, étapes, légende, étiquettes, repli sans WebGL, mouvement réduit. Corrections
-issues de ces contrôles : fond de carte sans artefact (polygones découpés à
-l'antiméridien — l'Eurasie était un anneau unique dont deux arêtes faisaient le
-tour du pôle), cadrage calculé sur l'emprise réelle des sites (et non des zooms
-fixés pour un écran de bureau), carte centrée au-dessus de la légende et sous la
-mention d'exemple sur téléphone, légende qui suit le contenu affiché et non le
-clic, noms d'opérateurs décalés plutôt qu'écartés en cas de collision.
+Contrôle visuel fait sur captures (accueil à 390, 768, 1024, 1366, 1440 et 1920 px,
+chacun des six leviers en carte à plat, le globe en rendu logiciel, les schémas,
+chaque page, FR et EN) : couverture, bulles et noms de lieux sans recouvrement du
+texte, bandeau des leviers, repli sans WebGL, mouvement réduit. Corrections issues de
+ces contrôles : taille estimée des bulles de la carte à plat (leur sous-titre passe à
+la ligne et cachait un nom de lieu), en-tête passé en menu jusqu'à 1280 px (le
+bouton de contact se coupait en deux à 1024 px), contraste d'un badge du parcours et
+d'une pastille, titre de la couverture réduit pour que le bandeau des leviers tienne
+dans le premier écran à 900 px de haut. Les captures sont un contrôle de la
+personne qui développe : le jugement sur le style est celui de l'équipe.
 
 ## 7. Performance (Lighthouse 12, build de production local)
 
@@ -302,16 +394,16 @@ alors que Lighthouse mesure `http://localhost:3000`). Les autres contrôles SEO
 passent.
 
 ```
-approach desktop                         perf 100       a11y 100 bp 100 seo* 58 | LCP 0.6 s | CLS 0.000 | TBT 0 ms
-approach mobile                          perf 98/99/99  a11y 100 bp 100 seo* 58 | LCP 2.0 s · 2.1 s · 2.3 s | CLS 0.000 | TBT 26 ms
+approach desktop                         perf 100       a11y 100 bp 100 seo* 58 | LCP 0.4 s | CLS 0.000 | TBT 0 ms
+approach mobile                          perf 99/99/99  a11y 100 bp 100 seo* 58 | LCP 2.0 s · 2.0 s · 2.0 s | CLS 0.000 | TBT 31 ms
 contact desktop                          perf 100       a11y 100 bp 100 seo* 58 | LCP 0.5 s | CLS 0.000 | TBT 0 ms
-contact mobile                           perf 98/99/98  a11y 100 bp 100 seo* 58 | LCP 2.1 s · 2.3 s · 2.4 s | CLS 0.000 | TBT 37 ms
+contact mobile                           perf 99/100/100 a11y 100 bp 100 seo* 58 | LCP 1.8 s · 1.8 s · 2.0 s | CLS 0.000 | TBT 17 ms
 datasets desktop                         perf 100       a11y 100 bp 100 seo* 58 | LCP 0.6 s | CLS 0.000 | TBT 0 ms
-datasets mobile                          perf 96/98/98  a11y 100 bp 100 seo* 58 | LCP 2.3 s · 2.4 s · 2.7 s | CLS 0.000 | TBT 83 ms
-home desktop                             perf 100       a11y 100 bp 100 seo* 61 | LCP 0.7 s | CLS 0.000 | TBT 0 ms
-home mobile                              perf 94/96/97  a11y 100 bp 100 seo* 61 | LCP 2.6 s · 2.6 s · 2.9 s | CLS 0.000 | TBT 76 ms
-solutions-transport-engineering desktop  perf 100       a11y 100 bp 100 seo* 58 | LCP 0.6 s | CLS 0.000 | TBT 0 ms
-solutions-transport-engineering mobile   perf 97/99/99  a11y 100 bp 100 seo* 58 | LCP 2.1 s · 2.1 s · 2.6 s | CLS 0.000 | TBT 83 ms
+datasets mobile                          perf 99/99/99  a11y 100 bp 100 seo* 58 | LCP 2.0 s · 2.0 s · 2.2 s | CLS 0.000 | TBT 37 ms
+home desktop                             perf 100       a11y 100 bp 100 seo* 61 | LCP 0.6 s | CLS 0.000 | TBT 0 ms
+home mobile                              perf 98/98/96  a11y 100 bp 100 seo* 61 | LCP 2.3 s · 2.3 s · 2.7 s | CLS 0.000 | TBT 68 ms
+solutions-transport-engineering desktop  perf 100       a11y 100 bp 100 seo* 58 | LCP 0.5 s | CLS 0.000 | TBT 0 ms
+solutions-transport-engineering mobile   perf 99/99/99  a11y 100 bp 100 seo* 58 | LCP 2.0 s · 2.0 s · 2.2 s | CLS 0.000 | TBT 29 ms
 ```
 
 Seuils « bons » (CWV) : LCP ≤ 2,5 s, CLS ≤ 0,1, INP ≤ 200 ms (TBT sert de proxy de
@@ -322,70 +414,61 @@ donc sans WebGL, et l'animation prend son repli SVG (≈ 180 Ko de fond géograp
 Europe, aucun script de carte). Le globe 3D, lui, charge MapLibre (voir le poids en
 section 2) ; son coût sur un appareil réel n'est pas mesuré ici.
 
-Ce qui a été fait pour tenir ces seuils : polices variables allégées et
-sous-ensemblées, `font-display: optional` sur le texte principal (pas de bascule en
+Ce qui a été fait pour tenir ces seuils : Inter variable sous-ensemblée (48 Ko), `font-display: optional` (pas de bascule en
 cours de lecture), messages passés aux composants client page par page, pages rendues
-statiquement par langue, MapLibre **chargé à la demande seulement** (à l'approche de
-la scène, sur un appareil capable de la 3D), fond géographique fin réduit à
+statiquement par langue, MapLibre **chargé à la demande seulement** (après l'événement `load`, sur un
+appareil capable de la 3D), fond géographique fin réduit à
 l'Europe (183 Ko au lieu de 1,15 Mo pour le monde), vitrine intégrée au HTML (7 Ko,
 aucune requête de données).
 
 **Le seuil de LCP ≤ 2,5 s n'est pas démontré tenu sur toutes les pages en mobile.** Plages mesurées (trois exécutions chacune, simulation Lighthouse) :
 
-- approach : 2,0 s · 2,1 s · 2,3 s
-- contact : 2,1 s · 2,3 s · 2,4 s
-- datasets : 2,3 s · 2,4 s · 2,7 s
-- home : 2,6 s · 2,6 s · 2,9 s
-- solutions-transport-engineering : 2,1 s · 2,1 s · 2,6 s
+- approach : 2,0 s · 2,0 s · 2,0 s
+- contact : 1,8 s · 1,8 s · 2,0 s
+- datasets : 2,0 s · 2,0 s · 2,2 s
+- home : 2,3 s · 2,3 s · 2,7 s
+- solutions-transport-engineering : 2,0 s · 2,0 s · 2,2 s
 
-Pages dont au moins une exécution dépasse 2,5 s : datasets, home, solutions-transport-engineering. Pages qui restent sous le seuil sur les trois exécutions : approach, contact. L'accueil est le plus loin du seuil (2,6 s · 2,6 s · 2,9 s). Éléments d'explication, mesurés dans une série précédente : sans bridage, FCP et LCP de l'accueil sont à 175 ms ; c'est le modèle de simulation (environ 300 Ko chargés avant le LCP, sur une 4G lente) qui porte l'estimation à ≈ 3 s ; l'élément LCP est le paragraphe d'accroche (texte), pas une image. Pistes non engagées : différer le filigrane des courbes de niveau (22 Ko) et la police mono (24 Ko) hors du premier écran, réduire le JavaScript de l'accueil (≈ 135 Ko). La valeur de terrain (CrUX / RUM) tranchera après la mise en ligne ; d'ici là, ne pas annoncer « Core Web Vitals bons ».
+Pages dont au moins une exécution dépasse 2,5 s : home. Pages qui restent sous le seuil sur les trois exécutions : approach, contact, datasets, solutions-transport-engineering. L'accueil est le plus loin du seuil (2,3 s · 2,3 s · 2,7 s). Éléments d'explication : l'élément LCP de l'accueil est le paragraphe d'accroche (du texte, pas une image) ; sans bridage ni latence réseau (poste local, cinq chargements), FCP et LCP de l'accueil sont à 104–124 ms ; c'est le modèle de simulation (environ 300 Ko chargés avant le LCP, sur une 4G lente, processeur ralenti ×4) qui porte l'estimation à 2,3–2,7 s. La carte de la couverture ne charge rien avant l'événement `load` (carte à plat : deux fonds géographiques, 57 Ko ; globe : MapLibre, voir section 2). Pistes non engagées : réduire le JavaScript de l'accueil (≈ 138 Ko), différer les courbes de niveau du parcours (22 Ko). La valeur de terrain (CrUX / RUM) tranchera après la mise en ligne ; d'ici là, ne pas annoncer « Core Web Vitals bons ».
 
 ## 8. Prévisualisation hébergée (Netlify)
 
 Vérifié sur le déploiement de la pull request n° 23 :
-`https://deploy-preview-23--pool4wardv2.netlify.app` (le second site Netlify,
-`https://deploy-preview-23--p4wname.netlify.app`, donne les mêmes en-têtes), au
-commit `e76ee75` pour les parcours et au commit `c38cdf0` pour les en-têtes des
-fichiers statiques. Les essais partent de ce conteneur, par le proxy de
-l'environnement (la vérification TLS reste active).
+`https://deploy-preview-23--p4wname.netlify.app` (le second site Netlify,
+`https://deploy-preview-23--pool4wardv2.netlify.app`, est servi par le même commit),
+au commit `39678a5`. Les essais partent de ce conteneur, par le proxy de l'environnement
+(la vérification TLS reste active).
 
-- **Contrôles Netlify de la pull request** (« Header rules », « Redirect rules »,
-  « Pages changed ») : réussis sur les deux sites, pour chaque commit poussé. Le
-  job GitHub Actions `build` est le gabarit du dépôt (il n'exécute que des `echo`) :
-  il ne démontre rien sur le site.
+- **Contrôles Netlify de la pull request** (« Deploy Preview ») : réussis sur les deux sites
+  pour le commit `39678a5`. Le job GitHub Actions `build` est le gabarit du dépôt (il
+  n'exécute que des `echo`) : il ne démontre rien sur le site.
 - **Redirections** (même script qu'en local) : 27/27 sur l'hébergeur.
-- **Surface de routes** : 14/14 — plus aucune route de données, la source de la
-  vitrine n'est pas servie, `/api/contact` répond 503 « non raccordé ».
-- **Parcours complet FR et EN** : 40 vérifications réussies, formulaire compris
-  (503 attendu, message honnête).
-- **Comportements de l'animation** : 21/21 (carte à plat, mouvement réduit, globe 3D
-  forcé en rendu logiciel).
-- **Inspection réseau** : aucune requête `/api/*`, un seul cookie (`NEXT_LOCALE`),
-  rien dans le stockage du navigateur, réponses JSON limitées au fond géographique
-  public, 35 sites sur 35 présents dans la liste textuelle, aucun mot réservé dans
-  le HTML.
+- **Surface de routes** : 14/14 — aucune route de données, la source de la vitrine n'est
+  pas servie, `/api/contact` répond 503 « non raccordé ».
+- **Parcours complet FR et EN** : 40 vérifications réussies, formulaire compris (503
+  attendu, message honnête).
+- **Comportements de l'animation du monde** : 21/21 (carte à plat, mouvement réduit, globe
+  3D forcé en rendu logiciel).
+- **Scène des leviers et schémas** : 59/59, sur l'hébergeur, FR et EN, téléphone, globe 3D
+  forcé compris.
+- **Inspection réseau** : aucune requête `/api/*`, un seul cookie (`NEXT_LOCALE`), rien dans
+  le stockage du navigateur.
 
 **En-têtes constatés sur l'hébergeur** : les pages portent `X-Content-Type-Options`,
-`X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy` et HSTS ; une prévisualisation
-émet `X-Robots-Tag: noindex` et un `robots.txt` qui interdit tout. Les fichiers
-statiques (polices, fond géographique, images, visuel de partage) sont servis en
-`Cache-Control: public, max-age=604800` (polices et fond) ou `86400` (images), avec
+`X-Frame-Options`, `Referrer-Policy` et HSTS ; une prévisualisation émet `X-Robots-Tag: noindex`.
+Les fichiers statiques (fond géographique, images dont `levers-poster.svg`, polices) sont
+servis avec `Cache-Control: public, max-age=604800` (fond) ou `86400` (images), avec
 `stale-while-revalidate`, et `X-Content-Type-Options: nosniff`.
 
-Deux défauts d'hébergement ont été **trouvés et corrigés** grâce à cette vérification :
-les fichiers statiques étaient servis en `max-age=0` (les règles `headers()` de
-`next.config.mjs` ne s'appliquent pas aux fichiers statiques sur Netlify : la règle
-vit désormais dans `netlify.toml`), puis sans `nosniff` (même cause).
+**Netlify injecte ses propres scripts dans les prévisualisations.** Le navigateur contacte
+`app.netlify.com`, `cdn.segment.com` et `sessions.bugsnag.com` via `/.netlify/scripts/cdp`
+(outil de commentaires des prévisualisations) : ce n'est pas le code du site, qui n'émet
+aucune requête tierce (vérifié en local). Conséquence : le poids mesuré sur la
+prévisualisation (≈ 2 Mo) est gonflé par Netlify et n'est pas repris ici ; les poids de la
+section 2 sont ceux du build local. À reverifier en production.
 
-**Netlify injecte ses propres scripts dans les prévisualisations.** Le navigateur
-contacte `app.netlify.com` et `cdn.segment.com` via `/.netlify/scripts/cdp` (outil
-de commentaires des prévisualisations) : ce n'est pas le code du site, qui n'émet
-aucune requête tierce (vérifié en local et par recherche dans le code). Conséquence :
-le poids mesuré sur la prévisualisation (≈ 2 Mo) est gonflé par Netlify et n'est pas
-repris ici ; les poids de la section 2 sont ceux du build local. À reverifier en
-production.
-
-**Non mesuré sur l'hébergeur** : Lighthouse (les scripts de Netlify faussent la
-mesure), les quotas du formulaire de contact (compteurs en mémoire d'instance), le
-fonctionnement de l'identification du client (`x-nf-client-connection-ip`, variable
-`NETLIFY`), la performance derrière le CDN d'un visiteur réel.
+**Non mesuré sur l'hébergeur** : Lighthouse (les scripts de Netlify faussent la mesure), les
+quotas du formulaire de contact (compteurs en mémoire d'instance), la performance derrière
+le CDN d'un visiteur réel, et le déploiement **de production** de la branche : il exige
+`NEXT_PUBLIC_SITE_ENV=preview` tant que la vitrine est un exemple (DEPLOY.md), sans quoi le
+garde-fou `prebuild` refuse le build.
