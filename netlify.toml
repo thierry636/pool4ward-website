@@ -18,22 +18,27 @@
 # retour revalide les polices préchargées et le fond cartographique. Les `headers()` de
 # next.config.mjs ne s'appliquent pas aux fichiers statiques sur Netlify : la règle
 # vit donc ici (et dans next.config.mjs pour `next start` et les autres hébergeurs).
+# Même raison pour `X-Content-Type-Options` : Netlify ne l'ajoute qu'aux pages.
 [[headers]]
   for = "/fonts/*"
   [headers.values]
     Cache-Control = "public, max-age=604800, stale-while-revalidate=604800"
+    X-Content-Type-Options = "nosniff"
 
 [[headers]]
   for = "/geo/*"
   [headers.values]
     Cache-Control = "public, max-age=604800, stale-while-revalidate=604800"
+    X-Content-Type-Options = "nosniff"
 
 [[headers]]
   for = "/images/*"
   [headers.values]
     Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+    X-Content-Type-Options = "nosniff"
 
 [[headers]]
   for = "/og/*"
   [headers.values]
     Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+    X-Content-Type-Options = "nosniff"
