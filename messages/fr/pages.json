@@ -222,5 +222,10 @@
       ],
       "diagnostic": "Faire le diagnostic"
     }
+  },
+  "NotFound": {
+    "title": "Cette page n’existe pas.",
+    "body": "Le lien est peut-être ancien : plusieurs pages du site précédent ont été regroupées. Repartez de l’accueil ou de l’une des quatre rubriques.",
+    "home": "Retour à l’accueil"
   }
 }

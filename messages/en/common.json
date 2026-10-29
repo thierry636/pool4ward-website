@@ -35,7 +35,7 @@
   "Capabilities": {
     "eyebrow": "Five capabilities",
     "title": "One continuous line, from the first study to the managed contract.",
-    "lede": "Each capability picks up what the previous one established. You can enter through any of them; you do not have to buy everything to start.",
+    "lede": "Each capability picks up what the previous one established. Each page says what it covers, and what the software really does.",
     "decision": "Decision supported",
     "covers": "What this capability covers",
     "apps": "Applications involved",
@@ -67,7 +67,7 @@
       ],
       "covers": [
         "A multi-step preparation assistant: flow selection, lines by postal mesh, zone or region, tiered grids, fuel-revision clause, ancillary services, scenario test.",
-        "A tender file in a protected spreadsheet format, with preview, ready to be issued.",
+        "A tender file in a protected spreadsheet format, with preview.",
         "Publication of zones and grid templates in CarrierBridge."
       ],
       "scope": "The scope described here is the preparation of the tender file."
@@ -82,7 +82,7 @@
         "Invite"
       ],
       "covers": [
-        "Selection of intermodal operators (rail, inland waterway, sea), ranked by corridor, from the Modal4ward service catalogue.",
+        "Selection of intermodal operators, ranked by corridor, from the Modal4ward service catalogue.",
         "Matching with the shipper’s current carriers.",
         "A listed carrier is not an available carrier: availability is confirmed by its reply."
       ],

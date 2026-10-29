@@ -35,7 +35,7 @@
   "Capabilities": {
     "eyebrow": "Cinq capacités",
     "title": "Une continuité, de la première étude au contrat suivi.",
-    "lede": "Chaque capacité reprend ce que la précédente a établi. On peut entrer par n’importe laquelle ; on n’a pas à tout acheter pour commencer.",
+    "lede": "Chaque capacité reprend ce que la précédente a établi. La page de chacune dit ce qu’elle couvre, et ce que le logiciel fait réellement.",
     "decision": "Décision éclairée",
     "covers": "Ce que couvre cette capacité",
     "apps": "Applications concernées",
@@ -67,7 +67,7 @@
       ],
       "covers": [
         "Un assistant de préparation en plusieurs étapes : sélection des flux, lignes par maille postale, zone ou région, grilles à tranches, clause de révision carburant, prestations annexes, test du scénario.",
-        "Un dossier de consultation au format tableur protégé, avec aperçu, prêt à être diffusé.",
+        "Un dossier de consultation au format tableur protégé, avec aperçu.",
         "La publication des zones et des modèles de grille dans CarrierBridge."
       ],
       "scope": "Le périmètre décrit la préparation du dossier de consultation."
@@ -82,7 +82,7 @@
         "Inviter"
       ],
       "covers": [
-        "Sélection d’opérateurs intermodaux (rail, fluvial, maritime), classés par corridor, à partir du catalogue de services Modal4ward.",
+        "Sélection d’opérateurs intermodaux, classés par corridor, à partir du catalogue de services Modal4ward.",
         "Rapprochement avec les transporteurs actuels du chargeur.",
         "Un transporteur référencé n’est pas un transporteur disponible : la disponibilité se confirme par sa réponse."
       ],

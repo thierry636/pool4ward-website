@@ -64,7 +64,8 @@
         "zoom": "Zoom max"
       },
       "grain": "≈ {deg}°",
-      "legendNote": "La maille est la plus petite zone distinguable : rien de plus fin n’est diffusé."
+      "legendNote": "La maille est la plus petite zone distinguable : rien de plus fin n’est diffusé.",
+      "tableLabel": "Tableau de couverture des couches"
     },
     "cta": {
       "title": "Besoin du détail ?",
@@ -154,6 +155,7 @@
       "loading": "Chargement de la synthèse…",
       "error": "La synthèse de cette zone n’a pas pu être chargée.",
       "suppressed": "Masqué : effectif trop faible pour être décrit.",
+      "demo": "Données de démonstration",
       "range": "{min} à {max} ressources référencées",
       "rangeOpen": "{min} ressources référencées ou plus",
       "corridorsYes": "Corridors généralisés présents",

@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { Journey } from "@/components/journey/Journey";
+import { JourneyLazy } from "@/components/journey/JourneyLazy";
 
 export function JourneySection() {
   const t = useTranslations("Home.journey");
@@ -14,7 +14,7 @@ export function JourneySection() {
           <p className="mono mt-4 text-[0.78rem]" style={{ color: "var(--fg-2)" }}>{t("note")}</p>
         </div>
         <div className="mt-12">
-          <Journey />
+          <JourneyLazy />
         </div>
       </div>
     </section>

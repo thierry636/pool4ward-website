@@ -27,11 +27,17 @@ La production reste sur `main`. La version 2 se prévisualise à part :
 1. Raccordements nécessaires (INTEGRATIONS.md) : au minimum formulaire de contact,
    URL du portail, pages légales, validation du partenariat CERMICS.
 2. `NEXT_PUBLIC_SITE_URL=https://pool4ward.com`, `NEXT_PUBLIC_SITE_ENV=production`.
-3. Redirections : déjà dans `next.config.mjs` (308) — `/products*` → `/solutions*`,
-   `/platform` et `/products/cobuild4ward` → `/approach`, `/ecosystem` →
-   `/datasets`, `/resources` → `/blog`, anciennes solutions →
-   `/solutions/transport-engineering` (sauf `collaborative-transport` → `/approach`).
-   Les adresses sans préfixe de langue n'ont jamais été servies par la v1.
+3. Redirections : déjà dans `next.config.mjs` (308, permanentes), pour `/fr` et
+   `/en` — voir le tableau `redirectionsV1`. `/products` → `/solutions` ;
+   `design4ward` et `compute4ward` → `/solutions/transport-engineering` ;
+   `modal4ward` → `/solutions/carrier-search` ; `connect4ward` →
+   `/solutions/contract-management` ; `cobuild4ward` et `/platform` →
+   `/approach` ; `/ecosystem` → `/datasets` ; `/resources` → `/blog` ; les trois
+   anciennes pages de solution → `/solutions/transport-engineering`, et
+   `collaborative-transport` → `/approach`. En v1, seuls `/`, `/blog` et
+   `/diagnostic` répondaient sans préfixe de langue : les autres adresses sans
+   préfixe n'ont jamais existé et ne sont pas redirigées. Le résultat est
+   rejoué dans VERIFICATION.md.
 4. Le diagnostic de campagne (`/diagnostic` → `/fr/diagnostic`) est inchangé.
 5. Rejouer VERIFICATION.md sur l'environnement final.
 

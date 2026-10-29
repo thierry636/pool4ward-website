@@ -35,7 +35,7 @@ export async function rendreMarkdown(
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
     .use(rehypeSlug)
-    .use(rehypeTableaux)
+    .use(rehypeTableaux, locale)
     .use(rehypeLiens, locale);
 
   if (locale === "fr") {

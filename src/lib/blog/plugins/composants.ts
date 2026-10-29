@@ -258,7 +258,7 @@ function enQuestions(citation: Blockquote): Blockquote {
   return {
     type: "blockquote",
     children: marques as BlockContent[],
-    data: { hName: "aside", hProperties: { className: ["p4w-questions"] } },
+    data: { hName: "aside", hProperties: { className: ["p4w-questions"], role: "note" } },
   };
 }
 
@@ -290,7 +290,7 @@ function enEncadre(nom: "note" | "cta", enfants: BlockContent[]): Blockquote {
   return {
     type: "blockquote",
     children: traites as BlockContent[],
-    data: { hName: "aside", hProperties: { className: [prefixe] } },
+    data: { hName: "aside", hProperties: { className: [prefixe], role: "note" } },
   };
 }
 

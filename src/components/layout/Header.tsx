@@ -62,16 +62,19 @@ export function Header({ solid = false }: HeaderProps) {
   const toneClass = opaque ? "tone-light" : "tone-dark";
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color] duration-200 ${
-        opaque ? "border-b" : "border-b border-transparent"
-      } ${toneClass}`}
-      style={{
-        background: opaque ? "color-mix(in srgb, var(--bg) 92%, transparent)" : "transparent",
-        borderColor: opaque ? "var(--rule)" : undefined,
-        backdropFilter: opaque ? "blur(14px)" : undefined,
-      }}
-    >
+    <header className={`fixed inset-x-0 top-0 z-50 isolate bg-transparent ${toneClass}`}>
+      {/* Fond et filet de l'en-tête : posés sur un calque, pas sur le <header>.
+          `backdrop-filter` sur le <header> en ferait le bloc conteneur du menu
+          mobile (position: fixed), qui s'écraserait à la hauteur de l'en-tête. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 border-b transition-[background-color,border-color] duration-200"
+        style={{
+          background: opaque ? "color-mix(in srgb, var(--bg) 92%, transparent)" : "transparent",
+          borderColor: opaque ? "var(--rule)" : "transparent",
+          backdropFilter: opaque ? "blur(14px)" : undefined,
+        }}
+      />
       <div className="wrap flex h-[4.25rem] items-center justify-between gap-6">
         <Link href="/" aria-label={t("home")} className="shrink-0 rounded-sm">
           <Logo />

@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { URL_SITE } from "./site";
 
+/** Image de partage par défaut. Next remplace `openGraph` en bloc d'un segment à l'autre :
+ * sans elle ici, les pages intérieures perdraient l'image du layout. */
+export const IMAGE_PARTAGE = { url: "/og/pool4ward.png", width: 1200, height: 630 };
+
 /**
  * Métadonnées d'une page éditoriale : canonique, alternates de langue, Open
  * Graph. `path` est le chemin sans préfixe de langue ("/approach").
@@ -31,6 +35,7 @@ export function pageMetadata({
       description,
       url: `${URL_SITE}/${locale}${suffix}`,
       locale: locale === "fr" ? "fr_FR" : "en_GB",
+      images: [IMAGE_PARTAGE],
     },
   };
 }

@@ -191,6 +191,8 @@ export function Board({ state, tone, cover, label, className = "" }: BoardProps)
           ))}
         </g>
 
+        {!isCover && (
+          <>
         {/* ---- lots (étape 3) : bandes sous les flux ---- */}
         <g aria-hidden="true" fill="none" strokeLinecap="round">
           {FLOW_IDS.map((id) => {
@@ -208,6 +210,8 @@ export function Board({ state, tone, cover, label, className = "" }: BoardProps)
             );
           })}
         </g>
+          </>
+        )}
 
         {/* ---- flux de base ---- */}
         <g fill="none" strokeLinecap="round">
@@ -251,6 +255,8 @@ export function Board({ state, tone, cover, label, className = "" }: BoardProps)
           })}
         </g>
 
+        {!isCover && (
+          <>
         {/* ---- récurrence : un point par départ hebdomadaire ---- */}
         <g aria-hidden="true" fill="none" strokeLinecap="round">
           {FLOW_IDS.map((id) => {
@@ -272,6 +278,8 @@ export function Board({ state, tone, cover, label, className = "" }: BoardProps)
             );
           })}
         </g>
+          </>
+        )}
 
         {/* ---- boucle : les quatre liaisons mises bout à bout ---- */}
         <g aria-hidden="true" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -306,6 +314,8 @@ export function Board({ state, tone, cover, label, className = "" }: BoardProps)
           ))}
         </g>
 
+        {!isCover && (
+          <>
         {/* ---- électrique : traction électrique sur les liaisons à recharge aux deux bouts ---- */}
         <g aria-hidden="true" fill="none" strokeLinecap="round">
           {(["F1", "F2"] as const).map((id) => (
@@ -484,6 +494,8 @@ export function Board({ state, tone, cover, label, className = "" }: BoardProps)
             );
           })}
         </g>
+          </>
+        )}
 
         {/* ---- sites du groupe ---- */}
         <g>

@@ -122,9 +122,17 @@ describe("typographie française", () => {
 });
 
 describe("robustesse du pipeline", () => {
+  it("donne un nom et le focus clavier aux zones qui défilent (tableaux et graphiques)", async () => {
+    const html = (await lireArticle("fr", "make-or-buy-transport"))!.html;
+    expect(html).toMatch(/<div class="p4w-chart-scroll" tabindex="0" role="region" aria-label="Le transport pour compte propre en France">/);
+    // Les encadrés ne créent pas de repère « complémentaire » en double.
+    expect(html).not.toMatch(/<aside(?![^>]*role="note")/);
+  });
+
   it("enveloppe les tableaux pour qu'ils défilent seuls", async () => {
     const html = (await lireArticle("fr", "make-or-buy-transport"))!.html;
-    expect(html).toContain('<div class="p4w-table-scroll"><table>');
+    // Le conteneur qui défile est atteignable au clavier et nommé.
+    expect(html).toMatch(/<div class="p4w-table-scroll" tabindex="0" role="region" aria-label="[^"]+"><table>/);
   });
 
   it("accepte une directive collée comme une directive espacée", async () => {

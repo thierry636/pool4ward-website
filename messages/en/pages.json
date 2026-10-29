@@ -222,5 +222,10 @@
       ],
       "diagnostic": "Take the diagnostic"
     }
+  },
+  "NotFound": {
+    "title": "This page does not exist.",
+    "body": "The link may be old: several pages of the previous site have been merged. Start again from the home page or one of the four sections.",
+    "home": "Back to the home page"
   }
 }

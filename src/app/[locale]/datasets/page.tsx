@@ -97,7 +97,7 @@ export default async function DatasetsPage({ params }: { params: Promise<{ local
             <h2 id="coverage" className="h2 mt-4">{t("coverage.title")}</h2>
             <p className="lede mt-6">{t("coverage.lede")}</p>
           </div>
-          <div className="mt-12 overflow-x-auto">
+          <div className="mt-12 overflow-x-auto" tabIndex={0} role="region" aria-label={t("coverage.tableLabel")}>
             <table className="w-full min-w-[40rem] border-collapse text-left">
               <thead>
                 <tr className="eyebrow">

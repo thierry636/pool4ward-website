@@ -75,8 +75,16 @@ adresse ; champ piège anti-robot.
 
 ## 7. Cookies et traceurs
 
-Le site ne pose qu'un cookie, fonctionnel : `p4w_gs` (session du globe, 30 min,
-HttpOnly), uniquement quand le globe est ouvert. Aucun outil de mesure d'audience.
+Le site pose deux cookies, tous deux fonctionnels, et aucun outil de mesure
+d'audience :
+
+- `p4w_gs` : session du globe (30 min, HttpOnly, SameSite=Lax, chemin
+  `/api/globe`), uniquement quand le globe est ouvert ;
+- `NEXT_LOCALE` : mémorise la langue choisie (posé par `next-intl`).
+
+Dans le navigateur, ni `localStorage`, ni IndexedDB, ni cache de service worker ;
+seule la scène de couverture écrit un indicateur dans `sessionStorage`
+(`p4w-cover-seen`) pour ne jouer son mouvement qu'une fois par session.
 À faire valider par le responsable de la protection des données avant publication.
 
 ## 8. Prévisualisation séparée

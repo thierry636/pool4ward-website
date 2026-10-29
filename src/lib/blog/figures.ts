@@ -51,11 +51,24 @@ export function reinjecterFigures(
   locale: string,
 ): string {
   return figures.reduce((sortie, figure, index) => {
-    const contenu = locale === "fr" ? typographierHtml(figure) : figure;
+    const contenu = nommerDefilement(locale === "fr" ? typographierHtml(figure) : figure);
     return sortie
       .replace(`<p>${jeton(index)}</p>`, contenu)
       .replace(jeton(index), contenu);
   }, html);
+}
+
+/**
+ * Le conteneur qui fait défiler un graphique doit pouvoir recevoir le focus
+ * clavier et porter un nom : on lui donne le titre de la figure.
+ */
+function nommerDefilement(figure: string): string {
+  const titre = /<p class="p4w-fig-title">([\s\S]*?)<\/p>/.exec(figure)?.[1].replace(/<[^>]*>/g, "").trim();
+  const nom = (titre ?? "Figure").replace(/"/g, "&quot;");
+  return figure.replace(
+    '<div class="p4w-chart-scroll">',
+    `<div class="p4w-chart-scroll" tabindex="0" role="region" aria-label="${nom}">`,
+  );
 }
 
 /**

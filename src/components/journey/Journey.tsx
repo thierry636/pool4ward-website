@@ -141,14 +141,14 @@ export function Journey() {
       </div>
 
       <div className="mt-8 grid items-start gap-8 lg:mt-12 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] lg:gap-14">
-        <div className="lg:sticky lg:top-24">
+        <div className="min-w-0 lg:sticky lg:top-24">
           <Board state={state} tone="light" label={label} />
           <div className="mt-5">
             <StatusLadder current={status} />
           </div>
         </div>
 
-        <div>
+        <div className="min-w-0">
           {state.stage === 1 && (
             <Stage1 state={state} auto={auto} onLayer={(layer) => act({ layer })} onToggleAuto={() => {
               touched.current = true;
@@ -353,7 +353,7 @@ function Stage2({
         )}
       </div>
 
-      <div className="mt-6 overflow-x-auto">
+      <div className="mt-6 overflow-x-auto" tabIndex={0} role="region" aria-label={t("stages.2.compareCaption")}>
         <table className="w-full min-w-[20rem] border-collapse text-left text-[0.92rem]">
           <caption className="eyebrow pb-2 text-left">{t("stages.2.compareCaption")}</caption>
           <tbody>
@@ -481,7 +481,7 @@ function Stage3({
         )}
 
         {step === "offers" && (
-          <div className="mt-5 overflow-x-auto">
+          <div className="mt-5 overflow-x-auto" tabIndex={0} role="region" aria-label={t("contract.offers.caption")}>
             <table className="w-full min-w-[22rem] border-collapse text-left text-[0.88rem]">
               <caption className="sr-only">{t("contract.offers.caption")}</caption>
               <thead>

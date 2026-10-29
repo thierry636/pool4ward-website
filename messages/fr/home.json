@@ -59,7 +59,7 @@
     "capabilities": {
       "eyebrow": "Cinq capacités",
       "title": "Une continuité, de la première étude au contrat suivi.",
-      "lede": "Chaque capacité reprend ce que la précédente a établi. On peut entrer par n’importe laquelle ; on n’a pas à tout acheter pour commencer."
+      "lede": "Chaque capacité reprend ce que la précédente a établi. La page de chacune dit ce qu’elle couvre, et ce que le logiciel fait réellement."
     },
     "datasets": {
       "eyebrow": "Référentiels",
@@ -92,8 +92,8 @@
             "body": "Chaque couche du globe dit ce qu’elle couvre et de quand elle date."
           },
           {
-            "name": "Cinq capacités décrites par leurs fonctions",
-            "body": "Les pages Solutions listent ce que le logiciel fait, pas ce qu’on aimerait qu’il fasse."
+            "name": "Cinq capacités, avec leurs limites",
+            "body": "Les pages Solutions distinguent ce que le logiciel fait de la méthode que nous appliquons, et disent quand une fonction n’est pas couverte."
           }
         ]
       },

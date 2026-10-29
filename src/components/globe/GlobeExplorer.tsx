@@ -442,6 +442,11 @@ function ZonePanel({ zone, summary, manifest, active }: { zone: ManifestZone | n
       {zone && (
         <>
           <p className="h3 mt-3 !text-[1.25rem]">{t(`zones.${zone.slug}`)}</p>
+          {summary.state === "ok" && summary.data.mode === "demo" && (
+            <p className="mono mt-2 inline-block border px-2 py-0.5 text-[0.7rem] uppercase tracking-[0.06em]" style={{ borderColor: "var(--warm)", color: "var(--warm)" }}>
+              {tz("demo")}
+            </p>
+          )}
           {summary.state === "loading" && <p className="mt-3 text-[0.9rem]">{tz("loading")}</p>}
           {summary.state === "error" && <p className="mt-3 text-[0.9rem]">{tz("error")}</p>}
           {summary.state === "limited" && <p className="mt-3 text-[0.9rem]">{t("states.tooMany")}</p>}

@@ -59,7 +59,7 @@
     "capabilities": {
       "eyebrow": "Five capabilities",
       "title": "One continuous line, from the first study to the managed contract.",
-      "lede": "Each capability picks up what the previous one established. You can enter through any of them; you do not have to buy everything to start."
+      "lede": "Each capability picks up what the previous one established. Each page says what it covers, and what the software really does."
     },
     "datasets": {
       "eyebrow": "Datasets",
@@ -92,8 +92,8 @@
             "body": "Each globe layer says what it covers and how old it is."
           },
           {
-            "name": "Five capabilities described by their functions",
-            "body": "The Solutions pages list what the software does, not what we would like it to do."
+            "name": "Five capabilities, with their limits",
+            "body": "The Solutions pages tell what the software does apart from the method we apply, and say when a function is not covered."
           }
         ]
       },

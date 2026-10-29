@@ -64,7 +64,8 @@
         "zoom": "Max zoom"
       },
       "grain": "≈ {deg}°",
-      "legendNote": "The mesh is the smallest area that can be told apart: nothing finer is published."
+      "legendNote": "The mesh is the smallest area that can be told apart: nothing finer is published.",
+      "tableLabel": "Layer coverage table"
     },
     "cta": {
       "title": "Need the detail?",
@@ -154,6 +155,7 @@
       "loading": "Loading the summary…",
       "error": "This zone’s summary could not be loaded.",
       "suppressed": "Hidden: count too small to be described.",
+      "demo": "Demonstration data",
       "range": "{min} to {max} referenced resources",
       "rangeOpen": "{min} referenced resources or more",
       "corridorsYes": "Generalised corridors present",
