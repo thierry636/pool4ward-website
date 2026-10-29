@@ -7,6 +7,7 @@ import { DatasetsTeaser } from "@/components/home/DatasetsTeaser";
 import { Evidence } from "@/components/home/Evidence";
 import { InsightsStrip } from "@/components/home/InsightsStrip";
 import { ContactSection } from "@/components/home/ContactSection";
+import { ClientMessages } from "@/lib/client-messages";
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -14,14 +15,24 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
   return (
     <>
-      <Cover />
+      <ClientMessages namespaces={["Home.cover", "Journey.board", "Journey.sites"]}>
+        <Cover />
+      </ClientMessages>
       <Stakes />
-      <JourneySection />
-      <Capabilities />
-      <DatasetsTeaser />
+      <ClientMessages namespaces={["Journey"]}>
+        <JourneySection />
+      </ClientMessages>
+      <ClientMessages namespaces={["Capabilities"]}>
+        <Capabilities />
+      </ClientMessages>
+      <ClientMessages namespaces={["Home.datasets", "Globe", "Journey.status", "Journey.ladderLabel"]}>
+        <DatasetsTeaser />
+      </ClientMessages>
       <Evidence />
       <InsightsStrip />
-      <ContactSection />
+      <ClientMessages namespaces={["Contact.form"]}>
+        <ContactSection />
+      </ClientMessages>
     </>
   );
 }

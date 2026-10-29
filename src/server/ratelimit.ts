@@ -14,10 +14,17 @@ export interface RateStore {
   hit(key: string, windowMs: number, now: number): Promise<number>;
   /** Nombre d'événements dans la fenêtre, sans en ajouter. */
   count(key: string, windowMs: number, now: number): Promise<number>;
+  /**
+   * Enregistre `member` dans l'ensemble `key` et renvoie le nombre de membres
+   * DISTINCTS vus dans la fenêtre : c'est ce qui permet de reconnaître un
+   * balayage de tuiles, que le simple débit ne distingue pas d'une lecture.
+   */
+  distinct(key: string, member: string, windowMs: number, now: number): Promise<number>;
 }
 
 export class MemoryStore implements RateStore {
   private events = new Map<string, number[]>();
+  private sets = new Map<string, Map<string, number>>();
   private lastSweep = 0;
 
   constructor(private readonly maxKeys = 50_000) {}
@@ -38,6 +45,11 @@ export class MemoryStore implements RateStore {
     // Garde-fou mémoire : au-delà du plafond, on repart de zéro plutôt que de
     // laisser un balayage d'adresses faire grossir le processus sans limite.
     if (this.events.size > this.maxKeys) this.events.clear();
+    for (const [key, members] of this.sets) {
+      for (const [m, t] of members) if (now - t > 3_600_000) members.delete(m);
+      if (members.size === 0) this.sets.delete(key);
+    }
+    if (this.sets.size > this.maxKeys) this.sets.clear();
   }
 
   async hit(key: string, windowMs: number, now: number): Promise<number> {
@@ -50,6 +62,15 @@ export class MemoryStore implements RateStore {
 
   async count(key: string, windowMs: number, now: number): Promise<number> {
     return this.prune(key, windowMs, now).length;
+  }
+
+  async distinct(key: string, member: string, windowMs: number, now: number): Promise<number> {
+    this.sweep(now);
+    const members = this.sets.get(key) ?? new Map<string, number>();
+    members.set(member, now);
+    for (const [m, t] of members) if (now - t >= windowMs) members.delete(m);
+    this.sets.set(key, members);
+    return members.size;
   }
 }
 
@@ -94,6 +115,17 @@ export class UpstashStore implements RateStore {
     const out = await this.pipeline([["GET", this.bucket(key, windowMs, now)]]);
     return Number(out[0].result ?? 0);
   }
+
+  async distinct(key: string, member: string, windowMs: number, now: number): Promise<number> {
+    const k = `rs:${key}`;
+    const out = await this.pipeline([
+      ["ZADD", k, now, member],
+      ["ZREMRANGEBYSCORE", k, 0, now - windowMs],
+      ["ZCARD", k],
+      ["PEXPIRE", k, windowMs],
+    ]);
+    return Number(out[2].result);
+  }
 }
 
 let shared: RateStore | null = null;
@@ -115,17 +147,27 @@ export function setStoreForTests(store: RateStore | null) {
 /* ------------------------------------------------------------- identité */
 
 /**
- * Clé réseau d'une requête. On lit les en-têtes posés par l'hébergeur ; on ne
- * les croit que pour limiter, jamais pour autoriser. Une IP seule est un
- * signal faible (NAT d'entreprise, proxys) : elle se combine à d'autres.
+ * Clé réseau d'une requête. Une IP seule est un signal faible (NAT
+ * d'entreprise, proxys) : elle se combine à d'autres dans la garde.
+ *
+ * Quel en-tête croire ? Tout en-tête que le client peut poser lui-même
+ * (`X-Forwarded-For`, `X-Real-IP`…) permet de changer d'identité à volonté. On
+ * ne lit donc que celui que l'hébergeur garantit :
+ *   - `CLIENT_IP_HEADER` s'il est défini (par exemple `cf-connecting-ip`) ;
+ *   - sinon `x-nf-client-connection-ip` sur Netlify (variable `NETLIFY`) ;
+ *   - hors production (développement, tests) : `x-real-ip`, pour pouvoir simuler ;
+ *   - sinon, en production, le DERNIER maillon de `X-Forwarded-For` — celui que
+ *     l'infrastructure a ajouté, pas celui que le client a écrit — puis
+ *     « inconnue », qui regroupe tout le monde dans un même compteur (plus
+ *     strict, jamais plus faible).
  */
 export function clientKey(headers: Headers): string {
-  const forwarded =
-    headers.get("x-nf-client-connection-ip") ??
-    headers.get("cf-connecting-ip") ??
-    headers.get("x-real-ip") ??
-    headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-  return forwarded && forwarded.length < 64 ? forwarded : "inconnue";
+  const trusted = process.env.CLIENT_IP_HEADER ?? (process.env.NETLIFY ? "x-nf-client-connection-ip" : undefined);
+  let value: string | null | undefined;
+  if (trusted) value = headers.get(trusted);
+  else if (process.env.NODE_ENV !== "production") value = headers.get("x-real-ip");
+  else value = headers.get("x-forwarded-for")?.split(",").pop()?.trim();
+  return value && value.length < 64 ? value : "inconnue";
 }
 
 export interface Limit {

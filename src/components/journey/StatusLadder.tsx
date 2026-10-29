@@ -29,7 +29,7 @@ export function StatusLadder({ current, compact = false }: { current: Status; co
               />
               <span
                 className="mono mt-2 block text-[0.62rem] uppercase leading-tight tracking-[0.06em] sm:text-[0.68rem]"
-                style={{ opacity: reached ? 1 : 0.55, fontWeight: here ? 700 : 400 }}
+                style={{ color: reached ? "var(--fg)" : "var(--fg-2)", fontWeight: here ? 700 : 400 }}
               >
                 {t(`status.${s}.name`)}
               </span>

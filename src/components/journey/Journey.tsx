@@ -117,7 +117,7 @@ export function Journey() {
               onClick={() => goStage(st)}
               onKeyDown={(e) => onTabKey(e, i)}
               className="relative flex min-h-[4.25rem] flex-col items-start gap-1 px-1 pb-3 pt-4 text-left transition-opacity sm:flex-row sm:items-baseline sm:gap-3 sm:px-2"
-              style={{ opacity: active ? 1 : 0.62 }}
+              style={{ color: active ? "var(--fg)" : "var(--fg-2)" }}
             >
               <span className="mono text-[0.78rem] tracking-[0.12em]" style={{ color: "var(--warm)" }}>
                 0{st}
@@ -213,7 +213,7 @@ function Stage1({
                 onClick={() => onLayer(i)}
                 aria-current={active ? "step" : undefined}
                 className="flex min-h-[3rem] w-full items-center gap-4 py-3 text-left transition-opacity"
-                style={{ opacity: active ? 1 : done ? 0.75 : 0.5 }}
+                style={{ color: active ? "var(--fg)" : "var(--fg-2)" }}
               >
                 <span
                   aria-hidden="true"
@@ -287,7 +287,7 @@ function Stage2({
               <label
                 key={id}
                 className="flex min-h-[3rem] cursor-pointer items-center gap-4 border-b py-2.5 transition-opacity has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2"
-                style={{ borderColor: "var(--rule)", opacity: active ? 1 : 0.62, outlineColor: "var(--focus)" }}
+                style={{ borderColor: "var(--rule)", color: active ? "var(--fg)" : "var(--fg-2)", outlineColor: "var(--focus)" }}
               >
                 <input
                   type="radio"
@@ -441,7 +441,7 @@ function Stage3({
                 onClick={() => onStep(i)}
                 aria-current={active ? "step" : undefined}
                 className="flex min-h-[3.5rem] w-full flex-col items-start gap-0.5 px-1 py-2 text-left transition-opacity sm:px-2"
-                style={{ opacity: active ? 1 : 0.55, boxShadow: active ? "inset 0 -2px 0 var(--warm)" : undefined }}
+                style={{ color: active ? "var(--fg)" : "var(--fg-2)", boxShadow: active ? "inset 0 -2px 0 var(--warm)" : undefined }}
               >
                 <span className="mono text-[0.68rem]" style={{ color: "var(--warm)" }}>0{i + 1}</span>
                 <span className="text-[0.82rem] font-medium leading-tight sm:text-[0.9rem]">{t(`contract.${n}.short`)}</span>

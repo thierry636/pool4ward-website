@@ -28,13 +28,8 @@ export function Logo({ className = "" }: { className?: string }) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <Sigma className="h-7 w-auto" />
-      <span
-        className="text-[1.3rem] font-semibold leading-none tracking-[-0.03em]"
-        aria-label="Pool4ward"
-      >
-        <span aria-hidden="true">
-          pool<span style={{ color: "var(--warm)" }}>4</span>ward
-        </span>
+      <span className="text-[1.3rem] font-semibold leading-none tracking-[-0.03em]">
+        pool<span style={{ color: "var(--warm)" }}>4</span>ward
       </span>
     </span>
   );

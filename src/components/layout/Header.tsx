@@ -195,7 +195,7 @@ function LocaleSwitch({
             aria-pressed={locale === l}
             onClick={() => onSwitch(l)}
             className={`inline-flex min-h-[2.75rem] min-w-[2.25rem] items-center justify-center uppercase tracking-[0.1em] transition-opacity ${
-              locale === l ? "opacity-100 underline underline-offset-4" : "opacity-60 hover:opacity-100"
+              locale === l ? "underline underline-offset-4" : "text-[color:var(--fg-2)] hover:text-[color:var(--fg)]"
             }`}
           >
             {l}

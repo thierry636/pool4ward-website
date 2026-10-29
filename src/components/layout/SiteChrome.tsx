@@ -2,7 +2,6 @@
 
 import { usePathname } from "@/i18n/routing";
 import { Header } from "./Header";
-import { Footer } from "./Footer";
 
 /**
  * Chrome du site — en-tête et pied de page.
@@ -19,7 +18,7 @@ const LIGHT_TOP_ROUTES = ["/blog"];
 const correspond = (pathname: string, routes: string[]) =>
   routes.some((route) => pathname === route || pathname.startsWith(`${route}/`));
 
-export function SiteChrome({ children }: { children: React.ReactNode }) {
+export function SiteChrome({ children, footer }: { children: React.ReactNode; footer: React.ReactNode }) {
   const pathname = usePathname();
 
   if (correspond(pathname, BARE_ROUTES)) {
@@ -34,7 +33,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
         <Header solid={enBlog} />
         <main id="contenu">{children}</main>
       </div>
-      <Footer />
+      {footer}
     </>
   );
 }

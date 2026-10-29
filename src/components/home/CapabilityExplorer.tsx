@@ -62,7 +62,7 @@ export function CapabilityExplorer() {
                 aria-expanded={open}
                 aria-controls={`cap-panel-${c.id}`}
                 className="flex min-h-[4.25rem] w-full items-center gap-5 py-3 text-left transition-opacity"
-                style={{ opacity: open ? 1 : 0.62 }}
+                style={{ color: open ? "var(--fg)" : "var(--fg-2)" }}
               >
                 <span
                   aria-hidden="true"

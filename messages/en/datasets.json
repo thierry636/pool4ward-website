@@ -1,1 +1,188 @@
-{}
+{
+  "Datasets": {
+    "meta": {
+      "title": "Datasets",
+      "description": "What Pool4ward knows about the ground — intermodal services, carriers, charging points, networks — and how far: coverage, freshness, limits on what is shown."
+    },
+    "hero": {
+      "eyebrow": "Datasets",
+      "title": "What we know about the ground — and how far.",
+      "lede": "The globe shows the richness of our datasets without handing out their content: concentration areas and generalised corridors, never the list of assets."
+    },
+    "explore": {
+      "eyebrow": "Explore",
+      "title": "The ground, layer by layer.",
+      "lede": "Two layers at a time, at most. A click, or the zone selector, opens the summary of a territory."
+    },
+    "read": {
+      "eyebrow": "How to read the globe",
+      "title": "Three reading rules.",
+      "items": [
+        {
+          "name": "Referenced is not available.",
+          "body": "An actor or a service listed in a dataset does not necessarily have free capacity on your corridor. The globe shows the “referenced” level; availability is confirmed by a written reply."
+        },
+        {
+          "name": "Areas, not points.",
+          "body": "Layers are concentrations aggregated at a mesh of several degrees, and generalised corridors. No exact position, no vehicle tracked."
+        },
+        {
+          "name": "Coverage is displayed.",
+          "body": "Each layer says whether it is connected, what it covers and how old it is. What is not covered stays empty: we do not fill it in."
+        }
+      ]
+    },
+    "protection": {
+      "eyebrow": "What we publish",
+      "title": "Make the richness visible without handing out the database.",
+      "lede": "Anything a browser displays can be captured, including as an image. We know it: that is why we limit what is shown rather than promise the impossible.",
+      "tiers": [
+        {
+          "name": "Private datasets",
+          "body": "Source data, contacts, qualifications, precise coordinates. No access from this site."
+        },
+        {
+          "name": "Public projection",
+          "body": "Aggregates and images generated server-side, at a capped mesh and zoom: acceptable even if copied in full."
+        },
+        {
+          "name": "Detailed exploration",
+          "body": "Reserved for an authorised account, bounded in results, filters and cumulative volume. Not connected in this preview."
+        }
+      ],
+      "limit": "Residual risk: the summaries you can see remain capturable. They do not allow the database, or the precision of the private data, to be reconstructed."
+    },
+    "coverage": {
+      "eyebrow": "Coverage",
+      "title": "What each layer contains today.",
+      "lede": "In this preview, layers are demonstration projections: their shape illustrates the mechanism, not the real coverage of the datasets.",
+      "columns": {
+        "layer": "Layer",
+        "nature": "Nature",
+        "status": "Status",
+        "grain": "Mesh",
+        "zoom": "Max zoom"
+      },
+      "grain": "≈ {deg}°",
+      "legendNote": "The mesh is the smallest area that can be told apart: nothing finer is published."
+    },
+    "cta": {
+      "title": "Need the detail?",
+      "body": "The detail of a dataset is consulted with an authorised account, as part of a conversation about your scope.",
+      "button": "Request access"
+    }
+  },
+  "Globe": {
+    "label": "Datasets globe",
+    "banner": {
+      "demo": "Demonstration data: these layers illustrate the mechanism; they do not come from Pool4ward’s datasets.",
+      "freshness": "Freshness: not applicable (demonstration)",
+      "live": "Freshness: {date}"
+    },
+    "layers": {
+      "services": {
+        "name": "Intermodal services and terminals",
+        "short": "Intermodal services",
+        "body": "Rail, inland waterway, shortsea, deepsea: areas where services and terminals are referenced."
+      },
+      "carriers": {
+        "name": "Carriers",
+        "short": "Carriers",
+        "body": "Referenced areas of presence. Does not locate any vehicle and says nothing about availability."
+      },
+      "parkings": {
+        "name": "Secure parking",
+        "short": "Secure parking",
+        "body": "Areas where secure parking sites are referenced."
+      },
+      "charging": {
+        "name": "Heavy-duty electric charging",
+        "short": "Heavy-duty charging",
+        "body": "Concentration areas of charging infrastructure, with heavy-duty relevance qualified."
+      },
+      "networks": {
+        "name": "Rail and inland waterway networks",
+        "short": "Networks",
+        "body": "Generalised, schematic corridors: they represent neither a real route nor a service."
+      }
+    },
+    "kind": {
+      "density": "Concentration areas",
+      "corridor": "Generalised corridors"
+    },
+    "availability": {
+      "demo": "Demonstration",
+      "available": "Connected",
+      "unavailable": "Dataset not connected"
+    },
+    "controls": {
+      "layers": "Layers shown",
+      "layersHelp": "Two at most: choosing a third removes the oldest.",
+      "zone": "Zone",
+      "zoneNone": "Choose a zone…",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "reset": "Overview",
+      "rotate": "Rotation",
+      "pause": "Pause rotation",
+      "resume": "Resume rotation",
+      "fullscreen": "Full screen",
+      "close": "Back to the journey",
+      "legend": "Legend",
+      "map": "Interactive globe: drag to rotate, wheel or buttons to zoom. Zone selection is also available in the list."
+    },
+    "states": {
+      "loading": "Loading the globe…",
+      "noWebgl": "Your browser does not display 3D rendering: here is the flat map, with the same layers.",
+      "lost": "3D rendering stopped: the flat map takes over.",
+      "software": "Your device renders 3D in software: the flat map is smoother and shows the same layers.",
+      "retry": "Try the globe again",
+      "sourceError": "A layer could not be loaded. The others remain available.",
+      "tooMany": "Too many requests in a short time: the globe slows down. Please wait a moment.",
+      "sessionError": "Could not open the globe session. Please try again in a moment.",
+      "manifestError": "The globe is not available right now.",
+      "notConnected": "The projection is not connected on this environment."
+    },
+    "poster": {
+      "label": "Preview of the globe: the interactive rendering loads on demand.",
+      "load": "Load the interactive globe",
+      "open": "Open full screen"
+    },
+    "zonePanel": {
+      "title": "Zone summary",
+      "none": "No zone selected. Click the globe or choose a zone in the list.",
+      "loading": "Loading the summary…",
+      "error": "This zone’s summary could not be loaded.",
+      "suppressed": "Hidden: count too small to be described.",
+      "range": "{min} to {max} referenced resources",
+      "rangeOpen": "{min} referenced resources or more",
+      "corridorsYes": "Generalised corridors present",
+      "corridorsNo": "No generalised corridor",
+      "unavailable": "Dataset not connected",
+      "note": "Summaries are ranges, never the list of assets. Detail requires authorised access.",
+      "request": "Request access",
+      "noLayer": "Show a layer to read its summary."
+    },
+    "legendNote": "Base map: Natural Earth (public domain). Layers are images generated server-side from aggregated data.",
+    "zones": {
+      "iberia": "Iberian Peninsula",
+      "france": "France",
+      "benelux-rhine": "Benelux, northern France, Rhine-Ruhr",
+      "british-isles": "British Isles",
+      "germany-austria": "Germany and Austria",
+      "alps-north-italy": "Alps and northern Italy",
+      "south-italy": "Central and southern Italy",
+      "central-eastern-europe": "Central and Eastern Europe",
+      "balkans-greece": "Balkans and Greece",
+      "nordics-baltics": "Nordics and Baltics",
+      "turkey-caucasus": "Turkey and Caucasus",
+      "north-america": "North America",
+      "latin-america": "Latin America",
+      "north-africa-middle-east": "North Africa and Middle East",
+      "sub-saharan-africa": "Sub-Saharan Africa",
+      "central-asia-russia": "Central Asia and Russia",
+      "asia": "South, Southeast and East Asia",
+      "oceania": "Oceania"
+    }
+  }
+}

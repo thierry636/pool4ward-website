@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
 import { StatusLadder } from "@/components/journey/StatusLadder";
+import { GlobeTeaser } from "./GlobeTeaser";
 
 /** Passerelle vers les référentiels (le globe lui-même vit sur /datasets). */
 export function DatasetsTeaser() {
@@ -17,12 +17,12 @@ export function DatasetsTeaser() {
             <p className="h3">{t("ladderTitle")}</p>
             <p className="mt-2 text-[0.98rem] leading-relaxed" style={{ color: "var(--fg-2)" }}>{t("ladderBody")}</p>
           </div>
-          <Link href="/datasets" className="btn btn-solid mt-10">
-            {t("explore")} <span aria-hidden="true">→</span>
-          </Link>
         </div>
-        <div className="lg:pl-6">
-          <StatusLadder current="referenced" compact />
+        <div>
+          <GlobeTeaser />
+          <div className="mt-6">
+            <StatusLadder current="referenced" compact />
+          </div>
         </div>
       </div>
     </section>

@@ -6,17 +6,21 @@
    Trois familles, toutes auto-hébergées — aucune requête tierce avant le
    premier rendu :
    - Geist (sans) et Geist Mono arrivent par next/font dans le layout ;
-   - Source Serif 4 (serif d'affichage et de lecture) est déclarée ici. Fichier
-     variable : une déclaration couvre toute la plage de graisses. L'ordre des
-     deux blocs compte — leurs plages se recouvrent sur `œ`, la déclaration la
-     plus tardive l'emporte : latin passe en second pour qu'un seul « œ » ne
-     fasse pas télécharger le sous-ensemble latin-ext. */
+   - « Source Serif Display » est Source Serif 4 réduite à son usage
+     d'affichage : taille optique fixée (40) et graisses 300–600, soit ≈ 46 Ko
+     au lieu de 119 Ko. Le blog, lui, charge la version complète pour la
+     lecture (voir blog.css). `font-display: optional` : préchargée, elle arrive
+     le plus souvent avant le premier rendu ; sinon la page garde le repli
+     (métriques ajustées) au lieu de bouger en cours de lecture. L'ordre des
+     deux blocs compte — leurs plages se
+     recouvrent sur `œ`, la déclaration la plus tardive l'emporte : latin passe
+     en second pour qu'un seul « œ » ne fasse pas télécharger latin-ext. */
 @font-face {
-  font-family: "Source Serif 4";
-  src: url("/fonts/SourceSerif4-latin-ext.woff2") format("woff2");
-  font-weight: 200 900;
+  font-family: "Source Serif Display";
+  src: url("/fonts/SourceSerif4-display-latin-ext.woff2") format("woff2");
+  font-weight: 300 600;
   font-style: normal;
-  font-display: swap;
+  font-display: optional;
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
     U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
     U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
@@ -24,11 +28,11 @@
 }
 
 @font-face {
-  font-family: "Source Serif 4";
-  src: url("/fonts/SourceSerif4-latin.woff2") format("woff2");
-  font-weight: 200 900;
+  font-family: "Source Serif Display";
+  src: url("/fonts/SourceSerif4-display-latin.woff2") format("woff2");
+  font-weight: 300 600;
   font-style: normal;
-  font-display: swap;
+  font-display: optional;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
     U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
     U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
@@ -46,7 +50,7 @@
 }
 
 :root {
-  --font-serif: "Source Serif 4", "Source Serif Fallback", Georgia, serif;
+  --font-serif: "Source Serif Display", "Source Serif Fallback", Georgia, serif;
 
   /* Palette de la version 2. Les tons « clair » et « sombre » redéfinissent
      les mêmes noms : un composant écrit une fois, posé sur l'un ou l'autre. */
@@ -276,4 +280,18 @@
 }
 .cap-fade {
   animation: cap-fade 0.45s ease both;
+}
+
+/* Filigrane des ouvertures de page : les courbes de niveau de la couverture. */
+.hero-terrain {
+  background: var(--accent);
+  opacity: 0.14;
+  -webkit-mask-image: url("/images/terrain.svg");
+  mask-image: url("/images/terrain.svg");
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-position: center right;
+  mask-position: center right;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
 }
