@@ -25,7 +25,7 @@
     "company": "Pool4ward",
     "about": "The company",
     "rights": "© {year} Pool4ward. All rights reserved.",
-    "demoNote": "Cases, sites and values labelled “demonstration” are fictitious. The globe layers are aggregated projections: see the Datasets page."
+    "demoNote": "Cases and values presented as “demonstrators” are fictitious. As long as the datasets showcase is an example, the links on the globe are illustrative: see the Datasets page."
   },
   "Common": {
     "learnMore": "Learn more",
@@ -86,7 +86,7 @@
         "Matching with the shipper’s current carriers.",
         "A listed carrier is not an available carrier: availability is confirmed by its reply."
       ],
-      "scope": "Coverage depends on the datasets: it is shown, by mode and area, on the Datasets page."
+      "scope": "Coverage depends on the datasets: the Datasets page says what the showcase publishes and what it does not."
     },
     "comparison": {
       "name": "Offer comparison",

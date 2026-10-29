@@ -1,0 +1,35 @@
+/* Étiquettes posées par-dessus le globe : sites, et opérateurs lorsque la vitrine en publie. */
+.showcase-labels > span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  will-change: transform;
+}
+
+.showcase-site {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: #f5f2ea;
+  text-shadow: 0 0 3px #0b241a, 0 0 6px #0b241a, 0 1px 0 #0b241a;
+}
+
+.showcase-op {
+  display: inline-block;
+  padding: 4px 9px;
+  font-size: 0.68rem;
+  line-height: 1;
+  font-weight: 600;
+  color: #0b241a;
+  background: #f5f2ea;
+  border: 1px solid #e8b964;
+  border-radius: 2px;
+}
+
+.showcase-canvas .maplibregl-canvas {
+  outline: none;
+}

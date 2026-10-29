@@ -1,12 +1,15 @@
-# Note courte : données réelles, agrégats, démonstrations
+# Note courte : données réelles, démonstration, vitrine publiée
 
 ## Ce qui est réel
 
 - Les **textes** décrivant les fonctions logicielles : vérifiés dans le code lu
   (voir CAPABILITIES.md).
 - Le **fond géographique** du globe (terres, frontières) : Natural Earth, domaine
-  public, via le paquet `world-atlas` (ISC). Servi tel quel (`public/geo/`).
+  public, via le paquet `world-atlas` (ISC). Servi tel quel (`public/geo/`) ;
+  polygones découpés à l'antiméridien par `scripts/build-geo.mjs`.
 - Les **articles** du blog : ceux de la version 1, avec leurs sources.
+- Les **positions des sites** de l'exemple : villes et ports réels, arrondis à
+  ≈ 1 km. Rien d'autre n'y est réel.
 
 ## Ce qui est une démonstration (fictif, explicitement signalé)
 
@@ -15,44 +18,44 @@
   contrat, partenaires (profils, jamais des sociétés). Le plateau porte en
   permanence la mention « Cas démonstrateur — sites et valeurs fictifs ». Il ne
   calcule ni coût, ni gain, ni temps de parcours.
-- **Les couches du globe** (`src/server/projection/fixtures.ts`) : densités
-  illustratives calculées à partir de quelques foyers, corridors schématiques. Elles
-  **ne sont issues d'aucun référentiel Pool4ward**. L'interface le dit sur chaque
-  vue (bandeau « Données de démonstration »), dans la légende, dans le tableau de
-  couverture et dans le pied de page.
-- **Parkings sécurisés** : aucun référentiel n'a été trouvé ; la couche est
-  déclarée « Référentiel non raccordé » et ne dessine rien.
+- **La vitrine d'exemple** (`src/content/showcase.json`, mode `demo`, 35 sites,
+  29 liaisons, issue de `scripts/showcase/example.source.json`) : des liaisons
+  d'illustration entre sites réels, **sans aucun nom d'opérateur**. Elles ne sont
+  issues d'aucun référentiel Pool4ward et **n'affirment l'existence d'aucun
+  service**. L'animation le dit à l'écran (« Exemple illustratif »), la liste
+  des liaisons et le pied de page aussi.
+- **Parkings sécurisés, bornes de recharge, réseaux** : aucune de ces couches
+  n'est publiée par la vitrine (l'ancien globe d'exploration, qui les
+  évoquait, a été retiré).
 
-## Ce qui sera un agrégat (une fois le backend raccordé)
+## Ce que sera la vitrine publiée (mode `curated`)
 
-Des effectifs par maille de 1 à 3° (≈ 100 à 300 km) calculés **côté backend de
-projection**, jamais côté site, jamais depuis les API du portail. Le site les
-reçoit par un contrat strict (INTEGRATIONS.md), applique sa propre politique
-(masquage des cellules sous seuil, cinq paliers de couleur, zoom plafonné) et ne
-diffuse au navigateur que des **images** et des **paliers** d'effectifs.
+Un export de la base privée, validé et écrit par `npm run showcase:publish`
+(PROTECTION.md). Il ne contient que des **sites** (nom, type, pays, position à
+≈ 1 km), des **liaisons** (chapitre, mode, départ, passages, arrivée) et, si
+validé, un **nom d'opérateur**. L'écran passe de « Exemple illustratif » à
+« Vitrine publiée le … » ; le build de production refuse une vitrine `demo`.
 
 ## Règles de diffusion
 
-1. Aucune donnée source, aucun identifiant, aucune coordonnée plus fine que la
-   maille, aucun contact ne quitte les référentiels privés.
-2. Aucun jeu complet — GeoJSON, JSON, CSV, MVT, PMTiles, buffer WebGL — n'est
-   envoyé au navigateur ; la page n'embarque aucun payload de couche (vérifié :
-   VERIFICATION.md).
-3. Pas de bruit aléatoire par requête (il se moyennerait) : l'agrégation est stable.
-4. Cellules sous le seuil masquées ; effectifs de zone publiés en paliers fixes
-   (0, 10, 25, 50, 100, 250, 500, 1000) ; zones disjointes, pour qu'on ne déduise
-   pas une zone fine par soustraction.
-5. Un référencé n'est pas un disponible : le globe ne montre que le niveau
-   « référencé », ne localise aucun véhicule, n'anime aucune particule simulant un
-   suivi.
-6. Une couverture mal documentée reste **vide** : on ne la complète pas.
-7. Les chiffres de bases (services, gares, transporteurs…) ne sont publiés
+1. Aucune donnée source, aucun identifiant de base, aucune coordonnée plus fine
+   que le centième de degré, aucun contact ne quitte la base privée.
+2. Le site n'embarque aucun accès à la base ; il lit un fichier statique.
+3. Un format fermé : une colonne non prévue **bloque** la publication au lieu
+   d'être écartée en silence.
+4. Un référencé n'est pas un disponible : l'animation ne localise aucun véhicule,
+   ne simule aucun suivi (les impulsions qui parcourent une liaison sont une
+   animation, pas une position).
+5. Un nom d'opérateur n'est publié que s'il a été validé. Sans validation, la
+   liaison s'affiche sans nom : on ne comble pas les blancs.
+6. Les chiffres de bases (services, gares, transporteurs…) ne sont publiés
    qu'après validation : un nombre de lignes n'est pas un nombre d'entreprises
-   qualifiées (doublons et fiches hors périmètre signalés sur la base transporteurs).
+   qualifiées (doublons et fiches hors périmètre signalés sur la base
+   transporteurs). **La vitrine ne publie d'ailleurs aucun effectif.**
 
 ## Risque résiduel
 
-Tout ce qui est affiché peut être capturé, en image et par OCR. Les synthèses
-visibles — zones de concentration, paliers — restent donc copiables. La
-protection est dans la **faible précision de ce qui est montré** et dans la
-détection des balayages, pas dans l'impossibilité de copier.
+La vitrine peut être copiée en entier ; elle est faite pour que ce soit sans
+conséquence. Les points à trancher sont dans PROTECTION.md (« Limites à
+connaître ») : publiabilité des noms d'opérateurs, précision des bases de
+transporteurs.

@@ -44,6 +44,9 @@ const securityHeaders = [
  * fond cartographique. Polices et fond géographique changent rarement (7 jours,
  * puis une semaine de revalidation en arrière-plan) ; images et visuel de
  * partage peuvent être retouchés plus souvent (1 jour).
+ *
+ * Sur Netlify, ces règles ne s'appliquent pas aux fichiers statiques : les mêmes
+ * valeurs sont dans netlify.toml. Les garder alignées.
  */
 const cachePublic = (maxAge, swr) => ({
   key: "Cache-Control",

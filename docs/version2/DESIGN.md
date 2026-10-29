@@ -26,7 +26,7 @@ deux.
 | Ocre `#e8b964` sur `#0b241a` | 9,0 |
 
 L'information ne passe jamais par la couleur seule : tracés (plein, pointillé,
-double trait), formes (● ◆ ■ ▲ ━ dans la légende du globe) et libellés doublent
+double trait), formes de trait (plein, tirets courts, longs tirets, points dans la légende de l'animation) et libellés doublent
 chaque distinction.
 
 ## Typographie
@@ -52,13 +52,19 @@ engagement. Règles :
   vue, s'arrête au premier geste, a un bouton pause, n'existe pas sous « mouvement
   réduit » ;
 - transitions CSS uniquement sur le plateau : rien ne tourne en boucle ;
-- globe : rotation facultative, arrêtée au premier geste, contrôle pause/reprise,
-  suspendue hors écran et onglet masqué.
+- animation du monde (page Référentiels) : quatre chapitres, vol de caméra avec
+  recul, liaisons qui se tracent puis impulsions qui les parcourent. Bouton pause
+  en premier dans l'ordre de tabulation, puces de chapitre au clavier ; aucune
+  interaction directe avec la carte (pas de glisser, pas de zoom, pas de capture du
+  défilement) ; suspendue hors écran et onglet masqué ; sous « mouvement réduit »,
+  pas de lecture automatique, pas de vol ni d'impulsions — le chapitre s'affiche
+  tout tracé et se change par les puces.
 
 ## Accessibilité
 
 Lien d'évitement, onglets du parcours au clavier (flèches, Début, Fin), groupes de
 boutons radio natifs, cibles ≥ 44 px, focus visible, `aria-live` sur les panneaux
-qui changent, carte à plat et liste de zones comme alternative au globe,
-dialogue plein écran à focus capturé (Échap, bouton « Retour au parcours »,
-bouton Précédent).
+qui changent, carte à plat comme repli du globe, et liste textuelle des liaisons
+(`<details>`, tableaux nommés, rendue côté serveur) comme équivalent de l'animation.
+La légende du chapitre n'est pas une région `aria-live` : une lecture automatique
+n'annonce rien à un lecteur d'écran.

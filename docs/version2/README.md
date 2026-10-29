@@ -14,9 +14,14 @@ décision distincte.
 - **Cinq capacités** (ingénierie, appels d'offres, recherche de transporteurs,
   comparaison des offres, gestion des contrats), décrites par leurs fonctions
   vérifiées dans le code — voir [CAPABILITIES.md](CAPABILITIES.md).
-- **Un globe des référentiels** (MapLibre, projection globe) dont les couches sont
-  des images générées côté serveur à partir d'agrégats, avec garde, quotas et
-  repli sans WebGL — voir [PROTECTION.md](PROTECTION.md).
+- **Un monde qui tourne** (page Référentiels) : un globe animé (MapLibre,
+  projection globe) déroule quatre chapitres — rail intermodal en Europe, shortsea
+  en Baltique, transporteurs frigorifiques en Allemagne, fluvial sur le Rhin —
+  avec les sites géolocalisés, les liaisons et, quand ils sont publiés, des noms
+  d'opérateurs. Ce n'est pas un outil de recherche. Il lit une **vitrine
+  statique** (`src/content/showcase.json`) produite par un export validé de la
+  base privée ; repli en carte à plat sans WebGL — voir
+  [PROTECTION.md](PROTECTION.md) et [DATA.md](DATA.md).
 - **Pages** : Approche, Solutions (+ 5 pages), Référentiels, Analyses (le blog
   existant), Entreprise, Contact (formulaire réel). Le diagnostic de campagne
   (`/diagnostic`) est conservé tel quel.
@@ -29,10 +34,10 @@ décision distincte.
 |---|---|
 | [AUDIT.md](AUDIT.md) | Audit du dépôt et des accès |
 | [CAPABILITIES.md](CAPABILITIES.md) | Ce qui est vérifié, par capacité, et ce qui ne l'est pas |
-| [DATA.md](DATA.md) | Note courte : données réelles, agrégats, démonstrations, règles de diffusion |
-| [PROTECTION.md](PROTECTION.md) | Architecture de protection des référentiels, seuils, risque résiduel |
+| [DATA.md](DATA.md) | Note courte : données réelles, démonstration, vitrine publiée, règles de diffusion |
+| [PROTECTION.md](PROTECTION.md) | Modèle de protection : base privée, export validé, vitrine statique ; limites |
 | [INTEGRATIONS.md](INTEGRATIONS.md) | Liste exacte des raccordements restants et variables d'environnement |
-| [DEPLOY.md](DEPLOY.md) | Prévisualisation, variables, passage en production |
+| [DEPLOY.md](DEPLOY.md) | Netlify ou Railway, prévisualisation, publication de la vitrine, passage en production |
 | [DESIGN.md](DESIGN.md) | Direction artistique, contrastes, mouvement, accessibilité |
 | [VERIFICATION.md](VERIFICATION.md) | Résultats des vérifications et conditions de mesure |
 
@@ -41,20 +46,27 @@ décision distincte.
 ```bash
 npm ci
 npm run dev        # http://localhost:3000 — redirige vers /en ou /fr
-npm test           # vitest : textes, parcours, projection, garde
+npm test           # vitest : textes, parcours, vitrine (validation, publication, caméra)
 npm run build && npm start
 ```
 
 `?renderer=globe` force le globe 3D même sur un rendu logiciel (recette).
 
+```bash
+npm run showcase:demo      # régénère la vitrine d'exemple (mode demo)
+npm run showcase:publish -- --from export.json --mode curated --date AAAA-MM-JJ
+npm run showcase:check     # valide la vitrine (exécuté avant chaque build)
+```
+
 ## Scripts de génération (versionnés, déterministes)
 
 - `node scripts/build-terrain.mjs` → `public/images/terrain.svg` (courbes de niveau, décor).
-- `node scripts/build-geo.mjs` → `public/geo/*.json` (Natural Earth, domaine public).
-- `node scripts/build-globe-poster.mjs` → `public/images/globe-poster.svg`.
+- `node scripts/build-geo.mjs` → `public/geo/*.json` (Natural Earth, domaine public ; polygones découpés à l'antiméridien, extrait Europe à 50 m).
+- `node scripts/build-globe-poster.mjs` → `public/images/globe-poster.svg` (globe de l'accueil, avec les liaisons de la vitrine ; à relancer après chaque publication).
 
 ## Décisions à prendre (hors de ce dépôt)
 
-Voir [INTEGRATIONS.md](INTEGRATIONS.md) : raccordement du backend de projection,
+Voir [INTEGRATIONS.md](INTEGRATIONS.md) : base privée et export de la vitrine
+(publiabilité des noms d'opérateurs, précision des bases de transporteurs),
 formulation vérifiée du partenariat CERMICS, pages légales, URL du portail,
-activation de la prévisualisation sur l'hébergeur.
+variables du formulaire de contact.

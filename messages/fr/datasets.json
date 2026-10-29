@@ -2,189 +2,161 @@
   "Datasets": {
     "meta": {
       "title": "Référentiels",
-      "description": "Ce que Pool4ward sait du terrain — services intermodaux, transporteurs, bornes de recharge, réseaux — et jusqu’où : couverture, fraîcheur, limites de diffusion."
+      "description": "Le monde des services de transport tel que nos référentiels le documentent : intermodal ferroviaire, shortsea en Baltique, transporteurs frigorifiques en Allemagne, fluvial rhénan — en animation, sans outil de recherche."
     },
     "hero": {
       "eyebrow": "Référentiels",
-      "title": "Ce que nous savons du terrain — et jusqu’où.",
-      "lede": "Le globe montre la richesse de nos référentiels sans en distribuer le contenu : des zones de concentration et des corridors généralisés, jamais la liste des actifs."
+      "title": "Les services de transport, vus du dessus.",
+      "lede": "Intermodal, shortsea, frigorifique, fluvial : nos référentiels documentent des sites géolocalisés et les services qui les relient. Nous les montrons en animation — pas comme un annuaire où chercher."
     },
-    "explore": {
-      "eyebrow": "Explorer",
-      "title": "Le terrain, couche par couche.",
-      "lede": "Deux couches à la fois, au plus. Un clic, ou le sélecteur de zone, ouvre la synthèse d’un territoire."
+    "world": {
+      "eyebrow": "Le monde des services",
+      "title": "Quatre histoires de terrain, un globe qui tourne.",
+      "lede": "Le globe déroule quatre chapitres : le rail intermodal en Europe, le shortsea en Baltique, les transporteurs frigorifiques en Allemagne, le fluvial sur le Rhin. Rien à saisir, rien à interroger : on regarde, on met en pause, on passe au chapitre suivant."
     },
     "read": {
-      "eyebrow": "Comment lire le globe",
+      "eyebrow": "Comment lire l’animation",
       "title": "Trois règles de lecture.",
       "items": [
         {
           "name": "Référencé n’est pas disponible.",
-          "body": "Un acteur ou un service présent dans un référentiel n’a pas, pour autant, de capacité libre sur votre corridor. Le globe montre le niveau « référencé » ; la disponibilité se confirme par une réponse écrite."
+          "body": "Un site ou un service montré ici est référencé : cela ne dit pas qu’une capacité est libre sur votre corridor. La disponibilité se confirme par une réponse écrite."
         },
         {
-          "name": "Des zones, pas des points.",
-          "body": "Les couches sont des concentrations agrégées à une maille de plusieurs degrés, et des corridors généralisés. Aucune position exacte, aucun véhicule suivi."
+          "name": "Des sites, pas des itinéraires exacts.",
+          "body": "Les sites sont placés au kilomètre près ; les liaisons sont des arcs qui relient un départ à une arrivée, pas le tracé réel d’un train, d’un navire ou d’un camion. Aucun véhicule n’est suivi."
         },
         {
-          "name": "La couverture est affichée.",
-          "body": "Chaque couche dit si elle est raccordée, ce qu’elle couvre et de quand elle date. Ce qui n’est pas couvert reste vide : nous ne le complétons pas."
+          "name": "Ce qui est nommé est publié.",
+          "body": "Quand un nom d’opérateur apparaît, il a été validé pour la publication. Sans validation, la liaison s’affiche sans nom : nous ne comblons pas les blancs."
         }
       ]
     },
     "protection": {
-      "eyebrow": "Ce que nous diffusons",
-      "title": "Rendre visible la richesse, sans distribuer la base.",
-      "lede": "Tout ce qu’un navigateur affiche peut être capturé, y compris en image. Nous le savons : c’est pourquoi nous limitons ce qui est montré, plutôt que de promettre l’impossible.",
+      "eyebrow": "Ce que nous publions",
+      "title": "Une vitrine statique, une base qui reste privée.",
+      "lede": "Tout ce qu’un site public affiche peut être copié : nous ne prétendons pas l’empêcher. Nous réglons donc la question en amont — la base source n’est jamais en ligne, et le site ne publie que ce qu’il est acceptable de voir copié.",
       "tiers": [
         {
-          "name": "Référentiels privés",
-          "body": "Données sources, contacts, qualifications, coordonnées précises. Aucun accès depuis ce site."
+          "name": "Base privée",
+          "body": "Sources, contacts, qualifications, coordonnées précises. Tenue à jour par un administrateur, hors de ce site : il n’en a ni l’accès ni les identifiants."
         },
         {
-          "name": "Projection publique",
-          "body": "Agrégats et images générés côté serveur, à une maille et un zoom plafonnés : acceptables même copiés en entier."
+          "name": "Export validé",
+          "body": "Une publication à la fois, déclenchée par une personne. Colonnes autorisées seulement, volume plafonné, coordonnées arrondies à environ 1 km, noms contrôlés. La différence avec la version précédente est relue avant la mise en ligne."
         },
         {
-          "name": "Exploration détaillée",
-          "body": "Réservée à un compte autorisé, bornée en résultats, filtres et volume cumulé. Non raccordée dans cette prévisualisation."
+          "name": "Vitrine statique",
+          "body": "Un fichier unique, intégré au site lors de sa construction. Pas d’API, pas de requête vers la base, rien à interroger : ce qui est publié est ce qui est montré."
         }
       ],
-      "limit": "Risque résiduel : les synthèses visibles restent capturables. Elles ne permettent pas de reconstituer la base ni la précision des données privées."
+      "limit": "Limite assumée : la vitrine peut être copiée en entier. Elle ne contient que ce que nous acceptons de voir copié — ni volumes, ni tarifs, ni coordonnées précises."
     },
     "coverage": {
-      "eyebrow": "Couverture",
-      "title": "Ce que chaque couche contient aujourd’hui.",
-      "lede": "Dans cette prévisualisation, les couches sont des projections de démonstration : leur forme illustre le dispositif, pas la couverture réelle des référentiels.",
+      "eyebrow": "Contenu",
+      "title": "Ce que la vitrine contient — et rien d’autre.",
+      "lede": "Le format est fermé : une donnée qui n’est pas prévue n’est pas publiée, elle fait échouer la publication.",
       "columns": {
-        "layer": "Couche",
-        "nature": "Nature",
-        "status": "Statut",
-        "grain": "Maille",
-        "zoom": "Zoom max"
+        "item": "Donnée",
+        "content": "Ce qui est publié",
+        "grain": "Précision"
       },
-      "grain": "≈ {deg}°",
-      "legendNote": "La maille est la plus petite zone distinguable : rien de plus fin n’est diffusé.",
-      "tableLabel": "Tableau de couverture des couches"
+      "rows": [
+        {
+          "name": "Sites",
+          "content": "Nom, type (port, terminal rail-route, port fluvial, plateforme, base de transporteur), pays.",
+          "grain": "Position arrondie à environ 1 km."
+        },
+        {
+          "name": "Liaisons",
+          "content": "Mode, site de départ, trois sites de passage au plus, site d’arrivée, chapitre.",
+          "grain": "Un arc entre sites, pas le tracé réel."
+        },
+        {
+          "name": "Opérateur",
+          "content": "Un nom, seulement s’il a été validé pour la publication.",
+          "grain": "Jamais dans un exemple de démonstration."
+        },
+        {
+          "name": "Volume",
+          "content": "250 sites et 400 liaisons au plus, dont 80 par chapitre.",
+          "grain": "Plafonné à la publication et à la construction du site."
+        }
+      ],
+      "legendNote": "Toute autre colonne d’un export — un tarif, un contact, un identifiant interne — bloque la publication au lieu d’être écartée en silence.",
+      "tableLabel": "Contenu de la vitrine"
     },
     "cta": {
       "title": "Besoin du détail ?",
-      "body": "Le détail d’un référentiel se consulte avec un compte autorisé, dans le cadre d’un échange sur votre périmètre.",
-      "button": "Demander un accès"
+      "body": "Ce que nous savons d’un corridor précis se partage dans le cadre d’un échange sur votre périmètre.",
+      "button": "Parler de votre périmètre"
     }
   },
-  "Globe": {
-    "label": "Globe des référentiels",
-    "banner": {
-      "demo": "Données de démonstration : ces couches illustrent le dispositif ; elles ne sont pas issues des référentiels Pool4ward.",
-      "freshness": "Fraîcheur : sans objet (démonstration)",
-      "live": "Fraîcheur : {date}"
+  "Showcase": {
+    "mapLabel": "Globe animé des services de transport — {chapter}",
+    "demo": {
+      "tag": "Exemple illustratif",
+      "note": "Liaisons de démonstration entre sites réels. Aucun opérateur n’est cité et aucune de ces liaisons n’est affirmée."
     },
-    "layers": {
-      "services": {
-        "name": "Services et terminaux intermodaux",
-        "short": "Services intermodaux",
-        "body": "Rail, fluvial, shortsea, deepsea : zones où des services et terminaux sont référencés."
-      },
-      "carriers": {
-        "name": "Transporteurs",
-        "short": "Transporteurs",
-        "body": "Zones d’implantation référencées. Ne localise aucun véhicule et n’indique aucune disponibilité."
-      },
-      "parkings": {
-        "name": "Parkings sécurisés",
-        "short": "Parkings sécurisés",
-        "body": "Zones où des parkings sécurisés sont référencés."
-      },
-      "charging": {
-        "name": "Recharge électrique poids lourds",
-        "short": "Recharge poids lourds",
-        "body": "Zones de concentration d’infrastructures de recharge, avec pertinence poids lourds qualifiée."
-      },
-      "networks": {
-        "name": "Réseaux ferroviaires et fluviaux",
-        "short": "Réseaux",
-        "body": "Corridors généralisés et schématiques : ils ne représentent ni un tracé réel ni un service."
-      }
-    },
-    "kind": {
-      "density": "Zones de concentration",
-      "corridor": "Corridors généralisés"
-    },
-    "availability": {
-      "demo": "Démonstration",
-      "available": "Raccordée",
-      "unavailable": "Référentiel non raccordé"
-    },
+    "curated": "Vitrine publiée le {date}",
     "controls": {
-      "layers": "Couches affichées",
-      "layersHelp": "Deux au plus : en choisir une troisième retire la plus ancienne.",
-      "zone": "Zone",
-      "zoneNone": "Choisir une zone…",
-      "zoomIn": "Zoom avant",
-      "zoomOut": "Zoom arrière",
-      "reset": "Vue d’ensemble",
-      "rotate": "Rotation",
-      "pause": "Mettre la rotation en pause",
-      "resume": "Reprendre la rotation",
-      "fullscreen": "Plein écran",
-      "close": "Retour au parcours",
-      "legend": "Légende",
-      "map": "Globe interactif : glissez pour tourner, molette ou boutons pour zoomer. La sélection de zone est aussi disponible dans la liste."
+      "label": "Lecture de l’animation",
+      "pause": "Pause",
+      "play": "Lecture"
     },
     "states": {
-      "loading": "Chargement du globe…",
-      "noWebgl": "Votre navigateur n’affiche pas le rendu 3D : voici la carte à plat, avec les mêmes couches.",
-      "lost": "Le rendu 3D s’est interrompu : la carte à plat prend le relais.",
-      "software": "Votre appareil rend la 3D par logiciel : la carte à plat est plus fluide et affiche les mêmes couches.",
-      "retry": "Réessayer le globe",
-      "sourceError": "Une couche n’a pas pu être chargée. Les autres restent disponibles.",
-      "tooMany": "Trop de requêtes en peu de temps : le globe ralentit. Patientez un instant.",
-      "sessionError": "Impossible d’ouvrir la session du globe. Réessayez dans un instant.",
-      "manifestError": "Le globe n’est pas disponible pour le moment.",
-      "notConnected": "La projection n’est pas raccordée sur cet environnement."
+      "flat": {
+        "nowebgl": "Votre navigateur n’affiche pas la 3D : voici la carte à plat, avec les mêmes liaisons.",
+        "software": "Votre appareil ne dispose pas d’accélération 3D : voici la carte à plat, avec les mêmes liaisons.",
+        "lightweight": "Pour ménager votre connexion et votre appareil, la carte est à plat : mêmes liaisons, sans 3D.",
+        "lost": "L’affichage 3D s’est interrompu : voici la carte à plat, avec les mêmes liaisons."
+      }
     },
-    "poster": {
-      "label": "Aperçu du globe : le rendu interactif se charge à la demande.",
-      "load": "Charger le globe interactif",
-      "open": "Ouvrir en plein écran"
+    "modes": {
+      "rail": "Rail intermodal",
+      "shortsea": "Shortsea (cabotage maritime court)",
+      "barge": "Fluvial (barge)",
+      "road-reefer": "Route frigorifique"
     },
-    "zonePanel": {
-      "title": "Synthèse de zone",
-      "none": "Aucune zone sélectionnée. Cliquez sur le globe ou choisissez une zone dans la liste.",
-      "loading": "Chargement de la synthèse…",
-      "error": "La synthèse de cette zone n’a pas pu être chargée.",
-      "suppressed": "Masqué : effectif trop faible pour être décrit.",
-      "demo": "Données de démonstration",
-      "range": "{min} à {max} ressources référencées",
-      "rangeOpen": "{min} ressources référencées ou plus",
-      "corridorsYes": "Corridors généralisés présents",
-      "corridorsNo": "Aucun corridor généralisé",
-      "unavailable": "Référentiel non raccordé",
-      "note": "Les synthèses sont des paliers, jamais la liste des actifs. Pour le détail, un accès autorisé est requis.",
-      "request": "Demander un accès",
-      "noLayer": "Affichez une couche pour lire sa synthèse."
+    "kinds": {
+      "port": "Port",
+      "rail-terminal": "Terminal rail-route",
+      "inland-port": "Port fluvial",
+      "hub": "Plateforme",
+      "carrier-base": "Base de transporteur"
     },
-    "legendNote": "Fond : Natural Earth (domaine public). Les couches sont des images générées côté serveur à partir de données agrégées.",
-    "zones": {
-      "iberia": "Péninsule ibérique",
-      "france": "France",
-      "benelux-rhine": "Benelux, Nord de la France, Rhin-Ruhr",
-      "british-isles": "Îles britanniques",
-      "germany-austria": "Allemagne et Autriche",
-      "alps-north-italy": "Alpes et Italie du Nord",
-      "south-italy": "Italie centrale et méridionale",
-      "central-eastern-europe": "Europe centrale et orientale",
-      "balkans-greece": "Balkans et Grèce",
-      "nordics-baltics": "Scandinavie et pays baltes",
-      "turkey-caucasus": "Turquie et Caucase",
-      "north-america": "Amérique du Nord",
-      "latin-america": "Amérique latine",
-      "north-africa-middle-east": "Afrique du Nord et Moyen-Orient",
-      "sub-saharan-africa": "Afrique subsaharienne",
-      "central-asia-russia": "Asie centrale et Russie",
-      "asia": "Asie du Sud, du Sud-Est et de l’Est",
-      "oceania": "Océanie"
+    "chapters": {
+      "rail-intermodal": {
+        "short": "Rail intermodal",
+        "name": "Le rail intermodal en Europe",
+        "body": "Des terminaux rail-route et des ports de la mer du Nord, reliés par les grands axes : Rhin–Alpes, Europe centrale, Méditerranée."
+      },
+      "baltic-shortsea": {
+        "short": "Shortsea Baltique",
+        "name": "Le shortsea en Baltique",
+        "body": "Des liaisons maritimes courtes entre ports allemands, polonais, baltes, suédois et finlandais : la mer comme maillon d’une chaîne de transport."
+      },
+      "reefer-germany": {
+        "short": "Frigo Allemagne",
+        "name": "Les transporteurs frigorifiques en Allemagne",
+        "body": "Des transporteurs spécialisés en température dirigée, répartis sur le territoire allemand, et les destinations qu’ils desservent."
+      },
+      "barge-rhine": {
+        "short": "Fluvial Rhin",
+        "name": "Le fluvial sur le Rhin",
+        "body": "Des ports fluviaux reliés par barge, des ports de la mer du Nord jusqu’au Rhin supérieur."
+      }
+    },
+    "list": {
+      "summary": "Voir toutes les liaisons sous forme de liste",
+      "intro": "Équivalent texte de l’animation : chaque liaison, chapitre par chapitre.",
+      "columns": {
+        "route": "Liaison",
+        "mode": "Mode",
+        "operator": "Opérateur"
+      },
+      "none": "non publié",
+      "arrow": "vers"
     }
   }
 }

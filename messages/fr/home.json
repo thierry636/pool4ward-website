@@ -11,7 +11,7 @@
       ],
       "ctaJourney": "Voir du terrain aux contrats",
       "ctaTalk": "Parler de votre plan transport",
-      "ctaDatasets": "Explorer les référentiels",
+      "ctaDatasets": "Découvrir les référentiels",
       "sliderLabel": "Du flux isolé à l’organisation coordonnée",
       "sliderMin": "Flux séparés",
       "sliderMax": "Organisation cohérente",
@@ -64,13 +64,11 @@
     "datasets": {
       "eyebrow": "Référentiels",
       "title": "Ce que nous savons du terrain — et jusqu’où.",
-      "lede": "Services intermodaux, transporteurs, bornes de recharge, réseaux : nos référentiels documentent le terrain. Les montrer, c’est aussi dire ce qu’ils ne couvrent pas et de quand ils datent.",
+      "lede": "Intermodal, shortsea, frigorifique, fluvial : nos référentiels documentent les sites et les services qui les relient. Nous les montrons en animation — pas comme un annuaire où chercher.",
       "ladderTitle": "Référencé n’est pas disponible.",
-      "ladderBody": "Un transporteur présent dans un référentiel n’a pas pour autant de camion libre sur votre corridor. Nous distinguons cinq niveaux de connaissance, et le globe n’en montre qu’un : ce qui est référencé.",
-      "open": "Ouvrir le globe en plein écran",
-      "explore": "Explorer les référentiels",
-      "posterLabel": "Aperçu du globe — le globe interactif se charge à la demande.",
-      "load": "Charger le globe interactif"
+      "ladderBody": "Un transporteur présent dans un référentiel n’a pas pour autant de camion libre sur votre corridor. Nous distinguons cinq niveaux de connaissance, et l’animation n’en montre qu’un : ce qui est référencé.",
+      "explore": "Voir le monde des services",
+      "posterLabel": "Aperçu du globe des services de transport."
     },
     "evidence": {
       "eyebrow": "Preuves vérifiables",
@@ -89,7 +87,7 @@
           },
           {
             "name": "Une couverture affichée",
-            "body": "Chaque couche du globe dit ce qu’elle couvre et de quand elle date."
+            "body": "La vitrine des référentiels dit si elle est un exemple ou une publication, et de quand elle date."
           },
           {
             "name": "Cinq capacités, avec leurs limites",

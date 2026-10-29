@@ -11,7 +11,7 @@
       ],
       "ctaJourney": "See ground to contract",
       "ctaTalk": "Discuss your transport plan",
-      "ctaDatasets": "Explore the datasets",
+      "ctaDatasets": "Discover the datasets",
       "sliderLabel": "From isolated flows to a coordinated organisation",
       "sliderMin": "Separate flows",
       "sliderMax": "Coherent organisation",
@@ -64,13 +64,11 @@
     "datasets": {
       "eyebrow": "Datasets",
       "title": "What we know about the ground — and how far.",
-      "lede": "Intermodal services, carriers, charging points, networks: our datasets document the ground. Showing them also means saying what they do not cover and how old they are.",
+      "lede": "Intermodal, shortsea, refrigerated, barge: our datasets document the sites and the services that link them. We show them as an animation — not as a directory to search.",
       "ladderTitle": "Referenced is not available.",
-      "ladderBody": "A carrier listed in a dataset does not necessarily have a free truck on your corridor. We distinguish five levels of knowledge, and the globe shows only one of them: what is referenced.",
-      "open": "Open the globe full screen",
-      "explore": "Explore the datasets",
-      "posterLabel": "Preview of the globe — the interactive globe loads on demand.",
-      "load": "Load the interactive globe"
+      "ladderBody": "A carrier listed in a dataset does not necessarily have a free truck on your corridor. We distinguish five levels of knowledge, and the animation shows only one of them: what is referenced.",
+      "explore": "See the world of services",
+      "posterLabel": "Preview of the globe of transport services."
     },
     "evidence": {
       "eyebrow": "Verifiable evidence",
@@ -89,7 +87,7 @@
           },
           {
             "name": "Displayed coverage",
-            "body": "Each globe layer says what it covers and how old it is."
+            "body": "The datasets showcase says whether it is an example or a publication, and how old it is."
           },
           {
             "name": "Five capabilities, with their limits",

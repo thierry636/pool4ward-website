@@ -4,11 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "showcase:check": "node scripts/showcase/publish.mjs --check",
+    "prebuild": "npm run showcase:check",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "showcase:publish": "node scripts/showcase/publish.mjs",
+    "showcase:demo": "node scripts/showcase/publish.mjs --from scripts/showcase/example.source.json --mode demo"
   },
   "dependencies": {
     "framer-motion": "^11.18.2",

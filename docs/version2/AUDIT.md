@@ -7,9 +7,10 @@ Réalisé au début de la mission, avant toute modification.
 - Next.js 14.2.35 (App Router), React 18, TypeScript, Tailwind 3.4, `next-intl`
   4.8 (locales `fr`/`en`, défaut `en`), vitest. Pas de CI utile (le workflow
   `.github/workflows/blank.yml` est le gabarit GitHub).
-- Hébergement : probablement Netlify (le code l'évoque dans
+- Hébergement : Netlify (le code l'évoque dans
   `src/app/api/diagnostic/contact/route.ts`, et une branche `deploy-netlify`
-  existe) — **non vérifié**, aucun `netlify.toml` n'existait.
+  existe) ; aucun `netlify.toml` n'existait. Confirmé ensuite par les contrôles de
+  déploiement de la pull request (Netlify, sites `p4wname` et `pool4wardv2`).
 - Contenu existant conservé : le diagnostic de campagne (`/diagnostic`, 7 questions,
   envoi via Resend), le moteur de blog markdown (`src/lib/blog`) et ses deux
   articles (FR/EN), le sigma de la marque.

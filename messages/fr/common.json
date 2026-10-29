@@ -25,7 +25,7 @@
     "company": "Pool4ward",
     "about": "L’entreprise",
     "rights": "© {year} Pool4ward. Tous droits réservés.",
-    "demoNote": "Les cas, sites et valeurs présentés comme « démonstrateurs » sont fictifs. Les couches du globe sont des projections agrégées : voir la page Référentiels."
+    "demoNote": "Les cas et valeurs présentés comme « démonstrateurs » sont fictifs. Tant que la vitrine des référentiels est un exemple, les liaisons du globe sont illustratives : voir la page Référentiels."
   },
   "Common": {
     "learnMore": "En savoir plus",
@@ -86,7 +86,7 @@
         "Rapprochement avec les transporteurs actuels du chargeur.",
         "Un transporteur référencé n’est pas un transporteur disponible : la disponibilité se confirme par sa réponse."
       ],
-      "scope": "La couverture dépend des référentiels : elle est affichée, par mode et par zone, dans la page Référentiels."
+      "scope": "La couverture dépend des référentiels : la page Référentiels dit ce que la vitrine publie et ce qu’elle ne publie pas."
     },
     "comparison": {
       "name": "Comparaison des offres",
