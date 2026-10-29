@@ -60,12 +60,12 @@ Le mouvement explique, il ne décore. Règles :
 
 - aucune introduction qui bloque la navigation ; aucun détournement du défilement ;
   aucun son ;
-- **scène des leviers (couverture)** : six leviers joués à tour de rôle sur la
-  Méditerranée occidentale, 9 s chacun. La caméra se place, les tracés se dessinent,
-  des impulsions les parcourent pendant que des bulles expliquent (comme les bulles
-  d'opérateurs du portail). Un bouton arrête et relance la lecture ; un clic sur un
-  levier l'arrête et le joue une fois ; sous « mouvement réduit », pas de lecture
-  automatique, ni vol, ni impulsion — le levier s'affiche terminé ;
+- **scène des leviers (couverture)** : six leviers joués à tour de rôle (9 s chacun, 15 s
+  pour le report modal). La caméra se place, les tracés se dessinent, des impulsions les
+  parcourent pendant que des bulles expliquent (comme les bulles d'opérateurs du portail).
+  Pas de bouton pause : un clic sur un levier l'arrête et le joue une fois, la lecture reprend
+  vingt secondes après sa fin ; sous « mouvement réduit », pas de lecture automatique, ni vol,
+  ni impulsion — le levier s'affiche terminé ;
 - **schémas des leviers** : six cartes « situation de départ / avec le levier » ; les
   tracés se dessinent à l'entrée dans l'écran, une fois, puis des impulsions les
   parcourent ; terminés et immobiles sans script ou en mouvement réduit ;
@@ -87,6 +87,8 @@ Lien d'évitement, onglets du parcours au clavier (flèches, Début, Fin), group
 boutons radio natifs, cibles ≥ 44 px, focus visible, carte à plat comme repli du globe,
 et liste textuelle des liaisons (`<details>`, tableaux nommés, rendue côté serveur)
 comme équivalent de l'animation du monde. Les légendes des animations ne sont pas des
-régions `aria-live` : une lecture automatique n'annonce rien à un lecteur d'écran. Le
-bouton de lecture de la couverture change de nom (« Mettre en pause » / « Reprendre la
-lecture ») sans `aria-pressed`, pour ne pas doubler l'état.
+régions `aria-live` : une lecture automatique n'annonce rien à un lecteur d'écran. **La
+couverture n'a pas de bouton pause** (choix éditorial) : un geste sur un levier arrête la
+lecture automatique, et « mouvement réduit » la supprime ; c'est un écart à WCAG 2.2.2
+(« Pause, stop, hide », niveau A) pour un contenu qui bouge plus de cinq secondes, à
+arbitrer.

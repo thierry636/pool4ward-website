@@ -59,19 +59,33 @@ const bez = (p: readonly P[], t: number): P => {
 
 function Rail() {
   const c = LEVER_COLOR.rail;
-  const A: P = [34, 142], T1: P = [98, 106], T2: P = [226, 62], B: P = [288, 38];
-  const rail = `M${M(T1)}C150,92 180,78 ${M(T2)}`;
+  const O: P[] = [[34, 104], [34, 134], [34, 164]];
+  const D: P[] = [[288, 20], [288, 50], [288, 80]];
+  const T1: P = [100, 122], T2: P = [222, 62];
+  const rail = `M${M(T1)}C146,100 184,88 ${M(T2)}`;
+  const river = `M${M(T1)}C140,142 196,112 ${M(T2)}`;
   return (
     <>
-      <Ghost d="M34,142 Q176,196 288,38" />
-      <Draw d={line(A, T1)} color="#94a3b8" w={2.6} at={0.7} dur={0.5} />
-      <Draw d={line(T2, B)} color="#94a3b8" w={2.6} at={1.9} dur={0.5} />
-      <Draw d={rail} color={c} w={4.4} at={1.1} dur={0.9} halo={c} />
-      <Run d={rail} at={2.4} n={2} />
-      <Dot at={0.2} p={A} />
-      <Dot at={0.2} p={B} />
-      <Square at={1.0} p={T1} color={c} />
-      <Square at={1.9} p={T2} color={c} />
+      {O.map((o, i) => (
+        <Ghost key={i} d={line(o, D[i])} at={0.1 + i * 0.1} w={1.7} />
+      ))}
+      <path d={river} className="sch-fadein" fill="none" stroke="#38bdf8" strokeWidth="2.4" strokeDasharray="6 5" strokeLinecap="round" style={delay(0.9)} />
+      {O.map((o, i) => (
+        <Draw key={i} d={line(o, T1)} color="#94a3b8" w={2.2} at={1.2 + i * 0.1} dur={0.5} />
+      ))}
+      <Draw d={rail} color={c} w={4.6} at={1.9} dur={0.9} halo={c} />
+      <Run d={rail} at={3.0} n={2} />
+      {D.map((d, i) => (
+        <Draw key={i} d={line(T2, d)} color="#94a3b8" w={2.2} at={2.9 + i * 0.1} dur={0.5} />
+      ))}
+      {O.map((o, i) => (
+        <Dot key={i} at={0.1 + i * 0.1} p={o} r={4} />
+      ))}
+      {D.map((d, i) => (
+        <Dot key={i} at={0.2 + i * 0.1} p={d} r={4} />
+      ))}
+      <Square at={1.1} p={T1} color={c} />
+      <Square at={2.7} p={T2} color={c} />
     </>
   );
 }

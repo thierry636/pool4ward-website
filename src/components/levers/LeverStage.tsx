@@ -15,6 +15,9 @@ const LeverGlobe = dynamic(() => import("./LeverGlobe").then((m) => m.LeverGlobe
 
 type Renderer = "pending" | "globe" | "flat";
 
+/** Après un choix manuel, le levier se joue puis reste affiché ; sans nouveau geste, la lecture reprend après ce délai. */
+const IDLE_RESUME_MS = 20_000;
+
 const NO_PAD = { left: 0, right: 0, top: 0, bottom: 0 };
 
 /**
@@ -39,6 +42,10 @@ export function LeverStage() {
   const reserved = useRef<Rect[]>([]);
   const progress = useRef(0);
   const bars = useRef<(HTMLSpanElement | null)[]>([]);
+  const playingRef = useRef(false);
+  const reducedRef = useRef(false);
+  playingRef.current = playing;
+  reducedRef.current = reduced;
 
   /* Mesure du texte et du bandeau : la région se centre dans l'espace libre, les étiquettes les évitent. */
   useEffect(() => {
@@ -102,14 +109,23 @@ export function LeverStage() {
     if (reduced) setPlaying(false);
   }, [reduced]);
 
-  /* Barre de progression du levier en cours : écrite directement, sans repasser par React. */
+  /* Barre de progression du levier en cours (écrite directement, sans repasser par React) ; la lecture
+     reprend d'elle-même quand un levier choisi est terminé et que personne n'a rien touché depuis. */
   useEffect(() => {
     let raf = 0;
-    const tick = () => {
+    let doneAt: number | null = null;
+    const tick = (now: number) => {
       raf = requestAnimationFrame(tick);
       bars.current.forEach((b, i) => {
         if (b) b.style.transform = `scaleX(${i === active ? progress.current : 0})`;
       });
+      if (!playingRef.current && !reducedRef.current && progress.current >= 1) {
+        doneAt ??= now;
+        if (now - doneAt > IDLE_RESUME_MS) {
+          doneAt = null;
+          setPlaying(true);
+        }
+      } else doneAt = null;
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
@@ -207,10 +223,6 @@ export function LeverStage() {
                 {t(`items.${lever}.text`)}
               </p>
             </div>
-            <button type="button" className="lever-play" onClick={() => setPlaying((p) => !p)}>
-              <span aria-hidden="true">{playing ? "❚❚" : "▶"}</span>
-              <span className="sr-only sm:not-sr-only">{playing ? t("pause") : t("play")}</span>
-            </button>
           </div>
           <ol className="grid grid-cols-3 border-t md:grid-cols-6" style={{ borderColor: "rgb(148 163 184 / 0.16)" }} aria-label={t("listLabel")}>
             {LEVER_ORDER.map((id, i) => (

@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type MutableRefObject } from "react";
-import { PLACES, LEVER_SECONDS, type LeverId } from "@/lib/levers/data";
-import { anchorOf, buildScene, lineOpacity, sceneBox } from "@/lib/levers/scene";
-import { CALLOUT_OFFSETS, PLACE_OFFSETS, estimateCallout, placeFirstFree, type Box } from "@/lib/levers/layout";
+import { PLACES, leverSeconds, type LeverId } from "@/lib/levers/data";
+import { anchorOf, buildScene, sceneBox } from "@/lib/levers/scene";
+import { CALLOUT_OFFSETS, NARROW_MAP, PLACE_OFFSETS, estimateCallout, handoff, placeFirstFree, type Box } from "@/lib/levers/layout";
 import type { LeverGlobeProps } from "./LeverGlobe";
 import "./levers.css";
 
@@ -78,7 +78,7 @@ export function LeverFlat(props: FlatProps) {
 
   const scenes = useMemo(() => levers.map((id) => buildScene(id)), [levers]);
   const boxes = useMemo(() => levers.map((id) => sceneBox(id)), [levers]);
-  const base = useMemo(() => scenes.flatMap((s) => s.lines.map((l) => l.path.points.map(([lo, la], i) => `${i ? "L" : "M"}${mx(lo).toFixed(1)},${my(la).toFixed(1)}`).join(""))), [scenes]);
+  const base = useMemo(() => scenes.flatMap((s) => s.lines.filter((l) => !l.el.skipBase).map((l) => l.path.points.map(([lo, la], i) => `${i ? "L" : "M"}${mx(lo).toFixed(1)},${my(la).toFixed(1)}`).join(""))), [scenes]);
 
   /** Échelle et translation qui cadrent l'emprise du levier dans l'espace que le texte laisse libre. */
   const fit = useMemo(
@@ -99,6 +99,7 @@ export function LeverFlat(props: FlatProps) {
   const f = fit[active] ?? fit[0];
   const scene = scenes[active];
   const lever: LeverId = levers[active];
+  const secs = leverSeconds(lever);
   const proj = (lon: number, lat: number) => ({ x: mx(lon) * f.s + f.tx, y: my(lat) * f.s + f.ty });
 
   /* Étiquettes et bulles : positions calculées une fois pour le levier, sur la vue d'arrivée. */
@@ -106,7 +107,7 @@ export function LeverFlat(props: FlatProps) {
     const taken: Box[] = [...reserved.current];
     const bounds = size;
     const callouts: { key: string; x: number; y: number; w: number; t0: number; t1: number; color: string; title: string; sub: string; ax: number; ay: number; ex: number; ey: number }[] = [];
-    for (const co of scene.callouts) {
+    for (const co of size.w < NARROW_MAP ? handoff(scene.callouts) : scene.callouts) {
       const [lon, lat] = anchorOf(co.at);
       const a = proj(lon, lat);
       const tx = calloutText(lever, co.key);
@@ -147,7 +148,7 @@ export function LeverFlat(props: FlatProps) {
       if (document.hidden || reducedMotion) return;
       const c = clock.current;
       if (c.u < 1) {
-        c.u = Math.min(1, c.u + dt / LEVER_SECONDS);
+        c.u = Math.min(1, c.u + dt / secs);
         progress.current = c.u;
       } else if (playing && c.lever === active) {
         c.lever = -2;
@@ -156,10 +157,10 @@ export function LeverFlat(props: FlatProps) {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [playing, reducedMotion, active, onAdvance, progress]);
+  }, [playing, reducedMotion, active, secs, onAdvance, progress]);
 
   const px = (v: number) => v / f.s;
-  const dur = (a: number, b: number) => Math.max(0.2, (b - a) * LEVER_SECONDS);
+  const dur = (a: number, b: number) => Math.max(0.2, (b - a) * secs);
   const nodeStyle = (kind: string) =>
     kind === "charger-now"
       ? { r: 4.4, fill: "rgba(2,6,23,0.6)", stroke: "#94a3b8", sw: 1.8 }
@@ -182,23 +183,24 @@ export function LeverFlat(props: FlatProps) {
               const dashed = b.el.style === "dashed";
               const dotted = b.el.style === "dotted";
               const draw = !dashed && !dotted;
-              const o = lineOpacity(b.el, 1);
+              const faint = (b.el.opacity ?? 1) < 1;
+              const dim = b.el.dimAt !== undefined;
               return (
-                <g key={b.el.id}>
-                  {b.el.halo && <path d={d} fill="none" stroke={b.el.halo} strokeOpacity="0.55" strokeWidth={px(b.el.width * 2.6)} strokeLinecap="round" className="lever-fade" style={{ animationDelay: `${b.el.t0 * LEVER_SECONDS}s`, animationDuration: `${dur(b.el.t0, b.el.t1)}s` }} />}
-                  <path d={d} fill="none" stroke={b.el.color} strokeOpacity="0.26" strokeWidth={px(b.el.width * 3.4)} strokeLinecap="round" className="lever-fade" style={{ animationDelay: `${b.el.t0 * LEVER_SECONDS}s`, animationDuration: `${dur(b.el.t0, b.el.t1)}s` }} />
+                <g key={b.el.id} className={dim ? "lever-dim" : undefined} style={dim ? { animationDelay: `${b.el.dimAt! * secs}s`, ["--to" as string]: String(b.el.dimTo ?? 0.28) } : undefined}>
+                  {b.el.halo && <path d={d} fill="none" stroke={b.el.halo} strokeOpacity="0.55" strokeWidth={px(b.el.width * 2.6)} strokeLinecap="round" className="lever-fade" style={{ animationDelay: `${b.el.t0 * secs}s`, animationDuration: `${dur(b.el.t0, b.el.t1)}s` }} />}
+                  {!faint && <path d={d} fill="none" stroke={b.el.color} strokeOpacity="0.26" strokeWidth={px(b.el.width * 3.4)} strokeLinecap="round" className="lever-fade" style={{ animationDelay: `${b.el.t0 * secs}s`, animationDuration: `${dur(b.el.t0, b.el.t1)}s` }} />}
                   <path
                     d={d}
                     fill="none"
                     stroke={b.el.color}
-                    strokeOpacity={o}
+                    strokeOpacity={b.el.opacity ?? 1}
                     strokeWidth={px(b.el.width)}
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeDasharray={draw ? undefined : dashed ? `${px(b.el.width * 2.4)} ${px(b.el.width * 1.8)}` : `${px(0.1)} ${px(b.el.width * 2.2)}`}
                     pathLength={draw ? 1 : undefined}
                     className={draw ? "lever-draw" : "lever-fade"}
-                    style={{ animationDelay: `${b.el.t0 * LEVER_SECONDS}s`, animationDuration: `${dur(b.el.t0, b.el.t1)}s` }}
+                    style={{ animationDelay: `${b.el.t0 * secs}s`, animationDuration: `${dur(b.el.t0, b.el.t1)}s` }}
                   />
                   {!reducedMotion &&
                     b.el.pulses &&
@@ -210,8 +212,8 @@ export function LeverFlat(props: FlatProps) {
                         className="lever-pulse"
                         style={{
                           offsetPath: `path("${d}")`,
-                          animationDuration: `${Math.max(2.4, b.path.length / 210)}s`,
-                          animationDelay: `${b.el.t1 * LEVER_SECONDS + (k * Math.max(2.4, b.path.length / 210)) / b.el.pulses!}s`,
+                          animationDuration: `${Math.max(2.4, Math.min(8, b.path.length / 210))}s`,
+                          animationDelay: `${b.el.t1 * secs + (k * Math.max(2.4, Math.min(8, b.path.length / 210))) / b.el.pulses!}s`,
                         }}
                       />
                     ))}
@@ -221,7 +223,7 @@ export function LeverFlat(props: FlatProps) {
             {scene.rings.map((r) => {
               const [lo, la] = anchorOf(r.at);
               return Array.from({ length: 3 }, (_, k) => (
-                <circle key={`${r.at}-${k}`} cx={mx(lo)} cy={my(la)} r={px(10)} fill="none" stroke={r.color} strokeWidth={px(1.6)} className="lever-ring" style={{ animationDelay: `${r.t0 * LEVER_SECONDS + k * 0.8}s`, ["--s" as string]: String(px(36)) }} />
+                <circle key={`${r.at}-${k}`} cx={mx(lo)} cy={my(la)} r={px(10)} fill="none" stroke={r.color} strokeWidth={px(1.6)} className="lever-ring" style={{ animationDelay: `${r.t0 * secs + k * 0.8}s`, ["--s" as string]: "3.6" }} />
               ));
             })}
             {[
@@ -229,19 +231,19 @@ export function LeverFlat(props: FlatProps) {
               ...scene.chargers.flatMap((c) => c.points.map((p, i) => ({ at: p, kind: c.el.style as string, t: c.el.t0 + ((c.el.t1 - c.el.t0) * i) / Math.max(1, c.points.length), color: undefined as string | undefined }))),
             ].map((n, i) => {
               const st = nodeStyle(n.kind);
-              return <circle key={i} cx={mx(n.at[0])} cy={my(n.at[1])} r={px(st.r)} fill={st.fill} stroke={n.color ?? st.stroke} strokeWidth={px(st.sw)} className="lever-fade" style={{ animationDelay: `${n.t * LEVER_SECONDS}s`, animationDuration: "0.4s" }} />;
+              return <circle key={i} cx={mx(n.at[0])} cy={my(n.at[1])} r={px(st.r)} fill={st.fill} stroke={n.color ?? st.stroke} strokeWidth={px(st.sw)} className="lever-fade" style={{ animationDelay: `${n.t * secs}s`, animationDuration: "0.4s" }} />;
             })}
           </g>
         </g>
         <g key={`l-${lever}`}>
           {overlay.callouts.map((c) => (
-            <line key={c.key} x1={c.ax} y1={c.ay} x2={c.ex} y2={c.ey} stroke={c.color} strokeOpacity="0.7" strokeWidth="1.2" className="lever-fade" style={{ animationDelay: `${c.t0 * LEVER_SECONDS}s`, animationDuration: "0.4s" }} />
+            <line key={c.key} x1={c.ax} y1={c.ay} x2={c.ex} y2={c.ey} stroke={c.color} strokeOpacity="0.7" strokeWidth="1.2" className="lever-fade" style={{ animationDelay: `${c.t0 * secs}s`, animationDuration: "0.4s" }} />
           ))}
         </g>
       </svg>
       <div key={`o-${lever}`} aria-hidden="true" className="lever-overlay pointer-events-none absolute inset-0 overflow-hidden">
         {overlay.places.map((p) => (
-          <span key={p.id} className="lever-place lever-in" style={{ transform: `translate(${p.x}px, ${p.y}px)`, animationDelay: `${p.t * LEVER_SECONDS}s` }}>
+          <span key={p.id} className="lever-place lever-in" style={{ transform: `translate(${p.x}px, ${p.y}px)`, animationDelay: `${p.t * secs}s` }}>
             {p.name}
           </span>
         ))}
@@ -252,7 +254,7 @@ export function LeverFlat(props: FlatProps) {
             style={{
               transform: `translate(${c.x}px, ${c.y}px)`,
               ["--c" as string]: c.color,
-              animation: c.t1 >= 0.97 ? `lever-in 0.4s ease ${c.t0 * LEVER_SECONDS}s both` : `lever-in 0.4s ease ${c.t0 * LEVER_SECONDS}s both, lever-out 0.4s ease ${c.t1 * LEVER_SECONDS}s forwards`,
+              animation: c.t1 >= 0.97 ? `lever-in 0.4s ease ${c.t0 * secs}s both` : `lever-in 0.4s ease ${c.t0 * secs}s both, lever-out 0.4s ease ${c.t1 * secs}s forwards`,
             }}
           >
             <i />

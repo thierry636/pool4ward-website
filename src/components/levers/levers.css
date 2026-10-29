@@ -165,20 +165,11 @@
   pointer-events: none;
 }
 
-.lever-play {
-  display: inline-flex;
-  min-height: 2.5rem;
-  flex: none;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 0.85rem;
-  border: 1px solid rgb(148 163 184 / 0.35);
-  border-radius: 0.75rem;
-  color: #e2e8f0;
-  font-size: 0.8rem;
-  font-weight: 600;
-  transition: background 0.15s;
+
+/* Un tracé écarté (la liaison directe, une fois le service identifié) s'efface sans disparaître. */
+@keyframes lever-dim {
+  to { opacity: var(--to, 0.28); }
 }
-.lever-play:hover {
-  background: rgb(255 255 255 / 0.08);
+.lever-flat .lever-dim {
+  animation: lever-dim 0.6s ease forwards;
 }

@@ -5,8 +5,9 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { easeInOutCubic, fitCam } from "@/lib/showcase/camera";
 import { pointAt, type LonLat } from "@/lib/showcase/arcs";
-import { LEVER_COLOR, LEVER_SECONDS, PLACES, type LeverId, type NodeKind } from "@/lib/levers/data";
-import { anchorOf, buildScene, clamp01, drawnPart, lineOpacity, revealOf, sceneBox, type BuiltScene } from "@/lib/levers/scene";
+import { LEVER_COLOR, PLACES, leverSeconds, type LeverId, type NodeKind } from "@/lib/levers/data";
+import { anchorOf, buildScene, clamp01, drawnPart, isDimmed, lineOpacity, revealOf, sceneBox, type BuiltScene } from "@/lib/levers/scene";
+import { CALLOUT_OFFSETS, NARROW_MAP, handoff } from "@/lib/levers/layout";
 import { forcesGlobe, isSoftwareRenderer, supportsWebGL } from "@/components/showcase/support";
 import "./levers.css";
 
@@ -88,10 +89,10 @@ function frameOf(scene: BuiltScene, u: number, mul: number, clock: number, still
       out.lines.push({ type: "Feature", properties: { c: b.el.color, w: b.el.width, o, cls }, geometry: { type: "LineString", coordinates: part } });
       if (b.el.halo) out.halos.push({ type: "Feature", properties: { c: b.el.halo, w: b.el.width * 2.6, o: 0.55 * mul }, geometry: { type: "LineString", coordinates: part } });
     }
-    if (!still && b.el.pulses && revealOf(b.el.t0, b.el.t1, u) >= 1) {
+    if (!still && b.el.pulses && revealOf(b.el.t0, b.el.t1, u) >= 1 && !isDimmed(b.el, u)) {
       const n = b.el.pulses;
       for (let k = 0; k < n; k++) {
-        const f = (clock * (PULSE_KM_PER_S / Math.max(b.path.length, 80)) + k / n + hash01(b.el.id) * 0.3) % 1;
+        const f = (clock * (Math.max(PULSE_KM_PER_S, b.path.length / 8) / Math.max(b.path.length, 80)) + k / n + hash01(b.el.id) * 0.3) % 1;
         const [lon, lat] = pointAt(b.path, f);
         out.pulses.push(point(lon, lat, { c: b.el.color, a: Math.sqrt(Math.sin(Math.PI * f)) * mul }));
       }
@@ -150,7 +151,7 @@ export function LeverGlobe(props: LeverGlobeProps) {
     // Tous les tracés de tous les leviers, très discrets : un réseau vivant derrière le levier joué.
     const base: GeoJSON.FeatureCollection = {
       type: "FeatureCollection",
-      features: scenes.flatMap((s) => s.lines.filter((l) => !l.el.closed || true).map((l): GeoJSON.Feature => ({ type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: l.path.points } }))),
+      features: scenes.flatMap((s) => s.lines.filter((l) => !l.el.skipBase).map((l): GeoJSON.Feature => ({ type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: l.path.points } }))),
     };
 
     const map = new maplibregl.Map({
@@ -232,7 +233,7 @@ export function LeverGlobe(props: LeverGlobeProps) {
     /** Vue d'un levier : emprise de ses lieux, cadrée dans l'espace que le texte de la page laisse libre. */
     const camOf = (k: number) => {
       const p = live.current.pad;
-      const c = fitCam(boxes[k], Math.max(200, size.w - p.left - p.right), Math.max(160, size.h - p.top - p.bottom), { min: 3, max: 6 });
+      const c = fitCam(boxes[k], Math.max(200, size.w - p.left - p.right), Math.max(160, size.h - p.top - p.bottom), { min: 2.4, max: 6 });
       return { lon: c.lon, lat: c.lat, zoom: c.zoom - 0.3 };
     };
 
@@ -289,7 +290,7 @@ export function LeverGlobe(props: LeverGlobeProps) {
       const taken: Rect[] = [...p.reserved.current];
       const free = (r: Rect) => r.x >= 6 && r.y >= 6 && r.x + r.w <= size.w - 6 && r.y + r.h <= size.h - 6 && !taken.some((t) => r.x < t.x + t.w && r.x + r.w > t.x && r.y < t.y + t.h && r.y + r.h > t.y);
       const used = new Set<string>();
-      const zoomOk = clamp01((cam.zoom - 2.7) / 0.7);
+      const zoomOk = clamp01((cam.zoom - 2.0) / 0.7);
       const front = (lon: number, lat: number) => {
         const v = vec(lon, lat);
         return v[0] * cv[0] + v[1] * cv[1] + v[2] * cv[2] > 0.3;
@@ -297,7 +298,7 @@ export function LeverGlobe(props: LeverGlobeProps) {
 
       /* bulles d'explication */
       const usedLeaders = new Set<string>();
-      for (const co of scene.callouts) {
+      for (const co of size.w < NARROW_MAP ? handoff(scene.callouts) : scene.callouts) {
         const ramp = Math.min(clamp01((u - co.t0) / 0.05), clamp01((co.t1 - u) / 0.05 + (co.t1 >= 0.97 ? 1 : 0)));
         if (ramp <= 0 || !zoomOk) continue;
         const [lon, lat] = anchorOf(co.at);
@@ -318,16 +319,8 @@ export function LeverGlobe(props: LeverGlobeProps) {
         }
         const w = n.offsetWidth || 210;
         const h = n.offsetHeight || 50;
-        const options = [
-          [20, -h - 26],
-          [20, 26],
-          [-w - 20, -h - 26],
-          [-w - 20, 26],
-          [20, -h - 90],
-          [-w - 20, 90],
-        ];
         let placed = false;
-        for (const [dx, dy] of options) {
+        for (const [dx, dy] of CALLOUT_OFFSETS(w, h)) {
           const r = { x: a.x + dx, y: a.y + dy, w, h };
           if (!free(r)) continue;
           taken.push(r);
@@ -413,7 +406,7 @@ export function LeverGlobe(props: LeverGlobeProps) {
       /* temps : le levier avance quand on lit, ou une fois jusqu'au bout après un choix manuel */
       const running = !still && (p.playing || force);
       if (still) u = 1;
-      else if (running) u = Math.min(1, u + dt / LEVER_SECONDS);
+      else if (running) u = Math.min(1, u + dt / leverSeconds(levers[target]));
       if (u >= 1 && !advanced) {
         force = false;
         if (p.playing && !still) {

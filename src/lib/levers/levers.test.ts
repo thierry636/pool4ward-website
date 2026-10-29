@@ -1,8 +1,8 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { distanceKm } from "@/lib/showcase/arcs";
-import { LEVER_ORDER, PLACES, SCENES } from "./data";
-import { anchorOf, buildScene, drawnPart, offsetPoints, pointsAlong, regionBox, revealOf, sceneBox } from "./scene";
+import { LEVER_ORDER, LEVER_SECONDS, PLACES, SCENES, leverSeconds, type LineEl } from "./data";
+import { anchorOf, buildScene, drawnPart, isDimmed, lineOpacity, offsetPoints, pointsAlong, regionBox, revealOf, sceneBox } from "./scene";
 
 describe("données de la scène", () => {
   it("six leviers, dans l'ordre voulu", () => {
@@ -10,14 +10,14 @@ describe("données de la scène", () => {
     for (const id of LEVER_ORDER) expect(SCENES[id].length, id).toBeGreaterThan(0);
   });
 
-  it("tous les lieux cités existent, en deux langues, avec des positions plausibles pour la région", () => {
+  it("tous les lieux cités existent, en deux langues, avec des positions plausibles pour l'Europe", () => {
     for (const p of Object.values(PLACES)) {
       expect(p.fr.length).toBeGreaterThan(0);
       expect(p.en.length).toBeGreaterThan(0);
       expect(p.lon).toBeGreaterThan(-8);
-      expect(p.lon).toBeLessThan(16);
+      expect(p.lon).toBeLessThan(22);
       expect(p.lat).toBeGreaterThan(35);
-      expect(p.lat).toBeLessThan(47);
+      expect(p.lat).toBeLessThan(54);
     }
     for (const id of LEVER_ORDER) for (const el of SCENES[id]) {
       if (el.kind === "line") el.stops.forEach((s) => expect(() => anchorOf(s), `${id}/${el.id}`).not.toThrow());
@@ -47,6 +47,97 @@ describe("données de la scène", () => {
       expect(s.callouts.length, id).toBeGreaterThan(0);
       expect(Math.max(...s.callouts.map((c) => c.t1)), id).toBeGreaterThanOrEqual(0.97);
     }
+  });
+});
+
+describe("report modal rail/fluvial", () => {
+  const scene = buildScene("rail");
+  const lines = (prefix: string) => scene.lines.filter((l) => l.el.id.startsWith(prefix));
+  const first = (l: { path: { points: [number, number][] } }) => l.path.points[0];
+  const last = (l: { path: { points: [number, number][] } }) => l.path.points[l.path.points.length - 1];
+  const at = (id: string): [number, number] => anchorOf(id);
+
+  it("trois flux directs partent du sud de l'Espagne vers la Pologne, chacun par la route", () => {
+    const direct = lines("direct-");
+    expect(direct).toHaveLength(3);
+    for (const l of direct) {
+      expect(first(l)[1], `départ de ${l.el.id}`).toBeLessThan(38);
+      expect(first(l)[0], `départ de ${l.el.id}`).toBeLessThan(0);
+      expect(last(l)[0], `arrivée de ${l.el.id}`).toBeGreaterThan(16);
+      expect(l.el.stops, "un seul arc, sans escale").toHaveLength(2);
+    }
+  });
+
+  it("le service ferroviaire va de Saragosse à Poznań, par les terminaux et le réseau, pas par la route directe", () => {
+    const [service] = lines("service");
+    expect(service.el.stops[0]).toBe("zaragoza");
+    expect(service.el.stops[service.el.stops.length - 1]).toBe("poznan");
+    expect(distanceKm(first(service), at("zaragoza")), "part de Saragosse").toBeLessThan(1);
+    expect(distanceKm(last(service), at("poznan")), "arrive à Poznań").toBeLessThan(1);
+  });
+
+  it("pré-acheminement vers Saragosse, post-acheminement depuis Poznań, après l'identification du service", () => {
+    const [service] = lines("service");
+    for (const l of lines("pre-")) {
+      expect(distanceKm(last(l), at("zaragoza")), l.el.id).toBeLessThan(1);
+      expect(l.el.t0, `${l.el.id} suit le service`).toBeGreaterThanOrEqual(service.el.t1);
+    }
+    for (const l of lines("post-")) {
+      expect(distanceKm(first(l), at("poznan")), l.el.id).toBeLessThan(1);
+      expect(l.el.t0, `${l.el.id} suit le pré-acheminement`).toBeGreaterThan(Math.max(...lines("pre-").map((x) => x.el.t0)));
+    }
+    expect(lines("pre-")).toHaveLength(3);
+    expect(lines("post-")).toHaveLength(3);
+  });
+
+  it("les réseaux ferré et fluvial sont en filigrane, entre les flux directs et le service, et hors du fond commun", () => {
+    const net = [...lines("net-rail-"), ...lines("net-river-")];
+    expect(lines("net-rail-").length).toBeGreaterThan(8);
+    expect(lines("net-river-").length).toBeGreaterThanOrEqual(3);
+    const [service] = lines("service");
+    const directEnd = Math.max(...lines("direct-").map((l) => l.el.t1));
+    for (const l of net) {
+      expect(l.el.opacity ?? 1, l.el.id).toBeLessThan(0.6);
+      expect(l.el.skipBase, l.el.id).toBe(true);
+      expect(l.el.t0, `${l.el.id} apparaît après les flux directs`).toBeGreaterThanOrEqual(lines("direct-")[0].el.t0 + 0.2);
+      expect(l.el.t1, `${l.el.id} apparaît avant le service`).toBeLessThanOrEqual(service.el.t0);
+      expect(l.el.t1, l.el.id).toBeGreaterThan(directEnd);
+    }
+    // le fluvial se lit autrement que par la couleur : tirets
+    for (const l of lines("net-river-")) expect(l.el.style, l.el.id).toBe("dashed");
+  });
+
+  it("les flux directs sont écartés une fois le service identifié", () => {
+    const [service] = lines("service");
+    for (const l of lines("direct-")) {
+      const el = l.el as LineEl;
+      expect(el.dimAt, l.el.id).toBeDefined();
+      expect(el.dimAt!, "écarté après le début du service").toBeGreaterThanOrEqual(service.el.t0);
+      expect(lineOpacity(el, 0.3), "visible avant").toBe(1);
+      expect(lineOpacity(el, 1), "presque effacé à la fin").toBeLessThan(0.2);
+      expect(isDimmed(el, el.dimAt! - 0.01)).toBe(false);
+      expect(isDimmed(el, el.dimAt!)).toBe(true);
+    }
+  });
+
+  it("l'effacement est progressif : ni saut ni retour en arrière", () => {
+    const el = lines("direct-")[0].el;
+    const samples = [0.6, 0.62, 0.64, 0.66, 0.68, 0.7].map((u) => lineOpacity(el, u));
+    for (let i = 1; i < samples.length; i++) expect(samples[i], `u=${0.6 + i * 0.02}`).toBeLessThanOrEqual(samples[i - 1]);
+    expect(samples[0]).toBe(1);
+    expect(samples[samples.length - 1]).toBeCloseTo(el.dimTo ?? 0.28, 6);
+  });
+
+  it("l'emprise du levier va du sud de l'Espagne à la Pologne", () => {
+    const b = sceneBox("rail");
+    expect(b.south).toBeLessThan(38);
+    expect(b.east).toBeGreaterThan(19);
+    expect(b.north).toBeGreaterThan(52);
+  });
+
+  it("le report modal dure plus que les autres leviers", () => {
+    expect(leverSeconds("rail")).toBeGreaterThan(LEVER_SECONDS);
+    for (const id of LEVER_ORDER.filter((x) => x !== "rail")) expect(leverSeconds(id), id).toBe(LEVER_SECONDS);
   });
 });
 

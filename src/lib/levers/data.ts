@@ -1,6 +1,7 @@
 /**
- * La scène des leviers de la page d'accueil : une région du monde (la Méditerranée
- * occidentale) et six leviers joués tour à tour sur la même carte.
+ * La scène des leviers de la page d'accueil : six leviers joués tour à tour sur la même
+ * carte. Cinq se jouent en Méditerranée occidentale ; le report modal rail/fluvial part du
+ * sud de l'Espagne et va jusqu'en Pologne.
  *
  * C'est une ILLUSTRATION éditoriale, pas une donnée de référentiel : les lieux sont
  * réels (villes et ports, positions arrondies), les liaisons sont dessinées pour
@@ -15,8 +16,12 @@ export type LeverId = "rail" | "shortsea" | "loops" | "crossdock" | "electric" |
 
 export const LEVER_ORDER: readonly LeverId[] = ["rail", "shortsea", "loops", "crossdock", "electric", "pooling"];
 
-/** Durée de lecture d'un levier, en secondes. */
+/** Durée de lecture d'un levier, en secondes (celle des leviers qui n'ont pas la leur). */
 export const LEVER_SECONDS = 9;
+
+/** Le report modal raconte plus d'étapes que les autres : il dure plus longtemps. */
+const LEVER_DURATION: Partial<Record<LeverId, number>> = { rail: 15 };
+export const leverSeconds = (id: LeverId): number => LEVER_DURATION[id] ?? LEVER_SECONDS;
 
 export interface Place {
   fr: string;
@@ -42,6 +47,25 @@ export const PLACES: Record<string, Place> = {
   livorno: { fr: "Livourne", en: "Livorno", lon: 10.3, lat: 43.55 },
   civitavecchia: { fr: "Civitavecchia", en: "Civitavecchia", lon: 11.8, lat: 42.09 },
   napoli: { fr: "Naples", en: "Naples", lon: 14.27, lat: 40.84 },
+  /* report modal rail/fluvial : du sud de l'Espagne à la Pologne */
+  sevilla: { fr: "Séville", en: "Seville", lon: -5.99, lat: 37.39 },
+  almeria: { fr: "Almería", en: "Almería", lon: -2.46, lat: 36.84 },
+  paris: { fr: "Paris", en: "Paris", lon: 2.35, lat: 48.86 },
+  strasbourg: { fr: "Strasbourg", en: "Strasbourg", lon: 7.75, lat: 48.58 },
+  basel: { fr: "Bâle", en: "Basel", lon: 7.59, lat: 47.56 },
+  mannheim: { fr: "Mannheim", en: "Mannheim", lon: 8.47, lat: 49.49 },
+  frankfurt: { fr: "Francfort", en: "Frankfurt", lon: 8.68, lat: 50.11 },
+  koln: { fr: "Cologne", en: "Cologne", lon: 6.96, lat: 50.94 },
+  duisburg: { fr: "Duisbourg", en: "Duisburg", lon: 6.76, lat: 51.43 },
+  rotterdam: { fr: "Rotterdam", en: "Rotterdam", lon: 4.48, lat: 51.92 },
+  hannover: { fr: "Hanovre", en: "Hanover", lon: 9.73, lat: 52.37 },
+  leipzig: { fr: "Leipzig", en: "Leipzig", lon: 12.37, lat: 51.34 },
+  dresden: { fr: "Dresde", en: "Dresden", lon: 13.74, lat: 51.05 },
+  berlin: { fr: "Berlin", en: "Berlin", lon: 13.4, lat: 52.52 },
+  poznan: { fr: "Poznań", en: "Poznań", lon: 16.93, lat: 52.41 },
+  wroclaw: { fr: "Wrocław", en: "Wrocław", lon: 17.04, lat: 51.11 },
+  lodz: { fr: "Łódź", en: "Łódź", lon: 19.46, lat: 51.76 },
+  warszawa: { fr: "Varsovie", en: "Warsaw", lon: 21.01, lat: 52.23 },
 };
 
 /** Un point d'ancrage : un lieu nommé, ou une position [lon, lat]. */
@@ -66,8 +90,14 @@ export interface LineEl {
   closed?: boolean;
   /** Décalage perpendiculaire en degrés (faisceaux parallèles). */
   offset?: number;
-  /** À cet avancement, le tracé s'efface à demi (ex. la liaison directe écartée). */
+  /** À cet avancement, le tracé s'efface (ex. la liaison directe écartée). */
   dimAt?: number;
+  /** Opacité atteinte à `dimAt` (0,28 par défaut). */
+  dimTo?: number;
+  /** Opacité du tracé tant qu'il n'est pas effacé (1 par défaut) : un réseau en filigrane. */
+  opacity?: number;
+  /** Exclu du réseau discret affiché derrière tous les leviers (et de l'image d'attente). */
+  skipBase?: boolean;
   /** Halo plus large sous le tracé (faisceau mutualisé). */
   halo?: string;
 }
@@ -120,6 +150,41 @@ const AMBER = "#fbbf24";
 const SLATE = "#94a3b8";
 const WHITE = "#f1f5f9";
 const GHOST = "#64748b";
+const ROAD = "#94a3b8";
+const HAUL = "#cbd5e1";
+
+/** Report modal : flux directs par la route (départ → arrivée), puis le service ferroviaire retenu. */
+const DIRECT: readonly (readonly [string, string])[] = [
+  ["algeciras", "wroclaw"],
+  ["sevilla", "lodz"],
+  ["almeria", "warszawa"],
+];
+const SERVICE: readonly string[] = ["zaragoza", "barcelona", "perpignan", "lyon", "strasbourg", "frankfurt", "berlin", "poznan"];
+/** Réseaux en filigrane : tracés indicatifs entre villes, pas des lignes ni des voies d'eau relevées. */
+const RAIL_NET: readonly (readonly string[])[] = [
+  ["algeciras", "sevilla", "madrid"],
+  ["almeria", "madrid"],
+  ["madrid", "zaragoza"],
+  ["valencia", "zaragoza"],
+  ["zaragoza", "barcelona", "perpignan", "lyon"],
+  ["lyon", "paris"],
+  ["lyon", "strasbourg"],
+  ["paris", "strasbourg"],
+  ["strasbourg", "frankfurt"],
+  ["frankfurt", "leipzig", "berlin"],
+  ["frankfurt", "hannover", "berlin"],
+  ["berlin", "poznan"],
+  ["leipzig", "dresden", "wroclaw"],
+  ["wroclaw", "poznan"],
+  ["poznan", "warszawa"],
+  ["wroclaw", "lodz"],
+];
+const FLUVIAL_NET: readonly (readonly string[])[] = [
+  ["basel", "strasbourg", "mannheim", "koln", "duisburg", "rotterdam"],
+  ["marseille", "lyon"],
+  ["duisburg", "hannover", "berlin"],
+  ["berlin", "wroclaw"],
+];
 
 export const LEVER_COLOR: Record<LeverId, string> = {
   rail: INDIGO,
@@ -130,24 +195,48 @@ export const LEVER_COLOR: Record<LeverId, string> = {
   pooling: "#c4b5fd",
 };
 
-const rail = (id: string, stops: string[], t0: number, t1: number): LineEl => ({ kind: "line", id, stops, color: INDIGO, width: 3, t0, t1, pulses: 2 });
 const leg = (id: string, stops: string[], t0: number, t1: number): LineEl => ({ kind: "line", id, stops, color: TEAL, width: 3.2, t0, t1, pulses: 1 });
 
 export const SCENES: Record<LeverId, readonly SceneEl[]> = {
-  /* Les longues distances passent au rail ; la route garde les premiers et derniers kilomètres. */
+  /*
+   * Report modal rail/fluvial : trois flux partent du sud de l'Espagne vers la Pologne, chacun
+   * directement par la route. On branche en filigrane les réseaux ferré et fluvial ; on
+   * identifie un service ferroviaire (Saragosse → Poznań) ; les flux se transforment en
+   * pré-acheminement routier, traction ferroviaire et post-acheminement routier.
+   */
   rail: [
-    rail("r1", ["algeciras", "madrid"], 0.1, 0.3),
-    rail("r2", ["madrid", "zaragoza"], 0.18, 0.38),
-    rail("r3", ["zaragoza", "barcelona"], 0.28, 0.48),
-    rail("r4", ["valencia", "zaragoza"], 0.3, 0.5),
-    rail("r5", ["barcelona", "perpignan", "lyon"], 0.4, 0.66),
-    rail("r6", ["marseille", "lyon"], 0.56, 0.74),
-    rail("r7", ["genova", "milano"], 0.6, 0.8),
-    ...(["algeciras", "madrid", "zaragoza", "valencia", "barcelona", "lyon", "marseille", "genova", "milano"] as const).map(
-      (p, i): NodeEl => ({ kind: "node", at: p, style: "rail", t: 0.1 + i * 0.07, label: true }),
+    /* 1. La situation de départ : en direct, par la route. */
+    ...DIRECT.map(
+      ([from, to], i): LineEl => ({ kind: "line", id: `direct-${from}`, stops: [from, to], color: ROAD, width: 2.2, t0: 0.03 + i * 0.03, t1: 0.2 + i * 0.03, pulses: 1, dimAt: 0.62, dimTo: 0.14 }),
     ),
-    { kind: "callout", key: "terminal", at: "zaragoza", t0: 0.46, t1: 0.98, color: INDIGO },
-    { kind: "callout", key: "corridor", at: "lyon", t0: 0.7, t1: 0.98, color: INDIGO },
+    /* 2. Les réseaux ferré et fluvial, en filigrane. */
+    ...RAIL_NET.map(
+      (stops, i): LineEl => ({ kind: "line", id: `net-rail-${i}`, stops, color: INDIGO, width: 1.8, opacity: 0.4, t0: 0.26 + (i % 6) * 0.015, t1: 0.42 + (i % 6) * 0.015, skipBase: true }),
+    ),
+    ...FLUVIAL_NET.map(
+      (stops, i): LineEl => ({ kind: "line", id: `net-river-${i}`, stops, color: SKY, width: 2, style: "dashed", opacity: 0.5, t0: 0.3 + i * 0.02, t1: 0.46 + i * 0.02, skipBase: true }),
+    ),
+    /* 3. Un service ferroviaire est identifié. */
+    { kind: "ring", at: "zaragoza", color: INDIGO, t0: 0.5 },
+    { kind: "ring", at: "poznan", color: INDIGO, t0: 0.5 },
+    { kind: "line", id: "service", stops: SERVICE, color: INDIGO, width: 4.6, t0: 0.52, t1: 0.68, pulses: 3, halo: INDIGO },
+    /* 4. Les flux se transforment : route, rail, route. */
+    ...DIRECT.map(
+      ([from], i): LineEl => ({ kind: "line", id: `pre-${from}`, stops: [from, "zaragoza"], color: HAUL, width: 2.6, t0: 0.68 + i * 0.02, t1: 0.8 + i * 0.02, pulses: 1 }),
+    ),
+    ...DIRECT.map(
+      ([, to], i): LineEl => ({ kind: "line", id: `post-${to}`, stops: ["poznan", to], color: HAUL, width: 2.6, t0: 0.82 + i * 0.02, t1: 0.92 + i * 0.02, pulses: 1 }),
+    ),
+    ...DIRECT.map(([from], i): NodeEl => ({ kind: "node", at: from, style: "origin", t: 0.03 + i * 0.03, label: true })),
+    ...DIRECT.map(([, to], i): NodeEl => ({ kind: "node", at: to, style: "origin", t: 0.12 + i * 0.03, label: true })),
+    { kind: "node", at: "zaragoza", style: "hub", t: 0.5, label: true },
+    { kind: "node", at: "poznan", style: "hub", t: 0.5, label: true },
+    { kind: "callout", key: "direct", at: [3.4, 45.6], t0: 0.1, t1: 0.4, color: ROAD },
+    { kind: "callout", key: "network", at: "strasbourg", t0: 0.3, t1: 0.54, color: SKY },
+    { kind: "callout", key: "service", at: "lyon", t0: 0.54, t1: 0.74, color: INDIGO },
+    { kind: "callout", key: "pre", at: "zaragoza", t0: 0.76, t1: 0.98, color: HAUL },
+    { kind: "callout", key: "traction", at: "frankfurt", t0: 0.8, t1: 0.98, color: INDIGO },
+    { kind: "callout", key: "post", at: "poznan", t0: 0.9, t1: 0.98, color: WHITE },
   ],
 
   /* Le long de la côte, par escales, plutôt qu'une liaison directe. */

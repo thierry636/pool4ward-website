@@ -114,27 +114,41 @@
     },
     "levers": {
       "tag": "Illustration",
-      "region": "Western Mediterranean",
+      "region": "Europe",
       "note": "Links drawn to explain each lever: they are not existing services.",
-      "mapLabel": "Animated map of the western Mediterranean. Current lever: {lever}.",
+      "mapLabel": "Animated map of Europe. Current lever: {lever}.",
       "listLabel": "The six levers",
-      "play": "Resume autoplay",
-      "pause": "Pause",
       "items": {
         "rail": {
-          "name": "Rail",
-          "text": "Long distances go by rail; road keeps the first and last mile.",
+          "name": "Modal shift rail/waterway",
+          "text": "Direct road flows move to rail and inland waterways: a service is identified, and road keeps the pre- and post-haulage.",
           "callouts": {
-            "terminal": {
-              "title": "Road-rail terminal",
-              "sub": "Where road hands over to rail"
+            "direct": {
+              "title": "Direct road flows",
+              "sub": "From southern Spain to Poland"
             },
-            "corridor": {
-              "title": "Rail corridor",
-              "sub": "The long haul by rail"
+            "network": {
+              "title": "Rail and waterway networks",
+              "sub": "Faintly, between origin and destination"
+            },
+            "service": {
+              "title": "Rail service identified",
+              "sub": "Zaragoza → Poznań"
+            },
+            "pre": {
+              "title": "Road pre-haulage",
+              "sub": "To the Zaragoza terminal"
+            },
+            "traction": {
+              "title": "Rail haul",
+              "sub": "The three flows pooled on one service"
+            },
+            "post": {
+              "title": "Road post-haulage",
+              "sub": "From Poznań to each destination"
             }
           },
-          "schema": "Diagram: a long direct road trip is replaced by road, then rail for the long haul, then road."
+          "schema": "Diagram: long direct road trips are replaced by road pre-haulage, a rail or barge leg between two terminals, then road post-haulage."
         },
         "shortsea": {
           "name": "Coastal shortsea",

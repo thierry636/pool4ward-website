@@ -74,11 +74,19 @@ export function buildScene(id: LeverId): BuiltScene {
   };
 }
 
-/** Opacité d'un tracé : plein une fois dessiné ; s'efface à demi à `dimAt` (la liaison directe écartée). */
+/** Un tracé qui s'efface le fait en un sixième de la durée du levier. */
+const DIM_SPAN = 0.06;
+
+/** Opacité d'un tracé à l'avancement `u` : la sienne, puis `dimTo` une fois effacé (la liaison directe écartée). */
 export function lineOpacity(el: LineEl, u: number): number {
-  if (el.dimAt !== undefined && u >= el.dimAt) return 0.28;
-  return 1;
+  const base = el.opacity ?? 1;
+  if (el.dimAt === undefined) return base;
+  const k = clamp01((u - el.dimAt) / DIM_SPAN);
+  return base + ((el.dimTo ?? 0.28) - base) * k;
 }
+
+/** Vrai quand le tracé est effacé : ses impulsions ne le parcourent plus. */
+export const isDimmed = (el: LineEl, u: number): boolean => el.dimAt !== undefined && u >= el.dimAt;
 
 /** Partie dessinée d'un tracé à l'avancement `u`. */
 export function drawnPart(b: BuiltLine, u: number): LonLat[] {

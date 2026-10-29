@@ -98,11 +98,12 @@ const borderD = lines(borders)
 
 const net: string[] = [];
 const dots = new Set<string>();
-for (const id of LEVER_ORDER) {
+// Le report modal part du sud de l'Espagne vers la Pologne : il sort de cette image, centrée sur la Méditerranée.
+for (const id of LEVER_ORDER.filter((x) => x !== "rail")) {
   const s = buildScene(id);
   for (const b of s.lines) {
-    if (b.el.style === "dashed" || b.el.style === "dotted") continue;
-    net.push(`<path d="M${b.path.points.map((p) => fmt(px(p[0], p[1]))).join("L")}" stroke="${LEVER_COLOR[id]}" stroke-opacity="${id === "rail" || id === "shortsea" ? 0.7 : 0.32}" stroke-width="${id === "rail" || id === "shortsea" ? 2.6 : 1.6}"/>`);
+    if (b.el.style === "dashed" || b.el.style === "dotted" || b.el.skipBase) continue;
+    net.push(`<path d="M${b.path.points.map((p) => fmt(px(p[0], p[1]))).join("L")}" stroke="${LEVER_COLOR[id]}" stroke-opacity="${id === "shortsea" ? 0.7 : 0.32}" stroke-width="${id === "shortsea" ? 2.6 : 1.6}"/>`);
   }
   for (const n of s.nodes) {
     const [lon, lat] = anchorOf(n.at);

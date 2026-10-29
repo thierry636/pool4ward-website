@@ -114,27 +114,41 @@
     },
     "levers": {
       "tag": "Illustration",
-      "region": "Méditerranée occidentale",
+      "region": "Europe",
       "note": "Liaisons dessinées pour expliquer chaque levier : ce ne sont pas des services existants.",
-      "mapLabel": "Carte animée de la Méditerranée occidentale. Levier en cours : {lever}.",
+      "mapLabel": "Carte animée de l’Europe. Levier en cours : {lever}.",
       "listLabel": "Les six leviers",
-      "play": "Reprendre la lecture",
-      "pause": "Mettre en pause",
       "items": {
         "rail": {
-          "name": "Rail",
-          "text": "Les longues distances passent au rail ; la route garde le premier et le dernier kilomètre.",
+          "name": "Report modal rail/fluvial",
+          "text": "Les flux directs par la route passent au rail et au fluvial : un service est identifié, la route garde le pré- et le post-acheminement.",
           "callouts": {
-            "terminal": {
-              "title": "Terminal rail-route",
-              "sub": "Là où la route passe le relais au rail"
+            "direct": {
+              "title": "Flux directs par la route",
+              "sub": "Du sud de l’Espagne vers la Pologne"
             },
-            "corridor": {
-              "title": "Corridor ferroviaire",
-              "sub": "Le long cours sur rail"
+            "network": {
+              "title": "Réseaux ferré et fluvial",
+              "sub": "En filigrane, entre l’origine et la destination"
+            },
+            "service": {
+              "title": "Service ferroviaire identifié",
+              "sub": "Saragosse → Poznań"
+            },
+            "pre": {
+              "title": "Pré-acheminement routier",
+              "sub": "Vers le terminal de Saragosse"
+            },
+            "traction": {
+              "title": "Traction ferroviaire",
+              "sub": "Les trois flux regroupés sur un service"
+            },
+            "post": {
+              "title": "Post-acheminement routier",
+              "sub": "De Poznań vers chaque destination"
             }
           },
-          "schema": "Schéma : un trajet routier direct, long, est remplacé par route, puis rail sur le long cours, puis route."
+          "schema": "Schéma : des trajets routiers directs, longs, sont remplacés par un pré-acheminement routier, une traction ferroviaire ou fluviale entre deux terminaux, puis un post-acheminement routier."
         },
         "shortsea": {
           "name": "Shortsea côtier",

@@ -6,7 +6,7 @@ décision distincte.
 
 ## Ce que contient cette branche
 
-- **Une couverture-carte** : un globe qui joue six leviers (rail, shortsea côtier,
+- **Une couverture-carte** : un globe qui joue six leviers (report modal rail/fluvial, shortsea côtier,
   boucles, cross-dock, électrification selon un réseau de bornes optimal,
   mutualisation) sur une même région, suivi de six schémas animés — voir
   [LEVERS.md](LEVERS.md). C'est une illustration, pas une donnée.
