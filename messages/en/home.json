@@ -1,0 +1,124 @@
+{
+  "Home": {
+    "cover": {
+      "eyebrow": "From transport engineering to contracting",
+      "title": "Design transport as close to reality as possible.",
+      "lede": "Faced with the energy transition and pressure on resources, Pool4ward supports companies from engineering to contracting to control their costs, reduce their risks and secure their transport capacity.",
+      "benefits": [
+        "Control costs",
+        "Reduce risks",
+        "Secure capacity"
+      ],
+      "ctaJourney": "See ground to contract",
+      "ctaTalk": "Discuss your transport plan",
+      "ctaDatasets": "Explore the datasets",
+      "sliderLabel": "From isolated flows to a coordinated organisation",
+      "sliderMin": "Separate flows",
+      "sliderMax": "Coherent organisation",
+      "boardLabel": "Illustrative diagram: four sites of a fictitious group. Links that start out separate chain into a loop.",
+      "demoNote": "Illustrative diagram, demonstration case."
+    },
+    "stakes": {
+      "eyebrow": "Why start from the ground",
+      "title": "Transport is not an interchangeable service.",
+      "lede": "Buying at the best price assumes the offer is the same everywhere. It is not: what you can move, when, with what and by whom depends on six realities on the ground.",
+      "items": {
+        "flows": {
+          "name": "Flows",
+          "body": "Volumes and recurrence: they decide what can be pooled and what is contracted over time."
+        },
+        "slots": {
+          "name": "Time windows",
+          "body": "Dock windows and lead times: they decide which deliveries can be chained."
+        },
+        "drivers": {
+          "name": "Drivers",
+          "body": "Availability and driving time: a scarce resource that bounds rotations."
+        },
+        "equipment": {
+          "name": "Equipment",
+          "body": "Pallets, bulk, containers: what can travel together, and in what."
+        },
+        "energy": {
+          "name": "Infrastructure and energy",
+          "body": "Terminals, charging points, networks: what the territory allows, and at what power."
+        },
+        "commitments": {
+          "name": "Commitments",
+          "body": "Contracts, durations, deadlines: what is already taken, and when another organisation becomes possible again."
+        }
+      },
+      "closing": "That is why we start from the ground, not from the price."
+    },
+    "journey": {
+      "eyebrow": "From ground to commitments",
+      "title": "One case, from the reality on the ground to the contract.",
+      "lede": "A fictitious group, four sites, six flows. Follow it end to end: what we record, the organisations we compare, what we put out to tender and then under contract.",
+      "note": "Demonstration case: sites, volumes and deadlines are fictitious. The diagram is not a route calculation."
+    },
+    "capabilities": {
+      "eyebrow": "Five capabilities",
+      "title": "One continuous line, from the first study to the managed contract.",
+      "lede": "Each capability picks up what the previous one established. You can enter through any of them; you do not have to buy everything to start."
+    },
+    "datasets": {
+      "eyebrow": "Datasets",
+      "title": "What we know about the ground — and how far.",
+      "lede": "Intermodal services, carriers, charging points, networks: our datasets document the ground. Showing them also means saying what they do not cover and how old they are.",
+      "ladderTitle": "Referenced is not available.",
+      "ladderBody": "A carrier listed in a dataset does not necessarily have a free truck on your corridor. We distinguish five levels of knowledge, and the globe shows only one of them: what is referenced.",
+      "open": "Open the globe full screen",
+      "explore": "Explore the datasets",
+      "posterLabel": "Preview of the globe — the interactive globe loads on demand.",
+      "load": "Load the interactive globe"
+    },
+    "evidence": {
+      "eyebrow": "Verifiable evidence",
+      "title": "What you can verify, and what we do not claim.",
+      "lede": "No client logos or testimonials here: only what can be checked.",
+      "verify": {
+        "title": "To verify today",
+        "items": [
+          {
+            "name": "A navigable case",
+            "body": "The journey above takes two minutes to go through; its limits are written into it."
+          },
+          {
+            "name": "Sourced analyses",
+            "body": "Our articles cite their sources and stop where the figures stop."
+          },
+          {
+            "name": "Displayed coverage",
+            "body": "Each globe layer says what it covers and how old it is."
+          },
+          {
+            "name": "Five capabilities described by their functions",
+            "body": "The Solutions pages list what the software does, not what we would like it to do."
+          }
+        ]
+      },
+      "notClaimed": {
+        "title": "What we do not claim",
+        "items": [
+          "Track your vehicles in real time.",
+          "Guarantee a quantified saving without having read your data.",
+          "Summarise your risk in a single score.",
+          "Treat a listed carrier as an available carrier.",
+          "Cover every country and every mode equally."
+        ]
+      }
+    },
+    "insights": {
+      "eyebrow": "Insights",
+      "title": "Questions shippers have stopped asking.",
+      "all": "All insights"
+    },
+    "contact": {
+      "eyebrow": "Talk to us",
+      "title": "Let’s talk about your transport plan.",
+      "lede": "A first conversation is enough to tell whether your flows, sites and contracts lend themselves to another organisation. You have nothing to prepare.",
+      "diagnostic": "Prefer to start on your own? The diagnostic takes two minutes.",
+      "diagnosticLink": "Take the diagnostic"
+    }
+  }
+}

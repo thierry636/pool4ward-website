@@ -1,0 +1,128 @@
+{
+  "Metadata": {
+    "title": "Pool4ward — Design transport as close to reality as possible",
+    "titleTemplate": "%s · Pool4ward",
+    "description": "Pool4ward supports companies from transport engineering to contracting: control costs, reduce risks, secure capacity."
+  },
+  "Nav": {
+    "home": "Pool4ward — home",
+    "primary": "Main navigation",
+    "approach": "Approach",
+    "solutions": "Solutions",
+    "datasets": "Datasets",
+    "insights": "Insights",
+    "portal": "Portal",
+    "cta": "Discuss your transport plan",
+    "language": "Language",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "skip": "Skip to content"
+  },
+  "Footer": {
+    "statement": "From transport engineering to contracting: control costs, reduce risks, secure capacity.",
+    "explore": "Explore",
+    "capabilities": "Five capabilities",
+    "company": "Pool4ward",
+    "about": "The company",
+    "rights": "© {year} Pool4ward. All rights reserved.",
+    "demoNote": "Cases, sites and values labelled “demonstration” are fictitious. The globe layers are aggregated projections: see the Datasets page."
+  },
+  "Common": {
+    "learnMore": "Learn more",
+    "seeCapability": "See this capability",
+    "backToSolutions": "All solutions"
+  },
+  "Capabilities": {
+    "eyebrow": "Five capabilities",
+    "title": "One continuous line, from the first study to the managed contract.",
+    "lede": "Each capability picks up what the previous one established. You can enter through any of them; you do not have to buy everything to start.",
+    "decision": "Decision supported",
+    "covers": "What this capability covers",
+    "apps": "Applications involved",
+    "open": "Open the capability",
+    "engineering": {
+      "name": "Transport engineering",
+      "question": "Which transport organisation does your ground really allow?",
+      "summary": "Start from flows, sites, equipment, drivers and energy to compare possible organisations — before talking price.",
+      "verbs": [
+        "Qualify constraints",
+        "Compare organisations",
+        "Study feasibility"
+      ],
+      "covers": [
+        "Flow studies between sites: hubs and cross-docks, shift to rail, inland waterway or sea, loops between sites, regular rounds, long-haul consolidation, electrification of links.",
+        "Equipment, driving-time regulation, energy resources (electricity, charging points, diesel) and contracts in force are taken into account.",
+        "Each scenario is compared with a baseline built on your own flows."
+      ],
+      "scope": "Dock windows and service requirements are recorded with you and enter the feasibility analysis; they are not deduced automatically."
+    },
+    "tenders": {
+      "name": "Tender preparation",
+      "question": "How do you put what you designed out to tender?",
+      "summary": "Turn the retained scenario into clear tender lots: flows, geographic meshes, price grids, clauses, ancillary services.",
+      "verbs": [
+        "Structure lots",
+        "Define grids",
+        "Build the file"
+      ],
+      "covers": [
+        "A multi-step preparation assistant: flow selection, lines by postal mesh, zone or region, tiered grids, fuel-revision clause, ancillary services, scenario test.",
+        "A tender file in a protected spreadsheet format, with preview, ready to be issued.",
+        "Publication of zones and grid templates in CarrierBridge."
+      ],
+      "scope": "The scope described here is the preparation of the tender file."
+    },
+    "carriers": {
+      "name": "Carrier search",
+      "question": "Which partners should you approach for each lot?",
+      "summary": "Target the operators and carriers whose offer fits the lot — by corridor, mode and equipment — rather than sending the same brief to everyone.",
+      "verbs": [
+        "Target",
+        "Qualify",
+        "Invite"
+      ],
+      "covers": [
+        "Selection of intermodal operators (rail, inland waterway, sea), ranked by corridor, from the Modal4ward service catalogue.",
+        "Matching with the shipper’s current carriers.",
+        "A listed carrier is not an available carrier: availability is confirmed by its reply."
+      ],
+      "scope": "Coverage depends on the datasets: it is shown, by mode and area, on the Datasets page."
+    },
+    "comparison": {
+      "name": "Offer comparison",
+      "question": "Are the offers you received comparable?",
+      "summary": "Bring heterogeneous replies to the same scope, the same volume assumptions and the same conditions before comparing prices.",
+      "verbs": [
+        "Normalise",
+        "Compare",
+        "Arbitrate"
+      ],
+      "covers": [
+        "Reading offers on a common basis: scope covered, volume assumption, price structure, capacity commitment, adjustment conditions.",
+        "Highlighting differences in assumptions before any ranking by price.",
+        "Arbitration between offers on full cost, service and resources used — not on unit price alone."
+      ],
+      "scope": "This page describes the method. The precise software functions are shown in a meeting, on your own tenders."
+    },
+    "contracts": {
+      "name": "Contract management",
+      "question": "What does each contract cover, until when, and what happens to the plan at expiry?",
+      "summary": "Attach each contract to the links it covers, its dates and its documents, to know what is committed and when another organisation becomes possible again.",
+      "verbs": [
+        "Attach",
+        "Follow",
+        "Anticipate"
+      ],
+      "covers": [
+        "A contract register: code, start and end dates, carrier, attachments, bulk assignment to the links concerned.",
+        "Contracts are read in the engineering tool: covered links are flagged, and the end dates of a tender’s contracts are listed.",
+        "Commitment terms — capacity, service, duration, adjustment, milestones — are defined with you in the tender brief."
+      ],
+      "scope": "The scope described here is the contract register, its link to the shipping links, its documents and its deadlines."
+    }
+  },
+  "Status": {
+    "label": "Five levels of knowledge",
+    "lede": "We never mix what we have referenced, what we have detected, what we have studied, what a partner has confirmed and what is signed."
+  }
+}

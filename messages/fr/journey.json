@@ -1,0 +1,357 @@
+{
+  "Journey": {
+    "stagesLabel": "Étapes du parcours",
+    "play": "Lecture",
+    "pause": "Pause",
+    "ladderLabel": "Niveau de connaissance",
+    "status": {
+      "referenced": {
+        "name": "Référencé",
+        "body": "Connu : présent dans un référentiel ou dans vos données, pas encore analysé."
+      },
+      "detected": {
+        "name": "Détecté",
+        "body": "Une complémentarité ou une option apparaît ; elle n’est pas encore étudiée."
+      },
+      "studied": {
+        "name": "Étudié",
+        "body": "Faisabilité analysée avec les contraintes du terrain, sous réserve de validation."
+      },
+      "confirmed": {
+        "name": "Confirmé",
+        "body": "Disponibilité confirmée par la réponse écrite d’un partenaire."
+      },
+      "contracted": {
+        "name": "Contractualisé",
+        "body": "Engagement signé, avec ses conditions et ses échéances."
+      }
+    },
+    "stages": {
+      "1": {
+        "name": "Comprendre le terrain",
+        "short": "Terrain",
+        "lede": "Une organisation de transport ne se conçoit pas sur une grille de prix. Elle dépend de ce que le terrain permet réellement. Voici les paramètres que nous relevons, un à un.",
+        "layersLabel": "Ce que nous relevons",
+        "note": "Ici, tout est « référencé » : connu, pas encore analysé. Nous ne calculons aucun score de risque : il n’existe pas de méthode honnête pour résumer ces paramètres en une seule note.",
+        "next": "Concevoir le plan"
+      },
+      "2": {
+        "name": "Concevoir le plan",
+        "short": "Plan",
+        "lede": "À partir du même terrain, nous comparons des organisations alternatives. Chacune est une hypothèse de travail : elle se qualifie, elle ne se décrète pas.",
+        "scenariosLabel": "Organisations comparées",
+        "conditionsLabel": "Sous réserve de",
+        "compareCaption": "Ce qu’il faut comparer pour cette organisation",
+        "noGain": "Le plateau est un schéma : il ne calcule ni coût, ni gain, ni temps de parcours. Les chiffres viennent de vos données, jamais d’une animation.",
+        "back": "Le terrain",
+        "next": "Contractualiser ce scénario",
+        "nextDefault": "Contractualiser (boucle)"
+      },
+      "3": {
+        "name": "Contractualiser",
+        "short": "Contrat",
+        "lede": "Le scénario retenu devient un cahier de consultation, puis des engagements. Rien n’est confirmé tant qu’un partenaire n’a pas répondu par écrit.",
+        "retained": "Scénario retenu : {scenario}",
+        "back": "Le plan",
+        "cta": "Parler de votre plan transport",
+        "closing": "En trois étapes, le même cas est passé de flux référencés à des lots prêts à être mis en consultation. Chaque niveau de connaissance s’acquiert ; aucun ne se présume. Les deux derniers — confirmé, contractualisé — n’existent que dans les réponses et les signatures de vrais partenaires."
+      }
+    },
+    "layers": {
+      "sites": {
+        "name": "Les sites du groupe",
+        "body": "Quatre sites d’un même groupe : deux usines, une plateforme, un entrepôt. Chacun a ses horaires, ses quais, ses contraintes.",
+        "change": "Point de départ : qui expédie, qui reçoit, et où des complémentarités entre sites sont possibles."
+      },
+      "flows": {
+        "name": "Les flux à servir",
+        "body": "Six liaisons de transport, aujourd’hui organisées chacune de leur côté — deux d’entre elles partent du même site vers la même plateforme, pour deux filiales.",
+        "change": "Chaque liaison est traitée isolément. C’est le point de départ de la comparaison, pas un défaut."
+      },
+      "volumes": {
+        "name": "Volumes et récurrence",
+        "body": "L’épaisseur du trait donne le volume relatif, les points le nombre de départs par semaine. Les pointillés montrent les retours, le plus souvent à vide.",
+        "change": "La récurrence décide de ce qui peut se mutualiser et de ce qui se contractualise dans la durée."
+      },
+      "slots": {
+        "name": "Créneaux et exigences de service",
+        "body": "Chaque quai a ses fenêtres. L’entrepôt Est reçoit de 14 h à 16 h, la plateforme de 8 h à 12 h. Ces fenêtres se relèvent avec vous : elles ne se devinent pas.",
+        "change": "Un créneau n’est pas un détail : il décide des enchaînements possibles entre deux livraisons."
+      },
+      "assets": {
+        "name": "Équipements, conducteurs, énergie",
+        "body": "Type d’équipement par liaison (P palettes, V vrac, C conteneur), conducteurs mobilisables par site, bornes de recharge présentes (pleines) ou à confirmer (vides).",
+        "change": "Ce que le transport exige en conducteurs et en énergie limite les organisations réellement possibles."
+      },
+      "contracts": {
+        "name": "Contrats en cours",
+        "body": "Certaines liaisons sont sous contrat jusqu’à une date, d’autres circulent au spot.",
+        "change": "Un contrat en cours est une contrainte et une échéance : il dit quand une autre organisation devient possible."
+      }
+    },
+    "scenarios": {
+      "baseline": {
+        "name": "Situation actuelle",
+        "summary": "Six liaisons organisées séparément, chacune avec son véhicule et son retour à vide.",
+        "reserves": [],
+        "cost": "Référence à établir sur vos données : prix de chaque liaison, kilomètres à vide, immobilisations.",
+        "service": "Fenêtres de quai respectées liaison par liaison.",
+        "resources": "Un véhicule et un conducteur par liaison.",
+        "conditions": "Contrats en cours jusqu’aux échéances indiquées.",
+        "documented": [
+          "service",
+          "conditions"
+        ]
+      },
+      "loop": {
+        "name": "Boucle entre sites",
+        "summary": "Un même véhicule enchaîne les quatre sites au lieu de quatre allers-retours séparés. Les retours à vide disparaissent — si les enchaînements tiennent.",
+        "reserves": [
+          "Les fenêtres de quai doivent se succéder dans le bon ordre.",
+          "Les équipements doivent être compatibles d’une liaison à l’autre.",
+          "Les volumes doivent rester voisins d’une semaine à l’autre."
+        ],
+        "cost": "À chiffrer : kilomètres à vide évités, immobilisations de quai, rotations nécessaires.",
+        "service": "Dépend du créneau de l’entrepôt Est : c’est le point ouvert du scénario.",
+        "resources": "Moins de véhicules, des conducteurs sur rotation plus longue : à vérifier avec les règles de temps de conduite.",
+        "conditions": "Validation du créneau, équipement commun, fin des contrats concernés.",
+        "documented": [
+          "service"
+        ]
+      },
+      "pooling": {
+        "name": "Mutualisation de volumes",
+        "summary": "Deux filiales qui expédient séparément vers la même plateforme partagent un lot.",
+        "reserves": [
+          "Les créneaux de la plateforme doivent accueillir les deux enlèvements.",
+          "Le partage des coûts entre filiales doit être convenu.",
+          "Les exigences de service des deux flux doivent être compatibles."
+        ],
+        "cost": "À chiffrer : remplissage des véhicules, prix du lot commun, clé de répartition entre filiales.",
+        "service": "Un seul enlèvement à organiser : les deux filiales acceptent-elles la même fenêtre ?",
+        "resources": "Un véhicule au lieu de deux sur le corridor.",
+        "conditions": "Les deux contrats arrivent à la même échéance (12/2026) : fenêtre de renégociation commune.",
+        "documented": [
+          "conditions"
+        ]
+      },
+      "frequency": {
+        "name": "Fréquence adaptée",
+        "summary": "Trois départs par semaine, mieux chargés, au lieu de cinq départs partiels.",
+        "reserves": [
+          "Un stock tampon est nécessaire côté réception.",
+          "Le délai de service accepté doit le permettre.",
+          "Le destinataire doit valider le nouveau rythme."
+        ],
+        "cost": "À chiffrer : coût de stock tampon contre coût de départs partiels.",
+        "service": "Plus de livraisons quotidiennes : le service change de nature.",
+        "resources": "Moins de départs, donc moins de conducteurs mobilisés chaque semaine.",
+        "conditions": "Contrat en cours jusqu’en 03/2027 : le rythme se négocie à l’échéance ou par avenant.",
+        "documented": [
+          "conditions"
+        ]
+      },
+      "modal": {
+        "name": "Solution modale",
+        "summary": "La liaison Plateforme – Entrepôt Est passe par un terminal rail-route : route jusqu’au terminal, rail, route jusqu’au site.",
+        "reserves": [
+          "Les horaires et la capacité de la liaison ferroviaire sont à confirmer.",
+          "Le délai de bout en bout doit être comparé au service actuel.",
+          "Les créneaux aux terminaux et le dernier kilomètre sont à organiser."
+        ],
+        "cost": "À chiffrer : pré et post-acheminements, traction ferroviaire, manutention aux terminaux.",
+        "service": "Le délai total et la régularité dépendent de l’offre ferroviaire réellement disponible.",
+        "resources": "Moins de conducteurs au long cours, mais des acheminements terminaux à couvrir.",
+        "conditions": "Contrat routier en cours jusqu’en 03/2027 sur cette liaison.",
+        "documented": [
+          "conditions"
+        ]
+      },
+      "electric": {
+        "name": "Organisation électrique",
+        "summary": "Les liaisons dont les deux extrémités peuvent recharger sont étudiées en traction électrique ; les autres restent en l’état.",
+        "reserves": [
+          "La puissance disponible et les créneaux de recharge sont à confirmer sur chaque site.",
+          "L’autonomie utile dépend de l’équipement et de la charge.",
+          "Des véhicules et des conducteurs adaptés doivent être disponibles."
+        ],
+        "cost": "À chiffrer : prix de l’énergie selon site, véhicule, infrastructures de recharge.",
+        "service": "Les temps de recharge doivent tenir dans les fenêtres de quai.",
+        "resources": "Énergie : recharge confirmée à la plateforme et à l’entrepôt Est, à confirmer à l’usine Nord.",
+        "conditions": "Disponibilité des véhicules et fin des contrats thermiques concernés.",
+        "documented": [
+          "resources"
+        ]
+      }
+    },
+    "compare": {
+      "cost": "Coût complet",
+      "service": "Service",
+      "resources": "Ressources",
+      "conditions": "Conditions",
+      "documented": "Documenté dans le cas",
+      "todo": "À documenter"
+    },
+    "arbitration": {
+      "eyebrow": "Un arbitrage",
+      "body": "L’entrepôt Est reçoit de 14 h à 16 h. Le véhicule arrivé de la plateforme en fin de matinée ne peut pas repartir chargé vers l’usine Sud : la boucle reste ouverte. Avancer le créneau à 10–12 h la referme — hypothèse à valider avec l’entrepôt.",
+      "label": "Créneau de l’entrepôt Est",
+      "late": "Créneau actuel · 14–16 h",
+      "early": "Créneau avancé · 10–12 h",
+      "result": {
+        "late": "Complémentarité détectée, non étudiée : le point reste ouvert.",
+        "early": "Boucle fermée sur le schéma : faisabilité étudiée, sous réserve de validation par l’entrepôt."
+      }
+    },
+    "contract": {
+      "lots": {
+        "short": "Lots",
+        "name": "Lots de consultation",
+        "body": "Le scénario est découpé en lots que des partenaires peuvent chiffrer et s’engager à tenir : un périmètre, un rythme, des équipements, des conditions."
+      },
+      "partners": {
+        "short": "Partenaires",
+        "name": "Partenaires à interroger",
+        "body": "Nous ciblons des profils de partenaires adaptés à chaque lot. Un transporteur présent dans un référentiel n’est pas un transporteur disponible : la disponibilité se confirme par sa réponse.",
+        "caveat": "Profils, jamais d’entreprises nommées : le cas est démonstrateur."
+      },
+      "offers": {
+        "short": "Offres",
+        "name": "Comparaison des offres",
+        "body": "Des réponses hétérogènes ne se comparent pas telles quelles. Elles sont d’abord ramenées au même périmètre, aux mêmes hypothèses de volume et aux mêmes conditions. Voici la grille de lecture.",
+        "caption": "Grille de lecture de deux offres sur les mêmes critères",
+        "criterion": "Critère",
+        "rows": {
+          "scope": "Périmètre couvert",
+          "volume": "Hypothèse de volume",
+          "price": "Structure de prix",
+          "capacity": "Engagement de capacité",
+          "adjust": "Conditions d’ajustement"
+        },
+        "cell": {
+          "ok": "conforme au lot",
+          "diff": "hypothèse différente",
+          "ask": "à clarifier"
+        },
+        "noReal": "Grille de méthode : aucune offre réelle, aucun prix."
+      },
+      "commitments": {
+        "short": "Engagements",
+        "name": "Engagements",
+        "body": "Ce qu’un engagement doit préciser pour que le scénario existe aussi dans le contrat — et pas seulement sur le schéma.",
+        "template": "Ce qu’un engagement précise",
+        "fields": {
+          "capacity": {
+            "name": "Capacité",
+            "body": "Départs et équipements réservés, par liaison et par période."
+          },
+          "service": {
+            "name": "Service",
+            "body": "Fenêtres de chargement et de livraison, régularité attendue."
+          },
+          "duration": {
+            "name": "Durée",
+            "body": "Début, fin, conditions de reconduction."
+          },
+          "adjust": {
+            "name": "Conditions d’ajustement",
+            "body": "Ce qui peut varier — volumes, énergie, fréquence — et dans quelles limites."
+          },
+          "milestones": {
+            "name": "Échéances",
+            "body": "Points de revue, dates de révision, préavis."
+          }
+        }
+      }
+    },
+    "lots": {
+      "loop": {
+        "1": {
+          "name": "Lot 1 · Boucle Nord – Centre – Est – Sud",
+          "scope": "Les quatre liaisons enchaînées, avec la condition du créneau de l’entrepôt Est."
+        },
+        "2": {
+          "name": "Lot 2 · Corridor Sud → Centre",
+          "scope": "Les deux flux des filiales vers la plateforme, restés hors de la boucle."
+        },
+        "partners": [
+          "Transporteur routier régional capable d’enchaîner plusieurs sites dans la même rotation (lot 1).",
+          "Transporteur routier régional sur le corridor Sud → Centre (lot 2)."
+        ],
+        "offerReading": "Exemple de lecture : une offre qui suppose trois rotations hebdomadaires là où le lot en demande cinq n’est pas comparable à une autre — elle est d’abord ramenée au même périmètre."
+      },
+      "pooling": {
+        "1": {
+          "name": "Lot 1 · Corridor Sud → Centre mutualisé",
+          "scope": "Les flux des deux filiales regroupés en un seul lot, avec clé de répartition."
+        },
+        "partners": [
+          "Transporteur routier régional sur le corridor Sud → Centre.",
+          "Prestataire de groupage, si le volume commun ne remplit pas un véhicule."
+        ],
+        "offerReading": "Exemple de lecture : une offre peut proposer un prix pour le seul lot commun, une autre pour chaque filiale séparément ; elles se comparent après mise à la même base."
+      },
+      "frequency": {
+        "1": {
+          "name": "Lot 1 · Nord → Centre, trois départs par semaine",
+          "scope": "Un rythme réduit, avec les conditions de stock tampon côté réception."
+        },
+        "partners": [
+          "Transporteur routier régional sur la liaison Nord → Centre."
+        ],
+        "offerReading": "Exemple de lecture : le prix par départ augmente quand le rythme baisse ; la comparaison porte sur le coût hebdomadaire complet, pas sur le prix unitaire."
+      },
+      "modal": {
+        "1": {
+          "name": "Lot 1 · Plateforme → Entrepôt Est par rail-route",
+          "scope": "Pré-acheminement, traction ferroviaire, post-acheminement, manutention aux deux terminaux."
+        },
+        "partners": [
+          "Opérateur rail-route sur le corridor Plateforme → Entrepôt Est.",
+          "Transporteur routier pour les acheminements terminaux."
+        ],
+        "offerReading": "Exemple de lecture : une offre peut inclure les acheminements terminaux, une autre non ; elles ne se comparent qu’une fois le périmètre aligné."
+      },
+      "electric": {
+        "1": {
+          "name": "Lot 1 · Nord → Centre → Est en traction électrique",
+          "scope": "Les deux liaisons à recharge confirmée aux extrémités."
+        },
+        "2": {
+          "name": "Lot 2 · Liaisons restantes",
+          "scope": "Les autres liaisons, en l’état, dans l’attente d’infrastructures de recharge."
+        },
+        "partners": [
+          "Transporteur disposant de véhicules électriques adaptés au lot 1.",
+          "Transporteur routier régional pour les liaisons restantes (lot 2)."
+        ],
+        "offerReading": "Exemple de lecture : la disponibilité des véhicules et la puissance de recharge sont des conditions de l’offre, pas des détails."
+      }
+    },
+    "board": {
+      "aria": "Plateau du cas démonstrateur, étape « {stage} ». Niveau de connaissance : {status}.",
+      "demo": "Cas démonstrateur — sites et valeurs fictifs",
+      "perWeek": "{n}/sem.",
+      "pooled": "Filiales A + B",
+      "slotOpen": "Point ouvert",
+      "spot": "spot",
+      "terminal": "Terminal",
+      "lot": "Lot {n}",
+      "contract": "contrat",
+      "offer": "Offre {x}",
+      "partners": {
+        "roadRegional": "Routier régional",
+        "railRoad": "Opérateur rail-route",
+        "electricFleet": "Flotte électrique",
+        "roadSecond": "Routier régional (lot 2)",
+        "groupage": "Prestataire de groupage"
+      }
+    },
+    "sites": {
+      "N": "Usine Nord",
+      "C": "Plateforme Centre",
+      "E": "Entrepôt Est",
+      "S": "Usine Sud"
+    }
+  }
+}

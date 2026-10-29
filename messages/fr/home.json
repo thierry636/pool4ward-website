@@ -1,0 +1,124 @@
+{
+  "Home": {
+    "cover": {
+      "eyebrow": "De l’ingénierie à la contractualisation du transport",
+      "title": "Concevoir le transport au plus près du réel.",
+      "lede": "Face aux transformations énergétiques et aux tensions sur les ressources, Pool4ward accompagne les entreprises de l’ingénierie à la contractualisation pour maîtriser leurs coûts, réduire leurs risques et sécuriser leurs capacités de transport.",
+      "benefits": [
+        "Maîtriser les coûts",
+        "Réduire les risques",
+        "Sécuriser les capacités"
+      ],
+      "ctaJourney": "Voir du terrain aux contrats",
+      "ctaTalk": "Parler de votre plan transport",
+      "ctaDatasets": "Explorer les référentiels",
+      "sliderLabel": "Du flux isolé à l’organisation coordonnée",
+      "sliderMin": "Flux séparés",
+      "sliderMax": "Organisation cohérente",
+      "boardLabel": "Schéma illustratif : quatre sites d’un groupe fictif. Les liaisons, d’abord séparées, s’enchaînent en une boucle.",
+      "demoNote": "Schéma illustratif, cas démonstrateur."
+    },
+    "stakes": {
+      "eyebrow": "Pourquoi partir du terrain",
+      "title": "Le transport n’est pas une prestation interchangeable.",
+      "lede": "Acheter au meilleur prix suppose que l’offre soit la même partout. Elle ne l’est pas : ce que vous pouvez transporter, quand, avec quoi et par qui dépend de six réalités du terrain.",
+      "items": {
+        "flows": {
+          "name": "Les flux",
+          "body": "Volumes et récurrence : ils décident de ce qui peut se mutualiser et de ce qui se contractualise dans la durée."
+        },
+        "slots": {
+          "name": "Les créneaux",
+          "body": "Fenêtres de quai et délais : ils décident des enchaînements possibles entre deux livraisons."
+        },
+        "drivers": {
+          "name": "Les conducteurs",
+          "body": "Disponibilité et temps de conduite : une ressource rare, qui borne les rotations."
+        },
+        "equipment": {
+          "name": "Les équipements",
+          "body": "Palettes, vrac, conteneurs : ce qui peut voyager ensemble, et sur quoi."
+        },
+        "energy": {
+          "name": "Infrastructures et énergie",
+          "body": "Terminaux, bornes de recharge, réseaux : ce que le territoire permet, et à quelle puissance."
+        },
+        "commitments": {
+          "name": "Les engagements",
+          "body": "Contrats, durées, échéances : ce qui est déjà pris, et quand une autre organisation redevient possible."
+        }
+      },
+      "closing": "C’est pourquoi nous partons du terrain, pas du prix."
+    },
+    "journey": {
+      "eyebrow": "Du terrain aux engagements",
+      "title": "Un même cas, de la réalité du terrain jusqu’au contrat.",
+      "lede": "Un groupe fictif, quatre sites, six flux. Suivez-le de bout en bout : ce que nous relevons, les organisations que nous comparons, ce que nous mettons en consultation puis sous contrat.",
+      "note": "Cas démonstrateur : sites, volumes et échéances sont fictifs. Le schéma n’est pas un calcul d’itinéraire."
+    },
+    "capabilities": {
+      "eyebrow": "Cinq capacités",
+      "title": "Une continuité, de la première étude au contrat suivi.",
+      "lede": "Chaque capacité reprend ce que la précédente a établi. On peut entrer par n’importe laquelle ; on n’a pas à tout acheter pour commencer."
+    },
+    "datasets": {
+      "eyebrow": "Référentiels",
+      "title": "Ce que nous savons du terrain — et jusqu’où.",
+      "lede": "Services intermodaux, transporteurs, bornes de recharge, réseaux : nos référentiels documentent le terrain. Les montrer, c’est aussi dire ce qu’ils ne couvrent pas et de quand ils datent.",
+      "ladderTitle": "Référencé n’est pas disponible.",
+      "ladderBody": "Un transporteur présent dans un référentiel n’a pas pour autant de camion libre sur votre corridor. Nous distinguons cinq niveaux de connaissance, et le globe n’en montre qu’un : ce qui est référencé.",
+      "open": "Ouvrir le globe en plein écran",
+      "explore": "Explorer les référentiels",
+      "posterLabel": "Aperçu du globe — le globe interactif se charge à la demande.",
+      "load": "Charger le globe interactif"
+    },
+    "evidence": {
+      "eyebrow": "Preuves vérifiables",
+      "title": "Ce que vous pouvez vérifier, et ce que nous ne prétendons pas.",
+      "lede": "Pas de logos de clients ni de témoignages ici : seulement ce qui se contrôle.",
+      "verify": {
+        "title": "À vérifier aujourd’hui",
+        "items": [
+          {
+            "name": "Un cas navigable",
+            "body": "Le parcours ci-dessus se parcourt en deux minutes ; ses limites y sont écrites."
+          },
+          {
+            "name": "Des analyses sourcées",
+            "body": "Nos articles citent leurs sources et s’arrêtent là où les chiffres s’arrêtent."
+          },
+          {
+            "name": "Une couverture affichée",
+            "body": "Chaque couche du globe dit ce qu’elle couvre et de quand elle date."
+          },
+          {
+            "name": "Cinq capacités décrites par leurs fonctions",
+            "body": "Les pages Solutions listent ce que le logiciel fait, pas ce qu’on aimerait qu’il fasse."
+          }
+        ]
+      },
+      "notClaimed": {
+        "title": "Ce que nous ne prétendons pas",
+        "items": [
+          "Suivre vos véhicules en temps réel.",
+          "Garantir un gain chiffré sans avoir lu vos données.",
+          "Résumer votre risque en une note unique.",
+          "Considérer qu’un transporteur référencé est un transporteur disponible.",
+          "Couvrir tous les pays et tous les modes de la même façon."
+        ]
+      }
+    },
+    "insights": {
+      "eyebrow": "Analyses",
+      "title": "Des questions que les chargeurs ne se posent plus.",
+      "all": "Toutes les analyses"
+    },
+    "contact": {
+      "eyebrow": "Échanger",
+      "title": "Parlons de votre plan transport.",
+      "lede": "Un premier échange suffit pour dire si vos flux, vos sites et vos contrats se prêtent à une autre organisation. Vous n’avez rien à préparer.",
+      "diagnostic": "Vous préférez commencer seul ? Le diagnostic prend deux minutes.",
+      "diagnosticLink": "Faire le diagnostic"
+    }
+  }
+}

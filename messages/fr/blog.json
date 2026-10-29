@@ -1,0 +1,12 @@
+{
+  "Blog": {
+    "metaTitle": "Analyses — Pool4ward",
+    "metaDescription": "Des analyses sur l’arbitrage make or buy, l’électrification des flottes, le réemploi des emballages et la mutualisation entre chargeurs.",
+    "indexTitle": "Analyses",
+    "indexLede": "Des questions que les chargeurs ne se posent plus.",
+    "backToIndex": "Toutes les analyses",
+    "readNext": "Lire aussi",
+    "readingTime": "{minutes} min de lecture",
+    "empty": "Aucune analyse pour l’instant."
+  }
+}

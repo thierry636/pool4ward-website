@@ -1,0 +1,226 @@
+{
+  "Approach": {
+    "meta": {
+      "title": "Approach",
+      "description": "Transport is not an interchangeable service: it is designed from what the ground allows. Our approach, from engineering to contracting."
+    },
+    "hero": {
+      "eyebrow": "Approach",
+      "title": "Transport is designed with the ground first.",
+      "lede": "Transport is a cost item, a risk factor and a condition for business continuity. The energy transition and pressure on resources, human ones in particular, require decisions to move closer to physical reality and to the capacity that can actually be mobilised."
+    },
+    "conviction": {
+      "eyebrow": "Our conviction",
+      "title": "An interchangeable service, bought at the best price?",
+      "body": [
+        "Transport is not reducible to that. Flows, time windows, drivers, equipment, infrastructure, energy resources and commitments determine the organisations that are really possible.",
+        "Two offers at the same price are not worth the same if one assumes a free dock at 6 am and the other a loaded return. Comparing prices without comparing what they assume is comparing labels."
+      ]
+    },
+    "ground": {
+      "eyebrow": "What the ground determines",
+      "title": "Six realities before the first price.",
+      "items": {
+        "flows": {
+          "name": "Flows",
+          "body": "How much, how often, how regularly. A daily flow and a monthly flow call for neither the same transport nor the same contract."
+        },
+        "slots": {
+          "name": "Time windows",
+          "body": "Dock windows and service lead times bound what can be chained. A shifted window can open a complementarity — or close one."
+        },
+        "drivers": {
+          "name": "Drivers",
+          "body": "A scarce resource, subject to driving and rest times. An organisation that ignores them exists only on paper."
+        },
+        "equipment": {
+          "name": "Equipment",
+          "body": "What can travel together, in what, and what is needed to load and unload."
+        },
+        "energy": {
+          "name": "Infrastructure and energy",
+          "body": "Terminals, tracks, charging points, available power: what the territory allows, where you need it."
+        },
+        "commitments": {
+          "name": "Commitments",
+          "body": "Contracts in force, durations, deadlines. They say what is possible today and what becomes possible tomorrow."
+        }
+      }
+    },
+    "levers": {
+      "eyebrow": "Levers and means",
+      "title": "Levers to act, means to get there.",
+      "lede": "Controlling costs, reducing risks, securing capacity: those are the goals. Here is what makes them reachable.",
+      "items": {
+        "collaboration": {
+          "kind": "Lever",
+          "name": "Collaboration",
+          "body": "First between the sites and subsidiaries of a group, where complementarities are most direct. Then with other shippers, when it brings extra value. Carriers are partners with whom to build commitments that can be met."
+        },
+        "intermodal": {
+          "kind": "Lever",
+          "name": "Intermodal",
+          "body": "Rail, inland waterway, sea: one option among others, to be compared on full cost and service, not a bias."
+        },
+        "ai": {
+          "kind": "Means",
+          "name": "Artificial intelligence",
+          "body": "A means to explore more organisations and to read heterogeneous information faster. It helps prepare the decision; it does not take it for you."
+        },
+        "datasets": {
+          "kind": "Foundation",
+          "name": "Datasets",
+          "body": "Services, operators, infrastructure: they document the ground. Each is dated and bounded, and what we show of them is set out on the Datasets page."
+        }
+      }
+    },
+    "ladder": {
+      "eyebrow": "Precision",
+      "title": "Five levels of knowledge, never mixed.",
+      "lede": "Precision strengthens the argument. Every object in our studies — a site, a link, a partner — sits on this scale, and each level is earned differently."
+    },
+    "cta": {
+      "title": "Your ground has its own realities.",
+      "body": "Let’s talk about your flows, your sites and your contracts.",
+      "button": "Discuss your transport plan"
+    }
+  },
+  "Solutions": {
+    "meta": {
+      "title": "Solutions",
+      "description": "Five capabilities for five decisions: transport engineering, tender preparation, carrier search, offer comparison, contract management."
+    },
+    "hero": {
+      "eyebrow": "Solutions",
+      "title": "Five capabilities, for five decisions.",
+      "lede": "Each page answers a decision you have to make — not a software name. Application names remain available below."
+    },
+    "apps": {
+      "eyebrow": "Applications",
+      "title": "The applications behind these capabilities.",
+      "lede": "You do not need to know them to understand the offer. Here they are, with what each one does.",
+      "items": {
+        "design4ward": {
+          "name": "Design4ward",
+          "body": "The shipper’s cockpit: flow mapping, engineering studies (cross-dock, modal shift, loops, electrification), tender preparation."
+        },
+        "compute4ward": {
+          "name": "Compute4ward",
+          "body": "The cost and emissions model the studies draw on."
+        },
+        "modal4ward": {
+          "name": "Modal4ward",
+          "body": "The catalogue of multimodal services (rail, inland waterway, sea) and its assistant."
+        },
+        "connect4ward": {
+          "name": "Connect4ward",
+          "body": "Ingestion and standardisation of transport data, publication of shared datasets, the contract register."
+        },
+        "carrierbridge": {
+          "name": "CarrierBridge",
+          "body": "The price grids and energy indices exchanged with carriers."
+        }
+      },
+      "serves": "Serves:"
+    },
+    "detail": {
+      "decision": "The decision",
+      "continuity": "In the continuity",
+      "previous": "Before",
+      "next": "After",
+      "first": "Entry point of the journey.",
+      "last": "Last step of the journey.",
+      "cta": "Talk about this capability"
+    }
+  },
+  "Company": {
+    "meta": {
+      "title": "The company",
+      "description": "Pool4ward supports companies from engineering to contracting in transport. Our conviction, our way of working."
+    },
+    "hero": {
+      "eyebrow": "The company",
+      "title": "Bring an idea of an organisation closer to its realisation.",
+      "lede": "Pool4ward supports companies from transport engineering to contracting. We believe transport decisions are better taken close to the ground."
+    },
+    "beliefs": {
+      "eyebrow": "What we believe",
+      "title": "Four working convictions.",
+      "items": [
+        {
+          "name": "Price does not say everything.",
+          "body": "It depends on what the offer assumes: time windows, equipment, drivers, energy, commitments."
+        },
+        {
+          "name": "Data without structure is useless.",
+          "body": "Transport decisions need shared, dated and bounded data — not files in circulation."
+        },
+        {
+          "name": "The value is between sites.",
+          "body": "The most direct complementarities are first found between the sites and subsidiaries of one group."
+        },
+        {
+          "name": "Execution matters more than analysis.",
+          "body": "A plan that does not turn into commitments that can be met remains a diagram."
+        }
+      ]
+    },
+    "how": {
+      "eyebrow": "How we work",
+      "title": "Evidence before promises.",
+      "body": [
+        "We do not publish client logos or savings figures that could not be verified. We describe what our tools do, we say what our datasets cover, and we distinguish what is referenced from what is confirmed.",
+        "Our analyses cite their sources. When data is missing, we write so."
+      ]
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Write to us."
+    }
+  },
+  "Contact": {
+    "meta": {
+      "title": "Discuss your transport plan",
+      "description": "Talk to Pool4ward about your transport flows, sites and contracts."
+    },
+    "hero": {
+      "eyebrow": "Contact",
+      "title": "Let’s talk about your transport plan.",
+      "lede": "Tell us in a few lines what you are trying to decide. We reply with a short conversation, to see whether your flows, sites and contracts lend themselves to another organisation."
+    },
+    "form": {
+      "name": "Name",
+      "email": "Work e-mail",
+      "company": "Company",
+      "topic": "What brings you here",
+      "topics": {
+        "engineering": "Transport engineering",
+        "tenders": "Tender",
+        "carriers": "Carrier search",
+        "comparison": "Offer comparison",
+        "contracts": "Contract management",
+        "other": "Other"
+      },
+      "message": "Your context",
+      "messageHelp": "A few lines are enough: sites involved, nature of the flows, decision deadline. Do not send confidential data.",
+      "consent": "This information is used only to reply to your request.",
+      "submit": "Send",
+      "sending": "Sending…",
+      "required": "Required field",
+      "invalidEmail": "Invalid e-mail address",
+      "success": "Thank you, your message has been sent. We will get back to you shortly.",
+      "error": "Sending failed. Please try again in a moment.",
+      "unavailable": "The form is not connected on this preview environment. Your message was not sent.",
+      "tooMany": "Too many attempts. Please wait a few minutes before trying again."
+    },
+    "side": {
+      "title": "Before you write",
+      "items": [
+        "This form collects only the information beside it.",
+        "Do not attach confidential data: we will agree on a suitable exchange framework.",
+        "If you prefer to start on your own, the diagnostic takes two minutes."
+      ],
+      "diagnostic": "Take the diagnostic"
+    }
+  }
+}

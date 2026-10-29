@@ -75,8 +75,8 @@ describe("liens", () => {
     const fr = (await lireArticle("fr", "make-or-buy-transport"))!.html;
     const en = (await lireArticle("en", "make-or-buy-transport"))!.html;
 
-    expect(fr).toContain('href="/fr/company#contact"');
-    expect(en).toContain('href="/en/company#contact"');
+    expect(fr).toContain('href="/fr/contact"');
+    expect(en).toContain('href="/en/contact"');
     // `/contact` n'existe pas sur ce site : aucun lien ne doit y rester.
     expect(fr).not.toContain('href="/contact"');
   });

@@ -1,120 +1,70 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
-import Image from "next/image";
-import { BLOG_MASQUE } from "@/lib/blog/config";
+import { Logo } from "@/components/brand/Logo";
+import { CAPACITES } from "@/content/capabilities";
+import { PORTAL_URL } from "@/lib/site";
 
 export function Footer() {
   const t = useTranslations("Footer");
-  const tc = useTranslations("Common");
-
-  const footerSections = [
-    {
-      title: t("platform"),
-      links: [
-        { label: t("overview"), href: "/platform" },
-        { label: t("architecture"), href: "/platform#architecture" },
-        { label: t("collaboration"), href: "/platform#collaboration" },
-        { label: t("security"), href: "/platform#security" },
-      ],
-    },
-    {
-      title: t("products"),
-      links: [
-        { label: "Design4ward", href: "/products/design4ward" },
-        { label: "Modal4ward", href: "/products/modal4ward" },
-        { label: "Cobuild4ward", href: "/products/cobuild4ward" },
-        { label: "Compute4ward", href: "/products/compute4ward" },
-        { label: "Connect4ward", href: "/products/connect4ward" },
-      ],
-    },
-    {
-      title: t("solutions"),
-      links: [
-        { label: t("logisticsOptimization"), href: "/solutions/logistics-optimization" },
-        { label: t("collaborativeTransport"), href: "/solutions/collaborative-transport" },
-        { label: t("multimodalStrategy"), href: "/solutions/multimodal-strategy" },
-        { label: t("decarbonization"), href: "/solutions/supply-chain-decarbonization" },
-      ],
-    },
-    {
-      title: t("company"),
-      links: [
-        { label: t("vision"), href: "/company" },
-        // Masqué tant que le blog n'est pas annoncé — voir `BLOG_MASQUE`.
-        ...(BLOG_MASQUE ? [] : [{ label: t("blog"), href: "/blog" }]),
-        { label: t("contact"), href: "/company#contact" },
-        { label: t("privacyPolicy"), href: "#" },
-        { label: t("termsOfService"), href: "#" },
-      ],
-    },
-  ];
+  const tn = useTranslations("Nav");
+  const tc = useTranslations("Capabilities");
 
   return (
-    <footer className="bg-navy-900 text-white">
-      <div className="container-xl py-16 lg:py-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 lg:gap-12">
-          {/* Brand column */}
-          <div className="col-span-2 md:col-span-4 lg:col-span-1 mb-4 lg:mb-0">
-            <Link href="/" className="inline-block mb-4">
-              <Image
-                src="/images/brand/logo-full-dark.svg"
-                alt="Pool4ward"
-                width={180}
-                height={36}
-                className="h-8 w-auto"
-              />
-            </Link>
-            <p className="text-sm text-navy-400 leading-relaxed max-w-xs">
-              {tc("footerDescription")}
+    <footer className="tone-dark">
+      <div className="wrap section-y !pb-10">
+        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div>
+            <Logo />
+            <p className="mt-6 max-w-sm text-[0.98rem] leading-relaxed" style={{ color: "var(--fg-2)" }}>
+              {t("statement")}
             </p>
           </div>
 
-          {footerSections.map((section) => (
-            <div key={section.title}>
-              <h3 className="text-sm font-semibold text-white mb-4">{section.title}</h3>
-              <ul className="space-y-3">
-                {section.links.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href as "/"}
-                      className="text-sm text-navy-400 hover:text-white transition-colors"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <FooterColumn title={t("explore")}>
+            <li><Link href="/approach">{tn("approach")}</Link></li>
+            <li><Link href="/solutions">{tn("solutions")}</Link></li>
+            <li><Link href="/datasets">{tn("datasets")}</Link></li>
+            <li><Link href="/blog">{tn("insights")}</Link></li>
+          </FooterColumn>
+
+          <FooterColumn title={t("capabilities")}>
+            {CAPACITES.map((c) => (
+              <li key={c.slug}>
+                <Link href={`/solutions/${c.slug}`}>{tc(`${c.id}.name`)}</Link>
+              </li>
+            ))}
+          </FooterColumn>
+
+          <FooterColumn title={t("company")}>
+            <li><Link href="/company">{t("about")}</Link></li>
+            <li><Link href="/contact">{tn("cta")}</Link></li>
+            <li>
+              <a href={PORTAL_URL}>
+                {tn("portal")} <span aria-hidden="true">↗</span>
+              </a>
+            </li>
+          </FooterColumn>
         </div>
 
-        {/* Bottom bar */}
-        <div className="mt-16 pt-8 border-t border-navy-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-navy-400">
-            {tc("allRightsReserved", { year: new Date().getFullYear() })}
-          </p>
-          <div className="flex gap-6">
-            <Link
-              href={"#" as "/"}
-              className="text-sm text-navy-400 hover:text-white transition-colors"
-            >
-              {tc("privacy")}
-            </Link>
-            <Link
-              href={"#" as "/"}
-              className="text-sm text-navy-400 hover:text-white transition-colors"
-            >
-              {tc("terms")}
-            </Link>
-            <Link
-              href={"#" as "/"}
-              className="text-sm text-navy-400 hover:text-white transition-colors"
-            >
-              {tc("security")}
-            </Link>
-          </div>
+        <div
+          className="mt-16 flex flex-col gap-3 border-t pt-6 text-[0.82rem] sm:flex-row sm:items-start sm:justify-between"
+          style={{ borderColor: "var(--rule)", color: "var(--fg-2)" }}
+        >
+          <p>{t("rights", { year: new Date().getFullYear() })}</p>
+          <p className="max-w-xl sm:text-right">{t("demoNote")}</p>
         </div>
       </div>
     </footer>
+  );
+}
+
+function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <h2 className="eyebrow">{title}</h2>
+      <ul className="mt-5 space-y-1 text-[0.97rem] [&_a]:inline-flex [&_a]:min-h-[2.25rem] [&_a]:items-center [&_a]:opacity-90 [&_a:hover]:opacity-100 [&_a:hover]:underline [&_a]:underline-offset-4">
+        {children}
+      </ul>
+    </div>
   );
 }
