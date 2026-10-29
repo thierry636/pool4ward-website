@@ -471,7 +471,8 @@ export function LeverGlobe(props: LeverGlobeProps) {
 
     map.on("load", () => {
       ready = true;
-      startLever(Math.max(0, Math.min(scenes.length - 1, live.current.active)), false);
+      // Un levier choisi pendant le chargement (lecture arrêtée par ce geste) se joue une fois, comme après le chargement.
+      startLever(Math.max(0, Math.min(scenes.length - 1, live.current.active)), !live.current.playing);
       raf = requestAnimationFrame(tick);
       live.current.onReady();
     });
