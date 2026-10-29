@@ -19,6 +19,10 @@ terrain (CrUX / RUM) ne pourront être lus qu'après la mise en ligne.
   leviers de la couverture) : joués en rendu logiciel (SwiftShader), où ils
   fonctionnent mais saccadent ; les images par seconde ne sont pas mesurées. Le poids
   téléchargé l'est (section 2).
+- **Le chiffre « 3 500 services rail et fluviaux en Europe »** (titre de la couverture) vient de
+  la direction ; il n'est recoupé avec aucune donnée vérifiée ici (le référentiel Appel d'Air
+  2026 du portail compte 2 906 services ferroviaires intermodaux, sans le fluvial). À valider
+  avant toute mise en ligne publique (DATA.md).
 - **La scène des leviers est une illustration**, pas une donnée : liaisons dessinées,
   aucun service existant, aucun opérateur, aucun chiffre (LEVERS.md). Le choix de la
   région et des liaisons est éditorial, à valider.
@@ -34,7 +38,7 @@ terrain (CrUX / RUM) ne pourront être lus qu'après la mise en ligne.
 
 ## 1. Tests automatisés (`npm test`)
 
-230 tests dans 18 fichiers, tous réussis. Ils couvrent : parité FR/EN des textes et absence de Cobuild4ward et
+234 tests dans 19 fichiers, tous réussis. Ils couvrent : parité FR/EN des textes et absence de Cobuild4ward et
 des chiffres de la v1 ; typographie française ; état et continuité du parcours
 (jamais « confirmé » ni « contractualisé » dans un cas démonstrateur) ; contact
 (validation, échappement, injection d'en-tête, champ piège, limite) ; blog ; métadonnées
@@ -131,7 +135,7 @@ chapitres, pause, liste des liaisons) → contact :
 
 ```
 == FR ==
-PASS accueil : titre de la promesse — Concevoir le transport au plus près du réel.
+PASS accueil : titre de la promesse — 3 500 services rail et fluviaux en Europe, une alternative à la route.
 PASS accueil : langue du document
 PASS CTA principal → section du parcours
 PASS étape 2 : scénario modal choisi, niveau « détecté »
@@ -153,7 +157,7 @@ PASS envoi non raccordé : une seule réponse 503 de /api/contact, voulue — 1 
 PASS aucune autre erreur JavaScript sur tout le parcours
 
 == EN ==
-PASS accueil : titre de la promesse — Design transport as close to reality as possible.
+PASS accueil : titre de la promesse — 3,500 rail and waterway services across Europe, an alternative to the road.
 PASS accueil : langue du document
 PASS CTA principal → section du parcours
 PASS étape 2 : scénario modal choisi, niveau « détecté »
@@ -242,7 +246,7 @@ PASS créneau avancé → « étudiée »
 ```
 
 Scène des leviers de la couverture et schémas (FR et EN : six leviers listés,
-lecture automatique, **aucun bouton pause**, choix d'un levier (il se joue puis reste
+titre avec le chiffre, aucun encart sur l'image, lecture automatique, **aucun bouton pause**, choix d'un levier (il se joue puis reste
 affiché), reprise de la lecture après vingt secondes sans geste, clavier, mouvement
 réduit, téléphone sans recouvrement ni défilement horizontal, globe 3D forcé, schémas
 décrits et animés à l'entrée dans l'écran, immobiles en mouvement réduit). Le temps d'un
@@ -253,10 +257,11 @@ levier suit l'horloge de l'écran : sur ce poste, sans GPU, il dure un peu plus 
 == FR · mouvement normal ==
 PASS six leviers listés, dans l’ordre — Report modal rail/fluvial | Shortsea côtier | Boucles | Cross-dock | Électrification | Mutualisation
 PASS le premier levier est le report modal rail/fluvial
-PASS mention « Illustration · région » visible
+PASS titre : le chiffre et l’alternative à la route — 3 500 services rail et fluviaux en Europe, une alternative à la route.
+PASS mention « Illustration » visible
 PASS la carte porte une description accessible — Carte animée de l’Europe. Levier en cours : Report modal rail/fluvial.
 PASS rendu à plat sans WebGL ou en logiciel : aucun canvas
-PASS bulles et noms de lieux posés sur la carte
+PASS noms de lieux sur la carte, aucun encart qui empiète sur l’image
 PASS lecture automatique : le levier suivant s’affiche — Shortsea côtier
 PASS la barre de progression du levier en cours avance
 PASS aucun bouton de pause ni de lecture
@@ -275,16 +280,17 @@ PASS aucune impulsion ni onde animée — 0 animées
 
 == FR · téléphone ==
 PASS pas de défilement horizontal
-PASS texte, carte et bandeau s’empilent sans se recouvrir — h1 bas=268 carte=707–1107 bandeau=1127
+PASS texte, carte et pastilles s’empilent sans se recouvrir — h1 bas=348 carte=595–995 bandeau=1011
 PASS cibles tactiles d’au moins 44 px — 0 trop petites
 
 == EN · mouvement normal ==
 PASS six leviers listés, dans l’ordre — Modal shift rail/waterway | Coastal shortsea | Loops | Cross-dock | Electrification | Pooling
 PASS le premier levier est le report modal rail/fluvial
-PASS mention « Illustration · région » visible
+PASS titre : le chiffre et l’alternative à la route — 3,500 rail and waterway services across Europe, an alternative to the road.
+PASS mention « Illustration » visible
 PASS la carte porte une description accessible — Animated map of Europe. Current lever: Modal shift rail/waterway.
 PASS rendu à plat sans WebGL ou en logiciel : aucun canvas
-PASS bulles et noms de lieux posés sur la carte
+PASS noms de lieux sur la carte, aucun encart qui empiète sur l’image
 PASS lecture automatique : le levier suivant s’affiche — Coastal shortsea
 PASS la barre de progression du levier en cours avance
 PASS aucun bouton de pause ni de lecture
@@ -303,13 +309,13 @@ PASS aucune impulsion ni onde animée — 0 animées
 
 == EN · téléphone ==
 PASS pas de défilement horizontal
-PASS texte, carte et bandeau s’empilent sans se recouvrir — h1 bas=268 carte=680–1080 bandeau=1100
+PASS texte, carte et pastilles s’empilent sans se recouvrir — h1 bas=348 carte=595–995 bandeau=1011
 PASS cibles tactiles d’au moins 44 px — 0 trop petites
 
 == globe 3D forcé ==
 PASS le globe 3D se monte (canvas)
 PASS un levier choisi sur le globe
-PASS un levier choisi pendant le chargement se joue (bulles posées sur le globe)
+PASS un levier choisi pendant le chargement se joue (noms de lieux posés sur le globe)
 PASS aucune erreur JavaScript avec le globe
 
 == schémas · mouvement normal ==
@@ -323,7 +329,7 @@ PASS six schémas, chacun avec une description
 PASS aucune carte masquée
 PASS aucune impulsion animée — display=none
 
-55/55 comportements vérifiés
+57/57 comportements vérifiés
 ```
 
 Animation du monde (carte à plat, mouvement réduit, globe 3D) :
@@ -391,16 +397,16 @@ alors que Lighthouse mesure `http://localhost:3000`). Les autres contrôles SEO
 passent.
 
 ```
-approach desktop                         perf 100       a11y 100 bp 100 seo* 58 | LCP 0.4 s | CLS 0.000 | TBT 0 ms
-approach mobile                          perf 100/99/100 a11y 100 bp 100 seo* 58 | LCP 1.8 s · 1.8 s · 2.0 s | CLS 0.000 | TBT 27 ms
+approach desktop                         perf 100       a11y 100 bp 100 seo* 58 | LCP 0.5 s | CLS 0.000 | TBT 0 ms
+approach mobile                          perf 99/99/100 a11y 100 bp 100 seo* 58 | LCP 1.8 s · 2.0 s · 2.0 s | CLS 0.000 | TBT 22 ms
 contact desktop                          perf 100       a11y 100 bp 100 seo* 58 | LCP 0.5 s | CLS 0.000 | TBT 0 ms
-contact mobile                           perf 98/100/100 a11y 100 bp 100 seo* 58 | LCP 1.8 s · 1.8 s · 2.3 s | CLS 0.000 | TBT 74 ms
+contact mobile                           perf 100/99/100 a11y 100 bp 100 seo* 58 | LCP 1.8 s · 1.8 s · 2.0 s | CLS 0.000 | TBT 36 ms
 datasets desktop                         perf 100       a11y 100 bp 100 seo* 58 | LCP 0.6 s | CLS 0.000 | TBT 0 ms
-datasets mobile                          perf 99/99/99  a11y 100 bp 100 seo* 58 | LCP 2.0 s · 2.0 s · 2.2 s | CLS 0.000 | TBT 38 ms
+datasets mobile                          perf 99/99/99  a11y 100 bp 100 seo* 58 | LCP 2.0 s · 2.0 s · 2.0 s | CLS 0.000 | TBT 36 ms
 home desktop                             perf 100       a11y 100 bp 100 seo* 61 | LCP 0.6 s | CLS 0.000 | TBT 0 ms
-home mobile                              perf 98/98/98  a11y 100 bp 100 seo* 61 | LCP 2.1 s · 2.3 s · 2.3 s | CLS 0.000 | TBT 90 ms
+home mobile                              perf 98/96/98  a11y 100 bp 100 seo* 61 | LCP 2.3 s · 2.3 s · 2.7 s | CLS 0.000 | TBT 98 ms
 solutions-transport-engineering desktop  perf 100       a11y 100 bp 100 seo* 58 | LCP 0.5 s | CLS 0.000 | TBT 0 ms
-solutions-transport-engineering mobile   perf 99/99/99  a11y 100 bp 100 seo* 58 | LCP 2.0 s · 2.0 s · 2.2 s | CLS 0.000 | TBT 21 ms
+solutions-transport-engineering mobile   perf 99/99/99  a11y 100 bp 100 seo* 58 | LCP 2.0 s · 2.0 s · 2.2 s | CLS 0.000 | TBT 27 ms
 ```
 
 Seuils « bons » (CWV) : LCP ≤ 2,5 s, CLS ≤ 0,1, INP ≤ 200 ms (TBT sert de proxy de
@@ -418,18 +424,26 @@ appareil capable de la 3D), fond géographique fin réduit à
 l'Europe (183 Ko au lieu de 1,15 Mo pour le monde), vitrine intégrée au HTML (7 Ko,
 aucune requête de données).
 
-**Le seuil de LCP ≤ 2,5 s est tenu en simulation mobile sur toutes les pages** de la série finale (1,8–2,3 s). C'est une mesure de laboratoire, à relire sur des données de terrain après la mise en ligne.
+**Le seuil de LCP ≤ 2,5 s n'est pas démontré tenu sur toutes les pages en mobile.** Plages mesurées (trois exécutions chacune, simulation Lighthouse) :
+
+- approach : 1,8 s · 2,0 s · 2,0 s
+- contact : 1,8 s · 1,8 s · 2,0 s
+- datasets : 2,0 s · 2,0 s · 2,0 s
+- home : 2,3 s · 2,3 s · 2,7 s
+- solutions-transport-engineering : 2,0 s · 2,0 s · 2,2 s
+
+Pages dont au moins une exécution dépasse 2,5 s : home. Pages qui restent sous le seuil sur les trois exécutions : approach, contact, datasets, solutions-transport-engineering. L'accueil est le plus loin du seuil (2,3 s · 2,3 s · 2,7 s). Éléments d'explication : l'élément LCP de l'accueil est le paragraphe d'accroche (du texte, pas une image) ; sans bridage ni latence réseau (poste local, cinq chargements), FCP et LCP de l'accueil sont à 104–124 ms ; c'est le modèle de simulation (environ 300 Ko chargés avant le LCP, sur une 4G lente, processeur ralenti ×4) qui porte l'estimation à 2,3–2,7 s. La carte de la couverture ne charge rien avant l'événement `load` (carte à plat : deux fonds géographiques, 57 Ko ; globe : MapLibre, voir section 2). Pistes non engagées : réduire le JavaScript de l'accueil (≈ 138 Ko), différer les courbes de niveau du parcours (22 Ko). La valeur de terrain (CrUX / RUM) tranchera après la mise en ligne ; d'ici là, ne pas annoncer « Core Web Vitals bons ».
 
 ## 8. Prévisualisation hébergée (Netlify)
 
 Vérifié sur le déploiement de la pull request n° 23 :
 `https://deploy-preview-23--p4wname.netlify.app` (le second site Netlify,
 `https://deploy-preview-23--pool4wardv2.netlify.app`, est servi par le même commit),
-au commit `fded289`. Les essais partent de ce conteneur, par le proxy de l'environnement
+au commit `9aadbed`. Les essais partent de ce conteneur, par le proxy de l'environnement
 (la vérification TLS reste active).
 
 - **Contrôles Netlify de la pull request** (« Deploy Preview ») : réussis sur les deux sites
-  pour le commit `fded289`. Le job GitHub Actions `build` est le gabarit du dépôt (il
+  pour le commit `9aadbed`. Le job GitHub Actions `build` est le gabarit du dépôt (il
   n'exécute que des `echo`) : il ne démontre rien sur le site.
 - **Redirections** (même script qu'en local) : 27/27 sur l'hébergeur.
 - **Surface de routes** : 14/14 — aucune route de données, la source de la vitrine n'est
@@ -438,8 +452,9 @@ au commit `fded289`. Les essais partent de ce conteneur, par le proxy de l'envir
   attendu, message honnête).
 - **Comportements de l'animation du monde** : 21/21 (carte à plat, mouvement réduit, globe
   3D forcé en rendu logiciel).
-- **Scène des leviers et schémas** : 55/55, sur l'hébergeur, FR et EN, téléphone, globe 3D
+- **Scène des leviers et schémas** : 57/57, sur l'hébergeur, FR et EN, téléphone, globe 3D
   forcé compris.
+- **Deux échecs isolés, non reproduits** : au premier passage distant, un contrôle de molette de l'animation du monde et une attente de la scène des leviers (téléphone, EN) ont expiré ; rejoués, ils passent (21/21 et 57/57). Cause probable : temps de chargement par le proxy ; pas de défaut du site établi.
 - **Inspection réseau** : aucune requête `/api/*`, un seul cookie (`NEXT_LOCALE`), rien dans
   le stockage du navigateur.
 
