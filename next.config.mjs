@@ -37,6 +37,19 @@ const securityHeaders = [
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=()" },
 ];
 
+/**
+ * Fichiers de `public/` : ni empreinte ni version dans leur nom, donc ni
+ * `immutable` ni cache d'un an. Sans règle, l'hébergeur les sert en
+ * `max-age=0` et chaque visite de retour revalide les polices préchargées et le
+ * fond cartographique. Polices et fond géographique changent rarement (7 jours,
+ * puis une semaine de revalidation en arrière-plan) ; images et visuel de
+ * partage peuvent être retouchés plus souvent (1 jour).
+ */
+const cachePublic = (maxAge, swr) => ({
+  key: "Cache-Control",
+  value: `public, max-age=${maxAge}, stale-while-revalidate=${swr}`,
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
@@ -56,7 +69,13 @@ const nextConfig = {
     ];
   },
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      { source: "/fonts/:path*", headers: [cachePublic(604800, 604800)] },
+      { source: "/geo/:path*", headers: [cachePublic(604800, 604800)] },
+      { source: "/images/:path*", headers: [cachePublic(86400, 604800)] },
+      { source: "/og/:path*", headers: [cachePublic(86400, 604800)] },
+    ];
   },
 };
 
