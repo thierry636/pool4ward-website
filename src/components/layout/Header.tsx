@@ -80,7 +80,7 @@ export function Header({ solid = false }: HeaderProps) {
           <Logo />
         </Link>
 
-        <nav aria-label={t("primary")} className="hidden lg:block">
+        <nav aria-label={t("primary")} className="hidden xl:block">
           <ul className="flex items-center gap-1">
             {NAV.map((item) => (
               <li key={item.key}>
@@ -103,7 +103,7 @@ export function Header({ solid = false }: HeaderProps) {
           </ul>
         </nav>
 
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="hidden items-center gap-2 xl:flex">
           <a
             href={PORTAL_URL}
             className="inline-flex min-h-[2.75rem] items-center px-3 text-[0.9rem] font-medium opacity-80 transition-opacity hover:opacity-100"
@@ -112,7 +112,7 @@ export function Header({ solid = false }: HeaderProps) {
             <span aria-hidden="true" className="ml-1">↗</span>
           </a>
           <LocaleSwitch locale={locale} onSwitch={switchLocale} label={t("language")} />
-          <Link href="/contact" className="btn btn-solid ml-1">
+          <Link href="/contact" className="btn btn-solid ml-1 whitespace-nowrap">
             {t("cta")}
           </Link>
         </div>
@@ -120,7 +120,7 @@ export function Header({ solid = false }: HeaderProps) {
         <button
           ref={menuButton}
           type="button"
-          className="inline-flex min-h-[2.75rem] min-w-[2.75rem] items-center justify-center lg:hidden"
+          className="inline-flex min-h-[2.75rem] min-w-[2.75rem] items-center justify-center xl:hidden"
           aria-expanded={open}
           aria-controls="menu-mobile"
           aria-label={open ? t("closeMenu") : t("openMenu")}
@@ -140,7 +140,7 @@ export function Header({ solid = false }: HeaderProps) {
       {open && (
         <div
           id="menu-mobile"
-          className="tone-light fixed inset-x-0 bottom-0 top-[4.25rem] overflow-y-auto lg:hidden"
+          className="tone-light fixed inset-x-0 bottom-0 top-[4.25rem] overflow-y-auto xl:hidden"
         >
           <nav aria-label={t("primary")} className="wrap py-8">
             <ul>

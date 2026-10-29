@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link, routing } from "@/i18n/routing";
 import { PageHero } from "@/components/sections/PageHero";
 import { CtaBand } from "@/components/sections/CtaBand";
+import { Icon } from "@/components/ui/Icon";
 import { CAPACITES, capaciteParSlug } from "@/content/capabilities";
 import { pageMetadata } from "@/lib/seo";
 
@@ -37,11 +38,10 @@ export default async function SolutionPage({ params }: { params: Promise<{ local
 
   return (
     <>
-      <PageHero eyebrow={`0${i + 1} · ${t("eyebrow")}`} title={t(`${c.id}.name`)} lede={t(`${c.id}.summary`)}>
-        <ul className="mono mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[0.78rem] uppercase tracking-[0.1em]">
+      <PageHero eyebrow={`${i + 1} / ${CAPACITES.length} · ${t("eyebrow")}`} title={t(`${c.id}.name`)} lede={t(`${c.id}.summary`)}>
+        <ul className="mt-8 flex flex-wrap gap-2">
           {verbs.map((v) => (
-            <li key={v} className="flex items-center gap-2">
-              <span aria-hidden="true" style={{ color: "var(--warm)" }}>◆</span>
+            <li key={v} className="pill">
               {v}
             </li>
           ))}
@@ -56,15 +56,17 @@ export default async function SolutionPage({ params }: { params: Promise<{ local
           </div>
           <div>
             <p className="eyebrow">{t("covers")}</p>
-            <ul className="mt-4">
+            <ul className="mt-5 space-y-3">
               {covers.map((line, k) => (
-                <li key={line} className="rule-top grid gap-3 py-5 sm:grid-cols-[2.5rem_1fr]">
-                  <span className="mono text-[0.74rem]" style={{ color: "var(--warm)" }}>0{k + 1}</span>
-                  <span className="text-[1.02rem] leading-relaxed">{line}</span>
+                <li key={line} data-reveal className="card flex gap-4 p-5" style={{ ["--i" as string]: k % 3 }}>
+                  <span className="tile-icon !h-9 !w-9 !rounded-[0.65rem]">
+                    <Icon name="check" size={18} />
+                  </span>
+                  <span className="text-[1rem] leading-relaxed">{line}</span>
                 </li>
               ))}
             </ul>
-            <p className="mono mt-6 border-l-2 pl-4 text-[0.82rem] leading-relaxed" style={{ borderColor: "var(--warm)", color: "var(--fg-2)" }}>
+            <p className="mt-6 rounded-2xl border px-5 py-4 text-[0.9rem] leading-relaxed" style={{ borderColor: "var(--rule)", background: "var(--bg-2)", color: "var(--fg-2)" }}>
               {t(`${c.id}.scope`)}
             </p>
 
@@ -73,7 +75,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ local
                 <p className="eyebrow">{t("apps")}</p>
                 <ul className="mt-4 flex flex-wrap gap-3">
                   {c.apps.map((a) => (
-                    <li key={a} className="border px-4 py-2 text-[0.95rem] font-medium" style={{ borderColor: "var(--rule-strong)" }}>
+                    <li key={a} className="card px-4 py-2 text-[0.95rem] font-semibold">
                       {ts(`apps.items.${a}.name`)}
                     </li>
                   ))}
@@ -90,16 +92,16 @@ export default async function SolutionPage({ params }: { params: Promise<{ local
           <ol className="mt-5 grid grid-cols-5 gap-1.5">
             {CAPACITES.map((x, k) => (
               <li key={x.id}>
-                <span aria-hidden="true" className="block h-[3px]" style={{ background: k === i ? "var(--warm)" : "var(--rule-strong)" }} />
+                <span aria-hidden="true" className="block h-1.5 rounded-full" style={{ background: k === i ? "linear-gradient(90deg, #4263eb, #2dd4bf)" : "var(--rule-strong)" }} />
                 <Link
                   href={`/solutions/${x.slug}`}
                   aria-current={k === i ? "page" : undefined}
-                  className="mono mt-2 block text-[0.64rem] uppercase leading-tight tracking-[0.05em] sm:text-[0.72rem]"
+                  className="mt-2 block text-[0.7rem] font-medium leading-tight sm:text-[0.82rem]"
                   style={{ color: k === i ? "var(--fg)" : "var(--fg-2)", fontWeight: k === i ? 700 : 400 }}
                 >
-                  <span aria-hidden="true" className="sm:hidden">0{k + 1}</span>
+                  <span aria-hidden="true" className="sm:hidden">{k + 1}</span>
                   <span className="sr-only sm:not-sr-only">
-                    <span className="hidden sm:inline">0{k + 1} · </span>
+                    <span className="hidden sm:inline">{k + 1} · </span>
                     {t(`${x.id}.name`)}
                   </span>
                 </Link>
@@ -110,7 +112,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ local
             <div>
               <p className="eyebrow">{ts("detail.previous")}</p>
               {prev ? (
-                <Link href={`/solutions/${prev.slug}`} className="h3 mt-2 block underline-offset-[6px] hover:underline">← {t(`${prev.id}.name`)}</Link>
+                <Link href={`/solutions/${prev.slug}`} className="card card-lift mt-2 block px-5 py-4 text-[1.1rem] font-bold tracking-tight">← {t(`${prev.id}.name`)}</Link>
               ) : (
                 <p className="mt-2 text-[0.95rem]" style={{ color: "var(--fg-2)" }}>{ts("detail.first")}</p>
               )}
@@ -118,7 +120,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ local
             <div className="sm:text-right">
               <p className="eyebrow">{ts("detail.next")}</p>
               {next ? (
-                <Link href={`/solutions/${next.slug}`} className="h3 mt-2 block underline-offset-[6px] hover:underline">{t(`${next.id}.name`)} →</Link>
+                <Link href={`/solutions/${next.slug}`} className="card card-lift mt-2 block px-5 py-4 text-[1.1rem] font-bold tracking-tight">{t(`${next.id}.name`)} →</Link>
               ) : (
                 <p className="mt-2 text-[0.95rem]" style={{ color: "var(--fg-2)" }}>{ts("detail.last")}</p>
               )}

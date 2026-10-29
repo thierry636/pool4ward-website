@@ -2,7 +2,7 @@
   "Home": {
     "cover": {
       "eyebrow": "From transport engineering to contracting",
-      "title": "Design transport as close to reality as possible.",
+      "title": "Design transport <em>as close to reality as possible.</em>",
       "lede": "Faced with the energy transition and pressure on resources, Pool4ward supports companies from engineering to contracting to control their costs, reduce their risks and secure their transport capacity.",
       "benefits": [
         "Control costs",
@@ -10,13 +10,7 @@
         "Secure capacity"
       ],
       "ctaJourney": "See ground to contract",
-      "ctaTalk": "Discuss your transport plan",
-      "ctaDatasets": "Discover the datasets",
-      "sliderLabel": "From isolated flows to a coordinated organisation",
-      "sliderMin": "Separate flows",
-      "sliderMax": "Coherent organisation",
-      "boardLabel": "Illustrative diagram: four sites of a fictitious group. Links that start out separate chain into a loop.",
-      "demoNote": "Illustrative diagram, demonstration case."
+      "ctaTalk": "Discuss your transport plan"
     },
     "stakes": {
       "eyebrow": "Why start from the ground",
@@ -117,6 +111,120 @@
       "lede": "A first conversation is enough to tell whether your flows, sites and contracts lend themselves to another organisation. You have nothing to prepare.",
       "diagnostic": "Prefer to start on your own? The diagnostic takes two minutes.",
       "diagnosticLink": "Take the diagnostic"
+    },
+    "levers": {
+      "tag": "Illustration",
+      "region": "Western Mediterranean",
+      "note": "Links drawn to explain each lever: they are not existing services.",
+      "mapLabel": "Animated map of the western Mediterranean. Current lever: {lever}.",
+      "listLabel": "The six levers",
+      "play": "Resume autoplay",
+      "pause": "Pause",
+      "items": {
+        "rail": {
+          "name": "Rail",
+          "text": "Long distances go by rail; road keeps the first and last mile.",
+          "callouts": {
+            "terminal": {
+              "title": "Road-rail terminal",
+              "sub": "Where road hands over to rail"
+            },
+            "corridor": {
+              "title": "Rail corridor",
+              "sub": "The long haul by rail"
+            }
+          },
+          "schema": "Diagram: a long direct road trip is replaced by road, then rail for the long haul, then road."
+        },
+        "shortsea": {
+          "name": "Coastal shortsea",
+          "text": "Coastal flows, call by call, rather than a direct link: each port loads and unloads.",
+          "callouts": {
+            "direct": {
+              "title": "Direct link",
+              "sub": "Set aside in this example"
+            },
+            "calls": {
+              "title": "Coastal port calls",
+              "sub": "Loading and unloading at every port"
+            }
+          },
+          "schema": "Diagram: a direct link across open sea is replaced by a coastal route, port to port."
+        },
+        "loops": {
+          "name": "Loops",
+          "text": "Closed rotations: the vehicle that delivers leaves with a load instead of returning empty.",
+          "callouts": {
+            "round": {
+              "title": "Closed rotation",
+              "sub": "Loaded out and back"
+            },
+            "return": {
+              "title": "Loaded return",
+              "sub": "Fewer empty kilometres"
+            }
+          },
+          "schema": "Diagram: a loaded outbound leg followed by an empty return becomes a closed loop where every leg is loaded."
+        },
+        "crossdock": {
+          "name": "Cross-dock",
+          "text": "Partial shipments converge on a platform, are consolidated and leave as full loads.",
+          "callouts": {
+            "partial": {
+              "title": "Partial shipments",
+              "sub": "Several origins, one platform"
+            },
+            "hub": {
+              "title": "Cross-dock platform",
+              "sub": "Shipments are consolidated"
+            },
+            "full": {
+              "title": "Full loads",
+              "sub": "To each destination"
+            }
+          },
+          "schema": "Diagram: crossing partial shipments converge on a platform, then leave consolidated for two destinations."
+        },
+        "electric": {
+          "name": "Electrification",
+          "text": "Switch to electric around an optimal charging network, not the chargers already installed.",
+          "callouts": {
+            "now": {
+              "title": "Existing chargers",
+              "sub": "Gaps along the route"
+            },
+            "optimal": {
+              "title": "Optimal charging network",
+              "sub": "Placed to cover the whole route"
+            }
+          },
+          "schema": "Diagram: existing chargers leave gaps along the route; an optimal charging network covers the whole trip."
+        },
+        "pooling": {
+          "name": "Pooling",
+          "text": "Several shippers combine their flows on a single service: more volume on the same link.",
+          "callouts": {
+            "shippers": {
+              "title": "Three shippers",
+              "sub": "Each with their own flows"
+            },
+            "shared": {
+              "title": "Pooled service",
+              "sub": "One departure for everyone"
+            }
+          },
+          "schema": "Diagram: three separate departures become a single service shared by the three shippers."
+        }
+      }
+    },
+    "leverSchemas": {
+      "eyebrow": "The levers, in diagrams",
+      "title": "Six levers to <em>reshape</em> a transport network.",
+      "lede": "Each diagram sets a starting situation beside what a lever makes of it.",
+      "legendLabel": "Diagram legend",
+      "legendBefore": "Starting situation",
+      "legendAfter": "With the lever",
+      "note": "Illustrative diagrams, with no scale or figures: they explain a principle, they do not measure any gain."
     }
   }
 }

@@ -225,9 +225,9 @@ export function ShowcaseFlat({
 
   return (
     <div ref={host} className="h-full w-full">
-      <svg ref={svg} role="img" aria-label={ariaLabel} viewBox={`${view.x} ${view.y} ${view.w} ${view.h}`} className="h-full w-full" preserveAspectRatio="xMidYMid meet" style={{ background: "#0a2d4a" }}>
-        <path d={land} fill="#163f2f" stroke="#3f8c6a" strokeWidth="0.8" vectorEffect="non-scaling-stroke" />
-        <path d={borders} fill="none" stroke="#79b59a" strokeOpacity="0.32" strokeWidth="0.8" vectorEffect="non-scaling-stroke" />
+      <svg ref={svg} role="img" aria-label={ariaLabel} viewBox={`${view.x} ${view.y} ${view.w} ${view.h}`} className="h-full w-full" preserveAspectRatio="xMidYMid meet" style={{ background: "#071226" }}>
+        <path d={land} fill="#0e1c38" stroke="#2a4272" strokeWidth="0.8" vectorEffect="non-scaling-stroke" />
+        <path d={borders} fill="none" stroke="#5b7bb8" strokeOpacity="0.32" strokeWidth="0.8" vectorEffect="non-scaling-stroke" />
         <g key={chapter?.id} className="cap-fade">
           {routes.map((r) => (
             <path
@@ -247,7 +247,7 @@ export function ShowcaseFlat({
             routes.map((r, i) => {
               const dur = Math.max(2.5, r.km / 170);
               return (
-                <circle key={r.v.id} r={3.4 * unit} fill={MODE_STYLE[r.v.mode].color} stroke="#0b241a" strokeWidth={1 * unit}>
+                <circle key={r.v.id} r={3.4 * unit} fill={MODE_STYLE[r.v.mode].color} stroke="#020617" strokeWidth={1 * unit}>
                   <animateMotion dur={`${dur.toFixed(2)}s`} begin={`${(-((i * 0.37) % 1) * dur).toFixed(2)}s`} repeatCount="indefinite">
                     <mpath href={`#flat-${r.v.id}`} />
                   </animateMotion>
@@ -256,14 +256,14 @@ export function ShowcaseFlat({
             })}
           {[...new Set(routes.flatMap((r) => r.stops.map((s) => s.id)))].map((id) => {
             const s = siteById.get(id)!;
-            return <circle key={id} cx={mx(s.lon)} cy={my(s.lat)} r={3.2 * unit} fill="#f5f2ea" stroke="#0b241a" strokeWidth={1.2 * unit} />;
+            return <circle key={id} cx={mx(s.lon)} cy={my(s.lat)} r={3.2 * unit} fill="#f1f5f9" stroke="#020617" strokeWidth={1.2 * unit} />;
           })}
         </g>
         {box &&
           placed.pills.map((p) => (
             <g key={`op-${p.id}`} transform={`translate(${box.x + p.x * unit} ${box.y + p.y * unit})`}>
-              <rect width={p.w * unit} height={22 * unit} fill="#f5f2ea" stroke="#e8b964" strokeWidth={1 * unit} rx={2 * unit} />
-              <text x={(p.w / 2) * unit} y={15 * unit} textAnchor="middle" fontSize={11 * unit} fontWeight="600" fill="#0b241a" fontFamily="var(--font-geist-sans), system-ui, sans-serif">
+              <rect width={p.w * unit} height={22 * unit} fill="#f1f5f9" stroke="#2dd4bf" strokeWidth={1 * unit} rx={6 * unit} />
+              <text x={(p.w / 2) * unit} y={15 * unit} textAnchor="middle" fontSize={11 * unit} fontWeight="600" fill="#0f172a" fontFamily="var(--font-sans)">
                 {p.text}
               </text>
             </g>
@@ -276,11 +276,11 @@ export function ShowcaseFlat({
               y={box.y + l.y * unit}
               textAnchor={l.anchor}
               fontSize={11 * unit}
-              fill="#f5f2ea"
-              stroke="#0b241a"
+              fill="#e2e8f0"
+              stroke="#020617"
               strokeWidth={3 * unit}
               paintOrder="stroke"
-              fontFamily="var(--font-geist-mono), ui-monospace, monospace"
+              fontFamily="var(--font-sans)"
               letterSpacing={0.04 * 11 * unit}
             >
               {l.name}

@@ -35,44 +35,6 @@ const config: Config = {
           900: "#0f172a",
           950: "#020617",
         },
-        // Version 2 — vert profond, fonds minéraux, accents sobres.
-        // Les rapports de contraste de chaque couple texte/fond sont vérifiés
-        // dans docs/version2/DESIGN.md (tous >= 4,5:1).
-        forest: {
-          50: "#eef4f0",
-          100: "#d8e6dd",
-          200: "#b3cdbd",
-          300: "#8fc4ab",
-          400: "#5da283",
-          500: "#2f7d5c",
-          600: "#1b6b4e",
-          700: "#14573f",
-          800: "#0f4130",
-          900: "#0b241a",
-          950: "#071a12",
-        },
-        mineral: {
-          50: "#f5f2ea",
-          100: "#ebe7db",
-          200: "#ddd7c7",
-          300: "#c9c2ae",
-          400: "#a8a089",
-          500: "#7d765f",
-        },
-        ochre: {
-          200: "#f2d9a3",
-          300: "#e8b964",
-          400: "#d49d3c",
-          500: "#b8821f",
-          700: "#8a5a10",
-          800: "#68430b",
-        },
-        river: {
-          300: "#9cc3de",
-          400: "#6aa0c7",
-          600: "#2f6a93",
-          800: "#1c4562",
-        },
         teal: {
           50: "#f0fdfa",
           100: "#ccfbf1",
@@ -87,12 +49,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        // Geist (auto-hébergée via next/font) remplace Inter, qui était tirée de
-        // Google Fonts : plus aucune requête tierce avant le premier rendu.
-        sans: ["var(--font-geist-sans)", "ui-sans-serif", "system-ui", "-apple-system", "sans-serif"],
-        display: ["var(--font-geist-sans)", "ui-sans-serif", "system-ui", "-apple-system", "sans-serif"],
-        serif: ["var(--font-serif)", "Source Serif Fallback", "Georgia", "serif"],
-        mono: ["var(--font-geist-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        sans: ["var(--font-inter)", "Inter", "ui-sans-serif", "system-ui", "-apple-system", "sans-serif"],
+        display: ["var(--font-inter)", "Inter", "ui-sans-serif", "system-ui", "-apple-system", "sans-serif"],
       },
       boxShadow: {
         glow: "0 0 60px -12px rgba(66, 99, 235, 0.25)",

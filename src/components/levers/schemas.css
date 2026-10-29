@@ -1,0 +1,95 @@
+/* Schémas des leviers : panneau sombre (même univers que la carte de la couverture) et animations
+   déclenchées par `reveal-in`. Sans cette classe, chaque schéma est affiché terminé. */
+
+.sch-panel {
+  position: relative;
+  background:
+    radial-gradient(120% 100% at 80% 0%, rgb(66 99 235 / 0.22), transparent 60%),
+    radial-gradient(rgb(148 163 184 / 0.13) 1px, transparent 1.2px) 0 0 / 18px 18px,
+    #0b1224;
+  border-bottom: 1px solid rgb(15 23 42 / 0.1);
+}
+.sch {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 0.6rem 0.4rem;
+}
+
+.sch-ghost {
+  fill: none;
+  stroke: #64748b;
+  stroke-dasharray: 5 5;
+  stroke-linecap: round;
+  opacity: 0.8;
+}
+.sch-draw {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+.sch-run {
+  display: none;
+}
+
+.reveal-in .sch-draw {
+  animation: sch-draw var(--t, 1.1s) cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation-delay: var(--d, 0s);
+}
+.reveal-in .sch-ghost,
+.reveal-in .sch-fadein,
+.reveal-in .sch-ghostnode {
+  animation: sch-in 0.6s ease both;
+  animation-delay: var(--d, 0s);
+}
+.reveal-in .sch-pop {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sch-pop 0.45s cubic-bezier(0.3, 1.5, 0.5, 1) both;
+  animation-delay: var(--d, 0s);
+}
+.reveal-in .sch-ping {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sch-ping 2.4s ease-out infinite;
+  animation-delay: var(--d, 0s);
+}
+.reveal-in .sch-run {
+  display: inline;
+  offset-rotate: 0deg;
+  opacity: 0;
+  filter: drop-shadow(0 0 4px currentColor);
+  animation: sch-move linear infinite;
+}
+
+@keyframes sch-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes sch-in {
+  from { opacity: 0; }
+}
+@keyframes sch-pop {
+  from { opacity: 0; transform: scale(0.3); }
+}
+@keyframes sch-ping {
+  from { transform: scale(1); opacity: 0.8; }
+  to { transform: scale(3.4); opacity: 0; }
+}
+@keyframes sch-move {
+  0% { offset-distance: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-in .sch-run {
+    display: none;
+  }
+  .reveal-in .sch-ping {
+    display: none;
+  }
+}

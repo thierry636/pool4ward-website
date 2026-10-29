@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHero } from "@/components/sections/PageHero";
 import { CtaBand } from "@/components/sections/CtaBand";
+import { FeatureCard } from "@/components/ui/FeatureCard";
 import { Showcase } from "@/components/showcase/Showcase";
 import { ShowcaseList } from "@/components/showcase/ShowcaseList";
 import { StatusScale } from "@/components/sections/StatusScale";
@@ -48,15 +49,11 @@ export default async function DatasetsPage({ params }: { params: Promise<{ local
         <div className="wrap">
           <p className="eyebrow">{t("read.eyebrow")}</p>
           <h2 id="read" className="h2 mt-4 max-w-3xl">{t("read.title")}</h2>
-          <ol className="mt-12 grid gap-x-12 md:grid-cols-3">
+          <ul className="mt-12 grid gap-4 md:grid-cols-3">
             {read.map((r, i) => (
-              <li key={r.name} className="rule-top py-7">
-                <span className="mono text-[0.72rem]" style={{ color: "var(--warm)" }}>0{i + 1}</span>
-                <p className="h3 mt-2">{r.name}</p>
-                <p className="mt-3 text-[1rem] leading-relaxed" style={{ color: "var(--fg-2)" }}>{r.body}</p>
-              </li>
+              <FeatureCard key={r.name} index={i} title={r.name} body={r.body} />
             ))}
-          </ol>
+          </ul>
           <div className="mt-14">
             <p className="eyebrow mb-3">{ta("title")}</p>
             <StatusScale />
@@ -71,16 +68,12 @@ export default async function DatasetsPage({ params }: { params: Promise<{ local
             <h2 id="protection" className="h2 mt-4">{t("protection.title")}</h2>
             <p className="lede mt-6">{t("protection.lede")}</p>
           </div>
-          <ol className="mt-12 grid gap-x-12 md:grid-cols-3">
+          <ul className="mt-12 grid gap-4 md:grid-cols-3">
             {tiers.map((tier, i) => (
-              <li key={tier.name} className="rule-top py-7">
-                <span className="mono text-[0.72rem]" style={{ color: "var(--warm)" }}>0{i + 1}</span>
-                <p className="h3 mt-2">{tier.name}</p>
-                <p className="mt-3 text-[1rem] leading-relaxed" style={{ color: "var(--fg-2)" }}>{tier.body}</p>
-              </li>
+              <FeatureCard key={tier.name} index={i} title={tier.name} body={tier.body} />
             ))}
-          </ol>
-          <p className="mono mt-10 max-w-3xl border-l-2 pl-4 text-[0.84rem] leading-relaxed" style={{ borderColor: "var(--warm)", color: "var(--fg-2)" }}>
+          </ul>
+          <p className="mt-8 max-w-3xl rounded-2xl border px-5 py-4 text-[0.92rem] leading-relaxed" style={{ borderColor: "var(--rule)", background: "var(--card)", color: "var(--fg-2)" }}>
             {t("protection.limit")}
           </p>
         </div>

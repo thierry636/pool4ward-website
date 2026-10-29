@@ -2,7 +2,7 @@
   "Home": {
     "cover": {
       "eyebrow": "De l’ingénierie à la contractualisation du transport",
-      "title": "Concevoir le transport au plus près du réel.",
+      "title": "Concevoir le transport <em>au plus près du réel.</em>",
       "lede": "Face aux transformations énergétiques et aux tensions sur les ressources, Pool4ward accompagne les entreprises de l’ingénierie à la contractualisation pour maîtriser leurs coûts, réduire leurs risques et sécuriser leurs capacités de transport.",
       "benefits": [
         "Maîtriser les coûts",
@@ -10,13 +10,7 @@
         "Sécuriser les capacités"
       ],
       "ctaJourney": "Voir du terrain aux contrats",
-      "ctaTalk": "Parler de votre plan transport",
-      "ctaDatasets": "Découvrir les référentiels",
-      "sliderLabel": "Du flux isolé à l’organisation coordonnée",
-      "sliderMin": "Flux séparés",
-      "sliderMax": "Organisation cohérente",
-      "boardLabel": "Schéma illustratif : quatre sites d’un groupe fictif. Les liaisons, d’abord séparées, s’enchaînent en une boucle.",
-      "demoNote": "Schéma illustratif, cas démonstrateur."
+      "ctaTalk": "Parler de votre plan transport"
     },
     "stakes": {
       "eyebrow": "Pourquoi partir du terrain",
@@ -117,6 +111,120 @@
       "lede": "Un premier échange suffit pour dire si vos flux, vos sites et vos contrats se prêtent à une autre organisation. Vous n’avez rien à préparer.",
       "diagnostic": "Vous préférez commencer seul ? Le diagnostic prend deux minutes.",
       "diagnosticLink": "Faire le diagnostic"
+    },
+    "levers": {
+      "tag": "Illustration",
+      "region": "Méditerranée occidentale",
+      "note": "Liaisons dessinées pour expliquer chaque levier : ce ne sont pas des services existants.",
+      "mapLabel": "Carte animée de la Méditerranée occidentale. Levier en cours : {lever}.",
+      "listLabel": "Les six leviers",
+      "play": "Reprendre la lecture",
+      "pause": "Mettre en pause",
+      "items": {
+        "rail": {
+          "name": "Rail",
+          "text": "Les longues distances passent au rail ; la route garde le premier et le dernier kilomètre.",
+          "callouts": {
+            "terminal": {
+              "title": "Terminal rail-route",
+              "sub": "Là où la route passe le relais au rail"
+            },
+            "corridor": {
+              "title": "Corridor ferroviaire",
+              "sub": "Le long cours sur rail"
+            }
+          },
+          "schema": "Schéma : un trajet routier direct, long, est remplacé par route, puis rail sur le long cours, puis route."
+        },
+        "shortsea": {
+          "name": "Shortsea côtier",
+          "text": "Des flux côtiers, d’escale en escale, plutôt qu’une liaison directe : chaque port charge et décharge.",
+          "callouts": {
+            "direct": {
+              "title": "Liaison directe",
+              "sub": "Écartée dans cet exemple"
+            },
+            "calls": {
+              "title": "Escales côtières",
+              "sub": "Chargement et déchargement à chaque port"
+            }
+          },
+          "schema": "Schéma : une liaison directe en pleine mer est remplacée par un trajet côtier, de port en port."
+        },
+        "loops": {
+          "name": "Boucles",
+          "text": "Des rotations fermées : le moyen de transport qui livre repart avec une charge au lieu de rentrer à vide.",
+          "callouts": {
+            "round": {
+              "title": "Rotation fermée",
+              "sub": "Aller et retour chargés"
+            },
+            "return": {
+              "title": "Retour chargé",
+              "sub": "Moins de kilomètres à vide"
+            }
+          },
+          "schema": "Schéma : un aller chargé suivi d’un retour à vide devient une boucle fermée où chaque tronçon est chargé."
+        },
+        "crossdock": {
+          "name": "Cross-dock",
+          "text": "Les envois partiels convergent vers une plateforme, se regroupent et repartent en lots complets.",
+          "callouts": {
+            "partial": {
+              "title": "Envois partiels",
+              "sub": "Plusieurs origines, une même plateforme"
+            },
+            "hub": {
+              "title": "Plateforme cross-dock",
+              "sub": "Les envois sont regroupés"
+            },
+            "full": {
+              "title": "Lots complets",
+              "sub": "Vers chaque destination"
+            }
+          },
+          "schema": "Schéma : des envois partiels qui se croisent convergent vers une plateforme, puis repartent groupés vers deux destinations."
+        },
+        "electric": {
+          "name": "Électrification",
+          "text": "Passer à l’électrique selon un réseau de bornes optimal, pas selon les bornes déjà installées.",
+          "callouts": {
+            "now": {
+              "title": "Bornes existantes",
+              "sub": "Des trous sur l’axe"
+            },
+            "optimal": {
+              "title": "Réseau de bornes optimal",
+              "sub": "Placé pour couvrir tout l’axe"
+            }
+          },
+          "schema": "Schéma : des bornes existantes laissent des trous sur l’axe ; un réseau de bornes optimal couvre tout le trajet."
+        },
+        "pooling": {
+          "name": "Mutualisation",
+          "text": "Plusieurs chargeurs regroupent leurs flux sur un même service : plus de volume sur la même liaison.",
+          "callouts": {
+            "shippers": {
+              "title": "Trois chargeurs",
+              "sub": "Chacun avec ses propres flux"
+            },
+            "shared": {
+              "title": "Service mutualisé",
+              "sub": "Un seul départ pour tous"
+            }
+          },
+          "schema": "Schéma : trois départs séparés deviennent un seul service partagé par les trois chargeurs."
+        }
+      }
+    },
+    "leverSchemas": {
+      "eyebrow": "Les leviers en schéma",
+      "title": "Six leviers pour <em>changer la forme</em> d’un réseau de transport.",
+      "lede": "Chaque schéma met côte à côte une situation de départ et ce qu’un levier permet d’en faire.",
+      "legendLabel": "Légende des schémas",
+      "legendBefore": "Situation de départ",
+      "legendAfter": "Avec le levier",
+      "note": "Schémas illustratifs, sans échelle ni chiffre : ils expliquent un principe, ils ne mesurent aucun gain."
     }
   }
 }

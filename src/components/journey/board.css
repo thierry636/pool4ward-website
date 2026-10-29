@@ -12,45 +12,45 @@
 }
 
 .board-dark {
-  --c-terrain: #8fc4ab;
-  --terrain-alpha: 0.2;
-  --c-river: #6aa0c7;
-  --c-rail: #a7bdb0;
-  --c-muted: #c9c2ae;
-  --c-ghost: #c9c2ae;
-  --c-group: #8fc4ab;
-  --c-loop: #e8b964;
-  --c-lot1: #e8b964;
-  --c-lot2: #8fc4ab;
-  --c-electric: #c6d84b;
-  --c-node: #f5f2ea;
-  --c-node-ink: #0b241a;
-  --c-label: #f5f2ea;
-  --c-label-2: #a7bdb0;
-  --c-warn: #f0a07a;
-  --c-chip: rgb(245 242 234 / 0.1);
-  --c-chip-line: rgb(245 242 234 / 0.4);
+  --c-terrain: #4263eb;
+  --terrain-alpha: 0.16;
+  --c-river: #38bdf8;
+  --c-rail: #94a3b8;
+  --c-muted: #64748b;
+  --c-ghost: #64748b;
+  --c-group: #2dd4bf;
+  --c-loop: #2dd4bf;
+  --c-lot1: #fbbf24;
+  --c-lot2: #2dd4bf;
+  --c-electric: #a3e635;
+  --c-node: #f1f5f9;
+  --c-node-ink: #020617;
+  --c-label: #f1f5f9;
+  --c-label-2: #94a3b8;
+  --c-warn: #fb923c;
+  --c-chip: rgb(241 245 249 / 0.08);
+  --c-chip-line: rgb(241 245 249 / 0.4);
 }
 
 .board-light {
-  --c-terrain: #14573f;
-  --terrain-alpha: 0.16;
-  --c-river: #2f6a93;
-  --c-rail: #4a5a50;
-  --c-muted: #7d765f;
-  --c-ghost: #7d765f;
-  --c-group: #14573f;
-  --c-loop: #14573f;
-  --c-lot1: #14573f;
-  --c-lot2: #b8821f;
-  --c-electric: #5c7a12;
-  --c-node: #0b241a;
-  --c-node-ink: #f5f2ea;
-  --c-label: #0e2219;
-  --c-label-2: #4a5a50;
-  --c-warn: #a8431f;
-  --c-chip: rgb(14 34 25 / 0.06);
-  --c-chip-line: rgb(14 34 25 / 0.4);
+  --c-terrain: #4263eb;
+  --terrain-alpha: 0.12;
+  --c-river: #0284c7;
+  --c-rail: #475569;
+  --c-muted: #64748b;
+  --c-ghost: #94a3b8;
+  --c-group: #4263eb;
+  --c-loop: #0f766e;
+  --c-lot1: #4263eb;
+  --c-lot2: #b45309;
+  --c-electric: #4d7c0f;
+  --c-node: #0f172a;
+  --c-node-ink: #ffffff;
+  --c-label: #0f172a;
+  --c-label-2: #475569;
+  --c-warn: #c2410c;
+  --c-chip: rgb(15 23 42 / 0.06);
+  --c-chip-line: rgb(15 23 42 / 0.4);
 }
 
 .board-terrain {
@@ -72,7 +72,7 @@
   width: 100%;
   height: 100%;
   overflow: visible;
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-family: var(--font-sans);
 }
 
 /* Tout ce qui change d'une étape à l'autre le fait en douceur ; le mouvement
@@ -106,7 +106,7 @@
   stroke-linejoin: round;
 }
 .board .site-name {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 28px;
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -140,42 +140,7 @@
   to { stroke-dashoffset: -60; }
 }
 
-/* Pas de transition pendant qu'on déplace le curseur de la couverture, ou
-   quand la scène s'ouvre déjà dans son état final : le plateau suit la main. */
+/* Pas de transition quand la scène s'ouvre déjà dans son état final. */
 .board-still .t {
   transition: none !important;
-}
-
-/* Curseur de la couverture */
-.cover-range {
-  -webkit-appearance: none;
-  appearance: none;
-  background: transparent;
-}
-.cover-range::-webkit-slider-runnable-track {
-  height: 2px;
-  background: linear-gradient(to right, var(--warm), var(--rule-strong));
-}
-.cover-range::-moz-range-track {
-  height: 2px;
-  background: var(--rule-strong);
-}
-.cover-range::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 22px;
-  height: 22px;
-  margin-top: -10px;
-  border-radius: 50%;
-  background: var(--warm);
-  border: 3px solid var(--bg);
-  box-shadow: 0 0 0 1px var(--warm);
-}
-.cover-range::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--warm);
-  border: 3px solid var(--bg);
-  box-shadow: 0 0 0 1px var(--warm);
 }

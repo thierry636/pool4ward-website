@@ -1,0 +1,245 @@
+"use client";
+
+import dynamic from "next/dynamic";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { usePrefersReducedMotion } from "@/lib/use-reduced-motion";
+import { LEVER_COLOR, LEVER_ORDER, type LeverId } from "@/lib/levers/data";
+import { forcesGlobe, isSoftwareRenderer, preferLightweight, supportsWebGL } from "@/components/showcase/support";
+import { LeverFlat } from "./LeverFlat";
+import { LeverIcon } from "./icons";
+import type { Rect } from "./LeverGlobe";
+
+/** MapLibre pèse ≈ 250 Ko : il n'est téléchargé que si l'appareil sait afficher le globe. */
+const LeverGlobe = dynamic(() => import("./LeverGlobe").then((m) => m.LeverGlobe), { ssr: false });
+
+type Renderer = "pending" | "globe" | "flat";
+
+const NO_PAD = { left: 0, right: 0, top: 0, bottom: 0 };
+
+/**
+ * La scène des leviers de la page de garde : une carte (globe 3D, ou carte à plat sans
+ * WebGL) qui joue les six leviers l'un après l'autre sur une même région, et le bandeau qui
+ * les liste. Elle se place dans la section de la couverture, derrière le texte sur grand
+ * écran, sous le texte sur téléphone. Fragment : le conteneur parent est un flex en colonne.
+ */
+export function LeverStage() {
+  const t = useTranslations("Home.levers");
+  const locale = useLocale() === "en" ? "en" : "fr";
+  const reduced = usePrefersReducedMotion();
+
+  const [renderer, setRenderer] = useState<Renderer>("pending");
+  const [ready, setReady] = useState(false);
+  const [active, setActive] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const [pad, setPad] = useState(NO_PAD);
+  const [mobile, setMobile] = useState(false);
+  const mapEl = useRef<HTMLDivElement>(null);
+  const dockEl = useRef<HTMLDivElement>(null);
+  const reserved = useRef<Rect[]>([]);
+  const progress = useRef(0);
+  const bars = useRef<(HTMLSpanElement | null)[]>([]);
+
+  /* Mesure du texte et du bandeau : la région se centre dans l'espace libre, les étiquettes les évitent. */
+  useEffect(() => {
+    const map = mapEl.current;
+    const dock = dockEl.current;
+    const section = map?.parentElement;
+    if (!map || !dock || !section) return;
+    const measure = () => {
+      const text = section.querySelector<HTMLElement>("[data-cover-text]");
+      const m = map.getBoundingClientRect();
+      if (!text || m.width === 0) return;
+      const wide = window.matchMedia("(min-width: 1024px)").matches;
+      setMobile(window.innerWidth < 768);
+      if (!wide) {
+        reserved.current = [];
+        setPad((p) => (p.left === 8 && p.right === 8 && p.top === 12 && p.bottom === 12 ? p : { left: 8, right: 8, top: 12, bottom: 12 }));
+        return;
+      }
+      const tr = text.getBoundingClientRect();
+      const dr = dock.getBoundingClientRect();
+      const left = Math.round(Math.min(tr.right - m.left + 24, m.width * 0.58));
+      const bottom = Math.round(m.bottom - dr.top + 10);
+      const top = 92;
+      reserved.current = [
+        { x: tr.left - m.left - 8, y: tr.top - m.top - 8, w: tr.width + 16, h: tr.height + 16 },
+        { x: dr.left - m.left, y: dr.top - m.top - 6, w: dr.width, h: dr.height + 6 },
+        { x: 0, y: 0, w: m.width, h: 70 },
+      ];
+      setPad((p) => (p.left === left && p.bottom === bottom && p.top === top && p.right === 28 ? p : { left, right: 28, top, bottom }));
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(section);
+    ro.observe(dock);
+    const text = section.querySelector("[data-cover-text]");
+    if (text) ro.observe(text);
+    return () => ro.disconnect();
+  }, []);
+
+  /* Le rendu se décide après le chargement de la page, pour ne rien prendre au premier affichage. */
+  useEffect(() => {
+    let timer = 0;
+    const decide = () => {
+      if (forcesGlobe()) setRenderer("globe");
+      else if (!supportsWebGL() || isSoftwareRenderer() || preferLightweight()) setRenderer("flat");
+      else setRenderer("globe");
+      setPlaying(!window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    };
+    const later = () => {
+      timer = window.setTimeout(decide, 200);
+    };
+    if (document.readyState === "complete") later();
+    else window.addEventListener("load", later, { once: true });
+    return () => {
+      window.removeEventListener("load", later);
+      window.clearTimeout(timer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (reduced) setPlaying(false);
+  }, [reduced]);
+
+  /* Barre de progression du levier en cours : écrite directement, sans repasser par React. */
+  useEffect(() => {
+    let raf = 0;
+    const tick = () => {
+      raf = requestAnimationFrame(tick);
+      bars.current.forEach((b, i) => {
+        if (b) b.style.transform = `scaleX(${i === active ? progress.current : 0})`;
+      });
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [active]);
+
+  const advance = useCallback(() => setActive((a) => (a + 1) % LEVER_ORDER.length), []);
+  const fatal = useCallback(() => setRenderer("flat"), []);
+  const onReady = useCallback(() => setReady(true), []);
+  const noop = useCallback(() => {}, []);
+  const calloutText = useCallback(
+    (lever: LeverId, key: string) => ({ title: t(`items.${lever}.callouts.${key}.title`), sub: t(`items.${lever}.callouts.${key}.sub`) }),
+    [t],
+  );
+  const pick = (i: number) => {
+    // Un choix manuel arrête le défilement : le levier se joue une fois, puis reste affiché.
+    setPlaying(false);
+    setActive(i);
+  };
+
+  const lever = LEVER_ORDER[active];
+  const name = t(`items.${lever}.name`);
+  const label = t("mapLabel", { lever: name });
+
+  return (
+    <>
+      {/* La carte : fond de la couverture sur grand écran, bloc sous le texte sur téléphone. */}
+      <div ref={mapEl} className="lever-map relative h-[25rem] overflow-hidden sm:h-[31rem] lg:absolute lg:inset-0 lg:-z-10 lg:h-auto">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/levers-poster.svg"
+          alt=""
+          aria-hidden="true"
+          width={1600}
+          height={900}
+          decoding="async"
+          fetchPriority="low"
+          className="absolute inset-0 h-full w-full object-cover object-[62%_50%] transition-opacity duration-700"
+          style={{ opacity: ready ? 0 : 1 }}
+        />
+        {renderer === "globe" && (
+          <div className="absolute inset-0">
+            <LeverGlobe
+              levers={LEVER_ORDER}
+              active={active}
+              playing={playing}
+              reducedMotion={reduced}
+              mobile={mobile}
+              locale={locale}
+              calloutText={calloutText}
+              ariaLabel={label}
+              pad={pad}
+              reserved={reserved}
+              progress={progress}
+              onAdvance={advance}
+              onShown={noop}
+              onFatal={fatal}
+              onReady={onReady}
+            />
+          </div>
+        )}
+        {renderer === "flat" && (
+          <div className="absolute inset-0">
+            <LeverFlat
+              levers={LEVER_ORDER}
+              active={active}
+              playing={playing}
+              reducedMotion={reduced}
+              locale={locale}
+              calloutText={calloutText}
+              ariaLabel={label}
+              pad={pad}
+              reserved={reserved}
+              progress={progress}
+              onAdvance={advance}
+              onShown={noop}
+              onReady={onReady}
+            />
+          </div>
+        )}
+        {/* Fondu vers le texte et vers la section suivante. */}
+        <div aria-hidden="true" className="lever-fade-x pointer-events-none absolute inset-0 hidden lg:block" />
+        <div aria-hidden="true" className="lever-fade-y pointer-events-none absolute inset-0" />
+      </div>
+
+      {/* Le bandeau : le levier en cours, et les six leviers. */}
+      <div ref={dockEl} className="wrap relative z-10 pb-5 pt-5 lg:pb-7 lg:pt-3">
+        <div className="lever-dock">
+          <div className="flex items-start gap-4 px-4 pb-3 pt-4 sm:px-5">
+            <div key={lever} className="cap-fade min-w-0 flex-1">
+              <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                <span aria-hidden="true" className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: LEVER_COLOR[lever], boxShadow: `0 0 10px ${LEVER_COLOR[lever]}` }} />
+                <span className="text-[1.02rem] font-bold tracking-tight text-white">{name}</span>
+              </p>
+              <p className="mt-1 max-w-3xl text-[0.9rem] leading-snug" style={{ color: "#cbd5e1" }}>
+                {t(`items.${lever}.text`)}
+              </p>
+            </div>
+            <button type="button" className="lever-play" onClick={() => setPlaying((p) => !p)}>
+              <span aria-hidden="true">{playing ? "❚❚" : "▶"}</span>
+              <span className="sr-only sm:not-sr-only">{playing ? t("pause") : t("play")}</span>
+            </button>
+          </div>
+          <ol className="grid grid-cols-3 border-t md:grid-cols-6" style={{ borderColor: "rgb(148 163 184 / 0.16)" }} aria-label={t("listLabel")}>
+            {LEVER_ORDER.map((id, i) => (
+              <li key={id} className="relative border-b border-r last:border-r-0 md:border-b-0 [&:nth-child(3)]:border-r-0 md:[&:nth-child(3)]:border-r" style={{ borderColor: "rgb(148 163 184 / 0.16)" }}>
+                <button type="button" className="lever-chip" aria-pressed={i === active} onClick={() => pick(i)}>
+                  <span style={{ color: i === active ? LEVER_COLOR[id] : "#94a3b8" }}>
+                    <LeverIcon id={id} size={19} />
+                  </span>
+                  <span>{t(`items.${id}.name`)}</span>
+                </button>
+                <span
+                  aria-hidden="true"
+                  ref={(el) => {
+                    bars.current[i] = el;
+                  }}
+                  className="lever-bar"
+                  style={{ background: LEVER_COLOR[id] }}
+                />
+              </li>
+            ))}
+          </ol>
+          <p className="border-t px-4 py-2 text-[0.72rem] leading-snug sm:px-5" style={{ borderColor: "rgb(148 163 184 / 0.16)", color: "#94a3b8" }}>
+            <span className="font-semibold" style={{ color: "#cbd5e1" }}>
+              {t("tag")} · {t("region")}.
+            </span>{" "}
+            {t("note")}
+          </p>
+        </div>
+      </div>
+    </>
+  );
+}

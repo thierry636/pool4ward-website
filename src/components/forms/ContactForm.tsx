@@ -110,7 +110,7 @@ export function ContactForm({ defaultTopic = "other" }: { defaultTopic?: Contact
           style={{ borderColor: "var(--rule-strong)", borderRadius: 2 }}
         >
           {CONTACT_TOPICS.map((k) => (
-            <option key={k} value={k} style={{ color: "#0e2219" }}>
+            <option key={k} value={k} style={{ color: "#0f172a" }}>
               {t(`topics.${k}`)}
             </option>
           ))}

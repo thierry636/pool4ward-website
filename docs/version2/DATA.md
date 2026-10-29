@@ -24,6 +24,10 @@
   issues d'aucun référentiel Pool4ward et **n'affirment l'existence d'aucun
   service**. L'animation le dit à l'écran (« Exemple illustratif »), la liste
   des liaisons et le pied de page aussi.
+- **La scène des leviers de la couverture** (`src/lib/levers/data.ts`, voir LEVERS.md) :
+  lieux réels, liaisons **dessinées pour expliquer** six leviers sur la Méditerranée
+  occidentale. Aucun service existant n'est affirmé, aucun nom d'opérateur, aucun chiffre ;
+  l'écran le dit (« Illustration »). Indépendante de la vitrine et de la base privée.
 - **Parkings sécurisés, bornes de recharge, réseaux** : aucune de ces couches
   n'est publiée par la vitrine (l'ancien globe d'exploration, qui les
   évoquait, a été retiré).

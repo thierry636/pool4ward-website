@@ -316,7 +316,7 @@ function Stage2({
 
         {sc === "loop" && (
           <div className="mt-5 border p-4 sm:p-5" style={{ borderColor: "var(--rule-strong)", background: "var(--card)" }}>
-            <p className="eyebrow" style={{ color: "var(--warm)" }}>{t("arbitration.eyebrow")}</p>
+            <p className="eyebrow">{t("arbitration.eyebrow")}</p>
             <p className="mt-2 text-[0.98rem] leading-relaxed">{t("arbitration.body")}</p>
             <div role="radiogroup" aria-label={t("arbitration.label")} className="mt-4 grid gap-2 sm:grid-cols-2">
               {(["late", "early"] as const).map((v) => (
@@ -365,10 +365,10 @@ function Stage2({
                   <td className="py-3 pr-3 leading-relaxed">{t(`scenarios.${sc}.${r}`)}</td>
                   <td className="w-[7.5rem] py-3 text-right">
                     <span
-                      className="mono inline-block whitespace-nowrap border px-2 py-0.5 text-[0.68rem] uppercase tracking-[0.08em]"
+                      className="inline-block whitespace-nowrap rounded-full border px-2.5 py-0.5 text-[0.72rem] font-semibold"
                       style={{
                         borderColor: documented ? "var(--accent)" : "var(--rule-strong)",
-                        color: documented ? "var(--accent)" : "var(--fg-2)",
+                        color: documented ? "var(--pill-fg)" : "var(--fg-2)",
                         background: documented ? "color-mix(in srgb, var(--accent) 10%, transparent)" : "transparent",
                       }}
                     >
@@ -514,7 +514,7 @@ function Stage3({
 
         {step === "commitments" && (
           <div className="mt-5 border p-4 sm:p-5" style={{ borderColor: "var(--rule-strong)", background: "var(--card)" }}>
-            <p className="eyebrow" style={{ color: "var(--warm)" }}>{t("contract.commitments.template")}</p>
+            <p className="eyebrow">{t("contract.commitments.template")}</p>
             <dl className="mt-3 divide-y" style={{ borderColor: "var(--rule)" }}>
               {COMMIT_FIELDS.map((f) => (
                 <div key={f} className="grid gap-1 py-3 sm:grid-cols-[9rem_1fr] sm:gap-4" style={{ borderColor: "var(--rule)" }}>

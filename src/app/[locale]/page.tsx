@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Cover } from "@/components/home/Cover";
+import { LeverSchemas } from "@/components/levers/LeverSchemas";
 import { Stakes } from "@/components/home/Stakes";
 import { JourneySection } from "@/components/home/JourneySection";
 import { Capabilities } from "@/components/home/Capabilities";
@@ -39,9 +40,10 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               : "Pool4ward supports companies from transport engineering to contracting.",
         }}
       />
-      <ClientMessages namespaces={["Home.cover", "Journey.board", "Journey.sites"]}>
+      <ClientMessages namespaces={["Home.cover", "Home.levers"]}>
         <Cover />
       </ClientMessages>
+      <LeverSchemas />
       <Stakes />
       <ClientMessages namespaces={["Journey"]}>
         <JourneySection />

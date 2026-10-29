@@ -12,7 +12,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "showcase:publish": "node scripts/showcase/publish.mjs",
-    "showcase:demo": "node scripts/showcase/publish.mjs --from scripts/showcase/example.source.json --mode demo"
+    "showcase:demo": "node scripts/showcase/publish.mjs --from scripts/showcase/example.source.json --mode demo",
+    "poster:levers": "esbuild scripts/build-levers-poster.ts --bundle --platform=node --format=esm --alias:@=./src | node --input-type=module"
   },
   "dependencies": {
     "framer-motion": "^11.18.2",

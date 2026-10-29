@@ -1,5 +1,6 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
+import { Icon } from "@/components/ui/Icon";
 import { listerArticles } from "@/lib/blog/source";
 import type { BlogLocale } from "@/lib/blog/types";
 
@@ -19,20 +20,26 @@ export async function InsightsStrip() {
             <p className="eyebrow">{t("eyebrow")}</p>
             <h2 id="insights-title" className="h2 mt-4">{t("title")}</h2>
           </div>
-          <Link href="/blog" className="mono inline-flex min-h-[2.75rem] items-center text-[0.8rem] uppercase tracking-[0.1em] underline underline-offset-[6px]">
-            {t("all")} →
+          <Link href="/blog" className="btn btn-line self-start sm:self-auto">
+            {t("all")} <Icon name="arrow" size={17} />
           </Link>
         </div>
 
-        <ul className="mt-12 grid gap-x-12 md:grid-cols-2">
-          {articles.map((a) => (
-            <li key={a.slug} className="rule-top">
-              <Link href={`/blog/${a.slug}` as "/"} className="group block py-7">
-                <p className="eyebrow">{a.category}</p>
-                <h3 className="h3 mt-3 !text-[clamp(1.4rem,2.4vw,1.9rem)] group-hover:underline decoration-1 underline-offset-[6px]">{a.title}</h3>
-                <p className="mt-3 max-w-xl text-[0.98rem] leading-relaxed" style={{ color: "var(--fg-2)" }}>{a.description}</p>
-                <p className="mono mt-4 text-[0.76rem]" style={{ color: "var(--fg-2)" }}>
-                  {tb("readingTime", { minutes: a.readingTime })}
+        <ul className="mt-10 grid gap-6 md:grid-cols-2">
+          {articles.map((a, i) => (
+            <li key={a.slug} data-reveal style={{ ["--i" as string]: i }}>
+              <Link href={`/blog/${a.slug}` as "/"} className="card card-lift group flex h-full flex-col p-6 sm:p-8">
+                <span className="tile-icon">
+                  <Icon name="book" />
+                </span>
+                <p className="pill mt-6">{a.category}</p>
+                <h3 className="mt-4 text-[clamp(1.25rem,2.2vw,1.65rem)] font-bold leading-tight tracking-tight">{a.title}</h3>
+                <p className="mt-3 max-w-xl text-[0.96rem] leading-relaxed" style={{ color: "var(--fg-2)" }}>{a.description}</p>
+                <p className="mt-auto flex items-center justify-between pt-6 text-[0.85rem] font-medium" style={{ color: "var(--fg-2)" }}>
+                  <span>{tb("readingTime", { minutes: a.readingTime })}</span>
+                  <span aria-hidden="true" className="transition-transform group-hover:translate-x-1" style={{ color: "var(--accent)" }}>
+                    <Icon name="arrow" size={20} />
+                  </span>
                 </p>
               </Link>
             </li>

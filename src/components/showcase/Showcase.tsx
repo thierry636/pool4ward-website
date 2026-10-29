@@ -132,7 +132,7 @@ export function Showcase({ data }: { data: ShowcaseData }) {
 
   return (
     <div ref={section} className="tone-dark">
-      <div ref={stage} className="relative h-[32rem] overflow-hidden border sm:h-[38rem] lg:h-[42rem]" style={{ borderColor: "var(--rule)", background: "#0a2d4a" }}>
+      <div ref={stage} className="relative h-[32rem] overflow-hidden border sm:h-[38rem] lg:h-[42rem]" style={{ borderColor: "var(--rule)", background: "#071226" }}>
         {/* Visuel d'attente : le globe se dessine par-dessus. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -177,15 +177,15 @@ export function Showcase({ data }: { data: ShowcaseData }) {
         <div ref={tag} className="pointer-events-none absolute left-0 top-0 max-w-[26rem] p-4 sm:p-5">
           {data.mode === "demo" ? (
             <>
-              <p className="eyebrow inline-block border px-2 py-1" style={{ borderColor: "var(--warm)", color: "var(--warm)", background: "rgba(11,36,26,0.78)" }}>
+              <p className="eyebrow inline-block border px-2 py-1" style={{ borderColor: "var(--warm)", color: "var(--warm)", background: "rgba(2,6,23,0.8)" }}>
                 {t("demo.tag")}
               </p>
-              <p className="mt-2 text-[0.8rem] leading-snug" style={{ color: "#dbe6df", textShadow: "0 1px 3px #0b241a" }}>
+              <p className="mt-2 text-[0.8rem] leading-snug" style={{ color: "#cbd5e1", textShadow: "0 1px 3px #020617" }}>
                 {t("demo.note")}
               </p>
             </>
           ) : (
-            <p className="eyebrow inline-block px-2 py-1" style={{ color: "var(--fg-2)", background: "rgba(11,36,26,0.78)" }}>
+            <p className="eyebrow inline-block px-2 py-1" style={{ color: "var(--fg-2)", background: "rgba(2,6,23,0.8)" }}>
               {t("curated", { date: published ?? "" })}
             </p>
           )}
@@ -195,17 +195,17 @@ export function Showcase({ data }: { data: ShowcaseData }) {
         <div
           ref={caption}
           className="pointer-events-none absolute inset-x-0 bottom-0 px-4 pb-4 pt-16 sm:px-6 sm:pb-6"
-          style={{ background: "linear-gradient(to top, rgba(11,36,26,0.94) 8%, rgba(11,36,26,0.6) 55%, rgba(11,36,26,0))" }}
+          style={{ background: "linear-gradient(to top, rgba(2,6,23,0.94) 8%, rgba(2,6,23,0.6) 55%, rgba(2,6,23,0))" }}
         >
           <div key={chapter.id} className="cap-fade">
           <p className="mono text-[0.72rem] uppercase tracking-[0.14em]" style={{ color: "var(--warm)" }}>
             {String(shown + 1).padStart(2, "0")} / {String(chapters.length).padStart(2, "0")}
           </p>
-          <p className="h3 mt-1" style={{ color: "#f5f2ea" }}>{name}</p>
-          <p className="mt-2 max-w-2xl text-[0.95rem] leading-snug" style={{ color: "#dbe6df" }}>{t(`chapters.${chapter.id}.body`)}</p>
+          <p className="h3 mt-1" style={{ color: "#f1f5f9" }}>{name}</p>
+          <p className="mt-2 max-w-2xl text-[0.95rem] leading-snug" style={{ color: "#cbd5e1" }}>{t(`chapters.${chapter.id}.body`)}</p>
           <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1">
             {chapter.modes.map((m) => (
-              <li key={m} className="flex items-center gap-2 text-[0.8rem]" style={{ color: "#dbe6df" }}>
+              <li key={m} className="flex items-center gap-2 text-[0.8rem]" style={{ color: "#cbd5e1" }}>
                 <LegendSample mode={m} />
                 {t(`modes.${m}`)}
               </li>

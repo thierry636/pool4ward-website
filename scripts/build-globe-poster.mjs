@@ -72,10 +72,10 @@ const show = JSON.parse(readFileSync("src/content/showcase.json", "utf8"));
 const site = new Map(show.sites.map((x) => [x.id, x]));
 // Mêmes couleurs et mêmes tracés que src/components/showcase/style.ts.
 const MODE = {
-  rail: { color: "#f2efe6", dash: "" },
-  shortsea: { color: "#7cc3ee", dash: "5 3.5" },
-  barge: { color: "#8fc4ab", dash: "9 3.5" },
-  "road-reefer": { color: "#e8b964", dash: "0.1 4.5" },
+  rail: { color: "#818cf8", dash: "" },
+  shortsea: { color: "#2dd4bf", dash: "5 3.5" },
+  barge: { color: "#38bdf8", dash: "9 3.5" },
+  "road-reefer": { color: "#fbbf24", dash: "0.1 4.5" },
 };
 const vec = (lon, lat) => [Math.cos(lat * RAD) * Math.cos(lon * RAD), Math.cos(lat * RAD) * Math.sin(lon * RAD), Math.sin(lat * RAD)];
 const unvec = ([x, y, z]) => [Math.atan2(y, x) / RAD, Math.asin(Math.max(-1, Math.min(1, z))) / RAD];
@@ -108,24 +108,24 @@ for (const v of show.services) {
 let dots = "";
 for (const st of show.sites) {
   const [x, y, vis] = project(st.lon, st.lat);
-  if (vis) dots += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.4" fill="#f5f2ea" stroke="#0b241a" stroke-width=".8"/>`;
+  if (vis) dots += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.4" fill="#f1f5f9" stroke="#020617" stroke-width=".8"/>`;
 }
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
 <defs>
-<radialGradient id="sea" cx="40%" cy="35%" r="75%"><stop offset="0" stop-color="#14527e"/><stop offset="1" stop-color="#07213a"/></radialGradient>
-<radialGradient id="halo" cx="50%" cy="50%" r="50%"><stop offset=".88" stop-color="#8fc4ab" stop-opacity=".0"/><stop offset=".95" stop-color="#8fc4ab" stop-opacity=".28"/><stop offset="1" stop-color="#8fc4ab" stop-opacity="0"/></radialGradient>
+<radialGradient id="sea" cx="40%" cy="35%" r="75%"><stop offset="0" stop-color="#14306b"/><stop offset="1" stop-color="#050d1f"/></radialGradient>
+<radialGradient id="halo" cx="50%" cy="50%" r="50%"><stop offset=".88" stop-color="#4263eb" stop-opacity=".0"/><stop offset=".95" stop-color="#4263eb" stop-opacity=".34"/><stop offset="1" stop-color="#4263eb" stop-opacity="0"/></radialGradient>
 <clipPath id="disc"><circle cx="${C}" cy="${C}" r="${R}"/></clipPath>
 </defs>
 <circle cx="${C}" cy="${C}" r="${R + 24}" fill="url(#halo)"/>
 <circle cx="${C}" cy="${C}" r="${R}" fill="url(#sea)"/>
 <g clip-path="url(#disc)">
-<path d="${grat}" fill="none" stroke="#8fc4ab" stroke-opacity=".16" stroke-width="1"/>
-<path d="${d}" fill="#1d5a42" stroke="#79b59a" stroke-opacity=".5" stroke-width=".8"/>
+<path d="${grat}" fill="none" stroke="#4263eb" stroke-opacity=".2" stroke-width="1"/>
+<path d="${d}" fill="#0d1a35" stroke="#3b5fb5" stroke-opacity=".9" stroke-width=".8"/>
 ${lines}
 ${dots}
 </g>
-<circle cx="${C}" cy="${C}" r="${R}" fill="none" stroke="#8fc4ab" stroke-opacity=".35"/>
+<circle cx="${C}" cy="${C}" r="${R}" fill="none" stroke="#4263eb" stroke-opacity=".45"/>
 </svg>
 `;
 writeFileSync("public/images/globe-poster.svg", svg);

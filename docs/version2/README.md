@@ -6,7 +6,11 @@ décision distincte.
 
 ## Ce que contient cette branche
 
-- **Une couverture et un parcours « du terrain aux engagements »** : un même cas
+- **Une couverture-carte** : un globe qui joue six leviers (rail, shortsea côtier,
+  boucles, cross-dock, électrification selon un réseau de bornes optimal,
+  mutualisation) sur une même région, suivi de six schémas animés — voir
+  [LEVERS.md](LEVERS.md). C'est une illustration, pas une donnée.
+- **Un parcours « du terrain aux engagements »** : un même cas
   démonstrateur (quatre sites, six flux, fictifs) traverse trois étapes —
   comprendre le terrain, concevoir le plan, contractualiser. Le plateau SVG
   (`src/components/journey/Board.tsx`) est animé par transitions CSS seulement,
@@ -38,6 +42,7 @@ décision distincte.
 | [PROTECTION.md](PROTECTION.md) | Modèle de protection : base privée, export validé, vitrine statique ; limites |
 | [INTEGRATIONS.md](INTEGRATIONS.md) | Liste exacte des raccordements restants et variables d'environnement |
 | [DEPLOY.md](DEPLOY.md) | Netlify ou Railway, prévisualisation, publication de la vitrine, passage en production |
+| [LEVERS.md](LEVERS.md) | La scène des leviers de la couverture et les schémas : contenu, limites, code |
 | [DESIGN.md](DESIGN.md) | Direction artistique, contrastes, mouvement, accessibilité |
 | [VERIFICATION.md](VERIFICATION.md) | Résultats des vérifications et conditions de mesure |
 
@@ -62,7 +67,8 @@ npm run showcase:check     # valide la vitrine (exécuté avant chaque build)
 
 - `node scripts/build-terrain.mjs` → `public/images/terrain.svg` (courbes de niveau, décor).
 - `node scripts/build-geo.mjs` → `public/geo/*.json` (Natural Earth, domaine public ; polygones découpés à l'antiméridien, extrait Europe à 50 m).
-- `node scripts/build-globe-poster.mjs` → `public/images/globe-poster.svg` (globe de l'accueil, avec les liaisons de la vitrine ; à relancer après chaque publication).
+- `node scripts/build-globe-poster.mjs` → `public/images/globe-poster.svg` (aperçu du globe des services, avec les liaisons de la vitrine ; à relancer après chaque publication).
+- `npm run poster:levers` → `public/images/levers-poster.svg` (image d'attente de la carte de la couverture).
 
 ## Décisions à prendre (hors de ce dépôt)
 

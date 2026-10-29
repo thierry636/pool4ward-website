@@ -3,59 +3,13 @@
 @tailwind utilities;
 
 /* ---------------------------------------------------------------- polices
-   Trois familles, toutes auto-hébergées — aucune requête tierce avant le
-   premier rendu :
-   - Geist (sans) et Geist Mono arrivent par next/font dans le layout ;
-   - « Source Serif Display » est Source Serif 4 réduite à son usage
-     d'affichage : taille optique fixée (40) et graisses 300–600, soit ≈ 46 Ko
-     au lieu de 119 Ko. Le blog, lui, charge la version complète pour la
-     lecture (voir blog.css). `font-display: optional` : préchargée, elle arrive
-     le plus souvent avant le premier rendu ; sinon la page garde le repli
-     (métriques ajustées) au lieu de bouger en cours de lecture. L'ordre des
-     deux blocs compte — leurs plages se
-     recouvrent sur `œ`, la déclaration la plus tardive l'emporte : latin passe
-     en second pour qu'un seul « œ » ne fasse pas télécharger latin-ext. */
-@font-face {
-  font-family: "Source Serif Display";
-  src: url("/fonts/SourceSerif4-display-latin-ext.woff2") format("woff2");
-  font-weight: 300 600;
-  font-style: normal;
-  font-display: optional;
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
-    U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
-    U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
-    U+A720-A7FF;
-}
-
-@font-face {
-  font-family: "Source Serif Display";
-  src: url("/fonts/SourceSerif4-display-latin.woff2") format("woff2");
-  font-weight: 300 600;
-  font-style: normal;
-  font-display: optional;
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
-    U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
-    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* Repli métrique : le temps que le serif arrive, Georgia est réduite à sa
-   taille pour que le titre ne saute pas à l'arrivée de la vraie police. */
-@font-face {
-  font-family: "Source Serif Fallback";
-  src: local("Georgia");
-  size-adjust: 94%;
-  ascent-override: 98%;
-  descent-override: 28%;
-  line-gap-override: 0%;
-}
-
+   Inter, variable, auto-hébergée (layout.tsx) : c'est la police de la version 1.
+   Aucune requête tierce avant le premier rendu. Les chiffres sont tabulaires
+   partout où l'on aligne des valeurs (classe `.mono`, conservée pour les
+   étiquettes) : plus de police à chasse fixe, la version 1 n'en avait pas. */
 :root {
-  --font-serif: "Source Serif Display", "Source Serif Fallback", Georgia, serif;
-
-  /* Palette de la version 2. Les tons « clair » et « sombre » redéfinissent
-     les mêmes noms : un composant écrit une fois, posé sur l'un ou l'autre. */
-  --mineral-50: #f5f2ea;
-  --forest-900: #0b241a;
+  --font-sans: var(--font-inter), Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-sans);
 }
 
 @layer base {
@@ -68,15 +22,16 @@
 
   body {
     @apply bg-white font-sans text-navy-800;
+    font-feature-settings: "cv11", "ss01";
   }
 
   ::selection {
-    background: #e8b964;
-    color: #0b241a;
+    background: #bac8ff;
+    color: #0f172a;
   }
 
   :focus-visible {
-    outline: 2px solid var(--focus, #14573f);
+    outline: 2px solid var(--focus, #4263eb);
     outline-offset: 3px;
   }
 
@@ -98,44 +53,52 @@
 }
 
 /* ------------------------------------------------------------------ tons */
-/* Chaque section déclare son ton ; les composants lisent les variables. */
+/* Chaque section déclare son ton ; les composants lisent les variables.
+   Palette de la version 1 : `navy`, `brand` (bleu) et `teal` de tailwind.config.ts.
+   Contrastes : texte courant ≥ 7:1, texte secondaire ≥ 4,5:1 sur chaque fond. */
 @layer components {
   .tone-light {
-    --bg: #f5f2ea;
-    --bg-2: #ebe7db;
-    --card: #fbf9f3;
-    --fg: #0e2219;
-    --fg-2: #4a5a50;
-    --rule: rgb(14 34 25 / 0.16);
-    --rule-strong: rgb(14 34 25 / 0.42);
-    --accent: #14573f;
-    --accent-ink: #f5f2ea;
-    --warm: #8a5a10;
-    --focus: #14573f;
+    --bg: #ffffff;
+    --bg-2: #f8fafc;
+    --card: #ffffff;
+    --fg: #0f172a;
+    --fg-2: #475569;
+    --rule: rgb(15 23 42 / 0.1);
+    --rule-strong: rgb(15 23 42 / 0.32);
+    --accent: #4263eb;
+    --accent-ink: #ffffff;
+    --warm: #0f766e;
+    --focus: #4263eb;
+    --pill-bg: #eef2ff;
+    --pill-fg: #3b5bdb;
+    --shadow: 0 1px 2px rgb(15 23 42 / 0.04), 0 4px 8px rgb(15 23 42 / 0.04), 0 16px 32px rgb(15 23 42 / 0.05);
     background: var(--bg);
     color: var(--fg);
   }
 
-  /* Variante plus profonde du ton clair, pour alterner les sections sans
-     quitter la palette. */
+  /* Variante : fond légèrement grisé, pour alterner les sections claires. */
   .tone-light-2 {
-    --bg: #ebe7db;
-    --bg-2: #e2ddcd;
-    --card: #f5f2ea;
+    --bg: #f8fafc;
+    --bg-2: #f1f5f9;
+    --card: #ffffff;
+    --pill-bg: #e0e7ff;
   }
 
   .tone-dark {
-    --bg: #0b241a;
-    --bg-2: #0f3226;
-    --card: #10311f;
-    --fg: #f5f2ea;
-    --fg-2: #a7bdb0;
-    --rule: rgb(245 242 234 / 0.18);
-    --rule-strong: rgb(245 242 234 / 0.5);
-    --accent: #8fc4ab;
-    --accent-ink: #0b241a;
-    --warm: #e8b964;
-    --focus: #e8b964;
+    --bg: #020617;
+    --bg-2: #0b1224;
+    --card: rgb(255 255 255 / 0.04);
+    --fg: #f1f5f9;
+    --fg-2: #94a3b8;
+    --rule: rgb(148 163 184 / 0.18);
+    --rule-strong: rgb(148 163 184 / 0.5);
+    --accent: #748ffc;
+    --accent-ink: #020617;
+    --warm: #2dd4bf;
+    --focus: #5eead4;
+    --pill-bg: rgb(66 99 235 / 0.18);
+    --pill-fg: #a5b4fc;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px rgb(0 0 0 / 0.35);
     background: var(--bg);
     color: var(--fg);
   }
@@ -149,55 +112,70 @@
   }
 
   .section-y {
-    @apply py-20 sm:py-24 lg:py-32;
+    @apply py-20 sm:py-24 lg:py-28;
   }
 
-  /* Titre d'affichage : le serif porte la voix, le sans porte l'interface. */
+  /* Titres : Inter lourd, interlettrage serré, comme en version 1. */
   .display {
-    font-family: var(--font-serif);
-    font-weight: 400;
-    letter-spacing: -0.022em;
-    line-height: 1.02;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.03;
     text-wrap: balance;
-    font-variation-settings: "wght" 400;
   }
 
-  .display em {
-    font-style: italic;
-    font-weight: 400;
-    color: var(--warm);
+  /* Un groupe de mots peut porter le dégradé bleu → turquoise de la version 1. */
+  .display em,
+  .h2 em,
+  .text-gradient {
+    font-style: normal;
+    background: linear-gradient(90deg, #748ffc 0%, #2dd4bf 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .tone-light .display em,
+  .tone-light .h2 em,
+  .tone-light .text-gradient {
+    background-image: linear-gradient(90deg, #4263eb 0%, #0d9488 100%);
   }
 
   .h2 {
-    font-family: var(--font-serif);
-    font-weight: 400;
-    letter-spacing: -0.018em;
-    line-height: 1.06;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
     text-wrap: balance;
-    font-size: clamp(2rem, 4.4vw, 3.5rem);
+    font-size: clamp(2rem, 4.2vw, 3.25rem);
   }
 
   .h3 {
-    font-family: var(--font-serif);
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    line-height: 1.15;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
     text-wrap: balance;
-    font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
   }
 
-  .eyebrow {
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.72rem;
+  /* Pastille de section, comme les petites étiquettes bleues de la version 1. */
+  .eyebrow,
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    width: fit-content;
+    padding: 0.28rem 0.8rem;
+    border-radius: 9999px;
+    background: var(--pill-bg, #eef2ff);
+    color: var(--pill-fg, #3b5bdb);
+    font-size: 0.8rem;
+    font-weight: 600;
     line-height: 1.2;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--fg-2);
+    letter-spacing: 0;
   }
 
   .lede {
-    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
-    line-height: 1.55;
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    line-height: 1.65;
     color: var(--fg-2);
     max-width: 44rem;
     text-wrap: pretty;
@@ -214,8 +192,18 @@
     border-top: 1px solid var(--rule);
   }
 
+  /* Étiquettes et valeurs : Inter, chiffres tabulaires. */
   .mono {
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-family: var(--font-sans);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Carte de la version 1 : coins larges, bordure fine, ombre douce. */
+  .card {
+    border: 1px solid var(--rule);
+    border-radius: 1rem;
+    background: var(--card);
+    box-shadow: var(--shadow);
   }
 
   .skip-link {
@@ -224,35 +212,30 @@
     top: -4rem;
     z-index: 100;
     padding: 0.6rem 1rem;
-    background: #0b241a;
-    color: #f5f2ea;
-    border: 2px solid #e8b964;
-    border-radius: 2px;
+    background: #0f172a;
+    color: #f8fafc;
+    border: 2px solid #2dd4bf;
+    border-radius: 0.5rem;
     transition: top 0.15s;
   }
   .skip-link:focus {
     top: 1rem;
   }
 
-  /* Boutons de la version 2 : arêtes nettes, pas de dégradé. */
+  /* Boutons de la version 1 : coins arrondis, bleu de marque, halo discret. */
   .btn {
-    @apply inline-flex min-h-[2.75rem] items-center justify-center gap-2 px-5 py-2.5 text-[0.95rem] font-medium transition-colors duration-150;
+    @apply inline-flex min-h-[2.75rem] items-center justify-center gap-2 px-5 py-2.5 text-[0.95rem] font-semibold transition duration-150;
     border: 1px solid transparent;
-    border-radius: 2px;
+    border-radius: 0.75rem;
   }
   .btn-solid {
-    background: var(--warm-btn, var(--accent));
-    color: var(--accent-ink);
+    background: #4263eb;
+    color: #ffffff;
+    box-shadow: 0 8px 24px -10px rgb(66 99 235 / 0.7);
   }
-  .tone-dark .btn-solid {
-    --warm-btn: #e8b964;
-    color: #0b241a;
-  }
-  .tone-dark .btn-solid:hover {
-    background: #f2d9a3;
-  }
-  .tone-light .btn-solid:hover {
-    background: #0f4130;
+  .btn-solid:hover {
+    background: #3b5bdb;
+    transform: translateY(-1px);
   }
   .btn-line {
     border-color: var(--rule-strong);
@@ -282,10 +265,10 @@
   animation: cap-fade 0.45s ease both;
 }
 
-/* Filigrane des ouvertures de page : les courbes de niveau de la couverture. */
+/* Filigrane des courbes de niveau, très discret sur fond sombre. */
 .hero-terrain {
   background: var(--accent);
-  opacity: 0.14;
+  opacity: 0.06;
   -webkit-mask-image: url("/images/terrain.svg");
   mask-image: url("/images/terrain.svg");
   -webkit-mask-size: cover;
@@ -294,4 +277,52 @@
   mask-position: center right;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
+}
+
+/* Halo lumineux de la version 1, derrière un visuel. */
+.glow-blue {
+  background: radial-gradient(60% 60% at 50% 50%, rgb(66 99 235 / 0.32), transparent 70%);
+}
+.glow-teal {
+  background: radial-gradient(60% 60% at 50% 50%, rgb(20 184 166 / 0.22), transparent 70%);
+}
+
+/* ------------------------------------------------------- apparition au défilement
+   Sans script (ou avec « réduire les animations »), rien n'est masqué : `reveal-pending`
+   n'est posée que par RevealObserver, sur les blocs situés sous la ligne de flottaison. */
+[data-reveal].reveal-pending {
+  opacity: 0;
+  transform: translateY(18px);
+}
+[data-reveal].reveal-in {
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+
+/* Pastille d'icône : carré arrondi teinté, comme les pictogrammes de la version 1. */
+.tile-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: none;
+  border-radius: 0.8rem;
+  background: var(--pill-bg);
+  color: var(--accent);
+}
+.tone-dark .tile-icon {
+  color: var(--warm);
+  background: rgb(45 212 191 / 0.12);
+}
+
+/* Carte qui se soulève au survol : le seul mouvement de survol du site. */
+.card-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.card-lift:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--rule));
+  box-shadow: 0 2px 4px rgb(15 23 42 / 0.05), 0 22px 44px -18px rgb(66 99 235 / 0.35);
 }
