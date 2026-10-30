@@ -8,7 +8,7 @@ import { LEVER_COLOR, LEVER_ORDER, type LeverId } from "@/lib/levers/data";
 import { forcesGlobe, isSoftwareRenderer, preferLightweight, supportsWebGL } from "@/components/showcase/support";
 import { LeverFlat } from "./LeverFlat";
 import { LeverIcon } from "./icons";
-import { Move2RailGlyph } from "./Move2RailGlyph";
+import { RailWatermark } from "./RailWatermark";
 import { EUROPE_SERVICES_COUNT } from "@/content/figures";
 import type { Rect } from "./LeverGlobe";
 
@@ -19,6 +19,9 @@ type Renderer = "pending" | "globe" | "flat";
 
 /** Après un choix manuel, le levier se joue puis reste affiché ; sans nouveau geste, la lecture reprend après ce délai. */
 const IDLE_RESUME_MS = 20_000;
+
+/** Avancement du report modal à partir duquel le filigrane apparaît : les flux directs viennent de commencer à se dessiner. */
+const WATERMARK_AT = 0.09;
 
 const NO_PAD = { left: 0, right: 0, top: 0, bottom: 0 };
 
@@ -46,6 +49,7 @@ export function LeverStage() {
   const reserved = useRef<Rect[]>([]);
   const progress = useRef(0);
   const bars = useRef<(HTMLSpanElement | null)[]>([]);
+  const watermark = useRef<HTMLDivElement>(null);
   const playingRef = useRef(false);
   const reducedRef = useRef(false);
   playingRef.current = playing;
@@ -123,6 +127,12 @@ export function LeverStage() {
       bars.current.forEach((b, i) => {
         if (b) b.style.transform = `scaleX(${i === active ? progress.current : 0})`;
       });
+      // Le filigrane du report modal apparaît juste après le début du tracé des flux, et seulement pour ce levier.
+      const wm = watermark.current;
+      if (wm) {
+        const on = active === 0 && (reducedRef.current || progress.current >= WATERMARK_AT);
+        if (wm.dataset.on !== (on ? "1" : "0")) wm.dataset.on = on ? "1" : "0";
+      }
       if (!playingRef.current && !reducedRef.current && progress.current >= 1) {
         doneAt ??= now;
         if (now - doneAt > IDLE_RESUME_MS) {
@@ -211,24 +221,16 @@ export function LeverStage() {
             />
           </div>
         )}
+        <RailWatermark rootRef={watermark} label={t("legendLabel")} note={t("note")}>
+          {t.rich("legend", { count, b: (chunks) => <b>{chunks}</b> })}
+        </RailWatermark>
         {/* Fondu vers le texte et vers la section suivante. */}
         <div aria-hidden="true" className="lever-fade-x pointer-events-none absolute inset-0 hidden lg:block" />
         <div aria-hidden="true" className="lever-fade-y pointer-events-none absolute inset-0" />
       </div>
 
-      {/* Sous l'image : une légende discrète (le sigle de Move2Rail, le chiffre, ce qu'est l'illustration), puis les six leviers. */}
-      <div ref={dockEl} className="wrap relative z-10 flex flex-col gap-4 pb-5 pt-4 lg:pb-7 lg:pt-2">
-        <div role="note" aria-label={t("legendLabel")} className="flex items-start gap-3 lg:ml-auto lg:max-w-[24rem]">
-          <span className="mt-[0.1rem] shrink-0">
-            <Move2RailGlyph />
-          </span>
-          <p className="text-[0.74rem] leading-snug" style={{ color: "#94a3b8" }}>
-            <span className="block text-[0.82rem] font-medium leading-snug" style={{ color: "#cbd5e1" }}>
-              {t.rich("legend", { count, b: (chunks) => <b className="font-semibold text-white">{chunks}</b> })}
-            </span>
-            <span className="mt-1 block">{t("note")}</span>
-          </p>
-        </div>
+      {/* Sous l'image : les six leviers, de simples pastilles. */}
+      <div ref={dockEl} className="wrap relative z-10 pb-5 pt-4 lg:pb-7 lg:pt-2">
         <ol className="flex flex-wrap gap-2" aria-label={t("listLabel")}>
           {LEVER_ORDER.map((id, i) => (
             <li key={id}>

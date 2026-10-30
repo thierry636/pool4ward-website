@@ -18,17 +18,20 @@ part du sud de l'Espagne et va jusqu'en Pologne :
 Sous la couverture, une section de six schémas animés (`LeverSchemas`) compare pour chaque
 levier une situation de départ (gris, pointillé) à ce que le levier permet (couleur).
 
-## La couverture : une image seule, une légende
+## La couverture : une image seule, un filigrane
 
 Le titre de la couverture ne change pas (« Concevoir le transport au plus près du réel. »). Pas
-d'encart sur l'image : la carte joue le report modal en premier, six pastilles permettent de
-passer d'un levier à l'autre, et **une légende discrète**, en bas à droite sous l'image, dit
-l'idée en une phrase — « 3 500 services rail et fluviaux en Europe, une alternative à la route. »
-— avec le sigle de Move2Rail (la route qui devient une voie ferrée, tracé de la tuile du portail,
-`Move2RailGlyph.tsx`) et, dessous, ce qu'est l'illustration (« Illustration : liaisons dessinées
-pour expliquer, pas des services existants. »). Les bulles d'explication restent dans le code
-(`callouts`, textes `Home.levers.items.*.callouts`) mais la couverture les désactive ; seuls les
-noms de lieux restent sur la carte.
+d'encart sur l'image, pas de texte fixe : quand le report modal commence à tracer ses flux, **un
+filigrane très estompé se dessine** dans le coin libre de l'image — le sigle de Move2Rail (la
+route qui devient une voie ferrée, tracé de la tuile du portail : la route, la bifurcation, la
+voie, puis le convoi) et l'idée en une phrase, « 3 500 services rail et fluviaux en Europe, une
+alternative à la route. ». Il s'efface quand un autre levier prend la main (`RailWatermark.tsx`,
+piloté par `data-on` depuis `LeverStage.tsx`, seuil `WATERMARK_AT`) ; en mouvement réduit, il est
+là d'emblée. La mention « Illustration : liaisons dessinées pour expliquer, pas des services
+existants » n'est plus affichée (jugée inutile) : elle reste dans le texte du filigrane, lisible
+par les lecteurs d'écran. Six pastilles, sous l'image, passent d'un levier à l'autre. Les bulles
+d'explication restent dans le code (`callouts`, textes `Home.levers.items.*.callouts`) mais la
+couverture les désactive ; seuls les noms de lieux restent sur la carte.
 
 **Le chiffre « 3 500 »** vient de la direction (`src/content/figures.ts`). Il n'a pas été recoupé :
 dans le portail, le référentiel Appel d'Air 2026 compte 2 906 services ferroviaires intermodaux
@@ -42,7 +45,7 @@ arrondies) ; les liaisons sont **dessinées pour expliquer** chaque levier. Les 
 et fluvial du report modal sont des tracés **indicatifs** entre villes, pas des lignes ni des
 voies d'eau relevées, et le service Saragosse → Poznań n'existe pas parce qu'on le dessine.
 Les liaisons n'affirment l'existence d'aucun service, ne portent aucun nom d'opérateur, aucun
-chiffre, aucun gain. L'écran le dit en permanence (« Illustration : liaisons dessinées pour expliquer, pas des services existants. »), et la scène est
+chiffre, aucun gain. Elles ne sont plus signalées à l'écran (voir plus haut : filigrane), et la scène est
 indépendante de la vitrine (`showcase.json`) et de la base privée : elle n'en lit rien.
 
 > Les noms d'opérateurs visibles sur la carte du portail (capture fournie) ne sont **pas
@@ -59,7 +62,7 @@ indépendante de la vitrine (`showcase.json`) et de la base privée : elle n'en 
 | `src/components/levers/LeverGlobe.tsx` | Globe MapLibre incliné, sans interaction, piloté image par image ; étiquettes HTML |
 | `src/components/levers/LeverFlat.tsx` | Même scène en SVG (sans WebGL, rendu logiciel, appareil économe) ; animations CSS |
 | `src/components/levers/LeverStage.tsx` | Orchestrateur : choix du rendu, lecture automatique, pastilles des six leviers, mesure du texte |
-| `src/components/levers/Move2RailGlyph.tsx` | Le sigle de Move2Rail, en petit, pour la légende |
+| `src/components/levers/RailWatermark.tsx` | Le filigrane : sigle de Move2Rail dessiné + phrase, animé en CSS |
 | `src/components/levers/LeverSchemas.tsx` | Les six schémas animés (SVG inline, `reveal-in`) |
 | `messages/*/home.json` → `Home.levers`, `Home.leverSchemas` | Tous les textes, FR et EN (clés vérifiées par `levers.test.ts`) |
 | `scripts/build-levers-poster.ts` | `public/images/levers-poster.svg`, image d'attente de la carte (`npm run poster:levers`) |
