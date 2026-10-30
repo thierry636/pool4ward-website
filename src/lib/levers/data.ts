@@ -353,8 +353,8 @@ export const SCENES: Record<LeverId, readonly SceneEl[]> = {
     /* 3. Deux services de port à port sont identifiés. */
     ...["lehavre", "civitavecchia", "oslo", "kiel"].map((p): RingEl => ({ kind: "ring", at: p, color: TEAL, t0: 0.5 })),
     ...["lehavre", "civitavecchia", "oslo", "kiel"].map((p): NodeEl => ({ kind: "node", at: p, style: "port", t: 0.5, label: p === "lehavre" })),
-    { kind: "line", id: "sea-med", stops: SEA_ATLANTIC_MED, color: TEAL, width: 4.2, t0: 0.52, t1: 0.74, pulses: 3, halo: TEAL },
-    { kind: "line", id: "sea-nord", stops: SEA_OSLO_KIEL, color: TEAL, width: 4.2, t0: 0.54, t1: 0.66, pulses: 2, halo: TEAL },
+    { kind: "line", id: "sea-med", stops: SEA_ATLANTIC_MED, color: TEAL, width: 4.2, t0: 0.52, t1: 0.74, pulses: 3, halo: TEAL, skipBase: true },
+    { kind: "line", id: "sea-nord", stops: SEA_OSLO_KIEL, color: TEAL, width: 4.2, t0: 0.54, t1: 0.66, pulses: 2, halo: TEAL, skipBase: true },
     /* 4. Les flux se transforment : route, mer, route. */
     { kind: "line", id: "pre-paris", stops: ["paris", "lehavre"], color: HAUL, width: 2.6, t0: 0.74, t1: 0.82, pulses: 1 },
     { kind: "line", id: "post-roma", stops: ["civitavecchia", "roma"], color: HAUL, width: 2.6, t0: 0.84, t1: 0.9, pulses: 1 },
