@@ -8,6 +8,8 @@ import { LEVER_COLOR, LEVER_ORDER, type LeverId } from "@/lib/levers/data";
 import { forcesGlobe, isSoftwareRenderer, preferLightweight, supportsWebGL } from "@/components/showcase/support";
 import { LeverFlat } from "./LeverFlat";
 import { LeverIcon } from "./icons";
+import { Move2RailGlyph } from "./Move2RailGlyph";
+import { EUROPE_SERVICES_COUNT } from "@/content/figures";
 import type { Rect } from "./LeverGlobe";
 
 /** MapLibre pèse ≈ 250 Ko : il n'est téléchargé que si l'appareil sait afficher le globe. */
@@ -29,6 +31,8 @@ const NO_PAD = { left: 0, right: 0, top: 0, bottom: 0 };
 export function LeverStage() {
   const t = useTranslations("Home.levers");
   const locale = useLocale() === "en" ? "en" : "fr";
+  // Espace insécable ordinaire entre milliers : la fine de la locale française se voit à peine.
+  const count = new Intl.NumberFormat(locale).format(EUROPE_SERVICES_COUNT).replace(/\u202f/g, "\u00a0");
   const reduced = usePrefersReducedMotion();
 
   const [renderer, setRenderer] = useState<Renderer>("pending");
@@ -212,33 +216,36 @@ export function LeverStage() {
         <div aria-hidden="true" className="lever-fade-y pointer-events-none absolute inset-0" />
       </div>
 
-      {/* Les six leviers : de simples pastilles, sous l'image. La légende dit ce qu'est l'illustration. */}
-      <div ref={dockEl} className="wrap relative z-10 pb-5 pt-4 lg:pb-7 lg:pt-2">
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
-          <ol className="flex flex-wrap gap-2" aria-label={t("listLabel")}>
-            {LEVER_ORDER.map((id, i) => (
-              <li key={id}>
-                <button type="button" className="lever-chip" aria-pressed={i === active} onClick={() => pick(i)} style={{ ["--c" as string]: LEVER_COLOR[id] }}>
-                  <LeverIcon id={id} size={17} />
-                  <span>{t(`items.${id}.name`)}</span>
-                  <span
-                    aria-hidden="true"
-                    ref={(el) => {
-                      bars.current[i] = el;
-                    }}
-                    className="lever-bar"
-                  />
-                </button>
-              </li>
-            ))}
-          </ol>
-          <p className="text-[0.74rem] leading-snug lg:max-w-[18rem] lg:text-right" style={{ color: "#94a3b8" }}>
-            <span className="font-semibold" style={{ color: "#cbd5e1" }}>
-              {t("tag")}.
-            </span>{" "}
-            {t("note")}
+      {/* Sous l'image : une légende discrète (le sigle de Move2Rail, le chiffre, ce qu'est l'illustration), puis les six leviers. */}
+      <div ref={dockEl} className="wrap relative z-10 flex flex-col gap-4 pb-5 pt-4 lg:pb-7 lg:pt-2">
+        <div role="note" aria-label={t("legendLabel")} className="flex items-start gap-3 lg:ml-auto lg:max-w-[24rem]">
+          <span className="mt-[0.1rem] shrink-0">
+            <Move2RailGlyph />
+          </span>
+          <p className="text-[0.74rem] leading-snug" style={{ color: "#94a3b8" }}>
+            <span className="block text-[0.82rem] font-medium leading-snug" style={{ color: "#cbd5e1" }}>
+              {t.rich("legend", { count, b: (chunks) => <b className="font-semibold text-white">{chunks}</b> })}
+            </span>
+            <span className="mt-1 block">{t("note")}</span>
           </p>
         </div>
+        <ol className="flex flex-wrap gap-2" aria-label={t("listLabel")}>
+          {LEVER_ORDER.map((id, i) => (
+            <li key={id}>
+              <button type="button" className="lever-chip" aria-pressed={i === active} onClick={() => pick(i)} style={{ ["--c" as string]: LEVER_COLOR[id] }}>
+                <LeverIcon id={id} size={17} />
+                <span>{t(`items.${id}.name`)}</span>
+                <span
+                  aria-hidden="true"
+                  ref={(el) => {
+                    bars.current[i] = el;
+                  }}
+                  className="lever-bar"
+                />
+              </button>
+            </li>
+          ))}
+        </ol>
       </div>
     </>
   );

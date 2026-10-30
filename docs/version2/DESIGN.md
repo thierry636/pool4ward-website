@@ -63,7 +63,7 @@ Le mouvement explique, il ne décore. Règles :
 - **scène des leviers (couverture)** : six leviers joués à tour de rôle (9 s chacun, 15 s
   pour le report modal). La caméra se place, les tracés se dessinent, des impulsions les
   parcourent pendant que des bulles expliquent (comme les bulles d'opérateurs du portail).
-  Pas de bouton pause, pas d'encart sur l'image (titre court, pastilles, légende) : un clic sur un levier l'arrête et le joue une fois, la lecture reprend
+  Pas de bouton pause, pas d'encart sur l'image (pastilles, et une légende discrète avec le sigle de Move2Rail) : un clic sur un levier l'arrête et le joue une fois, la lecture reprend
   vingt secondes après sa fin ; sous « mouvement réduit », pas de lecture automatique, ni vol,
   ni impulsion — le levier s'affiche terminé ;
 - **schémas des leviers** : six cartes « situation de départ / avec le levier » ; les

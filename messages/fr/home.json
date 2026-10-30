@@ -2,8 +2,13 @@
   "Home": {
     "cover": {
       "eyebrow": "De l’ingénierie à la contractualisation du transport",
-      "title": "<em>{count} services</em> rail et fluviaux en Europe, une alternative à la route.",
-      "lede": "Maîtrisez vos coûts, réduisez vos risques, sécurisez vos capacités de transport.",
+      "title": "Concevoir le transport <em>au plus près du réel.</em>",
+      "lede": "Face aux transformations énergétiques et aux tensions sur les ressources, Pool4ward accompagne les entreprises de l’ingénierie à la contractualisation pour maîtriser leurs coûts, réduire leurs risques et sécuriser leurs capacités de transport.",
+      "benefits": [
+        "Maîtriser les coûts",
+        "Réduire les risques",
+        "Sécuriser les capacités"
+      ],
       "ctaJourney": "Voir du terrain aux contrats",
       "ctaTalk": "Parler de votre plan transport"
     },
@@ -110,7 +115,7 @@
     "levers": {
       "tag": "Illustration",
       "region": "Europe",
-      "note": "Liaisons dessinées pour expliquer, pas des services existants.",
+      "note": "Illustration : liaisons dessinées pour expliquer, pas des services existants.",
       "mapLabel": "Carte animée de l’Europe. Levier en cours : {lever}.",
       "listLabel": "Les six leviers",
       "items": {
@@ -224,7 +229,9 @@
           },
           "schema": "Schéma : trois départs séparés deviennent un seul service partagé par les trois chargeurs."
         }
-      }
+      },
+      "legend": "<b>{count} services</b> rail et fluviaux en Europe, une alternative à la route.",
+      "legendLabel": "Légende de l’illustration"
     },
     "leverSchemas": {
       "eyebrow": "Les leviers en schéma",
