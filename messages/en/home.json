@@ -123,37 +123,53 @@
           "name": "Modal shift rail/waterway",
           "text": "Direct road flows move to rail and inland waterways: a service is identified, and road keeps the pre- and post-haulage.",
           "schema": "Diagram: long direct road trips are replaced by road pre-haulage, a rail or barge leg between two terminals, then road post-haulage.",
-          "watermark": "<b>{count} rail and waterway services</b> across Europe, an alternative to the road."
+          "card": {
+            "label": "rail and waterway services · Europe"
+          }
         },
         "shortsea": {
           "name": "Coastal shortsea",
-          "text": "Every coastal port in Europe, then a service calling port to port along the coast, rather than a direct link.",
-          "schema": "Diagram: ports along a coast, and a service linking them port to port rather than a direct link across open sea.",
-          "watermark": "<b>{count} shortsea services</b> across Europe, an alternative to the road."
+          "text": "A road flow (Paris – Rome, Oslo – Cologne) goes by sea, port to port: the road only keeps the first and last legs.",
+          "schema": "Diagram: a flow links two cities directly by road; with the lever, it reaches a port, crosses the sea from one port to another, then continues by road.",
+          "card": {
+            "label": "shortsea services · Europe"
+          }
         },
         "loops": {
           "name": "Loops",
-          "text": "One-way pan-European flows, in which loops are spotted: loaded legs that close on themselves, with an empty leg where needed.",
-          "schema": "Diagram: one-way flows are spotted as a closed loop whose empty leg brings the vehicle back to its starting point.",
-          "watermark": "<b>Loops are hiding</b> in your pan-European flows."
+          "text": "Dozens of one-way pan-European flows, in which long triangular loops are spotted: loaded legs that close on themselves, with an empty leg where needed.",
+          "schema": "Diagram: many one-way flows; three of them form a closed triangle, whose dashed empty leg brings the vehicle back to its starting point.",
+          "card": {
+            "head": "Loops are hiding",
+            "label": "in your pan-European flows"
+          }
         },
         "crossdock": {
           "name": "Cross-dock",
           "text": "Small flows from varied origins converge on a platform, are consolidated and leave as a single large flow to the plant.",
           "schema": "Diagram: several partial flows converge on a platform, then a single large flow leaves for the plant.",
-          "watermark": "<b>Consolidate</b>: many small flows, one large flow to the plant."
+          "card": {
+            "head": "Consolidate",
+            "label": "many small flows, one large flow to the plant"
+          }
         },
         "electric": {
           "name": "Electrification",
           "text": "A charging network across Europe, and a looped, electrified flow that recharges at the right chargers.",
           "schema": "Diagram: a charging network covers the territory; an electrified loop relies on some of the chargers to recharge.",
-          "watermark": "<b>Chargers across Europe</b>, one looped, electrified flow."
+          "card": {
+            "head": "Chargers across Europe",
+            "label": "one looped, electrified flow"
+          }
         },
         "pooling": {
           "name": "Pooling",
           "text": "Flows from several companies are pooled on one train, for example Dourges–Poznań.",
           "schema": "Diagram: three departures from different companies are pooled on a single shared service, then redistributed.",
-          "watermark": "<b>Different companies</b>, one shared train: Dourges–Poznań."
+          "card": {
+            "head": "Different companies",
+            "label": "one shared train: Dourges–Poznań"
+          }
         }
       },
       "legendLabel": "Illustration legend"

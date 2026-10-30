@@ -153,77 +153,170 @@ describe("report modal rail/fluvial", () => {
 const endsOf = (l: { path: { points: [number, number][] } }) => [l.path.points[0], l.path.points[l.path.points.length - 1]] as const;
 const near = (a: [number, number], b: [number, number]) => distanceKm(a, b) < 1;
 
-describe("shortsea : les ports d'Europe, puis un service de port en port", () => {
-  const scene = buildScene("shortsea");
-  const ports = SCENES.shortsea.filter((e): e is NodeEl => e.kind === "node" && e.style === "dot");
-  const chain = scene.lines.filter((l) => /^c\d+$/.test(l.el.id));
+/** Le jeu de polygones « terre » du fond de carte : sert à vérifier qu'un tracé en mer reste dans l'eau. */
+const land = (JSON.parse(readFileSync("public/geo/land-50m-europe.json", "utf8")) as { geometry: { type: string; coordinates: number[][][][] | number[][][] } }).geometry;
+const polygons: number[][][][] = land.type === "MultiPolygon" ? (land.coordinates as number[][][][]) : [land.coordinates as number[][][]];
+const inRing = (p: [number, number], ring: number[][]) => {
+  let c = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [xi, yi] = ring[i];
+    const [xj, yj] = ring[j];
+    if (yi > p[1] !== yj > p[1] && p[0] < ((xj - xi) * (p[1] - yi)) / (yj - yi) + xi) c = !c;
+  }
+  return c;
+};
+/** Profondeur à l'intérieur des terres, en km (0 en mer) : distance au bord le plus proche. */
+function landDepthKm(p: [number, number]): number {
+  const k = Math.cos((p[1] * Math.PI) / 180);
+  for (const poly of polygons) {
+    if (!inRing(p, poly[0]) || poly.slice(1).some((h) => inRing(p, h))) continue;
+    let best = Infinity;
+    for (const ring of poly) {
+      for (let i = 1; i < ring.length; i++) {
+        const ax = (ring[i - 1][0] - p[0]) * k, ay = ring[i - 1][1] - p[1], bx = (ring[i][0] - p[0]) * k, by = ring[i][1] - p[1];
+        const dx = bx - ax, dy = by - ay;
+        const t = Math.max(0, Math.min(1, -(ax * dx + ay * dy) / (dx * dx + dy * dy || 1e-12)));
+        best = Math.min(best, Math.hypot(ax + t * dx, ay + t * dy) * 111.2);
+      }
+    }
+    return best;
+  }
+  return 0;
+}
 
-  it("on voit d'abord au moins trente ports côtiers, de l'Atlantique à la Méditerranée et à la Baltique", () => {
+describe("shortsea : des flux par la route, puis des services de port à port", () => {
+  const scene = buildScene("shortsea");
+  const line = (id: string) => scene.lines.find((l) => l.el.id === id)!;
+  const ports = SCENES.shortsea.filter((e): e is NodeEl => e.kind === "node" && e.style === "dot");
+  const med = line("sea-med");
+  const nord = line("sea-nord");
+
+  it("deux flux par la route : Paris → Rome, et de la Norvège vers l'Allemagne", () => {
+    const [p0, p1] = endsOf(line("direct-paris"));
+    expect(near(p0, anchorOf("paris")) && near(p1, anchorOf("roma")), "Paris → Rome").toBe(true);
+    const [n0, n1] = endsOf(line("direct-oslo"));
+    expect(near(n0, anchorOf("oslo")), "il part de Norvège").toBe(true);
+    expect(near(n1, anchorOf("koln")), "il arrive en Allemagne").toBe(true);
+    expect(line("direct-paris").el.stops, "un seul arc, sans escale").toHaveLength(2);
+  });
+
+  it("entre les flux et les services, on voit au moins trente ports côtiers, de l'Atlantique à la Baltique et à la Méditerranée", () => {
     expect(ports.length).toBeGreaterThanOrEqual(30);
     const lats = ports.map((p) => anchorOf(p.at)[1]);
     expect(Math.max(...lats), "la Baltique").toBeGreaterThan(58);
     expect(Math.min(...lats), "la Méditerranée").toBeLessThan(40);
-    const lastPort = Math.max(...ports.map((p) => p.t));
-    expect(Math.min(...chain.map((l) => l.el.t0)), "le service arrive après les ports").toBeGreaterThan(lastPort);
+    const directEnd = Math.max(...scene.lines.filter((l) => l.el.id.startsWith("direct-")).map((l) => l.el.t1));
+    expect(Math.min(...ports.map((p) => p.t)), "après le début des flux directs").toBeGreaterThan(0.2);
+    expect(Math.max(...ports.map((p) => p.t)), "avant les services").toBeLessThan(med.el.t0);
+    expect(directEnd, "les flux directs sont déjà tracés").toBeLessThan(med.el.t0);
   });
 
-  it("le service méditerranéen enchaîne les escales d'Algésiras à Naples, chaque tronçon partant d'où le précédent s'arrête", () => {
-    expect(chain.length).toBeGreaterThanOrEqual(5);
-    expect(near(endsOf(chain[0])[0], anchorOf("algeciras")), "part d'Algésiras").toBe(true);
-    expect(near(endsOf(chain[chain.length - 1])[1], anchorOf("napoli")), "arrive à Naples").toBe(true);
-    for (let i = 1; i < chain.length; i++) {
-      expect(near(endsOf(chain[i - 1])[1], endsOf(chain[i])[0]), `tronçon ${i}`).toBe(true);
-      expect(chain[i].el.t0, `tronçon ${i} suit le précédent`).toBeGreaterThan(chain[i - 1].el.t0);
+  it("Paris → Rome passe par la mer : route jusqu'au Havre, mer du Havre à Civitavecchia, route jusqu'à Rome", () => {
+    const pre = line("pre-paris");
+    const post = line("post-roma");
+    expect(near(endsOf(pre)[0], anchorOf("paris")) && near(endsOf(pre)[1], anchorOf("lehavre")), "Paris → Le Havre").toBe(true);
+    expect(near(endsOf(med)[0], anchorOf("lehavre")) && near(endsOf(med)[1], anchorOf("civitavecchia")), "Le Havre → Civitavecchia").toBe(true);
+    expect(near(endsOf(post)[0], anchorOf("civitavecchia")) && near(endsOf(post)[1], anchorOf("roma")), "Civitavecchia → Rome").toBe(true);
+    expect(med.el.t0, "le service est identifié avant le pré-acheminement").toBeLessThan(pre.el.t0);
+    expect(post.el.t0, "le post-acheminement suit le pré-acheminement").toBeGreaterThan(pre.el.t0);
+  });
+
+  it("la Norvège passe par la mer, d'Oslo à Kiel, puis par la route vers Cologne", () => {
+    const post = line("post-koln");
+    expect(near(endsOf(nord)[0], anchorOf("oslo")) && near(endsOf(nord)[1], anchorOf("kiel")), "Oslo → Kiel").toBe(true);
+    expect(near(endsOf(post)[0], anchorOf("kiel")) && near(endsOf(post)[1], anchorOf("koln")), "Kiel → Cologne").toBe(true);
+    expect(post.el.t0, "après le service maritime").toBeGreaterThanOrEqual(nord.el.t1);
+  });
+
+  it("chaque service est de port à port, sans escale : aucun autre port du fond n'est touché", () => {
+    for (const sea of [med, nord]) {
+      const [a, b] = endsOf(sea);
+      for (const p of ports) {
+        const at = anchorOf(p.at);
+        if (near(at, a) || near(at, b)) continue;
+        // Algeciras borde le détroit de Gibraltar : on passe devant, sans y faire escale
+        const reach = p.at === "algeciras" ? 12 : 25;
+        const closest = Math.min(...sea.path.points.map((q) => distanceKm(q, at)));
+        expect(closest, `${sea.el.id} passe à ${Math.round(closest)} km de ${String(p.at)}`).toBeGreaterThan(reach);
+      }
     }
   });
 
-  it("seules quelques escales du service sont nommées, pour que les noms ne se chevauchent pas", () => {
-    const ports = SCENES.shortsea.filter((e): e is NodeEl => e.kind === "node" && e.style === "port");
-    expect(ports.length, "toutes les escales sont marquées").toBeGreaterThanOrEqual(6);
-    const named = ports.filter((p) => p.label);
-    expect(named.length, "quelques noms").toBeGreaterThanOrEqual(3);
-    expect(named.length, "pas plus de cinq noms").toBeLessThanOrEqual(5);
-    expect(named.map((p) => p.at), "les deux extrémités sont nommées").toEqual(expect.arrayContaining(["algeciras", "napoli"]));
+  it("les tracés en mer restent dans l'eau (à quelques kilomètres près, aux abords des ports)", () => {
+    for (const sea of [med, nord]) {
+      expect(sea.path.length, `${sea.el.id} : un vrai trajet maritime`).toBeGreaterThan(500);
+      const bad = sea.path.points.filter((p, i) => sea.path.cum[i] > 30 && sea.path.length - sea.path.cum[i] > 30 && landDepthKm(p) > 12);
+      expect(bad, `${sea.el.id} : ${bad.length} point(s) à plus de 12 km à l'intérieur des terres, dont ${bad[0]?.map((x) => x.toFixed(2))}`).toHaveLength(0);
+    }
   });
 
-  it("la liaison directe est écartée une fois le service tracé", () => {
-    const direct = scene.lines.find((l) => l.el.id === "direct")!.el;
-    expect(direct.style).toBe("dashed");
-    expect(direct.dimAt!, "écartée quand le service commence").toBeGreaterThanOrEqual(chain[0].el.t0);
-    expect(lineOpacity(direct, 1)).toBeLessThan(0.3);
+  it("les flux directs sont écartés une fois le service tracé, et seul Le Havre est nommé parmi les ports", () => {
+    for (const id of ["direct-paris", "direct-oslo"]) {
+      const el = line(id).el;
+      expect(el.dimAt!, id).toBeGreaterThanOrEqual(Math.min(med.el.t0, nord.el.t0));
+      expect(lineOpacity(el, 1), id).toBeLessThan(0.3);
+    }
+    const named = SCENES.shortsea.filter((e): e is NodeEl => e.kind === "node" && e.style === "port" && !!e.label);
+    expect(named.map((n) => n.at)).toEqual(["lehavre"]);
   });
 });
 
-describe("boucles : des flux paneuropéens, puis quelques boucles", () => {
+describe("boucles : de nombreux flux paneuropéens, puis de longues boucles triangulaires", () => {
   const scene = buildScene("loops");
   const flows = scene.lines.filter((l) => l.el.id.startsWith("flow-"));
-  const ids = ["iberia", "benelux", "central"];
+  const ids = ["west", "east", "south"];
+  const legs = (id: string) => scene.lines.filter((l) => l.el.id.startsWith(`loop-${id}-`));
+  const empty = (id: string) => scene.lines.find((l) => l.el.id === `empty-${id}`);
 
-  it("au moins dix flux de fond, écartés quand les boucles sont identifiées", () => {
-    expect(flows.length).toBeGreaterThanOrEqual(10);
-    const firstLoop = Math.min(...scene.lines.filter((l) => l.el.id.startsWith("loop-")).map((l) => l.el.t0));
+  it("une quarantaine de flux à sens unique d'abord, écartés quand les boucles sont identifiées", () => {
+    expect(flows.length).toBeGreaterThanOrEqual(35);
+    const firstLoop = Math.min(...ids.flatMap(legs).map((l) => l.el.t0));
+    expect(Math.max(...flows.map((l) => l.el.t1)), "tous les flux sont tracés avant la première boucle").toBeLessThanOrEqual(firstLoop);
     for (const l of flows) {
       expect(l.el.dimAt, l.el.id).toBeDefined();
       expect(l.el.dimAt!, `${l.el.id} s'efface quand les boucles commencent`).toBeGreaterThanOrEqual(firstLoop - 0.05);
     }
   });
 
-  it.each(ids)("la boucle %s : des jambes chargées qui s'enchaînent, refermées par une jambe à vide en pointillé", (id) => {
-    const loaded = scene.lines.filter((l) => l.el.id.startsWith(`loop-${id}-`));
-    const empty = scene.lines.find((l) => l.el.id === `empty-${id}`)!;
-    expect(loaded.length, "au moins deux jambes chargées").toBeGreaterThanOrEqual(2);
-    expect(empty.el.style, "la jambe à vide se lit en pointillé").toBe("dashed");
+  it.each(ids)("la boucle %s est un triangle qui se referme, et ses jambes chargées sont des flux du fond", (id) => {
+    const loaded = legs(id);
+    const closing = empty(id);
     for (let i = 1; i < loaded.length; i++) expect(near(endsOf(loaded[i - 1])[1], endsOf(loaded[i])[0]), `jambe ${i}`).toBe(true);
-    expect(near(endsOf(loaded[loaded.length - 1])[1], endsOf(empty)[0]), "la jambe à vide part d'où l'on a fini").toBe(true);
-    expect(near(endsOf(empty)[1], endsOf(loaded[0])[0]), "elle ramène au point de départ").toBe(true);
-    expect(empty.el.t0, "elle se trace après la première jambe chargée").toBeGreaterThan(loaded[0].el.t0);
-    expect(empty.el.width, "plus discrète que les jambes chargées").toBeLessThan(loaded[0].el.width ?? 0);
+    const last = closing ?? loaded[loaded.length - 1];
+    if (closing) expect(near(endsOf(loaded[loaded.length - 1])[1], endsOf(closing)[0]), "la jambe à vide part d'où l'on a fini").toBe(true);
+    expect(near(endsOf(last)[1], endsOf(loaded[0])[0]), "la boucle revient à son point de départ").toBe(true);
+    expect(loaded.length + (closing ? 1 : 0), "trois côtés : un triangle").toBe(3);
+    for (const l of loaded) {
+      const [a, b] = endsOf(l);
+      expect(flows.some((f) => near(endsOf(f)[0], a) && near(endsOf(f)[1], b)), `${l.el.id} est déjà un flux du fond`).toBe(true);
+    }
+  });
+
+  it("les boucles sont longues : chaque côté fait plus de 500 km, et l'une relie Barcelone à Anvers", () => {
+    for (const id of ids) {
+      for (const l of [...legs(id), ...(empty(id) ? [empty(id)!] : [])]) expect(distanceKm(...endsOf(l)), l.el.id).toBeGreaterThan(500);
+    }
+    const west = legs("west");
+    expect(near(endsOf(west[0])[0], anchorOf("barcelona")) && near(endsOf(west[0])[1], anchorOf("antwerpen")), "Barcelone → Anvers").toBe(true);
+  });
+
+  it("une boucle se referme par une jambe à vide en pointillé, une autre par une jambe chargée", () => {
+    const closings = ids.map((id) => empty(id));
+    expect(closings.some((c) => c?.el.style === "dashed"), "une jambe à vide").toBe(true);
+    expect(closings.some((c) => !c), "une boucle entièrement chargée").toBe(true);
+    for (const c of closings) if (c) expect(c.el.width, "plus discrète qu'une jambe chargée").toBeLessThan(legs("west")[0].el.width ?? 0);
+  });
+
+  it("aucun nom de ville sur la scène des boucles", () => {
+    expect(scene.nodes.length, "des repères aux sommets").toBeGreaterThan(0);
+    for (const n of scene.nodes) expect(n.label, `repère ${String(n.at)}`).toBeFalsy();
   });
 
   it("les boucles se traitent l'une après l'autre", () => {
-    const starts = ids.map((id) => scene.lines.find((l) => l.el.id === `loop-${id}-0`)!.el.t0);
+    const starts = ids.map((id) => legs(id)[0].el.t0);
     expect([...starts].sort((a, b) => a - b), "ordre d'apparition").toEqual(starts);
     expect(new Set(starts).size, "des départs distincts").toBe(ids.length);
+    expect(Math.max(...ids.flatMap((id) => [...legs(id), ...(empty(id) ? [empty(id)!] : [])]).map((l) => l.el.t1)), "tout tient dans le levier").toBeLessThanOrEqual(1);
   });
 });
 
@@ -364,31 +457,35 @@ describe("calculs de la scène", () => {
 });
 
 describe("textes de la scène (FR et EN)", () => {
-  type Item = { name: string; text: string; schema: string; watermark: string };
+  type Item = { name: string; text: string; schema: string; card: { head?: string; label: string } };
   type Msg = { Home: { levers: { items: Record<string, Item> } & Record<string, unknown> } };
   const load = (loc: string) => JSON.parse(readFileSync(`messages/${loc}/home.json`, "utf8")) as Msg;
 
-  it.each(["fr", "en"])("%s : chaque levier a un nom, un texte, une description de schéma et son filigrane", (loc) => {
+  it.each(["fr", "en"])("%s : chaque levier a un nom, un texte, une description de schéma et sa carte", (loc) => {
     const items = load(loc).Home.levers.items;
     for (const id of LEVER_ORDER) {
       const it = items[id];
       expect(it, `${loc} : levier ${id}`).toBeDefined();
-      for (const k of ["name", "text", "schema", "watermark"] as const) expect(it[k].length, `${loc}/${id}/${k}`).toBeGreaterThan(3);
+      for (const k of ["name", "text", "schema"] as const) expect(it[k].length, `${loc}/${id}/${k}`).toBeGreaterThan(3);
+      expect(it.card.label.length, `${loc}/${id}/card`).toBeGreaterThan(3);
     }
   });
 
-  it.each(["fr", "en"])("%s : les bulles d'explication ont disparu des messages", (loc) => {
+  it.each(["fr", "en"])("%s : plus de bulles d'explication ni de filigrane dans les messages", (loc) => {
     const levers = load(loc).Home.levers;
     expect(levers, `${loc} : plus de légende fixe`).not.toHaveProperty("legend");
-    for (const id of LEVER_ORDER) expect(levers.items[id], `${loc}/${id}`).not.toHaveProperty("callouts");
+    for (const id of LEVER_ORDER) {
+      expect(levers.items[id], `${loc}/${id}`).not.toHaveProperty("callouts");
+      expect(levers.items[id], `${loc}/${id}`).not.toHaveProperty("watermark");
+    }
   });
 
-  it("le filigrane est une phrase courte, avec un mot-clé en gras", () => {
+  it("la carte est courte : deux lignes, un passage qui accroche (chiffre ou phrase)", () => {
     for (const loc of ["fr", "en"]) {
       for (const id of LEVER_ORDER) {
-        const w = load(loc).Home.levers.items[id].watermark;
-        expect(w.replace(/<\/?b>/g, "").length, `${loc}/${id} : une phrase punchy`).toBeLessThan(90);
-        expect(w, `${loc}/${id} : un passage en gras`).toMatch(/<b>.+<\/b>/);
+        const { head, label } = load(loc).Home.levers.items[id].card;
+        expect(label.length, `${loc}/${id} : une ligne de précision`).toBeLessThan(60);
+        if (head !== undefined) expect(head.length, `${loc}/${id} : un titre court`).toBeLessThan(40);
       }
     }
   });

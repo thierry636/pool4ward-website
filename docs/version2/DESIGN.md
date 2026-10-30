@@ -63,12 +63,12 @@ Le mouvement explique, il ne décore. Règles :
 - **scène des leviers (couverture)** : six leviers joués à tour de rôle (12 à 16 s chacun selon
   le levier). Chacun suit les mêmes temps : les flux (ou les ports) se dessinent, on identifie ce
   qui peut changer, les flux se transforment. Les tracés se dessinent, des impulsions les
-  parcourent. Aucun encart ni bulle sur l'image, aucun texte fixe : un **filigrane** estompé, propre à
-  chaque levier (son sigle animé et une phrase courte, dont un passage en gras), se dessine
-  juste après le début des flux. Pas de bouton pause (pastilles) : un clic sur un levier
-  l'arrête et le joue une fois, la lecture reprend vingt secondes après sa fin ; sous
-  « mouvement réduit », pas de lecture automatique, ni vol, ni impulsion — le levier
-  s'affiche terminé, filigrane compris ;
+  parcourent. Aucun encart ni bulle sur l'image, aucun texte fixe, aucun sigle : les six
+  leviers sont des pastilles sur toute la largeur du bas, et la **carte du levier actif**
+  (un chiffre ou une phrase courte) est toujours en bas à droite. Pas de bouton pause : un clic sur
+  une pastille arrête la lecture et joue le levier une fois, la lecture reprend vingt secondes
+  après sa fin ; sous « mouvement réduit », pas de lecture automatique, ni vol, ni impulsion, ni
+  animation d'entrée de la carte — le levier s'affiche terminé ;
 - **schémas des leviers** : six cartes « situation de départ / avec le levier » ; les
   tracés se dessinent à l'entrée dans l'écran, une fois, puis des impulsions les
   parcourent ; terminés et immobiles sans script ou en mouvement réduit ;

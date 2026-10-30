@@ -57,7 +57,7 @@ export interface BuiltScene {
 }
 
 /** Points posés à des fractions de la longueur d'un tracé. */
-export function pointsAlong(stops: readonly string[], fractions: readonly number[]): LonLat[] {
+export function pointsAlong(stops: readonly Anchor[], fractions: readonly number[]): LonLat[] {
   const path = makePath(routePath(stops.map((s) => anchorOf(s)), 0.5));
   return fractions.map((f) => pointAt(path, f));
 }

@@ -13,7 +13,7 @@
 
 ## Deux chiffres à valider : « 3 500 services rail et fluviaux » et « 1 500 services shortsea »
 
-Les filigranes de la couverture annoncent ces nombres (`src/content/figures.ts`). Ils ont été
+Les cartes de la couverture annoncent ces nombres (`src/content/figures.ts`). Ils ont été
 donnés par la direction ; **ils ne sont pas recoupés** avec les données du portail consultées
 (référentiel Appel d'Air 2026 : 2 906 services ferroviaires intermodaux, sans le fluvial ni le
 shortsea, voir `data/referentiels/appeldair-services-2026/README.md` du dépôt du portail).
@@ -36,7 +36,7 @@ avant toute mise en ligne publique (source, date, périmètre), ou à remplacer.
 - **La scène des leviers de la couverture** (`src/lib/levers/data.ts`, voir LEVERS.md) :
   lieux réels, liaisons **dessinées pour expliquer** six leviers (cinq en Méditerranée
   occidentale, le report modal du sud de l'Espagne à la Pologne). Aucun service existant n'est affirmé, aucun nom d'opérateur, aucun chiffre ;
-  l'écran n'a plus de mention visible (le filigrane la porte pour les lecteurs d'écran). Indépendante de la vitrine et de la base privée.
+  l'écran n'a plus de mention visible (la carte du levier la porte pour les lecteurs d'écran). Indépendante de la vitrine et de la base privée.
 - **Parkings sécurisés, bornes de recharge, réseaux** : aucune de ces couches
   n'est publiée par la vitrine (l'ancien globe d'exploration, qui les
   évoquait, a été retiré).

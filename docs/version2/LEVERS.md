@@ -10,12 +10,20 @@ puis les flux se transforment**.
    service ferroviaire est identifié (Saragosse → Poznań) et les flux se transforment en
    pré-acheminement routier vers Saragosse, traction ferroviaire jusqu'à Poznań, puis
    post-acheminement routier (15 s) ;
-2. **Shortsea côtier** — on voit d'abord les ports côtiers d'Europe (une quarantaine de points,
-   de l'Atlantique à la Baltique et à la Méditerranée), puis un service méditerranéen, de port en
-   port d'Algésiras à Naples, à la place d'une liaison directe qui s'efface (15 s) ;
-3. **Boucles** — une quinzaine de flux paneuropéens à sens unique, puis l'identification de
-   quelques boucles : des jambes chargées qui se referment, au besoin avec une jambe à vide en
-   pointillé (15 s) ;
+2. **Shortsea côtier** — deux flux par la route, **Paris → Rome** et **Oslo → Cologne** (de la
+   Norvège vers l'Allemagne). On branche en filigrane les ports côtiers d'Europe (une quarantaine
+   de points), puis on identifie deux services **de port à port**, sans escale : Le Havre →
+   Civitavecchia (Manche, golfe de Gascogne, côte portugaise, détroit de Gibraltar, Méditerranée,
+   mer Tyrrhénienne) et Oslo → Kiel (fjord d'Oslo, Skagerrak, Kattegat, Grand Belt). Les flux se
+   transforment : pré-acheminement routier Paris → Le Havre, mer, post-acheminement routier
+   Civitavecchia → Rome ; Kiel → Cologne par la route pour la Norvège (15 s). **Les tracés en mer
+   restent dans l'eau** : leurs points de passage sont vérifiés par un test contre le jeu de
+   polygones « terre » du fond de carte (`levers.test.ts`) ;
+3. **Boucles** — une quarantaine de flux paneuropéens à sens unique, d'abord. **Dedans**, on repère
+   quelques longues boucles triangulaires (Barcelone → Anvers → Milan, Varsovie → Hambourg →
+   Vienne, Rome → Budapest → Munich) : leurs jambes chargées sont déjà des flux du fond, et une
+   jambe à vide en pointillé referme deux d'entre elles. **Aucun nom de ville** sur cette scène
+   (15 s) ;
 4. **Cross-dock** — neuf petits flux d'origines variées convergent vers une plateforme (Lyon),
    se consolident, et repartent en **un seul gros flux**, bien plus épais, vers l'usine (12 s) ;
 5. **Électrification** — comme le rail et le shortsea : les flux, puis **le réseau de bornes**
@@ -31,31 +39,31 @@ racontent la même histoire que la scène (ports puis service ; flux à sens uni
 petits flux puis gros flux ; réseau de bornes puis boucle électrifiée ; départs de trois
 entreprises puis train partagé).
 
-## La couverture : une image seule, un filigrane par levier
+## La couverture : l'image, les pastilles, la carte du levier actif
 
-Le titre de la couverture ne change pas (« Concevoir le transport au plus près du réel. »). Pas
-d'encart sur l'image, pas de texte fixe : quand un levier commence à tracer ses flux, **un
-filigrane très estompé se dessine** dans le coin libre de l'image — **le sigle du levier**
-(animé, propre à chacun : voir `glyphs.tsx`) et **l'idée en une phrase punchy**, dont un
-passage en gras :
+Le titre de la couverture ne change pas (« Concevoir le transport au plus près du réel. »). Plus
+de bulle sur l'image, plus de sigle ni de filigrane : **les six leviers sont de simples pastilles
+sur toute la largeur du bas**, et **la carte du levier actif est toujours en bas à droite** (sur
+l'Afrique, là où la carte n'a rien à montrer). Elle change avec le levier et porte l'idée en deux
+lignes, la pastille active disant déjà le nom :
 
-| Levier | Filigrane (FR) |
+| Levier | Carte (FR) |
 |---|---|
-| Report modal | **3 500 services** rail et fluviaux en Europe, une alternative à la route. |
-| Shortsea | **1 500 services** shortsea en Europe, une alternative à la route. |
-| Boucles | **Des boucles se cachent** dans vos flux paneuropéens. |
-| Cross-dock | **Consolider** : de petits flux, un gros flux vers l'usine. |
-| Électrification | **Des bornes partout en Europe**, un flux bouclé et électrifié. |
-| Mutualisation | **Des entreprises différentes**, un même train : Dourges – Poznań. |
+| Report modal | **3 500** · services ferroviaires et fluviaux · Europe |
+| Shortsea | **1 500** · services shortsea · Europe |
+| Boucles | **Des boucles se cachent** · dans vos flux paneuropéens |
+| Cross-dock | **Consolider** · de petits flux, un gros flux vers l'usine |
+| Électrification | **Des bornes partout en Europe** · un flux bouclé et électrifié |
+| Mutualisation | **Des entreprises différentes** · un même train : Dourges – Poznań |
 
-Il s'efface quand un autre levier prend la main (`LeverWatermark.tsx`, un par levier, remonté à
-chaque changement ; piloté par `data-on` depuis `LeverStage.tsx`, seuil `WATERMARK_AT`) ; en
-mouvement réduit, il est là d'emblée. La mention « Illustration : liaisons dessinées pour
-expliquer, pas des services existants » n'est pas affichée (jugée inutile) : elle reste dans le
-filigrane, lisible par les lecteurs d'écran. Six pastilles, sous l'image, passent d'un levier à
-l'autre. **Il n'y a plus aucune bulle d'explication** sur l'image (le code, les textes et le CSS
-correspondants ont été supprimés) ; seuls les noms de lieux restent sur la carte, et pas tous :
-quatre escales du service shortsea sont nommées, pas huit, pour qu'ils ne se chevauchent pas.
+Un chiffre en grand seulement pour le rail/fluvial et le shortsea ; les quatre autres portent une
+phrase, jamais un chiffre inventé. Une barre colorée au bas de la carte avance avec le levier,
+comme celle de la pastille active. La mention « Illustration : liaisons dessinées pour expliquer,
+pas des services existants » n'est pas affichée : elle reste dans la carte, lisible par les
+lecteurs d'écran (`LeverCard.tsx`, remontée à chaque levier ; en mouvement réduit, pas
+d'animation d'entrée). Sur téléphone, la carte passe pleine largeur au-dessus des pastilles ;
+sur un écran moyen, les pastilles passent sur deux lignes à gauche de la carte. Les noms de lieux
+restent sur la carte, mais pas tous (un seul port nommé pour le shortsea, aucun pour les boucles).
 
 **Les chiffres « 3 500 » et « 1 500 »** viennent de la direction (`src/content/figures.ts`).
 Ils n'ont pas été recoupés : dans le portail, le référentiel Appel d'Air 2026 compte
@@ -69,7 +77,7 @@ arrondies) ; les liaisons sont **dessinées pour expliquer** chaque levier. Les 
 et fluvial du report modal sont des tracés **indicatifs** entre villes, pas des lignes ni des
 voies d'eau relevées, et le service Saragosse → Poznań n'existe pas parce qu'on le dessine.
 Les liaisons n'affirment l'existence d'aucun service, ne portent aucun nom d'opérateur, aucun
-chiffre, aucun gain. Elles ne sont plus signalées à l'écran (voir plus haut : filigrane), et la scène est
+chiffre, aucun gain. Elles ne sont plus signalées à l'écran (voir plus haut : la carte du levier la porte pour les lecteurs d'écran), et la scène est
 indépendante de la vitrine (`showcase.json`) et de la base privée : elle n'en lit rien.
 
 > Les noms d'opérateurs visibles sur la carte du portail (capture fournie) ne sont **pas
@@ -86,7 +94,7 @@ indépendante de la vitrine (`showcase.json`) et de la base privée : elle n'en 
 | `src/components/levers/LeverGlobe.tsx` | Globe MapLibre incliné, sans interaction, piloté image par image ; étiquettes HTML |
 | `src/components/levers/LeverFlat.tsx` | Même scène en SVG (sans WebGL, rendu logiciel, appareil économe) ; animations CSS |
 | `src/components/levers/LeverStage.tsx` | Orchestrateur : choix du rendu, lecture automatique, pastilles des six leviers, mesure du texte |
-| `src/components/levers/LeverWatermark.tsx` · `glyphs.tsx` | Le filigrane : sigle animé du levier + phrase (`items.<levier>.watermark`) |
+| `src/components/levers/LeverCard.tsx` | La carte du levier actif, en bas à droite (`items.<levier>.card`) |
 | `src/components/levers/LeverSchemas.tsx` | Les six schémas animés (SVG inline, `reveal-in`) |
 | `messages/*/home.json` → `Home.levers`, `Home.leverSchemas` | Tous les textes, FR et EN (clés vérifiées par `levers.test.ts`) |
 | `scripts/build-levers-poster.ts` | `public/images/levers-poster.svg`, image d'attente de la carte (`npm run poster:levers`) |

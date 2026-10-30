@@ -8,7 +8,7 @@ import { LEVER_COLOR, LEVER_ORDER, type LeverId } from "@/lib/levers/data";
 import { forcesGlobe, isSoftwareRenderer, preferLightweight, supportsWebGL } from "@/components/showcase/support";
 import { LeverFlat } from "./LeverFlat";
 import { LeverIcon } from "./icons";
-import { LeverWatermark } from "./LeverWatermark";
+import { LeverCard } from "./LeverCard";
 import { EUROPE_SERVICES_COUNT, SHORTSEA_SERVICES_COUNT } from "@/content/figures";
 import type { Rect } from "./LeverGlobe";
 
@@ -19,9 +19,6 @@ type Renderer = "pending" | "globe" | "flat";
 
 /** Après un choix manuel, le levier se joue puis reste affiché ; sans nouveau geste, la lecture reprend après ce délai. */
 const IDLE_RESUME_MS = 20_000;
-
-/** Avancement d'un levier à partir duquel son filigrane apparaît : les premiers tracés viennent de commencer. */
-const WATERMARK_AT = 0.1;
 
 const NO_PAD = { left: 0, right: 0, top: 0, bottom: 0 };
 
@@ -50,7 +47,8 @@ export function LeverStage() {
   const reserved = useRef<Rect[]>([]);
   const progress = useRef(0);
   const bars = useRef<(HTMLSpanElement | null)[]>([]);
-  const watermark = useRef<HTMLDivElement>(null);
+  const cardBar = useRef<HTMLSpanElement>(null);
+  const cardSlot = useRef<HTMLDivElement>(null);
   const playingRef = useRef(false);
   const reducedRef = useRef(false);
   playingRef.current = playing;
@@ -78,10 +76,12 @@ export function LeverStage() {
       const left = Math.round(Math.min(tr.right - m.left + 24, m.width * 0.58));
       const bottom = Math.round(m.bottom - dr.top + 10);
       const top = 92;
+      const cr = cardSlot.current?.getBoundingClientRect();
       reserved.current = [
         { x: tr.left - m.left - 8, y: tr.top - m.top - 8, w: tr.width + 16, h: tr.height + 16 },
         { x: dr.left - m.left, y: dr.top - m.top - 6, w: dr.width, h: dr.height + 6 },
         { x: 0, y: 0, w: m.width, h: 70 },
+        ...(cr ? [{ x: cr.left - m.left - 8, y: cr.top - m.top - 8, w: cr.width + 16, h: cr.height + 16 }] : []),
       ];
       setPad((p) => (p.left === left && p.bottom === bottom && p.top === top && p.right === 28 ? p : { left, right: 28, top, bottom }));
     };
@@ -89,6 +89,7 @@ export function LeverStage() {
     const ro = new ResizeObserver(measure);
     ro.observe(section);
     ro.observe(dock);
+    if (cardSlot.current) ro.observe(cardSlot.current);
     const text = section.querySelector("[data-cover-text]");
     if (text) ro.observe(text);
     return () => ro.disconnect();
@@ -128,12 +129,7 @@ export function LeverStage() {
       bars.current.forEach((b, i) => {
         if (b) b.style.transform = `scaleX(${i === active ? progress.current : 0})`;
       });
-      // Le filigrane du levier apparaît juste après le début du tracé des flux.
-      const wm = watermark.current;
-      if (wm) {
-        const on = reducedRef.current || progress.current >= WATERMARK_AT;
-        if (wm.dataset.on !== (on ? "1" : "0")) wm.dataset.on = on ? "1" : "0";
-      }
+      if (cardBar.current) cardBar.current.style.transform = `scaleX(${progress.current})`;
       if (!playingRef.current && !reducedRef.current && progress.current >= 1) {
         doneAt ??= now;
         if (now - doneAt > IDLE_RESUME_MS) {
@@ -218,17 +214,15 @@ export function LeverStage() {
             />
           </div>
         )}
-        <LeverWatermark key={lever} lever={lever} rootRef={watermark} label={t("legendLabel")} note={t("note")}>
-          {t.rich(`items.${lever}.watermark`, { count: counts[lever] ?? "", b: (chunks) => <b>{chunks}</b> })}
-        </LeverWatermark>
         {/* Fondu vers le texte et vers la section suivante. */}
         <div aria-hidden="true" className="lever-fade-x pointer-events-none absolute inset-0 hidden lg:block" />
         <div aria-hidden="true" className="lever-fade-y pointer-events-none absolute inset-0" />
       </div>
 
-      {/* Sous l'image : les six leviers, de simples pastilles. */}
-      <div ref={dockEl} className="wrap relative z-10 pb-5 pt-4 lg:pb-7 lg:pt-2">
-        <ol className="flex flex-wrap gap-2" aria-label={t("listLabel")}>
+      {/* Sous l'image : les six leviers, de simples pastilles ; à droite, la carte du levier affiché
+          (au-dessus des pastilles sur téléphone). */}
+      <div ref={dockEl} className="wrap relative z-10 flex flex-col pb-5 pt-4 lg:pb-7 lg:pt-2">
+        <ol className="flex flex-wrap gap-2 lg:max-w-[calc(100%-20.5rem)]" aria-label={t("listLabel")}>
           {LEVER_ORDER.map((id, i) => (
             <li key={id}>
               <button type="button" className="lever-chip" aria-pressed={i === active} onClick={() => pick(i)} style={{ ["--c" as string]: LEVER_COLOR[id] }}>
@@ -245,6 +239,18 @@ export function LeverStage() {
             </li>
           ))}
         </ol>
+        <div ref={cardSlot} className="max-lg:order-first max-lg:mb-4 lg:absolute lg:bottom-7 lg:right-10 lg:w-[19rem]">
+          <LeverCard
+            key={lever}
+            lever={lever}
+            figure={counts[lever]}
+            head={counts[lever] ? undefined : t(`items.${lever}.card.head`)}
+            label={t(`items.${lever}.card.label`)}
+            note={t("note")}
+            ariaLabel={t("legendLabel")}
+            barRef={cardBar}
+          />
+        </div>
       </div>
     </>
   );

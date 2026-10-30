@@ -92,22 +92,26 @@ function Rail() {
 
 function Shortsea() {
   const c = LEVER_COLOR.shortsea;
-  const A: P = [30, 122], P1: P = [76, 82], P2: P = [136, 56], P3: P = [204, 50], B: P = [290, 66];
-  const route = line(A, P1, P2, P3, B);
-  const coast: P[] = [[22, 98], [44, 78], [62, 60], [96, 44], [130, 30], [166, 26], [204, 24], [248, 30], [290, 38], [312, 46]];
+  const O: P = [34, 40], D: P = [288, 40], A: P = [86, 90], B: P = [234, 90];
+  const coast = "M0,100 L40,96 L86,90 L112,93 L150,97 L200,93 L234,90 L270,98 L320,96";
+  const sea = `M${M(A)}C104,152 216,152 ${M(B)}`;
+  const ports: P[] = [[18, 98], [52, 94], [130, 95], [176, 95], [208, 92], [258, 95], [300, 97]];
   return (
     <>
-      <path d="M0,150 L0,106 L22,98 L62,60 L130,30 L204,24 L290,38 L320,48 L320,0 L0,0 Z" fill="#0f2147" className="sch-fadein" style={delay(0)} />
-      <path d="M0,106 L22,98 L62,60 L130,30 L204,24 L290,38 L320,48" fill="none" stroke="#2f56b8" strokeWidth="1.6" strokeLinejoin="round" className="sch-fadein" style={delay(0)} />
-      {coast.map((p, i) => (
-        <circle key={i} cx={p[0]} cy={p[1]} r="2.6" fill="#94a3b8" className="sch-pop" style={delay(0.1 + i * 0.08)} />
+      <path d={`${coast} L320,0 L0,0 Z`} fill="#0f2147" className="sch-fadein" style={delay(0)} />
+      <path d={coast} fill="none" stroke="#2f56b8" strokeWidth="1.6" strokeLinejoin="round" className="sch-fadein" style={delay(0)} />
+      <Ghost d={line(O, D)} at={0.2} />
+      {ports.map((p, i) => (
+        <circle key={i} cx={p[0]} cy={p[1]} r="2.6" fill="#94a3b8" className="sch-pop" style={delay(0.6 + i * 0.07)} />
       ))}
-      <Ghost d="M30,122 L290,66" at={0.9} />
-      <Draw d={route} color={c} w={3.6} at={1.5} dur={1.6} halo={c} />
-      <Run d={route} at={3.2} n={2} />
-      {[A, P1, P2, P3, B].map((p, i) => (
-        <Dot key={i} at={1.5 + i * 0.35} p={p} r={i === 0 || i === 4 ? 4.8 : 4} />
-      ))}
+      <Draw d={line(O, A)} color="#94a3b8" w={2.2} at={1.5} dur={0.6} />
+      <Draw d={sea} color={c} w={4.2} at={2.1} dur={1.3} halo={c} />
+      <Draw d={line(B, D)} color="#94a3b8" w={2.2} at={3.4} dur={0.6} />
+      <Run d={sea} at={3.4} n={2} dur={3.2} />
+      <Dot at={0.1} p={O} r={4.4} />
+      <Dot at={0.3} p={D} r={4.4} />
+      <Square at={1.4} p={A} color={c} />
+      <Square at={3.2} p={B} color={c} />
     </>
   );
 }

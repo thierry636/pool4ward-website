@@ -1,7 +1,7 @@
 /**
  * La scène des leviers de la page d'accueil : six leviers joués tour à tour sur la même
  * carte de l'Europe. Chacun raconte une idée en trois temps — la situation de départ, ce
- * qu'on identifie dessus, ce qu'elle devient — et pose un filigrane (LeverWatermark).
+ * qu'on identifie dessus, ce qu'elle devient — et la carte du levier (LeverCard) en dit l'idée.
  *
  * C'est une ILLUSTRATION éditoriale, pas une donnée de référentiel : les lieux sont réels
  * (villes et ports, positions arrondies), les liaisons sont dessinées pour expliquer chaque
@@ -102,6 +102,11 @@ export const PLACES: Record<string, Place> = {
   roma: { fr: "Rome", en: "Rome", lon: 12.5, lat: 41.9 },
   budapest: { fr: "Budapest", en: "Budapest", lon: 19.04, lat: 47.5 },
   dourges: { fr: "Dourges", en: "Dourges", lon: 3.0, lat: 50.43 },
+  kiel: { fr: "Kiel", en: "Kiel", lon: 10.15, lat: 54.33 },
+  bordeaux: { fr: "Bordeaux", en: "Bordeaux", lon: -0.58, lat: 44.84 },
+  toulouse: { fr: "Toulouse", en: "Toulouse", lon: 1.44, lat: 43.6 },
+  stuttgart: { fr: "Stuttgart", en: "Stuttgart", lon: 9.18, lat: 48.78 },
+  bologna: { fr: "Bologne", en: "Bologna", lon: 11.34, lat: 44.49 },
 };
 
 /** Un point d'ancrage : un lieu nommé, ou une position [lon, lat]. */
@@ -112,8 +117,8 @@ export type LineStyle = "solid" | "dashed" | "dotted";
 export interface LineEl {
   kind: "line";
   id: string;
-  /** Lieux traversés, dans l'ordre. */
-  stops: readonly string[];
+  /** Lieux traversés, dans l'ordre ; une position [lon, lat] sert de point de passage (un tracé qui suit la mer). */
+  stops: readonly Anchor[];
   color: string;
   width: number;
   style?: LineStyle;
@@ -175,7 +180,6 @@ const SKY = "#38bdf8";
 const AMBER = "#fbbf24";
 const SLATE = "#94a3b8";
 const WHITE = "#f1f5f9";
-const GHOST = "#64748b";
 const ROAD = "#94a3b8";
 const HAUL = "#cbd5e1";
 const PINK = "#f472b6";
@@ -225,24 +229,48 @@ export const LEVER_COLOR: Record<LeverId, string> = {
 /** Shortsea : les ports côtiers d'Europe, dans l'ordre où ils apparaissent (de l'Atlantique à la Baltique, puis la Méditerranée). */
 const PORTS: readonly string[] = [
   "sines", "lisboa", "leixoes", "bilbao", "lehavre", "southampton", "dublin", "liverpool", "felixstowe", "dunkerque", "zeebrugge", "antwerpen", "rotterdam",
-  "bremerhaven", "hamburg", "copenhagen", "gothenburg", "oslo", "stockholm", "helsinki", "tallinn", "riga", "klaipeda", "gdansk",
+  "bremerhaven", "hamburg", "kiel", "copenhagen", "gothenburg", "oslo", "stockholm", "helsinki", "tallinn", "riga", "klaipeda", "gdansk",
   "algeciras", "valencia", "barcelona", "cagliari", "marseille", "genova", "livorno", "civitavecchia", "napoli", "palermo", "koper", "bari", "thessaloniki", "piraeus",
 ];
-/** Le service méditerranéen mis en avant : d'escale en escale le long de la côte. */
-const MED_SERVICE: readonly string[] = ["algeciras", "valencia", "barcelona", "marseille", "genova", "livorno", "civitavecchia", "napoli"];
-/** Seules quatre escales sont nommées : les huit noms se chevauchent sur une carte de toute l'Europe. */
-const MED_LABELED: ReadonlySet<string> = new Set(["algeciras", "barcelona", "marseille", "napoli"]);
-
-/** Boucles : des flux paneuropéens à sens unique, dont certains se referment en boucle (une jambe à vide au besoin). */
-const PAN_FLOWS: readonly (readonly [string, string])[] = [
-  ["lisboa", "bilbao"], ["bilbao", "paris"], ["paris", "hamburg"], ["hamburg", "warszawa"], ["roma", "milano"], ["milano", "munchen"], ["munchen", "praha"],
-  ["praha", "berlin"], ["rotterdam", "koln"], ["koln", "wien"], ["budapest", "wien"], ["valencia", "madrid"], ["dresden", "wroclaw"], ["torino", "marseille"],
+/** Deux flux par la route : Paris → Rome, et de la Norvège vers l'Allemagne (Oslo → Cologne). */
+const SEA_FLOWS: readonly { from: string; to: string }[] = [
+  { from: "paris", to: "roma" },
+  { from: "oslo", to: "koln" },
 ];
-/** Chaque boucle : des jambes chargées, puis la jambe à vide qui la referme (dernier élément). */
-const LOOPS: readonly { id: string; loaded: readonly (readonly [string, string])[]; empty: readonly [string, string] }[] = [
-  { id: "iberia", loaded: [["zaragoza", "lyon"], ["lyon", "barcelona"]], empty: ["barcelona", "zaragoza"] },
-  { id: "benelux", loaded: [["rotterdam", "frankfurt"], ["frankfurt", "bruxelles"]], empty: ["bruxelles", "rotterdam"] },
-  { id: "central", loaded: [["wien", "praha"], ["praha", "munchen"]], empty: ["munchen", "wien"] },
+/**
+ * Le service Le Havre → Civitavecchia, de port à port, tout en mer : Manche, golfe de Gascogne,
+ * côte portugaise, détroit de Gibraltar, Méditerranée, mer Tyrrhénienne. Les points de passage
+ * ne sont pas des escales ; ils tiennent le tracé dans l'eau (levers.test.ts le vérifie).
+ */
+const SEA_ATLANTIC_MED: readonly Anchor[] = [
+  "lehavre", [-0.5, 49.8], [-1.0, 49.98], [-2.3, 49.98], [-3.6, 49.7], [-5.3, 49.0], [-6.2, 48.2], [-6.2, 46.5], [-8.0, 45.0], [-10.0, 43.5],
+  [-10.2, 41.0], [-10.1, 38.7], [-9.7, 36.8], [-7.2, 36.2], [-5.7, 35.95], [-4.0, 36.1], [-2.0, 36.4], [0.0, 37.9], [1.8, 38.3], [4.5, 38.4],
+  [8.6, 38.2], [9.6, 38.6], [10.3, 39.4], [11.5, 40.9], "civitavecchia",
+];
+/** Le service Oslo → Kiel : le fjord d'Oslo, le Skagerrak, le Kattegat, le Grand Belt, la baie de Kiel. */
+const SEA_OSLO_KIEL: readonly Anchor[] = [
+  "oslo", [10.58, 59.72], [10.6, 59.62], [10.55, 59.5], [10.53, 59.4], [10.58, 59.3], [10.62, 59.1], [10.62, 58.85], [10.6, 58.7], [10.9, 58.2], [11.05, 57.7],
+  [11.4, 57.3], [11.1, 56.65], [10.95, 55.85], [10.82, 55.8], [11.04, 55.35], [10.95, 54.85], [10.6, 54.5], [10.3, 54.43], "kiel",
+];
+
+/**
+ * Boucles : de nombreux flux paneuropéens à sens unique (de fond), et dedans quelques longues boucles
+ * triangulaires : des jambes chargées qui se referment, au besoin avec une jambe à vide (dernier tracé).
+ */
+const LOOPS: readonly { id: string; legs: readonly (readonly [string, string])[]; empty?: readonly [string, string] }[] = [
+  { id: "west", legs: [["barcelona", "antwerpen"], ["antwerpen", "milano"], ["milano", "barcelona"]] },
+  { id: "east", legs: [["warszawa", "hamburg"], ["hamburg", "wien"]], empty: ["wien", "warszawa"] },
+  { id: "south", legs: [["roma", "budapest"], ["budapest", "munchen"]], empty: ["munchen", "roma"] },
+];
+/** Les flux de fond : ceux des jambes chargées des boucles en font partie (c'est « à l'intérieur » qu'on les repère). */
+const PAN_FLOWS: readonly (readonly [string, string])[] = [
+  ["lisboa", "madrid"], ["madrid", "bordeaux"], ["bordeaux", "paris"], ["sevilla", "valencia"], ["valencia", "lyon"], ["toulouse", "milano"],
+  ["barcelona", "antwerpen"], ["marseille", "torino"], ["lyon", "stuttgart"], ["paris", "rotterdam"], ["paris", "frankfurt"], ["lehavre", "koln"],
+  ["antwerpen", "milano"], ["rotterdam", "berlin"], ["duisburg", "praha"], ["milano", "barcelona"], ["hamburg", "munchen"], ["frankfurt", "wien"],
+  ["warszawa", "hamburg"], ["stuttgart", "budapest"], ["berlin", "wroclaw"], ["poznan", "praha"], ["hamburg", "wien"], ["lodz", "dresden"],
+  ["gdansk", "berlin"], ["copenhagen", "hamburg"], ["roma", "budapest"], ["budapest", "wien"], ["wien", "milano"], ["milano", "roma"],
+  ["budapest", "munchen"], ["bologna", "napoli"], ["roma", "bari"], ["torino", "barcelona"], ["zaragoza", "bordeaux"], ["hannover", "leipzig"],
+  ["leipzig", "warszawa"], ["dresden", "praha"], ["bruxelles", "strasbourg"], ["basel", "munchen"], ["dourges", "lyon"],
 ];
 
 /** Cross-dock : des flux partiels d'origines variées convergent vers une plateforme. */
@@ -309,33 +337,64 @@ export const SCENES: Record<LeverId, readonly SceneEl[]> = {
 
 
   /*
-   * Shortsea : on voit d'abord tous les ports côtiers d'Europe, puis un service méditerranéen, de port
-   * en port le long de la côte, à la place d'une liaison directe.
+   * Shortsea : deux flux par la route (Paris → Rome, Oslo → Cologne). On branche en filigrane les
+   * ports côtiers d'Europe. On identifie deux services de port à port — Le Havre → Civitavecchia,
+   * Oslo → Kiel — et les flux se transforment : route, mer, route. Les tracés en mer restent dans l'eau.
    */
   shortsea: [
-    ...PORTS.map((p, i): NodeEl => ({ kind: "node", at: p, style: "dot", t: 0.03 + (i / PORTS.length) * 0.3 })),
-    { kind: "line", id: "direct", stops: ["algeciras", "napoli"], color: GHOST, width: 2, style: "dashed", t0: 0.38, t1: 0.48, dimAt: 0.52, dimTo: 0.18 },
-    ...MED_SERVICE.slice(0, -1).map(
-      (p, i): LineEl => ({ kind: "line", id: `c${i + 1}`, stops: [p, MED_SERVICE[i + 1]], color: TEAL, width: 3.4, t0: 0.5 + i * 0.06, t1: 0.58 + i * 0.06, pulses: 1 }),
+    /* 1. La situation de départ : en direct, par la route. */
+    ...SEA_FLOWS.map(
+      ({ from, to }, i): LineEl => ({ kind: "line", id: `direct-${from}`, stops: [from, to], color: ROAD, width: 2.2, t0: 0.03 + i * 0.04, t1: 0.2 + i * 0.04, pulses: 1, dimAt: 0.62, dimTo: 0.14 }),
     ),
-    ...MED_SERVICE.map((p, i): NodeEl => ({ kind: "node", at: p, style: "port", t: 0.5 + i * 0.06, label: MED_LABELED.has(p) })),
+    ...SEA_FLOWS.map(({ from }, i): NodeEl => ({ kind: "node", at: from, style: "origin", t: 0.03 + i * 0.04, label: true })),
+    ...SEA_FLOWS.map(({ to }, i): NodeEl => ({ kind: "node", at: to, style: "origin", t: 0.12 + i * 0.04, label: true })),
+    /* 2. Les ports côtiers d'Europe, en filigrane. */
+    ...PORTS.map((p, i): NodeEl => ({ kind: "node", at: p, style: "dot", t: 0.26 + (i / PORTS.length) * 0.2 })),
+    /* 3. Deux services de port à port sont identifiés. */
+    ...["lehavre", "civitavecchia", "oslo", "kiel"].map((p): RingEl => ({ kind: "ring", at: p, color: TEAL, t0: 0.5 })),
+    ...["lehavre", "civitavecchia", "oslo", "kiel"].map((p): NodeEl => ({ kind: "node", at: p, style: "port", t: 0.5, label: p === "lehavre" })),
+    { kind: "line", id: "sea-med", stops: SEA_ATLANTIC_MED, color: TEAL, width: 4.2, t0: 0.52, t1: 0.74, pulses: 3, halo: TEAL },
+    { kind: "line", id: "sea-nord", stops: SEA_OSLO_KIEL, color: TEAL, width: 4.2, t0: 0.54, t1: 0.66, pulses: 2, halo: TEAL },
+    /* 4. Les flux se transforment : route, mer, route. */
+    { kind: "line", id: "pre-paris", stops: ["paris", "lehavre"], color: HAUL, width: 2.6, t0: 0.74, t1: 0.82, pulses: 1 },
+    { kind: "line", id: "post-roma", stops: ["civitavecchia", "roma"], color: HAUL, width: 2.6, t0: 0.84, t1: 0.9, pulses: 1 },
+    { kind: "line", id: "post-koln", stops: ["kiel", "koln"], color: HAUL, width: 2.6, t0: 0.84, t1: 0.94, pulses: 1 },
   ],
 
   /*
-   * Boucles : plein de flux paneuropéens, puis on identifie quelques boucles — des jambes chargées
-   * qui se referment, au besoin avec une jambe à vide.
+   * Boucles : une quarantaine de flux paneuropéens à sens unique ; dedans, on identifie quelques
+   * longues boucles triangulaires — des jambes chargées qui se referment, au besoin avec une jambe
+   * à vide. Aucun nom de ville : seuls les tracés parlent.
    */
   loops: [
     ...PAN_FLOWS.map(
-      ([from, to], i): LineEl => ({ kind: "line", id: `flow-${i}`, stops: [from, to], color: ROAD, width: 1.8, t0: 0.03 + i * 0.022, t1: 0.14 + i * 0.022, pulses: 1, dimAt: 0.5, dimTo: 0.3 }),
+      ([from, to], i): LineEl => ({
+        kind: "line",
+        id: `flow-${i}`,
+        stops: [from, to],
+        color: ROAD,
+        width: 1.7,
+        t0: 0.02 + (i / (PAN_FLOWS.length - 1)) * 0.36,
+        t1: 0.12 + (i / (PAN_FLOWS.length - 1)) * 0.36,
+        pulses: i % 4 === 0 ? 1 : 0,
+        dimAt: 0.48,
+        dimTo: 0.25,
+      }),
     ),
-    ...LOOPS.flatMap((lp, k) => [
-      ...lp.loaded.map(
-        ([from, to], i): LineEl => ({ kind: "line", id: `loop-${lp.id}-${i}`, stops: [from, to], color: SKY, width: 3.6, t0: 0.5 + k * 0.1 + i * 0.05, t1: 0.58 + k * 0.1 + i * 0.05, pulses: 2, halo: SKY }),
-      ),
-      { kind: "line", id: `empty-${lp.id}`, stops: [...lp.empty], color: SLATE, width: 2.4, style: "dashed", t0: 0.6 + k * 0.1, t1: 0.68 + k * 0.1 } as LineEl,
-      ...Array.from(new Set([...lp.loaded.flat(), ...lp.empty])).map((p): NodeEl => ({ kind: "node", at: p, style: "hub", t: 0.5 + k * 0.1, label: true })),
-    ]),
+    ...LOOPS.flatMap((lp, k) => {
+      const t = 0.5 + k * 0.15;
+      const step = 0.055;
+      const vertices = Array.from(new Set(lp.legs.flatMap(([a, b]) => [a, b])));
+      return [
+        ...lp.legs.map(
+          ([from, to], i): LineEl => ({ kind: "line", id: `loop-${lp.id}-${i}`, stops: [from, to], color: SKY, width: 3.6, t0: t + i * step, t1: t + i * step + 0.07, pulses: 2, halo: SKY }),
+        ),
+        ...(lp.empty
+          ? [{ kind: "line", id: `empty-${lp.id}`, stops: [...lp.empty], color: SLATE, width: 2.4, style: "dashed", t0: t + lp.legs.length * step, t1: t + lp.legs.length * step + 0.07 } as LineEl]
+          : []),
+        ...vertices.map((p): NodeEl => ({ kind: "node", at: p, style: "hub", t: t })),
+      ];
+    }),
   ],
 
   /*
