@@ -94,15 +94,19 @@ function Shortsea() {
   const c = LEVER_COLOR.shortsea;
   const A: P = [30, 122], P1: P = [76, 82], P2: P = [136, 56], P3: P = [204, 50], B: P = [290, 66];
   const route = line(A, P1, P2, P3, B);
+  const coast: P[] = [[22, 98], [44, 78], [62, 60], [96, 44], [130, 30], [166, 26], [204, 24], [248, 30], [290, 38], [312, 46]];
   return (
     <>
       <path d="M0,150 L0,106 L22,98 L62,60 L130,30 L204,24 L290,38 L320,48 L320,0 L0,0 Z" fill="#0f2147" className="sch-fadein" style={delay(0)} />
       <path d="M0,106 L22,98 L62,60 L130,30 L204,24 L290,38 L320,48" fill="none" stroke="#2f56b8" strokeWidth="1.6" strokeLinejoin="round" className="sch-fadein" style={delay(0)} />
-      <Ghost d="M30,122 L290,66" at={0.3} />
-      <Draw d={route} color={c} w={3.6} at={1.0} dur={1.6} halo={c} />
-      <Run d={route} at={2.8} n={2} />
+      {coast.map((p, i) => (
+        <circle key={i} cx={p[0]} cy={p[1]} r="2.6" fill="#94a3b8" className="sch-pop" style={delay(0.1 + i * 0.08)} />
+      ))}
+      <Ghost d="M30,122 L290,66" at={0.9} />
+      <Draw d={route} color={c} w={3.6} at={1.5} dur={1.6} halo={c} />
+      <Run d={route} at={3.2} n={2} />
       {[A, P1, P2, P3, B].map((p, i) => (
-        <Dot key={i} at={1.0 + i * 0.35} p={p} r={i === 0 || i === 4 ? 4.8 : 4} />
+        <Dot key={i} at={1.5 + i * 0.35} p={p} r={i === 0 || i === 4 ? 4.8 : 4} />
       ))}
     </>
   );
@@ -110,83 +114,84 @@ function Shortsea() {
 
 function Loops() {
   const c = LEVER_COLOR.loops;
-  const A: P = [60, 132], B: P = [262, 108], C: P = [168, 34];
-  const loop = `${line(A, B, C)}L${M(A)}`;
+  const A: P = [62, 124], B: P = [258, 110], C: P = [166, 36];
+  const flows: [P, P][] = [[[24, 40], [118, 150]], [[300, 30], [196, 160]], [[24, 150], [300, 90]], [[40, 20], [290, 150]], [[150, 10], [170, 168]]];
   return (
     <>
-      <Ghost d="M60,132 Q160,176 262,108" />
-      <Draw d={loop} color={c} w={3.6} at={0.8} dur={1.7} halo={c} />
-      <Run d={loop} at={2.7} n={3} dur={4.2} />
+      {flows.map(([a, b], i) => (
+        <Ghost key={i} d={line(a, b)} at={0.05 + i * 0.08} w={1.5} />
+      ))}
+      <Draw d={line(A, B)} color={c} w={3.6} at={1.1} dur={0.8} halo={c} />
+      <Draw d={line(B, C)} color={c} w={3.6} at={1.7} dur={0.8} halo={c} />
+      <path d={line(C, A)} className="sch-fadein" fill="none" stroke="#94a3b8" strokeWidth="2.6" strokeDasharray="6 5" strokeLinecap="round" style={delay(2.3)} />
+      <Run d={`${line(A, B, C)}L${M(A)}`} at={3.2} n={3} dur={4.2} />
       {[A, B, C].map((p, i) => (
-        <Dot key={i} at={0.8 + i * 0.5} p={p} r={5.2} />
+        <Dot key={i} at={1.1 + i * 0.5} p={p} r={5.2} />
       ))}
     </>
   );
 }
 
 function Crossdock() {
-  const S: P[] = [[34, 26], [34, 62], [34, 98], [34, 134]];
-  const D: P[] = [[288, 52], [288, 120]];
-  const H: P = [160, 90];
+  const S: P[] = [[34, 16], [34, 46], [34, 76], [34, 106], [34, 136], [34, 166]];
+  const F: P = [290, 90];
+  const H: P = [162, 90];
   return (
     <>
-      {S.flatMap((s, i) => D.map((d, j) => <Ghost key={`${i}${j}`} d={line(s, d)} at={0.1 + i * 0.08} w={1.5} />))}
       {S.map((s, i) => (
-        <Draw key={i} d={line(s, H)} color="#cbd5e1" w={2} at={1.0 + i * 0.12} dur={0.8} />
+        <Ghost key={i} d={line(s, F)} at={0.1 + i * 0.07} w={1.4} />
       ))}
-      <Draw d={line(H, D[0])} color={WHITE} w={4.6} at={2.0} dur={0.8} halo="#4263eb" />
-      <Draw d={line(H, D[1])} color={WHITE} w={4.6} at={2.1} dur={0.8} halo="#4263eb" />
-      <Run d={line(H, D[0])} at={3.0} n={2} dur={2.6} />
-      <Run d={line(H, D[1])} at={3.1} n={2} dur={2.6} />
       {S.map((s, i) => (
-        <Dot key={i} at={0.1 + i * 0.08} p={s} r={4} />
+        <Draw key={i} d={line(s, H)} color="#cbd5e1" w={1.8} at={1.0 + i * 0.1} dur={0.7} />
       ))}
-      {D.map((d, i) => (
-        <Dot key={i} at={2.0} p={d} r={4.8} />
+      <Draw d={line(H, F)} color={WHITE} w={7} at={2.1} dur={0.9} halo="#4263eb" />
+      <Run d={line(H, F)} at={3.2} n={3} dur={2.6} />
+      {S.map((s, i) => (
+        <Dot key={i} at={0.1 + i * 0.07} p={s} r={3.8} />
       ))}
-      <circle cx={H[0]} cy={H[1]} r="9" fill="none" stroke={WHITE} strokeWidth="1.6" className="sch-ping" style={delay(1.6)} />
-      <Dot at={1.5} p={H} r={7} color={WHITE} fill="#4263eb" sw={2} />
+      <Dot at={2.6} p={F} r={5.6} color="#4263eb" sw={2.2} />
+      <circle cx={H[0]} cy={H[1]} r="10" fill="none" stroke={WHITE} strokeWidth="1.6" className="sch-ping" style={delay(1.8)} />
+      <Dot at={1.7} p={H} r={7} color={WHITE} fill="#4263eb" sw={2} />
     </>
   );
 }
 
 function Electric() {
   const c = LEVER_COLOR.electric;
-  const path: P[] = [[30, 128], [110, 148], [190, 64], [290, 52]];
-  const d = `M${M(path[0])}C${M(path[1])} ${M(path[2])} ${M(path[3])}`;
-  const now = [0.1, 0.17, 0.3, 0.96].map((t) => bez(path, t));
-  const opt = [0.05, 0.22, 0.39, 0.56, 0.73, 0.9].map((t) => bez(path, t));
+  const net: P[] = [[22, 40], [64, 18], [110, 30], [152, 14], [196, 34], [240, 16], [292, 36], [38, 82], [86, 70], [130, 84], [176, 70], [224, 86], [270, 74], [304, 96], [24, 128], [70, 150], [118, 134], [158, 160], [206, 140], [252, 158], [296, 138], [44, 170], [284, 172]];
+  const loop: P[] = [[62, 126], [118, 52], [212, 46], [270, 118]];
+  const d = `M${M(loop[0])}C${M(loop[1])} ${M(loop[2])} ${M(loop[3])}`;
+  const back = `M${M(loop[3])}C226,172 120,176 ${M(loop[0])}`;
+  const stops = [0.28, 0.72].map((t) => bez(loop, t));
   return (
     <>
-      <Ghost d={d} w={2.2} />
-      {now.map((p, i) => (
-        <g key={i} className="sch-ghostnode" style={delay(0.2 + i * 0.15)}>
-          <circle cx={p[0]} cy={p[1]} r="21" fill="none" stroke={GHOST} strokeDasharray="3 4" strokeWidth="1.2" />
-          <circle cx={p[0]} cy={p[1]} r="4.2" fill="#0b1224" stroke="#94a3b8" strokeWidth="1.8" />
-        </g>
+      {net.map((p, i) => (
+        <circle key={i} cx={p[0]} cy={p[1]} r="2.8" fill="#64748b" className="sch-pop" style={delay(0.1 + i * 0.05)} />
       ))}
-      <Draw d={d} color={c} w={3.6} at={1.2} dur={1.4} halo="#b45309" />
-      {opt.map((p, i) => (
-        <g key={i} className="sch-pop" style={delay(1.4 + i * 0.22)}>
-          <circle cx={p[0]} cy={p[1]} r="21" fill={c} fillOpacity="0.07" stroke={c} strokeOpacity="0.35" strokeWidth="1.2" />
+      <Draw d={d} color={c} w={3.6} at={1.5} dur={1.3} halo="#b45309" />
+      <Draw d={back} color={c} w={3.6} at={2.6} dur={1.1} halo="#b45309" />
+      {stops.map((p, i) => (
+        <g key={i} className="sch-pop" style={delay(2.2 + i * 0.3)}>
+          <circle cx={p[0]} cy={p[1]} r="14" fill={c} fillOpacity="0.1" stroke={c} strokeOpacity="0.4" strokeWidth="1.2" />
           <circle cx={p[0]} cy={p[1]} r="5" fill={c} stroke="#fff7d6" strokeWidth="1.6" />
         </g>
       ))}
-      <Run d={d} at={3.2} n={2} dur={3.6} color="#fff7d6" />
+      <Run d={`${d}${back.replace("M", "L")}`} at={3.6} n={2} dur={4} color="#fff7d6" />
     </>
   );
 }
 
 function Pooling() {
   const cols = [LEVER_COLOR.rail, LEVER_COLOR.shortsea, "#fbbf24"] as const;
-  const S: P[] = [[34, 30], [34, 90], [34, 150]];
-  const Mp: P = [140, 90];
-  const D: P = [288, 90];
+  const S: P[] = [[26, 30], [26, 90], [26, 150]];
+  const T: P[] = [[294, 30], [294, 90], [294, 150]];
+  const Mp: P = [100, 90];
+  const D: P = [220, 90];
   const bundle = line(Mp, D);
   return (
     <>
       {S.map((s, i) => (
-        <Ghost key={i} d={line(s, D)} at={0.1 + i * 0.12} w={1.6} />
+        <Ghost key={i} d={line(s, T[i])} at={0.1 + i * 0.12} w={1.6} />
       ))}
       {S.map((s, i) => (
         <Draw key={i} d={line(s, Mp)} color={cols[i]} w={2.6} at={0.9 + i * 0.12} dur={0.8} />
@@ -198,11 +203,17 @@ function Pooling() {
           <Run d={bundle} at={3.0 + i * 0.4} n={1} dur={2.4} color={col} />
         </g>
       ))}
+      {T.map((tt, i) => (
+        <Draw key={i} d={line(D, tt)} color={cols[i]} w={2.6} at={3.0 + i * 0.12} dur={0.8} />
+      ))}
       {S.map((s, i) => (
         <Dot key={i} at={0.1 + i * 0.12} p={s} r={5} color={cols[i]} sw={2.4} />
       ))}
-      <Dot at={1.7} p={Mp} r={6} />
-      <Dot at={2.0} p={D} r={5.4} />
+      {T.map((tt, i) => (
+        <Dot key={i} at={0.2 + i * 0.12} p={tt} r={5} color={cols[i]} sw={2.4} />
+      ))}
+      <Square at={1.7} p={Mp} color={LEVER_COLOR.pooling} />
+      <Square at={2.0} p={D} color={LEVER_COLOR.pooling} />
     </>
   );
 }

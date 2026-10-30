@@ -27,21 +27,6 @@ export function placeFirstFree(
   return null;
 }
 
-/** Positions essayées pour une bulle : au-dessus à droite, en dessous, à gauche, puis plus loin quand la place manque. */
-export const CALLOUT_OFFSETS = (w: number, h: number): [number, number][] => [
-  [20, -h - 26],
-  [20, 26],
-  [-w - 20, -h - 26],
-  [-w - 20, 26],
-  [20, -h - 90],
-  [-w - 20, 90],
-  [-w - 20, -h - 80],
-  [20, 84],
-  [-w / 2, 40],
-  [-w / 2, -h - 40],
-  [-w - 20, 150],
-];
-
 /** Positions essayées pour un nom de lieu. */
 export const PLACE_OFFSETS = (w: number): [number, number][] => [
   [9, -22],
@@ -49,26 +34,3 @@ export const PLACE_OFFSETS = (w: number): [number, number][] => [
   [9, 6],
   [-w - 9, 6],
 ];
-
-/**
- * Taille d'une bulle avant mesure : titre en gras sur une ligne, sous-titre qui passe à la ligne
- * au-delà de 15 rem, marges et bordure comprises (voir `.lever-callout` dans levers.css).
- */
-export function estimateCallout(title: string, sub: string) {
-  const inner = Math.min(240 - 42, Math.max(title.length * 7.7, sub.length * 6.3));
-  const w = inner + 42;
-  const subLines = Math.max(1, Math.ceil((sub.length * 6.3) / inner));
-  return { w, h: 22 + 16.5 + 15.5 * subLines };
-}
-
-/** Largeur de carte en dessous de laquelle les bulles se relaient au lieu de cohabiter. */
-export const NARROW_MAP = 560;
-
-/**
- * Sur une petite carte, chaque bulle s'efface quand la suivante apparaît : elles ne se
- * recouvrent plus la carte à trois. La dernière reste jusqu'au bout.
- */
-export function handoff<T extends { t0: number; t1: number }>(list: readonly T[]): T[] {
-  const sorted = [...list].sort((a, b) => a.t0 - b.t0);
-  return sorted.map((c, i) => (i < sorted.length - 1 ? { ...c, t1: Math.min(c.t1, sorted[i + 1].t0 + 0.02) } : c));
-}

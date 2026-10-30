@@ -122,115 +122,40 @@
         "rail": {
           "name": "Modal shift rail/waterway",
           "text": "Direct road flows move to rail and inland waterways: a service is identified, and road keeps the pre- and post-haulage.",
-          "callouts": {
-            "direct": {
-              "title": "Direct road flows",
-              "sub": "From southern Spain to Poland"
-            },
-            "network": {
-              "title": "Rail and waterway networks",
-              "sub": "Faintly, between origin and destination"
-            },
-            "service": {
-              "title": "Rail service identified",
-              "sub": "Zaragoza → Poznań"
-            },
-            "pre": {
-              "title": "Road pre-haulage",
-              "sub": "To the Zaragoza terminal"
-            },
-            "traction": {
-              "title": "Rail haul",
-              "sub": "The three flows pooled on one service"
-            },
-            "post": {
-              "title": "Road post-haulage",
-              "sub": "From Poznań to each destination"
-            }
-          },
-          "schema": "Diagram: long direct road trips are replaced by road pre-haulage, a rail or barge leg between two terminals, then road post-haulage."
+          "schema": "Diagram: long direct road trips are replaced by road pre-haulage, a rail or barge leg between two terminals, then road post-haulage.",
+          "watermark": "<b>{count} rail and waterway services</b> across Europe, an alternative to the road."
         },
         "shortsea": {
           "name": "Coastal shortsea",
-          "text": "Coastal flows, call by call, rather than a direct link: each port loads and unloads.",
-          "callouts": {
-            "direct": {
-              "title": "Direct link",
-              "sub": "Set aside in this example"
-            },
-            "calls": {
-              "title": "Coastal port calls",
-              "sub": "Loading and unloading at every port"
-            }
-          },
-          "schema": "Diagram: a direct link across open sea is replaced by a coastal route, port to port."
+          "text": "Every coastal port in Europe, then a service calling port to port along the coast, rather than a direct link.",
+          "schema": "Diagram: ports along a coast, and a service linking them port to port rather than a direct link across open sea.",
+          "watermark": "<b>{count} shortsea services</b> across Europe, an alternative to the road."
         },
         "loops": {
           "name": "Loops",
-          "text": "Closed rotations: the vehicle that delivers leaves with a load instead of returning empty.",
-          "callouts": {
-            "round": {
-              "title": "Closed rotation",
-              "sub": "Loaded out and back"
-            },
-            "return": {
-              "title": "Loaded return",
-              "sub": "Fewer empty kilometres"
-            }
-          },
-          "schema": "Diagram: a loaded outbound leg followed by an empty return becomes a closed loop where every leg is loaded."
+          "text": "One-way pan-European flows, in which loops are spotted: loaded legs that close on themselves, with an empty leg where needed.",
+          "schema": "Diagram: one-way flows are spotted as a closed loop whose empty leg brings the vehicle back to its starting point.",
+          "watermark": "<b>Loops are hiding</b> in your pan-European flows."
         },
         "crossdock": {
           "name": "Cross-dock",
-          "text": "Partial shipments converge on a platform, are consolidated and leave as full loads.",
-          "callouts": {
-            "partial": {
-              "title": "Partial shipments",
-              "sub": "Several origins, one platform"
-            },
-            "hub": {
-              "title": "Cross-dock platform",
-              "sub": "Shipments are consolidated"
-            },
-            "full": {
-              "title": "Full loads",
-              "sub": "To each destination"
-            }
-          },
-          "schema": "Diagram: crossing partial shipments converge on a platform, then leave consolidated for two destinations."
+          "text": "Small flows from varied origins converge on a platform, are consolidated and leave as a single large flow to the plant.",
+          "schema": "Diagram: several partial flows converge on a platform, then a single large flow leaves for the plant.",
+          "watermark": "<b>Consolidate</b>: many small flows, one large flow to the plant."
         },
         "electric": {
           "name": "Electrification",
-          "text": "Switch to electric around an optimal charging network, not the chargers already installed.",
-          "callouts": {
-            "now": {
-              "title": "Existing chargers",
-              "sub": "Gaps along the route"
-            },
-            "optimal": {
-              "title": "Optimal charging network",
-              "sub": "Placed to cover the whole route"
-            }
-          },
-          "schema": "Diagram: existing chargers leave gaps along the route; an optimal charging network covers the whole trip."
+          "text": "A charging network across Europe, and a looped, electrified flow that recharges at the right chargers.",
+          "schema": "Diagram: a charging network covers the territory; an electrified loop relies on some of the chargers to recharge.",
+          "watermark": "<b>Chargers across Europe</b>, one looped, electrified flow."
         },
         "pooling": {
           "name": "Pooling",
-          "text": "Several shippers combine their flows on a single service: more volume on the same link.",
-          "callouts": {
-            "shippers": {
-              "title": "Three shippers",
-              "sub": "Each with their own flows"
-            },
-            "shared": {
-              "title": "Pooled service",
-              "sub": "One departure for everyone"
-            }
-          },
-          "schema": "Diagram: three separate departures become a single service shared by the three shippers."
+          "text": "Flows from several companies are pooled on one train, for example Dourges–Poznań.",
+          "schema": "Diagram: three departures from different companies are pooled on a single shared service, then redistributed.",
+          "watermark": "<b>Different companies</b>, one shared train: Dourges–Poznań."
         }
       },
-      "legend": "<b>{count} rail and waterway services</b> across Europe, an alternative to the road.",
       "legendLabel": "Illustration legend"
     },
     "leverSchemas": {

@@ -7,7 +7,6 @@ import { easeInOutCubic, fitCam } from "@/lib/showcase/camera";
 import { pointAt, type LonLat } from "@/lib/showcase/arcs";
 import { LEVER_COLOR, PLACES, leverSeconds, type LeverId, type NodeKind } from "@/lib/levers/data";
 import { anchorOf, buildScene, clamp01, drawnPart, isDimmed, lineOpacity, revealOf, sceneBox, type BuiltScene } from "@/lib/levers/scene";
-import { CALLOUT_OFFSETS, NARROW_MAP, handoff } from "@/lib/levers/layout";
 import { forcesGlobe, isSoftwareRenderer, supportsWebGL } from "@/components/showcase/support";
 import "./levers.css";
 
@@ -25,10 +24,6 @@ export interface LeverGlobeProps {
   reducedMotion: boolean;
   mobile: boolean;
   locale: "fr" | "en";
-  /** Pose les bulles d'explication sur la carte (la couverture n'en veut pas : l'image reste seule). */
-  callouts: boolean;
-  /** Textes d'une bulle (titre, sous-titre) pour un levier et une clé. */
-  calloutText(lever: LeverId, key: string): { title: string; sub: string };
   ariaLabel: string;
   /** Marges de la scène que le texte de la page recouvre : la région se centre dans l'espace libre. */
   pad: { left: number; right: number; top: number; bottom: number };
@@ -65,6 +60,8 @@ const NODE_STYLE: Record<NodeKind, { r: number; fill: string | null; stroke: str
   rail: { r: 4.2, fill: "#f1f5f9", stroke: "#020617", sw: 1.4 },
   hub: { r: 5.4, fill: "#f1f5f9", stroke: "#020617", sw: 1.6 },
   origin: { r: 3.8, fill: "#f1f5f9", stroke: "#020617", sw: 1.3 },
+  dot: { r: 2.9, fill: "#cbd5e1", stroke: "#020617", sw: 0.8 },
+  "charger-net": { r: 3, fill: "#fbbf24", stroke: "#fbbf24", sw: 0.6 },
   "charger-now": { r: 4.4, fill: null, stroke: "#94a3b8", sw: 1.8 },
   "charger-opt": { r: 5, fill: "#fbbf24", stroke: "#fff7d6", sw: 1.6 },
 };
@@ -132,7 +129,6 @@ function frameOf(scene: BuiltScene, u: number, mul: number, clock: number, still
 export function LeverGlobe(props: LeverGlobeProps) {
   const container = useRef<HTMLDivElement>(null);
   const overlay = useRef<HTMLDivElement>(null);
-  const leaders = useRef<SVGSVGElement>(null);
   const live = useRef(props);
   live.current = props;
   const goto = useRef<((k: number, user: boolean) => void) | null>(null);
@@ -140,8 +136,7 @@ export function LeverGlobe(props: LeverGlobeProps) {
   useEffect(() => {
     const el = container.current;
     const ov = overlay.current;
-    const svg = leaders.current;
-    if (!el || !ov || !svg) return;
+    if (!el || !ov) return;
     if (!supportsWebGL()) return live.current.onFatal("nowebgl");
     if (isSoftwareRenderer() && !forcesGlobe()) return live.current.onFatal("software");
 
@@ -270,16 +265,12 @@ export function LeverGlobe(props: LeverGlobeProps) {
       if (k !== target && scenes[k]) startLever(k, user);
     };
 
-    /* ---- étiquettes et bulles (HTML) ---- */
+    /* ---- noms de lieux (HTML) ---- */
     const pool = new Map<string, HTMLElement>();
-    const lines = new Map<string, SVGLineElement>();
     function clearOverlay() {
       for (const n of pool.values()) n.remove();
       pool.clear();
-      for (const l of lines.values()) l.remove();
-      lines.clear();
     }
-    const text = live.current.calloutText;
     const placeName = (id: string) => (live.current.locale === "fr" ? PLACES[id].fr : PLACES[id].en);
 
     const updateOverlay = () => {
@@ -297,61 +288,6 @@ export function LeverGlobe(props: LeverGlobeProps) {
         const v = vec(lon, lat);
         return v[0] * cv[0] + v[1] * cv[1] + v[2] * cv[2] > 0.3;
       };
-
-      /* bulles d'explication */
-      const usedLeaders = new Set<string>();
-      for (const co of !p.callouts ? [] : size.w < NARROW_MAP ? handoff(scene.callouts) : scene.callouts) {
-        const ramp = Math.min(clamp01((u - co.t0) / 0.05), clamp01((co.t1 - u) / 0.05 + (co.t1 >= 0.97 ? 1 : 0)));
-        if (ramp <= 0 || !zoomOk) continue;
-        const [lon, lat] = anchorOf(co.at);
-        if (!front(lon, lat)) continue;
-        const a = map.project([lon, lat]);
-        const key = `c:${k}:${co.key}`;
-        let n = pool.get(key);
-        if (!n) {
-          const tx = text(levers[k], co.key);
-          n = document.createElement("div");
-          n.className = "lever-callout";
-          n.style.setProperty("--c", co.color);
-          n.innerHTML = `<i></i><span><b></b><em></em></span>`;
-          n.querySelector("b")!.textContent = tx.title;
-          n.querySelector("em")!.textContent = tx.sub;
-          ov.appendChild(n);
-          pool.set(key, n);
-        }
-        const w = n.offsetWidth || 210;
-        const h = n.offsetHeight || 50;
-        let placed = false;
-        for (const [dx, dy] of CALLOUT_OFFSETS(w, h)) {
-          const r = { x: a.x + dx, y: a.y + dy, w, h };
-          if (!free(r)) continue;
-          taken.push(r);
-          n.style.transform = `translate(${r.x.toFixed(1)}px, ${r.y.toFixed(1)}px)`;
-          n.style.opacity = String(ramp);
-          used.add(key);
-          // fil entre le lieu et la bulle
-          let ln = lines.get(key);
-          if (!ln) {
-            ln = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            ln.setAttribute("stroke", co.color);
-            ln.setAttribute("stroke-width", "1.2");
-            svg.appendChild(ln);
-            lines.set(key, ln);
-          }
-          const ex = dx > 0 ? r.x : r.x + w;
-          const ey = dy < 0 ? r.y + h : r.y;
-          ln.setAttribute("x1", a.x.toFixed(1));
-          ln.setAttribute("y1", a.y.toFixed(1));
-          ln.setAttribute("x2", ex.toFixed(1));
-          ln.setAttribute("y2", ey.toFixed(1));
-          ln.setAttribute("stroke-opacity", String(0.7 * ramp));
-          usedLeaders.add(key);
-          placed = true;
-          break;
-        }
-        if (!placed) n.style.opacity = "0";
-      }
-      for (const [key, ln] of lines) if (!usedLeaders.has(key)) ln.setAttribute("stroke-opacity", "0");
 
       /* noms de lieux */
       const seen = new Set<string>();
@@ -498,7 +434,6 @@ export function LeverGlobe(props: LeverGlobeProps) {
     <div className="relative h-full w-full">
       <div ref={container} role="img" aria-label={props.ariaLabel} className="h-full w-full" />
       <div ref={overlay} aria-hidden="true" className="lever-overlay pointer-events-none absolute inset-0 overflow-hidden">
-        <svg ref={leaders} className="absolute inset-0 h-full w-full" />
       </div>
     </div>
   );

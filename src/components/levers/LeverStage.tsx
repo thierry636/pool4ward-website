@@ -8,8 +8,8 @@ import { LEVER_COLOR, LEVER_ORDER, type LeverId } from "@/lib/levers/data";
 import { forcesGlobe, isSoftwareRenderer, preferLightweight, supportsWebGL } from "@/components/showcase/support";
 import { LeverFlat } from "./LeverFlat";
 import { LeverIcon } from "./icons";
-import { RailWatermark } from "./RailWatermark";
-import { EUROPE_SERVICES_COUNT } from "@/content/figures";
+import { LeverWatermark } from "./LeverWatermark";
+import { EUROPE_SERVICES_COUNT, SHORTSEA_SERVICES_COUNT } from "@/content/figures";
 import type { Rect } from "./LeverGlobe";
 
 /** MapLibre pèse ≈ 250 Ko : il n'est téléchargé que si l'appareil sait afficher le globe. */
@@ -20,8 +20,8 @@ type Renderer = "pending" | "globe" | "flat";
 /** Après un choix manuel, le levier se joue puis reste affiché ; sans nouveau geste, la lecture reprend après ce délai. */
 const IDLE_RESUME_MS = 20_000;
 
-/** Avancement du report modal à partir duquel le filigrane apparaît : les flux directs viennent de commencer à se dessiner. */
-const WATERMARK_AT = 0.09;
+/** Avancement d'un levier à partir duquel son filigrane apparaît : les premiers tracés viennent de commencer. */
+const WATERMARK_AT = 0.1;
 
 const NO_PAD = { left: 0, right: 0, top: 0, bottom: 0 };
 
@@ -35,7 +35,8 @@ export function LeverStage() {
   const t = useTranslations("Home.levers");
   const locale = useLocale() === "en" ? "en" : "fr";
   // Espace insécable ordinaire entre milliers : la fine de la locale française se voit à peine.
-  const count = new Intl.NumberFormat(locale).format(EUROPE_SERVICES_COUNT).replace(/\u202f/g, "\u00a0");
+  const fmt = (n: number) => new Intl.NumberFormat(locale).format(n).replace(/\u202f/g, "\u00a0");
+  const counts: Partial<Record<LeverId, string>> = { rail: fmt(EUROPE_SERVICES_COUNT), shortsea: fmt(SHORTSEA_SERVICES_COUNT) };
   const reduced = usePrefersReducedMotion();
 
   const [renderer, setRenderer] = useState<Renderer>("pending");
@@ -127,10 +128,10 @@ export function LeverStage() {
       bars.current.forEach((b, i) => {
         if (b) b.style.transform = `scaleX(${i === active ? progress.current : 0})`;
       });
-      // Le filigrane du report modal apparaît juste après le début du tracé des flux, et seulement pour ce levier.
+      // Le filigrane du levier apparaît juste après le début du tracé des flux.
       const wm = watermark.current;
       if (wm) {
-        const on = active === 0 && (reducedRef.current || progress.current >= WATERMARK_AT);
+        const on = reducedRef.current || progress.current >= WATERMARK_AT;
         if (wm.dataset.on !== (on ? "1" : "0")) wm.dataset.on = on ? "1" : "0";
       }
       if (!playingRef.current && !reducedRef.current && progress.current >= 1) {
@@ -145,17 +146,17 @@ export function LeverStage() {
     return () => cancelAnimationFrame(raf);
   }, [active]);
 
-  const advance = useCallback(() => setActive((a) => (a + 1) % LEVER_ORDER.length), []);
+  const advance = useCallback(() => {
+    progress.current = 0;
+    setActive((a) => (a + 1) % LEVER_ORDER.length);
+  }, []);
   const fatal = useCallback(() => setRenderer("flat"), []);
   const onReady = useCallback(() => setReady(true), []);
   const noop = useCallback(() => {}, []);
-  const calloutText = useCallback(
-    (lever: LeverId, key: string) => ({ title: t(`items.${lever}.callouts.${key}.title`), sub: t(`items.${lever}.callouts.${key}.sub`) }),
-    [t],
-  );
   const pick = (i: number) => {
     // Un choix manuel arrête le défilement : le levier se joue une fois, puis reste affiché.
     setPlaying(false);
+    progress.current = 0;
     setActive(i);
   };
 
@@ -188,8 +189,6 @@ export function LeverStage() {
               reducedMotion={reduced}
               mobile={mobile}
               locale={locale}
-              callouts={false}
-              calloutText={calloutText}
               ariaLabel={label}
               pad={pad}
               reserved={reserved}
@@ -209,8 +208,6 @@ export function LeverStage() {
               playing={playing}
               reducedMotion={reduced}
               locale={locale}
-              callouts={false}
-              calloutText={calloutText}
               ariaLabel={label}
               pad={pad}
               reserved={reserved}
@@ -221,9 +218,9 @@ export function LeverStage() {
             />
           </div>
         )}
-        <RailWatermark rootRef={watermark} label={t("legendLabel")} note={t("note")}>
-          {t.rich("legend", { count, b: (chunks) => <b>{chunks}</b> })}
-        </RailWatermark>
+        <LeverWatermark key={lever} lever={lever} rootRef={watermark} label={t("legendLabel")} note={t("note")}>
+          {t.rich(`items.${lever}.watermark`, { count: counts[lever] ?? "", b: (chunks) => <b>{chunks}</b> })}
+        </LeverWatermark>
         {/* Fondu vers le texte et vers la section suivante. */}
         <div aria-hidden="true" className="lever-fade-x pointer-events-none absolute inset-0 hidden lg:block" />
         <div aria-hidden="true" className="lever-fade-y pointer-events-none absolute inset-0" />

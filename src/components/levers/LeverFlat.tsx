@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState, type MutableRefObject } from "react";
 import { PLACES, leverSeconds, type LeverId } from "@/lib/levers/data";
 import { anchorOf, buildScene, sceneBox } from "@/lib/levers/scene";
-import { CALLOUT_OFFSETS, NARROW_MAP, PLACE_OFFSETS, estimateCallout, handoff, placeFirstFree, type Box } from "@/lib/levers/layout";
+import { PLACE_OFFSETS, placeFirstFree, type Box } from "@/lib/levers/layout";
 import type { LeverGlobeProps } from "./LeverGlobe";
 import "./levers.css";
 
@@ -39,12 +39,12 @@ function geoPath(geo: GeoJSON.Feature | GeoJSON.FeatureCollection, close: boolea
   return d;
 }
 
-type FlatProps = Pick<LeverGlobeProps, "levers" | "active" | "playing" | "reducedMotion" | "locale" | "callouts" | "calloutText" | "ariaLabel" | "pad" | "reserved" | "onAdvance" | "onShown" | "onReady"> & {
+type FlatProps = Pick<LeverGlobeProps, "levers" | "active" | "playing" | "reducedMotion" | "locale" | "ariaLabel" | "pad" | "reserved" | "onAdvance" | "onShown" | "onReady"> & {
   progress: MutableRefObject<number>;
 };
 
 export function LeverFlat(props: FlatProps) {
-  const { levers, active, playing, reducedMotion, locale, callouts: withCallouts, calloutText, pad, reserved, onAdvance, onShown, onReady, progress } = props;
+  const { levers, active, playing, reducedMotion, locale, pad, reserved, onAdvance, onShown, onReady, progress } = props;
   const host = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ w: 800, h: 520 });
   const [land, setLand] = useState("");
@@ -102,20 +102,10 @@ export function LeverFlat(props: FlatProps) {
   const secs = leverSeconds(lever);
   const proj = (lon: number, lat: number) => ({ x: mx(lon) * f.s + f.tx, y: my(lat) * f.s + f.ty });
 
-  /* Étiquettes et bulles : positions calculées une fois pour le levier, sur la vue d'arrivée. */
+  /* Noms de lieux : positions calculées une fois pour le levier, sur la vue d'arrivée. */
   const overlay = useMemo(() => {
     const taken: Box[] = [...reserved.current];
     const bounds = size;
-    const callouts: { key: string; x: number; y: number; w: number; t0: number; t1: number; color: string; title: string; sub: string; ax: number; ay: number; ex: number; ey: number }[] = [];
-    for (const co of !withCallouts ? [] : size.w < NARROW_MAP ? handoff(scene.callouts) : scene.callouts) {
-      const [lon, lat] = anchorOf(co.at);
-      const a = proj(lon, lat);
-      const tx = calloutText(lever, co.key);
-      const est = estimateCallout(tx.title, tx.sub);
-      const r = placeFirstFree(a, CALLOUT_OFFSETS(est.w, est.h), est, taken, bounds);
-      if (!r) continue;
-      callouts.push({ key: co.key, x: r.x, y: r.y, w: est.w, t0: co.t0, t1: co.t1, color: co.color, title: tx.title, sub: tx.sub, ax: a.x, ay: a.y, ex: r.dx > 0 ? r.x : r.x + est.w, ey: r.dy < 0 ? r.y + est.h : r.y });
-    }
     const places: { id: string; x: number; y: number; t: number; name: string }[] = [];
     const seen = new Set<string>();
     for (const n of scene.nodes) {
@@ -127,9 +117,9 @@ export function LeverFlat(props: FlatProps) {
       const r = placeFirstFree(a, PLACE_OFFSETS(w), { w, h: 16 }, taken, bounds);
       if (r) places.push({ id: n.at, x: r.x, y: r.y, t: n.t, name });
     }
-    return { callouts, places };
+    return { places };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scene, lever, size, pad, f, locale, withCallouts]);
+  }, [scene, lever, size, pad, f, locale]);
 
   /* Horloge : avancement du levier (pour la barre de progression) et lecture automatique. */
   const clock = useRef({ u: 0, lever: -1 });
@@ -166,7 +156,11 @@ export function LeverFlat(props: FlatProps) {
       ? { r: 4.4, fill: "rgba(2,6,23,0.6)", stroke: "#94a3b8", sw: 1.8 }
       : kind === "charger-opt"
         ? { r: 5, fill: "#fbbf24", stroke: "#fff7d6", sw: 1.6 }
-        : { r: kind === "hub" ? 5.4 : 4.2, fill: "#f1f5f9", stroke: "#020617", sw: 1.4 };
+        : kind === "charger-net"
+          ? { r: 3, fill: "#fbbf24", stroke: "#fbbf24", sw: 0.6 }
+          : kind === "dot"
+            ? { r: 2.9, fill: "#cbd5e1", stroke: "#020617", sw: 0.8 }
+            : { r: kind === "hub" ? 5.4 : 4.2, fill: "#f1f5f9", stroke: "#020617", sw: 1.4 };
 
   return (
     <div ref={host} className="lever-flat relative h-full w-full" style={{ background: "#050d1f" }}>
@@ -235,34 +229,12 @@ export function LeverFlat(props: FlatProps) {
             })}
           </g>
         </g>
-        <g key={`l-${lever}`}>
-          {overlay.callouts.map((c) => (
-            <line key={c.key} x1={c.ax} y1={c.ay} x2={c.ex} y2={c.ey} stroke={c.color} strokeOpacity="0.7" strokeWidth="1.2" className="lever-fade" style={{ animationDelay: `${c.t0 * secs}s`, animationDuration: "0.4s" }} />
-          ))}
-        </g>
       </svg>
       <div key={`o-${lever}`} aria-hidden="true" className="lever-overlay pointer-events-none absolute inset-0 overflow-hidden">
         {overlay.places.map((p) => (
           <span key={p.id} className="lever-place lever-in" style={{ transform: `translate(${p.x}px, ${p.y}px)`, animationDelay: `${p.t * secs}s` }}>
             {p.name}
           </span>
-        ))}
-        {overlay.callouts.map((c) => (
-          <div
-            key={c.key}
-            className="lever-callout lever-in"
-            style={{
-              transform: `translate(${c.x}px, ${c.y}px)`,
-              ["--c" as string]: c.color,
-              animation: c.t1 >= 0.97 ? `lever-in 0.4s ease ${c.t0 * secs}s both` : `lever-in 0.4s ease ${c.t0 * secs}s both, lever-out 0.4s ease ${c.t1 * secs}s forwards`,
-            }}
-          >
-            <i />
-            <span>
-              <b>{c.title}</b>
-              <em>{c.sub}</em>
-            </span>
-          </div>
         ))}
       </div>
     </div>

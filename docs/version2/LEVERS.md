@@ -1,42 +1,66 @@
 # La scène des leviers (couverture) et les schémas
 
-**Ce que c'est.** La couverture montre un globe sur lequel six leviers sont joués, l'un
-après l'autre. Cinq se jouent en Méditerranée occidentale ; le premier, le report modal,
-part du sud de l'Espagne et va jusqu'en Pologne :
+**Ce que c'est.** La couverture montre une carte (un globe, ou la carte à plat) sur laquelle six
+leviers sont joués, l'un après l'autre, sur toute l'Europe. Chaque levier suit la même
+dramaturgie : **on voit d'abord les flux (ou les ports), puis on identifie ce qui peut changer,
+puis les flux se transforment**.
 
 1. **Report modal rail/fluvial** — trois flux partent du sud de l'Espagne vers la Pologne,
    chacun en direct par la route. Les réseaux ferré et fluvial se branchent en filigrane, un
    service ferroviaire est identifié (Saragosse → Poznań) et les flux se transforment en
    pré-acheminement routier vers Saragosse, traction ferroviaire jusqu'à Poznań, puis
-   post-acheminement routier (15 s, les autres leviers 9 s) ;
-2. **Shortsea côtier** — des flux côtiers, d'escale en escale, plutôt qu'une liaison directe ;
-3. **Boucles** — des rotations fermées, le retour trouve une charge ;
-4. **Cross-dock** — les envois partiels convergent vers une plateforme, se regroupent, repartent complets ;
-5. **Électrification** — selon un réseau de bornes optimal, pas selon les bornes déjà installées ;
-6. **Mutualisation** — plusieurs chargeurs sur un même service.
+   post-acheminement routier (15 s) ;
+2. **Shortsea côtier** — on voit d'abord les ports côtiers d'Europe (une quarantaine de points,
+   de l'Atlantique à la Baltique et à la Méditerranée), puis un service méditerranéen, de port en
+   port d'Algésiras à Naples, à la place d'une liaison directe qui s'efface (15 s) ;
+3. **Boucles** — une quinzaine de flux paneuropéens à sens unique, puis l'identification de
+   quelques boucles : des jambes chargées qui se referment, au besoin avec une jambe à vide en
+   pointillé (15 s) ;
+4. **Cross-dock** — neuf petits flux d'origines variées convergent vers une plateforme (Lyon),
+   se consolident, et repartent en **un seul gros flux**, bien plus épais, vers l'usine (12 s) ;
+5. **Électrification** — comme le rail et le shortsea : les flux, puis **le réseau de bornes**
+   en dessous (une centaine de bornes réparties sur l'Europe), puis un flux bouclé et
+   électrifié (Lyon – Strasbourg – Francfort – Paris) qui se recharge sur quelques bornes bien
+   placées du réseau (16 s) ;
+6. **Mutualisation** — des flux d'entreprises différentes (une couleur par chargeur) sont
+   regroupés sur un même train **Dourges → Poznań**, avec leur pré- et post-acheminement (15 s).
 
 Sous la couverture, une section de six schémas animés (`LeverSchemas`) compare pour chaque
-levier une situation de départ (gris, pointillé) à ce que le levier permet (couleur).
+levier une situation de départ (gris, pointillé) à ce que le levier permet (couleur) ; ils
+racontent la même histoire que la scène (ports puis service ; flux à sens unique puis boucle ;
+petits flux puis gros flux ; réseau de bornes puis boucle électrifiée ; départs de trois
+entreprises puis train partagé).
 
-## La couverture : une image seule, un filigrane
+## La couverture : une image seule, un filigrane par levier
 
 Le titre de la couverture ne change pas (« Concevoir le transport au plus près du réel. »). Pas
-d'encart sur l'image, pas de texte fixe : quand le report modal commence à tracer ses flux, **un
-filigrane très estompé se dessine** dans le coin libre de l'image — le sigle de Move2Rail (la
-route qui devient une voie ferrée, tracé de la tuile du portail : la route, la bifurcation, la
-voie, puis le convoi) et l'idée en une phrase, « 3 500 services rail et fluviaux en Europe, une
-alternative à la route. ». Il s'efface quand un autre levier prend la main (`RailWatermark.tsx`,
-piloté par `data-on` depuis `LeverStage.tsx`, seuil `WATERMARK_AT`) ; en mouvement réduit, il est
-là d'emblée. La mention « Illustration : liaisons dessinées pour expliquer, pas des services
-existants » n'est plus affichée (jugée inutile) : elle reste dans le texte du filigrane, lisible
-par les lecteurs d'écran. Six pastilles, sous l'image, passent d'un levier à l'autre. Les bulles
-d'explication restent dans le code (`callouts`, textes `Home.levers.items.*.callouts`) mais la
-couverture les désactive ; seuls les noms de lieux restent sur la carte.
+d'encart sur l'image, pas de texte fixe : quand un levier commence à tracer ses flux, **un
+filigrane très estompé se dessine** dans le coin libre de l'image — **le sigle du levier**
+(animé, propre à chacun : voir `glyphs.tsx`) et **l'idée en une phrase punchy**, dont un
+passage en gras :
 
-**Le chiffre « 3 500 »** vient de la direction (`src/content/figures.ts`). Il n'a pas été recoupé :
-dans le portail, le référentiel Appel d'Air 2026 compte 2 906 services ferroviaires intermodaux
-(sans le fluvial). À valider contre la base avant toute mise en ligne publique, puis à
-changer au seul endroit où il est écrit.
+| Levier | Filigrane (FR) |
+|---|---|
+| Report modal | **3 500 services** rail et fluviaux en Europe, une alternative à la route. |
+| Shortsea | **1 500 services** shortsea en Europe, une alternative à la route. |
+| Boucles | **Des boucles se cachent** dans vos flux paneuropéens. |
+| Cross-dock | **Consolider** : de petits flux, un gros flux vers l'usine. |
+| Électrification | **Des bornes partout en Europe**, un flux bouclé et électrifié. |
+| Mutualisation | **Des entreprises différentes**, un même train : Dourges – Poznań. |
+
+Il s'efface quand un autre levier prend la main (`LeverWatermark.tsx`, un par levier, remonté à
+chaque changement ; piloté par `data-on` depuis `LeverStage.tsx`, seuil `WATERMARK_AT`) ; en
+mouvement réduit, il est là d'emblée. La mention « Illustration : liaisons dessinées pour
+expliquer, pas des services existants » n'est pas affichée (jugée inutile) : elle reste dans le
+filigrane, lisible par les lecteurs d'écran. Six pastilles, sous l'image, passent d'un levier à
+l'autre. **Il n'y a plus aucune bulle d'explication** sur l'image (le code, les textes et le CSS
+correspondants ont été supprimés) ; seuls les noms de lieux restent sur la carte, et pas tous :
+quatre escales du service shortsea sont nommées, pas huit, pour qu'ils ne se chevauchent pas.
+
+**Les chiffres « 3 500 » et « 1 500 »** viennent de la direction (`src/content/figures.ts`).
+Ils n'ont pas été recoupés : dans le portail, le référentiel Appel d'Air 2026 compte
+2 906 services ferroviaires intermodaux (sans le fluvial ni le shortsea). À valider contre la
+base avant toute mise en ligne publique, puis à changer au seul endroit où ils sont écrits.
 
 ## Ce que ce n'est pas
 
@@ -56,13 +80,13 @@ indépendante de la vitrine (`showcase.json`) et de la base privée : elle n'en 
 
 | Fichier | Rôle |
 |---|---|
-| `src/lib/levers/data.ts` | La scène : lieux, six leviers = listes d'éléments (tracés, nœuds, bulles, bornes) minutés de 0 à 1 |
+| `src/lib/levers/data.ts` | La scène : lieux (villes, ports), six leviers = listes d'éléments (tracés, repères, anneaux, bornes) minutés de 0 à 1, durée de chaque levier |
 | `src/lib/levers/scene.ts` | Calculs purs : tracé dessiné à l'avancement `u`, emprises, bornes le long d'un tracé (testés) |
-| `src/lib/levers/layout.ts` | Placement sans chevauchement des bulles et des noms de lieux (testé) |
+| `src/lib/levers/layout.ts` | Placement sans chevauchement des noms de lieux (testé) |
 | `src/components/levers/LeverGlobe.tsx` | Globe MapLibre incliné, sans interaction, piloté image par image ; étiquettes HTML |
 | `src/components/levers/LeverFlat.tsx` | Même scène en SVG (sans WebGL, rendu logiciel, appareil économe) ; animations CSS |
 | `src/components/levers/LeverStage.tsx` | Orchestrateur : choix du rendu, lecture automatique, pastilles des six leviers, mesure du texte |
-| `src/components/levers/RailWatermark.tsx` | Le filigrane : sigle de Move2Rail dessiné + phrase, animé en CSS |
+| `src/components/levers/LeverWatermark.tsx` · `glyphs.tsx` | Le filigrane : sigle animé du levier + phrase (`items.<levier>.watermark`) |
 | `src/components/levers/LeverSchemas.tsx` | Les six schémas animés (SVG inline, `reveal-in`) |
 | `messages/*/home.json` → `Home.levers`, `Home.leverSchemas` | Tous les textes, FR et EN (clés vérifiées par `levers.test.ts`) |
 | `scripts/build-levers-poster.ts` | `public/images/levers-poster.svg`, image d'attente de la carte (`npm run poster:levers`) |
@@ -74,7 +98,7 @@ indépendante de la vitrine (`showcase.json`) et de la base privée : elle n'en 
   (recette).
 - **Carte à plat** (SVG, projection de Mercator) : sans WebGL, en rendu logiciel, ou sur
   connexion/appareil économe. Mêmes leviers, mêmes tracés.
-- **Image d'attente** (`levers-poster.svg`, ≈ 27 Ko) : affichée tant que la carte n'est pas prête
+- **Image d'attente** (`levers-poster.svg`, ≈ 41 Ko) : affichée tant que la carte n'est pas prête
   et pour qui n'exécute pas de script.
 
 ## Lecture

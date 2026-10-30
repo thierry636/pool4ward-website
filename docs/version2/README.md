@@ -6,9 +6,9 @@ décision distincte.
 
 ## Ce que contient cette branche
 
-- **Une couverture-carte** : un globe qui joue six leviers (report modal rail/fluvial, shortsea côtier,
-  boucles, cross-dock, électrification selon un réseau de bornes optimal,
-  mutualisation) sur une même région, suivi de six schémas animés — voir
+- **Une couverture-carte** : un globe qui joue six leviers sur toute l'Europe (report modal
+  rail/fluvial, shortsea côtier, boucles, cross-dock, électrification avec son réseau de bornes,
+  mutualisation Dourges – Poznań), chacun avec son filigrane, suivi de six schémas animés — voir
   [LEVERS.md](LEVERS.md). C'est une illustration, pas une donnée.
 - **Un parcours « du terrain aux engagements »** : un même cas
   démonstrateur (quatre sites, six flux, fictifs) traverse trois étapes —

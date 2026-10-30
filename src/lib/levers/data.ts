@@ -1,15 +1,13 @@
 /**
  * La scène des leviers de la page d'accueil : six leviers joués tour à tour sur la même
- * carte. Cinq se jouent en Méditerranée occidentale ; le report modal rail/fluvial part du
- * sud de l'Espagne et va jusqu'en Pologne.
+ * carte de l'Europe. Chacun raconte une idée en trois temps — la situation de départ, ce
+ * qu'on identifie dessus, ce qu'elle devient — et pose un filigrane (LeverWatermark).
  *
- * C'est une ILLUSTRATION éditoriale, pas une donnée de référentiel : les lieux sont
- * réels (villes et ports, positions arrondies), les liaisons sont dessinées pour
- * expliquer chaque levier. Elles n'affirment l'existence d'aucun service, et la scène
- * ne porte ni chiffre ni nom d'opérateur. L'écran le dit (« Illustration »).
- *
- * Chaque levier est une liste d'ÉLÉMENTS (tracés, lieux, bulles) dont l'apparition est
- * minutée sur l'avancement `u` du levier, de 0 à 1.
+ * C'est une ILLUSTRATION éditoriale, pas une donnée de référentiel : les lieux sont réels
+ * (villes et ports, positions arrondies), les liaisons sont dessinées pour expliquer chaque
+ * levier. Elles n'affirment l'existence d'aucun service et la scène ne porte aucun nom
+ * d'opérateur. Chaque levier est une liste d'ÉLÉMENTS (tracés, lieux, bornes) dont
+ * l'apparition est minutée sur l'avancement `u` du levier, de 0 à 1.
  */
 
 export type LeverId = "rail" | "shortsea" | "loops" | "crossdock" | "electric" | "pooling";
@@ -17,10 +15,10 @@ export type LeverId = "rail" | "shortsea" | "loops" | "crossdock" | "electric" |
 export const LEVER_ORDER: readonly LeverId[] = ["rail", "shortsea", "loops", "crossdock", "electric", "pooling"];
 
 /** Durée de lecture d'un levier, en secondes (celle des leviers qui n'ont pas la leur). */
-export const LEVER_SECONDS = 9;
+export const LEVER_SECONDS = 12;
 
-/** Le report modal raconte plus d'étapes que les autres : il dure plus longtemps. */
-const LEVER_DURATION: Partial<Record<LeverId, number>> = { rail: 15 };
+/** Chaque levier raconte plus ou moins d'étapes : le report modal et le bouclage prennent leur temps. */
+const LEVER_DURATION: Partial<Record<LeverId, number>> = { rail: 15, shortsea: 15, loops: 15, crossdock: 12, electric: 16, pooling: 15 };
 export const leverSeconds = (id: LeverId): number => LEVER_DURATION[id] ?? LEVER_SECONDS;
 
 export interface Place {
@@ -66,6 +64,44 @@ export const PLACES: Record<string, Place> = {
   wroclaw: { fr: "Wrocław", en: "Wrocław", lon: 17.04, lat: 51.11 },
   lodz: { fr: "Łódź", en: "Łódź", lon: 19.46, lat: 51.76 },
   warszawa: { fr: "Varsovie", en: "Warsaw", lon: 21.01, lat: 52.23 },
+  /* shortsea : les ports côtiers d'Europe */
+  lisboa: { fr: "Lisbonne", en: "Lisbon", lon: -9.14, lat: 38.72 },
+  leixoes: { fr: "Leixões", en: "Leixões", lon: -8.7, lat: 41.18 },
+  sines: { fr: "Sines", en: "Sines", lon: -8.87, lat: 37.95 },
+  bilbao: { fr: "Bilbao", en: "Bilbao", lon: -2.93, lat: 43.34 },
+  lehavre: { fr: "Le Havre", en: "Le Havre", lon: 0.11, lat: 49.49 },
+  dunkerque: { fr: "Dunkerque", en: "Dunkirk", lon: 2.37, lat: 51.03 },
+  zeebrugge: { fr: "Zeebruges", en: "Zeebrugge", lon: 3.2, lat: 51.33 },
+  antwerpen: { fr: "Anvers", en: "Antwerp", lon: 4.4, lat: 51.23 },
+  hamburg: { fr: "Hambourg", en: "Hamburg", lon: 9.97, lat: 53.54 },
+  bremerhaven: { fr: "Bremerhaven", en: "Bremerhaven", lon: 8.58, lat: 53.55 },
+  felixstowe: { fr: "Felixstowe", en: "Felixstowe", lon: 1.35, lat: 51.96 },
+  southampton: { fr: "Southampton", en: "Southampton", lon: -1.4, lat: 50.9 },
+  liverpool: { fr: "Liverpool", en: "Liverpool", lon: -2.99, lat: 53.41 },
+  dublin: { fr: "Dublin", en: "Dublin", lon: -6.26, lat: 53.35 },
+  gothenburg: { fr: "Göteborg", en: "Gothenburg", lon: 11.97, lat: 57.7 },
+  oslo: { fr: "Oslo", en: "Oslo", lon: 10.74, lat: 59.91 },
+  copenhagen: { fr: "Copenhague", en: "Copenhagen", lon: 12.57, lat: 55.68 },
+  stockholm: { fr: "Stockholm", en: "Stockholm", lon: 18.07, lat: 59.33 },
+  helsinki: { fr: "Helsinki", en: "Helsinki", lon: 24.94, lat: 60.17 },
+  tallinn: { fr: "Tallinn", en: "Tallinn", lon: 24.75, lat: 59.44 },
+  riga: { fr: "Riga", en: "Riga", lon: 24.11, lat: 56.95 },
+  klaipeda: { fr: "Klaipėda", en: "Klaipėda", lon: 21.13, lat: 55.7 },
+  gdansk: { fr: "Gdańsk", en: "Gdańsk", lon: 18.65, lat: 54.35 },
+  palermo: { fr: "Palerme", en: "Palermo", lon: 13.36, lat: 38.12 },
+  cagliari: { fr: "Cagliari", en: "Cagliari", lon: 9.11, lat: 39.22 },
+  koper: { fr: "Koper", en: "Koper", lon: 13.73, lat: 45.55 },
+  bari: { fr: "Bari", en: "Bari", lon: 16.87, lat: 41.12 },
+  piraeus: { fr: "Le Pirée", en: "Piraeus", lon: 23.64, lat: 37.94 },
+  thessaloniki: { fr: "Thessalonique", en: "Thessaloniki", lon: 22.94, lat: 40.64 },
+  /* boucles, électrification, mutualisation : des villes d'Europe */
+  bruxelles: { fr: "Bruxelles", en: "Brussels", lon: 4.35, lat: 50.85 },
+  wien: { fr: "Vienne", en: "Vienna", lon: 16.37, lat: 48.21 },
+  praha: { fr: "Prague", en: "Prague", lon: 14.42, lat: 50.08 },
+  munchen: { fr: "Munich", en: "Munich", lon: 11.58, lat: 48.14 },
+  roma: { fr: "Rome", en: "Rome", lon: 12.5, lat: 41.9 },
+  budapest: { fr: "Budapest", en: "Budapest", lon: 19.04, lat: 47.5 },
+  dourges: { fr: "Dourges", en: "Dourges", lon: 3.0, lat: 50.43 },
 };
 
 /** Un point d'ancrage : un lieu nommé, ou une position [lon, lat]. */
@@ -102,7 +138,7 @@ export interface LineEl {
   halo?: string;
 }
 
-export type NodeKind = "port" | "rail" | "hub" | "origin" | "charger-now" | "charger-opt";
+export type NodeKind = "port" | "rail" | "hub" | "origin" | "dot" | "charger-now" | "charger-opt" | "charger-net";
 
 export interface NodeEl {
   kind: "node";
@@ -121,27 +157,17 @@ export interface RingEl {
   t0: number;
 }
 
-export interface CalloutEl {
-  kind: "callout";
-  /** Clé de texte : `Levers.items.<levier>.callouts.<clé>.title|sub`. */
-  key: string;
-  at: Anchor;
-  t0: number;
-  t1: number;
-  color: string;
-}
-
 /** Points posés à des fractions de la longueur d'un tracé (bornes de recharge). */
 export interface ChargersEl {
   kind: "chargers";
   along: readonly string[];
   fractions: readonly number[];
-  style: "charger-now" | "charger-opt";
+  style: "charger-now" | "charger-opt" | "charger-net";
   t0: number;
   t1: number;
 }
 
-export type SceneEl = LineEl | NodeEl | RingEl | CalloutEl | ChargersEl;
+export type SceneEl = LineEl | NodeEl | RingEl | ChargersEl;
 
 const INDIGO = "#818cf8";
 const TEAL = "#2dd4bf";
@@ -152,6 +178,7 @@ const WHITE = "#f1f5f9";
 const GHOST = "#64748b";
 const ROAD = "#94a3b8";
 const HAUL = "#cbd5e1";
+const PINK = "#f472b6";
 
 /** Report modal : flux directs par la route (départ → arrivée), puis le service ferroviaire retenu. */
 const DIRECT: readonly (readonly [string, string])[] = [
@@ -195,7 +222,54 @@ export const LEVER_COLOR: Record<LeverId, string> = {
   pooling: "#c4b5fd",
 };
 
-const leg = (id: string, stops: string[], t0: number, t1: number): LineEl => ({ kind: "line", id, stops, color: TEAL, width: 3.2, t0, t1, pulses: 1 });
+/** Shortsea : les ports côtiers d'Europe, dans l'ordre où ils apparaissent (de l'Atlantique à la Baltique, puis la Méditerranée). */
+const PORTS: readonly string[] = [
+  "sines", "lisboa", "leixoes", "bilbao", "lehavre", "southampton", "dublin", "liverpool", "felixstowe", "dunkerque", "zeebrugge", "antwerpen", "rotterdam",
+  "bremerhaven", "hamburg", "copenhagen", "gothenburg", "oslo", "stockholm", "helsinki", "tallinn", "riga", "klaipeda", "gdansk",
+  "algeciras", "valencia", "barcelona", "cagliari", "marseille", "genova", "livorno", "civitavecchia", "napoli", "palermo", "koper", "bari", "thessaloniki", "piraeus",
+];
+/** Le service méditerranéen mis en avant : d'escale en escale le long de la côte. */
+const MED_SERVICE: readonly string[] = ["algeciras", "valencia", "barcelona", "marseille", "genova", "livorno", "civitavecchia", "napoli"];
+/** Seules quatre escales sont nommées : les huit noms se chevauchent sur une carte de toute l'Europe. */
+const MED_LABELED: ReadonlySet<string> = new Set(["algeciras", "barcelona", "marseille", "napoli"]);
+
+/** Boucles : des flux paneuropéens à sens unique, dont certains se referment en boucle (une jambe à vide au besoin). */
+const PAN_FLOWS: readonly (readonly [string, string])[] = [
+  ["lisboa", "bilbao"], ["bilbao", "paris"], ["paris", "hamburg"], ["hamburg", "warszawa"], ["roma", "milano"], ["milano", "munchen"], ["munchen", "praha"],
+  ["praha", "berlin"], ["rotterdam", "koln"], ["koln", "wien"], ["budapest", "wien"], ["valencia", "madrid"], ["dresden", "wroclaw"], ["torino", "marseille"],
+];
+/** Chaque boucle : des jambes chargées, puis la jambe à vide qui la referme (dernier élément). */
+const LOOPS: readonly { id: string; loaded: readonly (readonly [string, string])[]; empty: readonly [string, string] }[] = [
+  { id: "iberia", loaded: [["zaragoza", "lyon"], ["lyon", "barcelona"]], empty: ["barcelona", "zaragoza"] },
+  { id: "benelux", loaded: [["rotterdam", "frankfurt"], ["frankfurt", "bruxelles"]], empty: ["bruxelles", "rotterdam"] },
+  { id: "central", loaded: [["wien", "praha"], ["praha", "munchen"]], empty: ["munchen", "wien"] },
+];
+
+/** Cross-dock : des flux partiels d'origines variées convergent vers une plateforme. */
+const CROSS_ORIGINS: readonly string[] = ["barcelona", "zaragoza", "valencia", "marseille", "genova", "paris", "frankfurt", "basel", "bruxelles"];
+
+/** Électrification : les flux, le réseau de bornes (des corridors), puis une boucle électrifiée qui en emprunte quelques-uns. */
+const ELEC_FLOWS: readonly (readonly [string, string])[] = [
+  ["madrid", "lyon"], ["barcelona", "milano"], ["paris", "berlin"], ["rotterdam", "wien"], ["hamburg", "munchen"], ["milano", "praha"], ["lyon", "frankfurt"], ["bruxelles", "warszawa"],
+];
+/** Les corridors de la boucle électrifiée : leurs bornes font partie du réseau, et celles qu'on utilise sont mises en avant. */
+const ELEC_LOOP: readonly (readonly string[])[] = [["lyon", "strasbourg"], ["strasbourg", "frankfurt"], ["frankfurt", "paris"], ["paris", "lyon"]];
+const ELEC_NET: readonly (readonly string[])[] = [
+  ["lisboa", "madrid"], ["madrid", "zaragoza", "barcelona"], ["barcelona", "perpignan", "lyon"], ["lyon", "torino", "milano"], ["milano", "munchen", "wien"],
+  ["wien", "praha", "berlin"], ["berlin", "poznan", "warszawa"], ["frankfurt", "leipzig", "berlin"], ["hamburg", "hannover", "frankfurt"], ["rotterdam", "koln", "frankfurt"],
+  ["bruxelles", "paris"], ...ELEC_LOOP,
+];
+const CHARGER_FRACTIONS: readonly number[] = [0.12, 0.3, 0.5, 0.7, 0.88];
+/** Les bornes de la boucle qu'on utilise : un sous-ensemble des bornes du réseau (mêmes fractions), donc au même endroit. */
+const LOOP_STOPS_FRACTIONS: readonly number[] = [0.3, 0.7];
+
+/** Mutualisation : des flux d'entreprises différentes, regroupés sur un même train Dourges → Poznań. */
+const SHIPPERS: readonly { from: string; to: string; color: string }[] = [
+  { from: "paris", to: "wroclaw", color: INDIGO },
+  { from: "bruxelles", to: "lodz", color: TEAL },
+  { from: "rotterdam", to: "warszawa", color: AMBER },
+  { from: "lehavre", to: "gdansk", color: PINK },
+];
 
 export const SCENES: Record<LeverId, readonly SceneEl[]> = {
   /*
@@ -231,88 +305,97 @@ export const SCENES: Record<LeverId, readonly SceneEl[]> = {
     ...DIRECT.map(([, to], i): NodeEl => ({ kind: "node", at: to, style: "origin", t: 0.12 + i * 0.03, label: true })),
     { kind: "node", at: "zaragoza", style: "hub", t: 0.5, label: true },
     { kind: "node", at: "poznan", style: "hub", t: 0.5, label: true },
-    { kind: "callout", key: "direct", at: [3.4, 45.6], t0: 0.1, t1: 0.4, color: ROAD },
-    { kind: "callout", key: "network", at: "strasbourg", t0: 0.3, t1: 0.54, color: SKY },
-    { kind: "callout", key: "service", at: "lyon", t0: 0.54, t1: 0.74, color: INDIGO },
-    { kind: "callout", key: "pre", at: "zaragoza", t0: 0.76, t1: 0.98, color: HAUL },
-    { kind: "callout", key: "traction", at: "frankfurt", t0: 0.8, t1: 0.98, color: INDIGO },
-    { kind: "callout", key: "post", at: "poznan", t0: 0.9, t1: 0.98, color: WHITE },
   ],
 
-  /* Le long de la côte, par escales, plutôt qu'une liaison directe. */
+
+  /*
+   * Shortsea : on voit d'abord tous les ports côtiers d'Europe, puis un service méditerranéen, de port
+   * en port le long de la côte, à la place d'une liaison directe.
+   */
   shortsea: [
-    { kind: "line", id: "direct", stops: ["algeciras", "napoli"], color: GHOST, width: 2, style: "dashed", t0: 0.08, t1: 0.22, dimAt: 0.3 },
-    leg("c1", ["algeciras", "valencia"], 0.22, 0.32),
-    leg("c2", ["valencia", "barcelona"], 0.32, 0.42),
-    leg("c3", ["barcelona", "marseille"], 0.42, 0.52),
-    leg("c4", ["marseille", "genova"], 0.52, 0.6),
-    leg("c5", ["genova", "livorno"], 0.6, 0.67),
-    leg("c6", ["livorno", "civitavecchia"], 0.67, 0.75),
-    leg("c7", ["civitavecchia", "napoli"], 0.75, 0.83),
-    ...(["algeciras", "valencia", "barcelona", "marseille", "genova", "livorno", "civitavecchia", "napoli"] as const).map(
-      (p, i): NodeEl => ({ kind: "node", at: p, style: "port", t: 0.12 + i * 0.1, label: true }),
+    ...PORTS.map((p, i): NodeEl => ({ kind: "node", at: p, style: "dot", t: 0.03 + (i / PORTS.length) * 0.3 })),
+    { kind: "line", id: "direct", stops: ["algeciras", "napoli"], color: GHOST, width: 2, style: "dashed", t0: 0.38, t1: 0.48, dimAt: 0.52, dimTo: 0.18 },
+    ...MED_SERVICE.slice(0, -1).map(
+      (p, i): LineEl => ({ kind: "line", id: `c${i + 1}`, stops: [p, MED_SERVICE[i + 1]], color: TEAL, width: 3.4, t0: 0.5 + i * 0.06, t1: 0.58 + i * 0.06, pulses: 1 }),
     ),
-    { kind: "callout", key: "direct", at: [-0.2, 38.2], t0: 0.12, t1: 0.36, color: SLATE },
-    { kind: "callout", key: "calls", at: "marseille", t0: 0.54, t1: 0.98, color: TEAL },
+    ...MED_SERVICE.map((p, i): NodeEl => ({ kind: "node", at: p, style: "port", t: 0.5 + i * 0.06, label: MED_LABELED.has(p) })),
   ],
 
-  /* Des rotations fermées : le retour trouve une charge. */
+  /*
+   * Boucles : plein de flux paneuropéens, puis on identifie quelques boucles — des jambes chargées
+   * qui se referment, au besoin avec une jambe à vide.
+   */
   loops: [
-    { kind: "line", id: "a", stops: ["valencia", "zaragoza", "barcelona"], color: SKY, width: 3.2, t0: 0.1, t1: 0.4, pulses: 3, closed: true },
-    { kind: "line", id: "b", stops: ["marseille", "lyon", "milano", "genova"], color: SKY, width: 3.2, t0: 0.36, t1: 0.72, pulses: 3, closed: true },
-    ...(["valencia", "zaragoza", "barcelona", "marseille", "lyon", "milano", "genova"] as const).map(
-      (p, i): NodeEl => ({ kind: "node", at: p, style: "hub", t: 0.1 + i * 0.08, label: true }),
+    ...PAN_FLOWS.map(
+      ([from, to], i): LineEl => ({ kind: "line", id: `flow-${i}`, stops: [from, to], color: ROAD, width: 1.8, t0: 0.03 + i * 0.022, t1: 0.14 + i * 0.022, pulses: 1, dimAt: 0.5, dimTo: 0.3 }),
     ),
-    { kind: "callout", key: "round", at: "zaragoza", t0: 0.3, t1: 0.98, color: SKY },
-    { kind: "callout", key: "return", at: "lyon", t0: 0.62, t1: 0.98, color: SKY },
+    ...LOOPS.flatMap((lp, k) => [
+      ...lp.loaded.map(
+        ([from, to], i): LineEl => ({ kind: "line", id: `loop-${lp.id}-${i}`, stops: [from, to], color: SKY, width: 3.6, t0: 0.5 + k * 0.1 + i * 0.05, t1: 0.58 + k * 0.1 + i * 0.05, pulses: 2, halo: SKY }),
+      ),
+      { kind: "line", id: `empty-${lp.id}`, stops: [...lp.empty], color: SLATE, width: 2.4, style: "dashed", t0: 0.6 + k * 0.1, t1: 0.68 + k * 0.1 } as LineEl,
+      ...Array.from(new Set([...lp.loaded.flat(), ...lp.empty])).map((p): NodeEl => ({ kind: "node", at: p, style: "hub", t: 0.5 + k * 0.1, label: true })),
+    ]),
   ],
 
-  /* Les flux se rejoignent sur une plateforme, se regroupent, repartent pleins. */
+  /*
+   * Cross-dock : de petits flux d'origines variées convergent vers une plateforme, se consolident,
+   * et repartent en un seul gros flux vers l'usine.
+   */
   crossdock: [
-    ...(["valencia", "zaragoza", "barcelona", "marseille", "genova"] as const).map(
-      (p, i): LineEl => ({ kind: "line", id: `in-${p}`, stops: [p, "lyon"], color: SLATE, width: 1.6, t0: 0.08 + i * 0.07, t1: 0.2 + i * 0.07, pulses: 1 }),
+    ...CROSS_ORIGINS.map(
+      (p, i): LineEl => ({ kind: "line", id: `in-${p}`, stops: [p, "lyon"], color: SLATE, width: 1.6, t0: 0.05 + i * 0.04, t1: 0.17 + i * 0.04, pulses: 1 }),
     ),
-    { kind: "ring", at: "lyon", color: WHITE, t0: 0.42 },
-    { kind: "line", id: "out-milano", stops: ["lyon", "milano"], color: WHITE, width: 5, t0: 0.5, t1: 0.7, pulses: 2, halo: "#4263eb" },
-    { kind: "line", id: "out-torino", stops: ["lyon", "torino"], color: WHITE, width: 5, t0: 0.55, t1: 0.74, pulses: 2, halo: "#4263eb" },
-    ...(["valencia", "zaragoza", "barcelona", "marseille", "genova"] as const).map((p, i): NodeEl => ({ kind: "node", at: p, style: "origin", t: 0.08 + i * 0.07, label: i > 1 })),
-    { kind: "node", at: "lyon", style: "hub", t: 0.38, label: true },
-    { kind: "node", at: "milano", style: "port", t: 0.7, label: true },
-    { kind: "node", at: "torino", style: "port", t: 0.74, label: true },
-    { kind: "callout", key: "partial", at: "zaragoza", t0: 0.18, t1: 0.46, color: SLATE },
-    { kind: "callout", key: "hub", at: "lyon", t0: 0.44, t1: 0.98, color: WHITE },
-    { kind: "callout", key: "full", at: "milano", t0: 0.74, t1: 0.98, color: WHITE },
+    ...CROSS_ORIGINS.map((p, i): NodeEl => ({ kind: "node", at: p, style: "origin", t: 0.05 + i * 0.04, label: i % 2 === 0 })),
+    { kind: "ring", at: "lyon", color: WHITE, t0: 0.5 },
+    { kind: "node", at: "lyon", style: "hub", t: 0.5, label: true },
+    { kind: "line", id: "out", stops: ["lyon", "milano"], color: WHITE, width: 9, t0: 0.58, t1: 0.82, pulses: 3, halo: "#4263eb" },
+    { kind: "node", at: "milano", style: "hub", t: 0.82, label: true },
   ],
 
-  /* Électrifier là où un réseau de bornes optimal le permet. */
+  /*
+   * Électrification : les flux, puis le réseau de bornes tout autour, puis un flux bouclé et
+   * électrifié qui se recharge sur les bonnes bornes.
+   */
   electric: [
-    { kind: "line", id: "road", stops: ["valencia", "barcelona", "perpignan", "lyon"], color: "#cbd5e1", width: 2, t0: 0.06, t1: 0.28 },
-    { kind: "chargers", along: ["valencia", "barcelona", "perpignan", "lyon"], fractions: [0.12, 0.33, 0.4, 0.84], style: "charger-now", t0: 0.26, t1: 0.4 },
-    { kind: "line", id: "covered", stops: ["valencia", "barcelona", "perpignan", "lyon"], color: AMBER, width: 4.5, t0: 0.46, t1: 0.88, pulses: 2, halo: "#b45309" },
-    { kind: "chargers", along: ["valencia", "barcelona", "perpignan", "lyon"], fractions: [0.06, 0.22, 0.38, 0.54, 0.7, 0.88], style: "charger-opt", t0: 0.44, t1: 0.82 },
-    { kind: "node", at: "valencia", style: "hub", t: 0.06, label: true },
-    { kind: "node", at: "barcelona", style: "hub", t: 0.14, label: true },
-    { kind: "node", at: "lyon", style: "hub", t: 0.22, label: true },
-    { kind: "callout", key: "now", at: [-0.7, 40.4], t0: 0.32, t1: 0.52, color: SLATE },
-    { kind: "callout", key: "optimal", at: "perpignan", t0: 0.6, t1: 0.98, color: AMBER },
+    ...ELEC_FLOWS.map(
+      ([from, to], i): LineEl => ({ kind: "line", id: `flow-${i}`, stops: [from, to], color: ROAD, width: 1.8, t0: 0.03 + i * 0.025, t1: 0.15 + i * 0.025, pulses: 1, dimAt: 0.55, dimTo: 0.22 }),
+    ),
+    ...ELEC_NET.map(
+      (stops, i): ChargersEl => ({ kind: "chargers", along: stops, fractions: CHARGER_FRACTIONS, style: "charger-net", t0: 0.28 + (i / ELEC_NET.length) * 0.2, t1: 0.34 + (i / ELEC_NET.length) * 0.2 }),
+    ),
+    ...ELEC_LOOP.map(
+      (stops, i): LineEl => ({ kind: "line", id: `loop-${i}`, stops, color: AMBER, width: 4.4, t0: 0.58 + i * 0.07, t1: 0.66 + i * 0.07, pulses: 2, halo: "#b45309" }),
+    ),
+    ...ELEC_LOOP.map(
+      (stops, i): ChargersEl => ({ kind: "chargers", along: stops, fractions: LOOP_STOPS_FRACTIONS, style: "charger-opt", t0: 0.62 + i * 0.07, t1: 0.7 + i * 0.07 }),
+    ),
+    ...["lyon", "strasbourg", "frankfurt", "paris"].map((p, i): NodeEl => ({ kind: "node", at: p, style: "hub", t: 0.58 + i * 0.07, label: true })),
   ],
 
-  /* Trois chargeurs, un même service. */
+  /*
+   * Mutualisation : les flux de plusieurs entreprises, regroupés sur un même train — par exemple
+   * Dourges → Poznań —, avec leur pré- et post-acheminement.
+   */
   pooling: [
-    { kind: "line", id: "s1", stops: ["alicante", "valencia", "barcelona"], color: INDIGO, width: 2.4, t0: 0.08, t1: 0.34, pulses: 1 },
-    { kind: "line", id: "s2", stops: ["castellon", "barcelona"], color: TEAL, width: 2.4, t0: 0.12, t1: 0.34, pulses: 1 },
-    { kind: "line", id: "s3", stops: ["zaragoza", "barcelona"], color: AMBER, width: 2.4, t0: 0.16, t1: 0.34, pulses: 1 },
-    { kind: "line", id: "halo", stops: ["barcelona", "marseille", "genova"], color: "#e2e8f0", width: 11, t0: 0.4, t1: 0.7 },
-    { kind: "line", id: "b1", stops: ["barcelona", "marseille", "genova"], color: INDIGO, width: 2.6, t0: 0.42, t1: 0.72, pulses: 2, offset: -0.1 },
-    { kind: "line", id: "b2", stops: ["barcelona", "marseille", "genova"], color: TEAL, width: 2.6, t0: 0.42, t1: 0.72, pulses: 2 },
-    { kind: "line", id: "b3", stops: ["barcelona", "marseille", "genova"], color: AMBER, width: 2.6, t0: 0.42, t1: 0.72, pulses: 2, offset: 0.1 },
-    { kind: "node", at: "alicante", style: "origin", t: 0.08, color: INDIGO, label: true },
-    { kind: "node", at: "castellon", style: "origin", t: 0.12, color: TEAL, label: true },
-    { kind: "node", at: "zaragoza", style: "origin", t: 0.16, color: AMBER, label: true },
-    { kind: "node", at: "barcelona", style: "hub", t: 0.3, label: true },
-    { kind: "node", at: "marseille", style: "port", t: 0.56, label: true },
-    { kind: "node", at: "genova", style: "port", t: 0.72, label: true },
-    { kind: "callout", key: "shippers", at: "zaragoza", t0: 0.18, t1: 0.4, color: SLATE },
-    { kind: "callout", key: "shared", at: "marseille", t0: 0.6, t1: 0.98, color: "#c4b5fd" },
+    ...SHIPPERS.map(
+      (sh, i): LineEl => ({ kind: "line", id: `direct-${sh.from}`, stops: [sh.from, sh.to], color: sh.color, width: 2.4, t0: 0.03 + i * 0.03, t1: 0.2 + i * 0.03, pulses: 1, dimAt: 0.56, dimTo: 0.14 }),
+    ),
+    ...SHIPPERS.map((sh, i): NodeEl => ({ kind: "node", at: sh.from, style: "origin", t: 0.03 + i * 0.03, color: sh.color, label: true })),
+    ...SHIPPERS.map((sh, i): NodeEl => ({ kind: "node", at: sh.to, style: "origin", t: 0.12 + i * 0.03, color: sh.color, label: true })),
+    { kind: "ring", at: "dourges", color: WHITE, t0: 0.42 },
+    { kind: "ring", at: "poznan", color: WHITE, t0: 0.42 },
+    { kind: "node", at: "dourges", style: "hub", t: 0.42, label: true },
+    { kind: "node", at: "poznan", style: "hub", t: 0.42, label: true },
+    { kind: "line", id: "train-halo", stops: ["dourges", "poznan"], color: "#e2e8f0", width: 13, opacity: 0.35, t0: 0.46, t1: 0.66 },
+    ...SHIPPERS.map(
+      (sh, i): LineEl => ({ kind: "line", id: `train-${i}`, stops: ["dourges", "poznan"], color: sh.color, width: 2.6, offset: (i - 1.5) * 0.09, t0: 0.46, t1: 0.66, pulses: 1 }),
+    ),
+    ...SHIPPERS.map(
+      (sh, i): LineEl => ({ kind: "line", id: `pre-${sh.from}`, stops: [sh.from, "dourges"], color: sh.color, width: 2.6, t0: 0.66 + i * 0.02, t1: 0.76 + i * 0.02, pulses: 1 }),
+    ),
+    ...SHIPPERS.map(
+      (sh, i): LineEl => ({ kind: "line", id: `post-${sh.to}`, stops: ["poznan", sh.to], color: sh.color, width: 2.6, t0: 0.78 + i * 0.02, t1: 0.88 + i * 0.02, pulses: 1 }),
+    ),
   ],
 };

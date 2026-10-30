@@ -4,7 +4,7 @@
  */
 import { makePath, pointAt, routePath, slice, type LonLat, type Path } from "@/lib/showcase/arcs";
 import { boxOf, type Box } from "@/lib/showcase/camera";
-import { PLACES, type Anchor, type CalloutEl, type ChargersEl, type LeverId, type LineEl, type NodeEl, type SceneEl, SCENES } from "./data";
+import { PLACES, type Anchor, type ChargersEl, type LeverId, type LineEl, type NodeEl, type SceneEl, SCENES } from "./data";
 
 export const clamp01 = (n: number) => Math.max(0, Math.min(1, n));
 
@@ -53,7 +53,6 @@ export interface BuiltScene {
   lines: BuiltLine[];
   nodes: NodeEl[];
   rings: Extract<SceneEl, { kind: "ring" }>[];
-  callouts: CalloutEl[];
   chargers: { el: ChargersEl; points: LonLat[] }[];
 }
 
@@ -69,7 +68,6 @@ export function buildScene(id: LeverId): BuiltScene {
     lines: els.filter((e): e is LineEl => e.kind === "line").map(buildLine),
     nodes: els.filter((e): e is NodeEl => e.kind === "node"),
     rings: els.filter((e): e is Extract<SceneEl, { kind: "ring" }> => e.kind === "ring"),
-    callouts: els.filter((e): e is CalloutEl => e.kind === "callout"),
     chargers: els.filter((e): e is ChargersEl => e.kind === "chargers").map((el) => ({ el, points: pointsAlong(el.along, el.fractions) })),
   };
 }

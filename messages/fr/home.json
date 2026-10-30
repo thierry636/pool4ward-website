@@ -122,115 +122,40 @@
         "rail": {
           "name": "Report modal rail/fluvial",
           "text": "Les flux directs par la route passent au rail et au fluvial : un service est identifié, la route garde le pré- et le post-acheminement.",
-          "callouts": {
-            "direct": {
-              "title": "Flux directs par la route",
-              "sub": "Du sud de l’Espagne vers la Pologne"
-            },
-            "network": {
-              "title": "Réseaux ferré et fluvial",
-              "sub": "En filigrane, entre l’origine et la destination"
-            },
-            "service": {
-              "title": "Service ferroviaire identifié",
-              "sub": "Saragosse → Poznań"
-            },
-            "pre": {
-              "title": "Pré-acheminement routier",
-              "sub": "Vers le terminal de Saragosse"
-            },
-            "traction": {
-              "title": "Traction ferroviaire",
-              "sub": "Les trois flux regroupés sur un service"
-            },
-            "post": {
-              "title": "Post-acheminement routier",
-              "sub": "De Poznań vers chaque destination"
-            }
-          },
-          "schema": "Schéma : des trajets routiers directs, longs, sont remplacés par un pré-acheminement routier, une traction ferroviaire ou fluviale entre deux terminaux, puis un post-acheminement routier."
+          "schema": "Schéma : des trajets routiers directs, longs, sont remplacés par un pré-acheminement routier, une traction ferroviaire ou fluviale entre deux terminaux, puis un post-acheminement routier.",
+          "watermark": "<b>{count} services</b> rail et fluviaux en Europe, une alternative à la route."
         },
         "shortsea": {
           "name": "Shortsea côtier",
-          "text": "Des flux côtiers, d’escale en escale, plutôt qu’une liaison directe : chaque port charge et décharge.",
-          "callouts": {
-            "direct": {
-              "title": "Liaison directe",
-              "sub": "Écartée dans cet exemple"
-            },
-            "calls": {
-              "title": "Escales côtières",
-              "sub": "Chargement et déchargement à chaque port"
-            }
-          },
-          "schema": "Schéma : une liaison directe en pleine mer est remplacée par un trajet côtier, de port en port."
+          "text": "Tous les ports côtiers d’Europe, puis un service qui les relie de port en port le long de la côte, plutôt qu’une liaison directe.",
+          "schema": "Schéma : des ports le long d’une côte, et un service qui les relie de port en port plutôt qu’une liaison directe en pleine mer.",
+          "watermark": "<b>{count} services</b> shortsea en Europe, une alternative à la route."
         },
         "loops": {
           "name": "Boucles",
-          "text": "Des rotations fermées : le moyen de transport qui livre repart avec une charge au lieu de rentrer à vide.",
-          "callouts": {
-            "round": {
-              "title": "Rotation fermée",
-              "sub": "Aller et retour chargés"
-            },
-            "return": {
-              "title": "Retour chargé",
-              "sub": "Moins de kilomètres à vide"
-            }
-          },
-          "schema": "Schéma : un aller chargé suivi d’un retour à vide devient une boucle fermée où chaque tronçon est chargé."
+          "text": "Des flux paneuropéens à sens unique, dans lesquels on repère des boucles : des jambes chargées qui se referment, au besoin avec une jambe à vide.",
+          "schema": "Schéma : des flux à sens unique sont repérés comme une boucle fermée, dont une jambe à vide ramène le véhicule à son point de départ.",
+          "watermark": "<b>Des boucles se cachent</b> dans vos flux paneuropéens."
         },
         "crossdock": {
           "name": "Cross-dock",
-          "text": "Les envois partiels convergent vers une plateforme, se regroupent et repartent en lots complets.",
-          "callouts": {
-            "partial": {
-              "title": "Envois partiels",
-              "sub": "Plusieurs origines, une même plateforme"
-            },
-            "hub": {
-              "title": "Plateforme cross-dock",
-              "sub": "Les envois sont regroupés"
-            },
-            "full": {
-              "title": "Lots complets",
-              "sub": "Vers chaque destination"
-            }
-          },
-          "schema": "Schéma : des envois partiels qui se croisent convergent vers une plateforme, puis repartent groupés vers deux destinations."
+          "text": "De petits flux d’origines variées convergent vers une plateforme, se consolident et repartent en un seul gros flux vers l’usine.",
+          "schema": "Schéma : plusieurs flux partiels convergent vers une plateforme, puis un seul gros flux part vers l’usine.",
+          "watermark": "<b>Consolider</b> : de petits flux, un gros flux vers l’usine."
         },
         "electric": {
           "name": "Électrification",
-          "text": "Passer à l’électrique selon un réseau de bornes optimal, pas selon les bornes déjà installées.",
-          "callouts": {
-            "now": {
-              "title": "Bornes existantes",
-              "sub": "Des trous sur l’axe"
-            },
-            "optimal": {
-              "title": "Réseau de bornes optimal",
-              "sub": "Placé pour couvrir tout l’axe"
-            }
-          },
-          "schema": "Schéma : des bornes existantes laissent des trous sur l’axe ; un réseau de bornes optimal couvre tout le trajet."
+          "text": "Un réseau de bornes à travers l’Europe, et un flux bouclé et électrifié qui se recharge sur les bonnes bornes.",
+          "schema": "Schéma : un réseau de bornes de recharge couvre le territoire ; une boucle électrifiée s’appuie sur certaines d’entre elles pour se recharger.",
+          "watermark": "<b>Des bornes partout en Europe</b>, un flux bouclé et électrifié."
         },
         "pooling": {
           "name": "Mutualisation",
-          "text": "Plusieurs chargeurs regroupent leurs flux sur un même service : plus de volume sur la même liaison.",
-          "callouts": {
-            "shippers": {
-              "title": "Trois chargeurs",
-              "sub": "Chacun avec ses propres flux"
-            },
-            "shared": {
-              "title": "Service mutualisé",
-              "sub": "Un seul départ pour tous"
-            }
-          },
-          "schema": "Schéma : trois départs séparés deviennent un seul service partagé par les trois chargeurs."
+          "text": "Les flux de plusieurs entreprises sont regroupés sur un même train, par exemple Dourges – Poznań.",
+          "schema": "Schéma : trois départs d’entreprises différentes sont regroupés sur un seul service partagé, puis redistribués.",
+          "watermark": "<b>Des entreprises différentes</b>, un même train : Dourges – Poznań."
         }
       },
-      "legend": "<b>{count} services</b> rail et fluviaux en Europe, une alternative à la route.",
       "legendLabel": "Légende de l’illustration"
     },
     "leverSchemas": {

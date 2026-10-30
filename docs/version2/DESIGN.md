@@ -60,12 +60,15 @@ Le mouvement explique, il ne décore. Règles :
 
 - aucune introduction qui bloque la navigation ; aucun détournement du défilement ;
   aucun son ;
-- **scène des leviers (couverture)** : six leviers joués à tour de rôle (9 s chacun, 15 s
-  pour le report modal). La caméra se place, les tracés se dessinent, des impulsions les
-  parcourent pendant que des bulles expliquent (comme les bulles d'opérateurs du portail).
-  Pas de bouton pause, pas d'encart sur l'image ni de texte fixe (pastilles ; un filigrane estompé avec le sigle de Move2Rail, qui se dessine après le début des flux) : un clic sur un levier l'arrête et le joue une fois, la lecture reprend
-  vingt secondes après sa fin ; sous « mouvement réduit », pas de lecture automatique, ni vol,
-  ni impulsion — le levier s'affiche terminé ;
+- **scène des leviers (couverture)** : six leviers joués à tour de rôle (12 à 16 s chacun selon
+  le levier). Chacun suit les mêmes temps : les flux (ou les ports) se dessinent, on identifie ce
+  qui peut changer, les flux se transforment. Les tracés se dessinent, des impulsions les
+  parcourent. Aucun encart ni bulle sur l'image, aucun texte fixe : un **filigrane** estompé, propre à
+  chaque levier (son sigle animé et une phrase courte, dont un passage en gras), se dessine
+  juste après le début des flux. Pas de bouton pause (pastilles) : un clic sur un levier
+  l'arrête et le joue une fois, la lecture reprend vingt secondes après sa fin ; sous
+  « mouvement réduit », pas de lecture automatique, ni vol, ni impulsion — le levier
+  s'affiche terminé, filigrane compris ;
 - **schémas des leviers** : six cartes « situation de départ / avec le levier » ; les
   tracés se dessinent à l'entrée dans l'écran, une fois, puis des impulsions les
   parcourent ; terminés et immobiles sans script ou en mouvement réduit ;
