@@ -8,9 +8,7 @@
         "Control costs",
         "Reduce risks",
         "Secure capacity"
-      ],
-      "ctaJourney": "See ground to contract",
-      "ctaTalk": "Discuss your transport plan"
+      ]
     },
     "stakes": {
       "eyebrow": "Why start from the ground",
@@ -113,75 +111,69 @@
       "diagnosticLink": "Take the diagnostic"
     },
     "levers": {
-      "tag": "Illustration",
-      "region": "Europe",
       "note": "Illustration: links drawn to explain, not existing services.",
       "mapLabel": "Animated map of Europe. Current lever: {lever}.",
-      "listLabel": "The six levers",
       "items": {
         "rail": {
-          "name": "Modal shift rail/waterway",
-          "text": "Direct road flows move to rail and inland waterways: a service is identified, and road keeps the pre- and post-haulage.",
-          "schema": "Diagram: long direct road trips are replaced by road pre-haulage, a rail or barge leg between two terminals, then road post-haulage.",
-          "card": {
-            "label": "rail and waterway services · Europe"
-          }
+          "name": "Modal shift rail/waterway"
         },
         "shortsea": {
-          "name": "Coastal shortsea",
-          "text": "A road flow (Paris – Rome, Oslo – Cologne) goes by sea, port to port: the road only keeps the first and last legs.",
-          "schema": "Diagram: a flow links two cities directly by road; with the lever, it reaches a port, crosses the sea from one port to another, then continues by road.",
-          "card": {
-            "label": "shortsea services · Europe"
-          }
+          "name": "Coastal shortsea"
         },
         "loops": {
-          "name": "Loops",
-          "text": "Dozens of one-way pan-European flows, in which long triangular loops are spotted: loaded legs that close on themselves, with an empty leg where needed.",
-          "schema": "Diagram: many one-way flows; three of them form a closed triangle, whose dashed empty leg brings the vehicle back to its starting point.",
-          "card": {
-            "head": "Loops are hiding",
-            "label": "in your pan-European flows"
-          }
+          "name": "Loops"
         },
         "crossdock": {
-          "name": "Cross-dock",
-          "text": "Small flows from varied origins converge on a platform, are consolidated and leave as a single large flow to the plant.",
-          "schema": "Diagram: several partial flows converge on a platform, then a single large flow leaves for the plant.",
-          "card": {
-            "head": "Consolidate",
-            "label": "many small flows, one large flow to the plant"
-          }
+          "name": "Cross-dock"
         },
         "electric": {
-          "name": "Electrification",
-          "text": "A charging network across Europe, and a looped, electrified flow that recharges at the right chargers.",
-          "schema": "Diagram: a charging network covers the territory; an electrified loop relies on some of the chargers to recharge.",
-          "card": {
-            "head": "Chargers across Europe",
-            "label": "one looped, electrified flow"
-          }
+          "name": "Electrification"
         },
         "pooling": {
-          "name": "Pooling",
-          "text": "Flows from several companies are pooled on one train, for example Dourges–Poznań.",
-          "schema": "Diagram: three departures from different companies are pooled on a single shared service, then redistributed.",
-          "card": {
-            "head": "Different companies",
-            "label": "one shared train: Dourges–Poznań"
-          }
+          "name": "Pooling"
         }
-      },
-      "legendLabel": "Illustration legend"
+      }
     },
-    "leverSchemas": {
-      "eyebrow": "The levers, in diagrams",
-      "title": "Six levers to <em>reshape</em> a transport network.",
-      "lede": "Each diagram sets a starting situation beside what a lever makes of it.",
-      "legendLabel": "Diagram legend",
-      "legendBefore": "Starting situation",
-      "legendAfter": "With the lever",
-      "note": "Illustrative diagrams, with no scale or figures: they explain a principle, they do not measure any gain."
+    "referentials": {
+      "eyebrow": "The physical side of transport",
+      "title": "Reference datasets that <em>map</em> the physical side of transport.",
+      "lede": "Networks, services and sites: we describe what actually exists, and the levers build on it.",
+      "mapLabel": "Animation: the “{name}” layer on the map of Europe.",
+      "note": "Illustrative animations: indicative positions and routes, no figures. The data itself is not published on this page.",
+      "items": {
+        "chargers": {
+          "name": "Electric charging networks",
+          "text": "Private charging networks for heavy trucks: locations, status, chargers."
+        },
+        "shortsea": {
+          "name": "Shortsea services",
+          "text": "Ports and port-to-port lines, as so many short-distance sea services."
+        },
+        "railServices": {
+          "name": "Rail services",
+          "text": "Existing intermodal services, with their terminals and operators."
+        },
+        "railNetwork": {
+          "name": "Rail network",
+          "text": "The lines and nodes the services run on."
+        },
+        "barges": {
+          "name": "Barge services",
+          "text": "Barge services between inland ports."
+        },
+        "waterways": {
+          "name": "Inland waterways",
+          "text": "The navigable waterways and the inland ports that serve them."
+        },
+        "parkings": {
+          "name": "Truck parking",
+          "text": "Heavy-vehicle parking areas along the main corridors."
+        },
+        "carriers": {
+          "name": "Carriers",
+          "text": "The referenced carriers: sites and modes."
+        }
+      }
     }
   }
 }

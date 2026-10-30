@@ -7,9 +7,9 @@ décision distincte.
 ## Ce que contient cette branche
 
 - **Une couverture-carte** : un globe qui joue six leviers sur toute l'Europe (report modal
-  rail/fluvial, shortsea côtier, boucles, cross-dock, électrification avec son réseau de bornes,
-  mutualisation Dourges – Poznań), les six pastilles en bas et la carte du levier actif en bas à droite, suivi de six schémas animés — voir
-  [LEVERS.md](LEVERS.md). C'est une illustration, pas une donnée.
+  rail/fluvial, shortsea côtier, boucles, cross-dock, électrification, mutualisation), **seul** —
+  ni texte, ni menu, ni bouton —, suivi d'une planche de huit référentiels du physique du transport
+  (bornes, shortsea, rail, fluvial, parkings, transporteurs) — voir [LEVERS.md](LEVERS.md). C'est une illustration, pas une donnée.
 - **Un parcours « du terrain aux engagements »** : un même cas
   démonstrateur (quatre sites, six flux, fictifs) traverse trois étapes —
   comprendre le terrain, concevoir le plan, contractualiser. Le plateau SVG
@@ -42,7 +42,7 @@ décision distincte.
 | [PROTECTION.md](PROTECTION.md) | Modèle de protection : base privée, export validé, vitrine statique ; limites |
 | [INTEGRATIONS.md](INTEGRATIONS.md) | Liste exacte des raccordements restants et variables d'environnement |
 | [DEPLOY.md](DEPLOY.md) | Netlify ou Railway, prévisualisation, publication de la vitrine, passage en production |
-| [LEVERS.md](LEVERS.md) | La scène des leviers de la couverture et les schémas : contenu, limites, code |
+| [LEVERS.md](LEVERS.md) | La scène des leviers de la couverture et la planche des référentiels : contenu, limites, code |
 | [DESIGN.md](DESIGN.md) | Direction artistique, contrastes, mouvement, accessibilité |
 | [VERIFICATION.md](VERIFICATION.md) | Résultats des vérifications et conditions de mesure |
 

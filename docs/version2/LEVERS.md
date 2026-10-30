@@ -1,4 +1,4 @@
-# La scène des leviers (couverture) et les schémas
+# La scène des leviers (couverture) et la planche des référentiels
 
 **Ce que c'est.** La couverture montre une carte (un globe, ou la carte à plat) sur laquelle six
 leviers sont joués, l'un après l'autre, sur toute l'Europe. Chaque levier suit la même
@@ -33,42 +33,60 @@ puis les flux se transforment**.
 6. **Mutualisation** — des flux d'entreprises différentes (une couleur par chargeur) sont
    regroupés sur un même train **Dourges → Poznań**, avec leur pré- et post-acheminement (15 s).
 
-Sous la couverture, une section de six schémas animés (`LeverSchemas`) compare pour chaque
-levier une situation de départ (gris, pointillé) à ce que le levier permet (couleur) ; ils
-racontent la même histoire que la scène (ports puis service ; flux à sens unique puis boucle ;
-petits flux puis gros flux ; réseau de bornes puis boucle électrifiée ; départs de trois
-entreprises puis train partagé).
+Sous la couverture, une planche présente autre chose : les **référentiels qui cartographient le
+physique du transport** (voir plus bas, « La planche des référentiels »).
 
-## La couverture : l'image, les pastilles, la carte du levier actif
+## La couverture : l'animation seule
 
-Le titre de la couverture ne change pas (« Concevoir le transport au plus près du réel. »). Plus
-de bulle sur l'image, plus de sigle ni de filigrane : **les six leviers sont de simples pastilles
-sur toute la largeur du bas**, et **la carte du levier actif est toujours en bas à droite** (sur
-l'Afrique, là où la carte n'a rien à montrer). Elle change avec le levier et porte l'idée en deux
-lignes, la pastille active disant déjà le nom :
+Le titre de la couverture ne change pas (« Concevoir le transport au plus près du réel. »), avec
+son paragraphe et ses trois pastilles de bénéfices. **Rien d'autre que l'animation** : plus de
+bulle, de sigle, de filigrane, de carte de texte, de menu des leviers ni de boutons d'appel à
+l'action sous le texte (l'accès au contact reste dans l'en-tête ; la section du parcours reste
+plus bas sur la page). Les six leviers se jouent l'un après l'autre, en boucle, sans que
+personne n'ait rien à choisir. Les noms de lieux restent sur la carte, mais pas tous (un seul
+port nommé pour le shortsea, aucun pour les boucles).
 
-| Levier | Carte (FR) |
+Les chiffres « 3 500 services rail et fluviaux » et « 1 500 services shortsea » donnés par la
+direction ne figurent donc plus nulle part sur le site : `src/content/figures.ts` a été supprimé
+(l'historique git le garde). Ils n'avaient pas été recoupés (le référentiel Appel d'Air 2026 du
+portail compte 2 906 services ferroviaires intermodaux, sans le fluvial ni le shortsea) : à
+valider avant de les remettre.
+
+La mention « Illustration : liaisons dessinées pour expliquer, pas des services existants »
+n'est pas affichée ; elle reste dans la page, lisible par les lecteurs d'écran, et le libellé
+accessible de la carte annonce le levier en cours.
+
+## La planche des référentiels
+
+La section qui suit la couverture (`Referentials`, id `referentiels`) met en avant la capacité de
+Pool4ward à tenir des **référentiels qui décrivent le physique du transport**. Huit tuiles, une
+couche chacune, jouées sur l'Europe avec le même fond et les mêmes animations que la couverture :
+
+| Couche | Ce qu'elle montre |
 |---|---|
-| Report modal | **3 500** · services ferroviaires et fluviaux · Europe |
-| Shortsea | **1 500** · services shortsea · Europe |
-| Boucles | **Des boucles se cachent** · dans vos flux paneuropéens |
-| Cross-dock | **Consolider** · de petits flux, un gros flux vers l'usine |
-| Électrification | **Des bornes partout en Europe** · un flux bouclé et électrifié |
-| Mutualisation | **Des entreprises différentes** · un même train : Dourges – Poznań |
+| Réseaux de bornes électriques | des corridors équipés, des bornes posées le long, des hubs privés qui ressortent |
+| Services shortsea | les ports côtiers, puis deux services de port à port (Le Havre → Civitavecchia, Oslo → Kiel) |
+| Services ferroviaires | des terminaux et les services qui les relient, avec des impulsions |
+| Réseau ferroviaire | les lignes, puis les nœuds |
+| Services fluviaux | les voies navigables en filigrane, puis les services de barges qui y circulent |
+| Réseau fluvial | les voies navigables (pointillés) et les ports intérieurs |
+| Parkings | des aires de stationnement poids lourds le long des grands axes |
+| Transporteurs | des implantations, leurs rayons d'action et les zones qu'elles couvrent |
 
-Un chiffre en grand seulement pour le rail/fluvial et le shortsea ; les quatre autres portent une
-phrase, jamais un chiffre inventé. Une barre colorée au bas de la carte avance avec le levier,
-comme celle de la pastille active. La mention « Illustration : liaisons dessinées pour expliquer,
-pas des services existants » n'est pas affichée : elle reste dans la carte, lisible par les
-lecteurs d'écran (`LeverCard.tsx`, remontée à chaque levier ; en mouvement réduit, pas
-d'animation d'entrée). Sur téléphone, la carte passe pleine largeur au-dessus des pastilles ;
-sur un écran moyen, les pastilles passent sur deux lignes à gauche de la carte. Les noms de lieux
-restent sur la carte, mais pas tous (un seul port nommé pour le shortsea, aucun pour les boucles).
+Chaque tuile porte un nom et une phrase sur ce que décrit le référentiel (objets, pas chiffres ;
+aucun opérateur nommé). **Aucun chiffre, aucune donnée de référentiel n'est lue** : les lieux sont
+réels, les tracés et les positions des sites sont indicatifs, et la note sous la planche le dit
+(« Les données elles-mêmes ne sont pas publiées sur cette page »). Les types de référentiels
+montrés viennent de ce que le portail contient (services intermodaux et gares, voies navigables
+européennes, réseau de bornes poids lourds) et de la liste donnée par la direction pour les autres
+(shortsea, parkings, transporteurs) : leur périmètre exact est à valider avant toute précision.
 
-**Les chiffres « 3 500 » et « 1 500 »** viennent de la direction (`src/content/figures.ts`).
-Ils n'ont pas été recoupés : dans le portail, le référentiel Appel d'Air 2026 compte
-2 906 services ferroviaires intermodaux (sans le fluvial ni le shortsea). À valider contre la
-base avant toute mise en ligne publique, puis à changer au seul endroit où ils sont écrits.
+Comportement : une tuile ne charge rien tant que la planche n'approche pas de l'écran (le fond est
+chargé une fois pour toute la page, `lib/levers/geo.ts`) ; elle joue sa couche quand elle est à
+l'écran, la rejoue toutes les douze secondes environ, se fige quand elle sort de l'écran, et
+s'affiche terminée, sans impulsion, sous « mouvement réduit ». Le fond a son propre calque et les
+impulsions n'ont pas de halo : mesuré ici en rendu logiciel, une capture de la planche en pleine
+lecture est passée de 64 s à 4 s.
 
 ## Ce que ce n'est pas
 
@@ -91,12 +109,13 @@ indépendante de la vitrine (`showcase.json`) et de la base privée : elle n'en 
 | `src/lib/levers/data.ts` | La scène : lieux (villes, ports), six leviers = listes d'éléments (tracés, repères, anneaux, bornes) minutés de 0 à 1, durée de chaque levier |
 | `src/lib/levers/scene.ts` | Calculs purs : tracé dessiné à l'avancement `u`, emprises, bornes le long d'un tracé (testés) |
 | `src/lib/levers/layout.ts` | Placement sans chevauchement des noms de lieux (testé) |
+| `src/lib/levers/geo.ts` | Projection de Mercator et fond de carte (terres, frontières), chargé une seule fois pour la page |
+| `src/lib/levers/layers.ts` | Les huit couches de la planche des référentiels (tracés, repères, anneaux, cadre) ; construit sur les constantes de `data.ts` |
 | `src/components/levers/LeverGlobe.tsx` | Globe MapLibre incliné, sans interaction, piloté image par image ; étiquettes HTML |
 | `src/components/levers/LeverFlat.tsx` | Même scène en SVG (sans WebGL, rendu logiciel, appareil économe) ; animations CSS |
-| `src/components/levers/LeverStage.tsx` | Orchestrateur : choix du rendu, lecture automatique, pastilles des six leviers, mesure du texte |
-| `src/components/levers/LeverCard.tsx` | La carte du levier actif, en bas à droite (`items.<levier>.card`) |
-| `src/components/levers/LeverSchemas.tsx` | Les six schémas animés (SVG inline, `reveal-in`) |
-| `messages/*/home.json` → `Home.levers`, `Home.leverSchemas` | Tous les textes, FR et EN (clés vérifiées par `levers.test.ts`) |
+| `src/components/levers/LeverStage.tsx` | Orchestrateur : choix du rendu, lecture automatique, mesure du texte ; aucun contrôle |
+| `src/components/referentials/Referentials.tsx` · `LayerMap.tsx` | La planche : huit tuiles et leur carte animée (couche `lib/levers/layers.ts`) |
+| `messages/*/home.json` → `Home.levers`, `Home.referentials` | Tous les textes, FR et EN (clés vérifiées par `levers.test.ts` et `layers.test.ts`) |
 | `scripts/build-levers-poster.ts` | `public/images/levers-poster.svg`, image d'attente de la carte (`npm run poster:levers`) |
 
 ## Rendus
@@ -111,13 +130,13 @@ indépendante de la vitrine (`showcase.json`) et de la base privée : elle n'en 
 
 ## Lecture
 
-La lecture est automatique et boucle sur les six leviers ; **il n'y a pas de bouton pause**.
-Un clic ou une touche sur un levier le joue une fois et le laisse affiché ; sans nouveau geste,
-la lecture reprend vingt secondes après la fin du levier. Sous « mouvement réduit », il n'y a
-pas de lecture automatique : le levier s'affiche terminé, et se change par le bandeau.
-(Arrêter ce qui bouge plus de cinq secondes est une exigence d'accessibilité WCAG 2.2.2 :
-sans bouton, la réponse tient à ce geste et au mouvement réduit — à reconsidérer si la page
-doit satisfaire cette exigence au niveau A.)
+La lecture de la couverture est automatique et boucle sur les six leviers ; **il n'y a ni bouton
+pause, ni moyen de choisir un levier**. Sous « mouvement réduit », il n'y a pas de lecture : le
+premier levier s'affiche terminé, immobile. Arrêter ce qui bouge plus de cinq secondes est une
+exigence d'accessibilité WCAG 2.2.2 : sans bouton, la réponse tient au seul mouvement réduit —
+écart plus net qu'avec le bandeau précédent, à reconsidérer si la page doit satisfaire cette
+exigence au niveau A (par exemple en arrêtant la boucle après un tour, ou en figeant la scène
+quand la couverture sort de l'écran).
 
 ## Réserves
 

@@ -457,36 +457,20 @@ describe("calculs de la scène", () => {
 });
 
 describe("textes de la scène (FR et EN)", () => {
-  type Item = { name: string; text: string; schema: string; card: { head?: string; label: string } };
-  type Msg = { Home: { levers: { items: Record<string, Item> } & Record<string, unknown> } };
+  type Msg = { Home: { levers: { items: Record<string, Record<string, unknown>> } & Record<string, unknown>; cover: Record<string, unknown> } };
   const load = (loc: string) => JSON.parse(readFileSync(`messages/${loc}/home.json`, "utf8")) as Msg;
 
-  it.each(["fr", "en"])("%s : chaque levier a un nom, un texte, une description de schéma et sa carte", (loc) => {
-    const items = load(loc).Home.levers.items;
-    for (const id of LEVER_ORDER) {
-      const it = items[id];
-      expect(it, `${loc} : levier ${id}`).toBeDefined();
-      for (const k of ["name", "text", "schema"] as const) expect(it[k].length, `${loc}/${id}/${k}`).toBeGreaterThan(3);
-      expect(it.card.label.length, `${loc}/${id}/card`).toBeGreaterThan(3);
-    }
+  it.each(["fr", "en"])("%s : chaque levier a un nom (la description accessible de la carte) et la mention d'illustration existe", (loc) => {
+    const { levers } = load(loc).Home;
+    for (const id of LEVER_ORDER) expect(String(levers.items[id]?.name ?? "").length, `${loc}/${id}/name`).toBeGreaterThan(3);
+    expect(String(levers.note), `${loc} : l'illustration est signalée`).toMatch(/Illustration/);
+    expect(String(levers.mapLabel), `${loc} : le levier en cours est annoncé`).toContain("{lever}");
   });
 
-  it.each(["fr", "en"])("%s : plus de bulles d'explication ni de filigrane dans les messages", (loc) => {
-    const levers = load(loc).Home.levers;
-    expect(levers, `${loc} : plus de légende fixe`).not.toHaveProperty("legend");
-    for (const id of LEVER_ORDER) {
-      expect(levers.items[id], `${loc}/${id}`).not.toHaveProperty("callouts");
-      expect(levers.items[id], `${loc}/${id}`).not.toHaveProperty("watermark");
-    }
-  });
-
-  it("la carte est courte : deux lignes, un passage qui accroche (chiffre ou phrase)", () => {
-    for (const loc of ["fr", "en"]) {
-      for (const id of LEVER_ORDER) {
-        const { head, label } = load(loc).Home.levers.items[id].card;
-        expect(label.length, `${loc}/${id} : une ligne de précision`).toBeLessThan(60);
-        if (head !== undefined) expect(head.length, `${loc}/${id} : un titre court`).toBeLessThan(40);
-      }
-    }
+  it.each(["fr", "en"])("%s : la couverture est l'animation seule — ni carte de texte, ni menu, ni bulle, ni bouton dans les messages", (loc) => {
+    const { levers, cover } = load(loc).Home;
+    expect(Object.keys(levers).sort(), `${loc} : rien d'autre que le nom des leviers, la mention et le libellé de la carte`).toEqual(["items", "mapLabel", "note"]);
+    for (const id of LEVER_ORDER) expect(Object.keys(levers.items[id]), `${loc}/${id}`).toEqual(["name"]);
+    expect(Object.keys(cover).some((k) => k.startsWith("cta")), `${loc} : plus de bouton sous le texte`).toBe(false);
   });
 });

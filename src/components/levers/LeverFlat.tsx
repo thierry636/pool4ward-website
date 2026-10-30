@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState, type MutableRefObject } from "rea
 import { PLACES, leverSeconds, type LeverId } from "@/lib/levers/data";
 import { anchorOf, buildScene, sceneBox } from "@/lib/levers/scene";
 import { PLACE_OFFSETS, placeFirstFree, type Box } from "@/lib/levers/layout";
+import { loadGeo, mx, my } from "@/lib/levers/geo";
 import type { LeverGlobeProps } from "./LeverGlobe";
 import "./levers.css";
 
@@ -12,32 +13,6 @@ import "./levers.css";
  * leviers, mêmes tracés, en SVG. Le dessin des tracés, l'apparition des lieux et des bulles et
  * les impulsions sont des animations CSS : rien ne tourne en JavaScript image par image.
  */
-
-const UPD = 10;
-const WORLD = 360 * UPD;
-const mx = (lon: number) => (lon + 180) * UPD;
-const my = (lat: number) => {
-  const s = Math.sin((Math.max(-85, Math.min(85, lat)) * Math.PI) / 180);
-  return (0.5 - Math.log((1 + s) / (1 - s)) / (4 * Math.PI)) * WORLD;
-};
-
-function geoPath(geo: GeoJSON.Feature | GeoJSON.FeatureCollection, close: boolean): string {
-  const feats = "features" in geo ? geo.features : [geo];
-  let d = "";
-  const ring = (pts: number[][]) => {
-    pts.forEach(([lon, lat], i) => {
-      d += `${i === 0 ? "M" : "L"}${mx(lon).toFixed(1)},${my(lat).toFixed(1)}`;
-    });
-    if (close) d += "Z";
-  };
-  for (const f of feats) {
-    const g = f.geometry;
-    if (g.type === "Polygon") g.coordinates.forEach(ring);
-    else if (g.type === "MultiPolygon") g.coordinates.forEach((p) => p.forEach(ring));
-    else if (g.type === "MultiLineString") g.coordinates.forEach(ring);
-  }
-  return d;
-}
 
 type FlatProps = Pick<LeverGlobeProps, "levers" | "active" | "playing" | "reducedMotion" | "locale" | "ariaLabel" | "pad" | "reserved" | "onAdvance" | "onShown" | "onReady"> & {
   progress: MutableRefObject<number>;
@@ -62,14 +37,12 @@ export function LeverFlat(props: FlatProps) {
 
   useEffect(() => {
     let cancelled = false;
-    Promise.all([fetch("/geo/land-50m-europe.json").then((r) => r.json()), fetch("/geo/borders-50m-europe.json").then((r) => r.json())])
-      .then(([l, b]) => {
-        if (cancelled) return;
-        setLand(geoPath(l, true));
-        setBorders(geoPath(b, false));
-        onReady();
-      })
-      .catch(() => !cancelled && onReady());
+    loadGeo().then((g) => {
+      if (cancelled) return;
+      setLand(g.land);
+      setBorders(g.borders);
+      onReady();
+    });
     return () => {
       cancelled = true;
     };

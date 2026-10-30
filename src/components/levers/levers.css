@@ -68,7 +68,7 @@
   animation: lever-in 0.4s ease forwards;
 }
 
-/* ------------------------------------------------------- couverture : carte et bandeau */
+/* ------------------------------------------------------- couverture : la carte */
 .lever-map {
   background: #050d1f;
 }
@@ -85,51 +85,6 @@
   }
 }
 
-/* Les six leviers : de simples pastilles. La barre sous la pastille active montre l'avancement. */
-.lever-chip {
-  position: relative;
-  display: inline-flex;
-  min-height: 2.75rem;
-  align-items: center;
-  gap: 0.5rem;
-  overflow: hidden;
-  padding: 0.45rem 0.95rem;
-  border: 1px solid rgb(148 163 184 / 0.3);
-  border-radius: 9999px;
-  background: rgb(2 6 23 / 0.45);
-  backdrop-filter: blur(6px);
-  color: #cbd5e1;
-  font-size: 0.82rem;
-  font-weight: 600;
-  line-height: 1.1;
-  white-space: nowrap;
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
-}
-.lever-chip:hover {
-  background: rgb(255 255 255 / 0.08);
-  color: #fff;
-}
-.lever-chip[aria-pressed="true"] {
-  border-color: var(--c, #748ffc);
-  background: rgb(66 99 235 / 0.2);
-  color: #fff;
-}
-.lever-chip svg {
-  color: #94a3b8;
-}
-.lever-chip[aria-pressed="true"] svg {
-  color: var(--c, #748ffc);
-}
-.lever-bar {
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 3px;
-  background: var(--c, #748ffc);
-  transform: scaleX(0);
-  transform-origin: left;
-  pointer-events: none;
-}
-
 /* Un tracé écarté (la liaison directe, une fois le service identifié) s'efface sans disparaître. */
 @keyframes lever-dim {
   to { opacity: var(--to, 0.28); }
@@ -138,58 +93,39 @@
   animation: lever-dim 0.6s ease forwards;
 }
 
-/* ------------------------------------------------------------- carte du levier affiché
-   En bas à droite de la couverture (au-dessus des pastilles sur téléphone) : un chiffre ou une
-   phrase courte, dans la couleur du levier. Elle se remonte à chaque levier (LeverStage, `key`). */
-.lever-card {
+/* ------------------------------------------------- tuiles des référentiels : une couche sur l'Europe */
+.layer-map {
   position: relative;
-  min-height: 7.5rem;
+  aspect-ratio: 400 / 250;
   overflow: hidden;
-  padding: 1rem 1.25rem 1.35rem;
-  border: 1px solid var(--c, #748ffc);
-  border-radius: 1.1rem;
-  background: rgb(66 99 235 / 0.22);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 10px 40px -12px rgb(99 102 241 / 0.55);
-  color: #fff;
-  animation: lever-card-in 0.5s ease both;
+  background:
+    radial-gradient(120% 100% at 80% 0%, rgb(66 99 235 / 0.22), transparent 60%),
+    radial-gradient(rgb(148 163 184 / 0.13) 1px, transparent 1.2px) 0 0 / 18px 18px,
+    #0b1224;
+  border-bottom: 1px solid rgb(15 23 42 / 0.1);
 }
-.lever-card .lc-fig {
-  margin: 0;
-  font-size: 3.1rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1;
-}
-.lever-card .lc-head {
-  margin: 0;
-  font-size: 1.3rem;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-}
-.lever-card .lc-label {
-  margin: 0.5rem 0 0;
-  font-size: 0.875rem;
-  font-weight: 600;
-  line-height: 1.35;
-  color: #e2e8f0;
-}
-.lever-card .lc-bar {
+.layer-map svg {
   position: absolute;
-  inset: auto 0 0 0;
-  height: 3px;
-  background: var(--c, #748ffc);
-  transform: scaleX(0);
-  transform-origin: left;
-  pointer-events: none;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
-@keyframes lever-card-in {
-  from { opacity: 0; transform: translateY(6px); }
+.layer-map[data-ready="true"] svg {
+  opacity: 1;
 }
-@media (prefers-reduced-motion: reduce) {
-  .lever-card {
-    animation: none;
-  }
+/* Le fond a son calque : les animations de la couche ne le redessinent pas à chaque image. */
+.layer-map .layer-base {
+  transform: translateZ(0);
+  will-change: transform;
+}
+/* Pas de halo coûteux sur les impulsions des petites cartes. */
+.layer-map .lever-pulse {
+  filter: none;
+}
+/* Une tuile hors écran se fige : ses impulsions et ses ondes ne tournent plus pour rien. */
+.layer-map[data-paused="true"] * {
+  animation-play-state: paused !important;
 }

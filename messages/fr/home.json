@@ -8,9 +8,7 @@
         "Maîtriser les coûts",
         "Réduire les risques",
         "Sécuriser les capacités"
-      ],
-      "ctaJourney": "Voir du terrain aux contrats",
-      "ctaTalk": "Parler de votre plan transport"
+      ]
     },
     "stakes": {
       "eyebrow": "Pourquoi partir du terrain",
@@ -113,75 +111,69 @@
       "diagnosticLink": "Faire le diagnostic"
     },
     "levers": {
-      "tag": "Illustration",
-      "region": "Europe",
       "note": "Illustration : liaisons dessinées pour expliquer, pas des services existants.",
       "mapLabel": "Carte animée de l’Europe. Levier en cours : {lever}.",
-      "listLabel": "Les six leviers",
       "items": {
         "rail": {
-          "name": "Report modal rail/fluvial",
-          "text": "Les flux directs par la route passent au rail et au fluvial : un service est identifié, la route garde le pré- et le post-acheminement.",
-          "schema": "Schéma : des trajets routiers directs, longs, sont remplacés par un pré-acheminement routier, une traction ferroviaire ou fluviale entre deux terminaux, puis un post-acheminement routier.",
-          "card": {
-            "label": "services ferroviaires et fluviaux · Europe"
-          }
+          "name": "Report modal rail/fluvial"
         },
         "shortsea": {
-          "name": "Shortsea côtier",
-          "text": "Un flux par la route (Paris – Rome, Oslo – Cologne) passe par la mer, de port à port : la route ne garde que le pré- et le post-acheminement.",
-          "schema": "Schéma : un flux relie directement deux villes par la route ; avec le levier, il rejoint un port, traverse la mer d'un port à l'autre, puis repart par la route.",
-          "card": {
-            "label": "services shortsea · Europe"
-          }
+          "name": "Shortsea côtier"
         },
         "loops": {
-          "name": "Boucles",
-          "text": "Des dizaines de flux paneuropéens à sens unique, dans lesquels on repère de longues boucles triangulaires : des jambes chargées qui se referment, au besoin avec une jambe à vide.",
-          "schema": "Schéma : de nombreux flux à sens unique ; trois d'entre eux forment un triangle fermé, dont une jambe à vide en pointillé ramène le véhicule à son point de départ.",
-          "card": {
-            "head": "Des boucles se cachent",
-            "label": "dans vos flux paneuropéens"
-          }
+          "name": "Boucles"
         },
         "crossdock": {
-          "name": "Cross-dock",
-          "text": "De petits flux d’origines variées convergent vers une plateforme, se consolident et repartent en un seul gros flux vers l’usine.",
-          "schema": "Schéma : plusieurs flux partiels convergent vers une plateforme, puis un seul gros flux part vers l’usine.",
-          "card": {
-            "head": "Consolider",
-            "label": "de petits flux, un gros flux vers l’usine"
-          }
+          "name": "Cross-dock"
         },
         "electric": {
-          "name": "Électrification",
-          "text": "Un réseau de bornes à travers l’Europe, et un flux bouclé et électrifié qui se recharge sur les bonnes bornes.",
-          "schema": "Schéma : un réseau de bornes de recharge couvre le territoire ; une boucle électrifiée s’appuie sur certaines d’entre elles pour se recharger.",
-          "card": {
-            "head": "Des bornes partout en Europe",
-            "label": "un flux bouclé et électrifié"
-          }
+          "name": "Électrification"
         },
         "pooling": {
-          "name": "Mutualisation",
-          "text": "Les flux de plusieurs entreprises sont regroupés sur un même train, par exemple Dourges – Poznań.",
-          "schema": "Schéma : trois départs d’entreprises différentes sont regroupés sur un seul service partagé, puis redistribués.",
-          "card": {
-            "head": "Des entreprises différentes",
-            "label": "un même train : Dourges – Poznań"
-          }
+          "name": "Mutualisation"
         }
-      },
-      "legendLabel": "Légende de l’illustration"
+      }
     },
-    "leverSchemas": {
-      "eyebrow": "Les leviers en schéma",
-      "title": "Six leviers pour <em>changer la forme</em> d’un réseau de transport.",
-      "lede": "Chaque schéma met côte à côte une situation de départ et ce qu’un levier permet d’en faire.",
-      "legendLabel": "Légende des schémas",
-      "legendBefore": "Situation de départ",
-      "legendAfter": "Avec le levier",
-      "note": "Schémas illustratifs, sans échelle ni chiffre : ils expliquent un principe, ils ne mesurent aucun gain."
+    "referentials": {
+      "eyebrow": "Le physique du transport",
+      "title": "Des référentiels qui <em>cartographient</em> le physique du transport.",
+      "lede": "Réseaux, services et sites : nous décrivons ce qui existe réellement, et les leviers s’appuient dessus.",
+      "mapLabel": "Animation : la couche « {name} » sur la carte de l’Europe.",
+      "note": "Animations illustratives : positions et tracés indicatifs, aucun chiffre. Les données elles-mêmes ne sont pas publiées sur cette page.",
+      "items": {
+        "chargers": {
+          "name": "Réseaux de bornes électriques",
+          "text": "Réseaux privés de bornes pour poids lourds : emplacements, statut, chargeurs."
+        },
+        "shortsea": {
+          "name": "Services shortsea",
+          "text": "Ports et lignes de port à port, comme autant de services maritimes à courte distance."
+        },
+        "railServices": {
+          "name": "Services ferroviaires",
+          "text": "Services intermodaux existants, avec leurs gares et leurs opérateurs."
+        },
+        "railNetwork": {
+          "name": "Réseau ferroviaire",
+          "text": "Les lignes et les nœuds sur lesquels circulent les services."
+        },
+        "barges": {
+          "name": "Services fluviaux",
+          "text": "Services de barges entre ports intérieurs."
+        },
+        "waterways": {
+          "name": "Réseau fluvial",
+          "text": "Les voies navigables et les ports intérieurs qui les desservent."
+        },
+        "parkings": {
+          "name": "Parkings",
+          "text": "Aires de stationnement poids lourds, le long des grands axes."
+        },
+        "carriers": {
+          "name": "Transporteurs",
+          "text": "Les transporteurs référencés : implantations et modes."
+        }
+      }
     }
   }
 }

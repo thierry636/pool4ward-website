@@ -1,11 +1,10 @@
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
 import { LeverStage } from "@/components/levers/LeverStage";
 
 /**
- * Première page : une promesse lisible, une carte qui joue les six leviers sur une même
- * région, un appel à l'action. Le texte est rendu côté serveur et s'affiche avant tout
- * script ; la carte (`LeverStage`) se pose derrière lui sur grand écran, sous lui sur
+ * Première page : une promesse lisible, et une carte qui joue les six leviers sur toute
+ * l'Europe — seule, sans menu ni lien. Le texte est rendu côté serveur et s'affiche avant
+ * tout script ; la carte (`LeverStage`) se pose derrière lui sur grand écran, sous lui sur
  * téléphone.
  */
 export function Cover() {
@@ -33,15 +32,6 @@ export function Cover() {
               </li>
             ))}
           </ul>
-
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <a href="#parcours" className="btn btn-solid">
-              {t("ctaJourney")} <span aria-hidden="true">↓</span>
-            </a>
-            <Link href="/contact" className="btn btn-line">
-              {t("ctaTalk")}
-            </Link>
-          </div>
         </div>
       </div>
 

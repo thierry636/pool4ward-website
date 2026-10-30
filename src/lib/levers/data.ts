@@ -174,15 +174,15 @@ export interface ChargersEl {
 
 export type SceneEl = LineEl | NodeEl | RingEl | ChargersEl;
 
-const INDIGO = "#818cf8";
-const TEAL = "#2dd4bf";
-const SKY = "#38bdf8";
-const AMBER = "#fbbf24";
-const SLATE = "#94a3b8";
-const WHITE = "#f1f5f9";
-const ROAD = "#94a3b8";
-const HAUL = "#cbd5e1";
-const PINK = "#f472b6";
+export const INDIGO = "#818cf8";
+export const TEAL = "#2dd4bf";
+export const SKY = "#38bdf8";
+export const AMBER = "#fbbf24";
+export const SLATE = "#94a3b8";
+export const WHITE = "#f1f5f9";
+export const ROAD = "#94a3b8";
+export const HAUL = "#cbd5e1";
+export const PINK = "#f472b6";
 
 /** Report modal : flux directs par la route (départ → arrivée), puis le service ferroviaire retenu. */
 const DIRECT: readonly (readonly [string, string])[] = [
@@ -190,9 +190,9 @@ const DIRECT: readonly (readonly [string, string])[] = [
   ["sevilla", "lodz"],
   ["almeria", "warszawa"],
 ];
-const SERVICE: readonly string[] = ["zaragoza", "barcelona", "perpignan", "lyon", "strasbourg", "frankfurt", "berlin", "poznan"];
+export const SERVICE: readonly string[] = ["zaragoza", "barcelona", "perpignan", "lyon", "strasbourg", "frankfurt", "berlin", "poznan"];
 /** Réseaux en filigrane : tracés indicatifs entre villes, pas des lignes ni des voies d'eau relevées. */
-const RAIL_NET: readonly (readonly string[])[] = [
+export const RAIL_NET: readonly (readonly string[])[] = [
   ["algeciras", "sevilla", "madrid"],
   ["almeria", "madrid"],
   ["madrid", "zaragoza"],
@@ -210,7 +210,7 @@ const RAIL_NET: readonly (readonly string[])[] = [
   ["poznan", "warszawa"],
   ["wroclaw", "lodz"],
 ];
-const FLUVIAL_NET: readonly (readonly string[])[] = [
+export const FLUVIAL_NET: readonly (readonly string[])[] = [
   ["basel", "strasbourg", "mannheim", "koln", "duisburg", "rotterdam"],
   ["marseille", "lyon"],
   ["duisburg", "hannover", "berlin"],
@@ -227,7 +227,7 @@ export const LEVER_COLOR: Record<LeverId, string> = {
 };
 
 /** Shortsea : les ports côtiers d'Europe, dans l'ordre où ils apparaissent (de l'Atlantique à la Baltique, puis la Méditerranée). */
-const PORTS: readonly string[] = [
+export const PORTS: readonly string[] = [
   "sines", "lisboa", "leixoes", "bilbao", "lehavre", "southampton", "dublin", "liverpool", "felixstowe", "dunkerque", "zeebrugge", "antwerpen", "rotterdam",
   "bremerhaven", "hamburg", "kiel", "copenhagen", "gothenburg", "oslo", "stockholm", "helsinki", "tallinn", "riga", "klaipeda", "gdansk",
   "algeciras", "valencia", "barcelona", "cagliari", "marseille", "genova", "livorno", "civitavecchia", "napoli", "palermo", "koper", "bari", "thessaloniki", "piraeus",
@@ -242,13 +242,13 @@ const SEA_FLOWS: readonly { from: string; to: string }[] = [
  * côte portugaise, détroit de Gibraltar, Méditerranée, mer Tyrrhénienne. Les points de passage
  * ne sont pas des escales ; ils tiennent le tracé dans l'eau (levers.test.ts le vérifie).
  */
-const SEA_ATLANTIC_MED: readonly Anchor[] = [
+export const SEA_ATLANTIC_MED: readonly Anchor[] = [
   "lehavre", [-0.5, 49.8], [-1.0, 49.98], [-2.3, 49.98], [-3.6, 49.7], [-5.3, 49.0], [-6.2, 48.2], [-6.2, 46.5], [-8.0, 45.0], [-10.0, 43.5],
   [-10.2, 41.0], [-10.1, 38.7], [-9.7, 36.8], [-7.2, 36.2], [-5.7, 35.95], [-4.0, 36.1], [-2.0, 36.4], [0.0, 37.9], [1.8, 38.3], [4.5, 38.4],
   [8.6, 38.2], [9.6, 38.6], [10.3, 39.4], [11.5, 40.9], "civitavecchia",
 ];
 /** Le service Oslo → Kiel : le fjord d'Oslo, le Skagerrak, le Kattegat, le Grand Belt, la baie de Kiel. */
-const SEA_OSLO_KIEL: readonly Anchor[] = [
+export const SEA_OSLO_KIEL: readonly Anchor[] = [
   "oslo", [10.58, 59.72], [10.6, 59.62], [10.55, 59.5], [10.53, 59.4], [10.58, 59.3], [10.62, 59.1], [10.62, 58.85], [10.6, 58.7], [10.9, 58.2], [11.05, 57.7],
   [11.4, 57.3], [11.1, 56.65], [10.95, 55.85], [10.82, 55.8], [11.04, 55.35], [10.95, 54.85], [10.6, 54.5], [10.3, 54.43], "kiel",
 ];
@@ -282,12 +282,12 @@ const ELEC_FLOWS: readonly (readonly [string, string])[] = [
 ];
 /** Les corridors de la boucle électrifiée : leurs bornes font partie du réseau, et celles qu'on utilise sont mises en avant. */
 const ELEC_LOOP: readonly (readonly string[])[] = [["lyon", "strasbourg"], ["strasbourg", "frankfurt"], ["frankfurt", "paris"], ["paris", "lyon"]];
-const ELEC_NET: readonly (readonly string[])[] = [
+export const ELEC_NET: readonly (readonly string[])[] = [
   ["lisboa", "madrid"], ["madrid", "zaragoza", "barcelona"], ["barcelona", "perpignan", "lyon"], ["lyon", "torino", "milano"], ["milano", "munchen", "wien"],
   ["wien", "praha", "berlin"], ["berlin", "poznan", "warszawa"], ["frankfurt", "leipzig", "berlin"], ["hamburg", "hannover", "frankfurt"], ["rotterdam", "koln", "frankfurt"],
   ["bruxelles", "paris"], ...ELEC_LOOP,
 ];
-const CHARGER_FRACTIONS: readonly number[] = [0.12, 0.3, 0.5, 0.7, 0.88];
+export const CHARGER_FRACTIONS: readonly number[] = [0.12, 0.3, 0.5, 0.7, 0.88];
 /** Les bornes de la boucle qu'on utilise : un sous-ensemble des bornes du réseau (mêmes fractions), donc au même endroit. */
 const LOOP_STOPS_FRACTIONS: readonly number[] = [0.3, 0.7];
 
