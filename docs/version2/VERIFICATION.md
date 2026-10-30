@@ -19,15 +19,22 @@ terrain (CrUX / RUM) ne pourront être lus qu'après la mise en ligne.
   leviers de la couverture) : joués en rendu logiciel (SwiftShader), où ils
   fonctionnent mais saccadent ; les images par seconde ne sont pas mesurées. Le poids
   téléchargé l'est (section 2).
-- **Les chiffres « 3 500 services rail et fluviaux » et « 1 500 services shortsea »** (cartes
-  de la couverture) viennent de la direction ; ils ne sont recoupés avec aucune donnée vérifiée
-  ici (le référentiel Appel d'Air 2026 du portail compte 2 906 services ferroviaires
-  intermodaux, sans le fluvial ni le shortsea). À valider avant toute mise en ligne publique
-  (DATA.md).
+- **Les chiffres « 3 500 services rail et fluviaux » et « 1 500 services shortsea »** donnés par
+  la direction ne figurent plus sur le site (couverture réduite à l'animation, planche des
+  référentiels sans chiffre). Ils n'avaient été recoupés avec aucune donnée vérifiée (le
+  référentiel Appel d'Air 2026 du portail compte 2 906 services ferroviaires intermodaux, sans le
+  fluvial ni le shortsea) : à valider avant de les remettre (DATA.md).
+- **La planche des référentiels est une illustration** : huit couches (bornes, shortsea, services et
+  réseau ferroviaires, services et réseau fluviaux, parkings, transporteurs) dessinées sur des
+  lieux réels avec des tracés et des positions indicatifs ; aucune donnée de référentiel n'est lue,
+  aucun chiffre ni opérateur n'est annoncé. Le périmètre exact de chaque référentiel (parkings,
+  transporteurs, shortsea) est à valider avant toute précision.
+- **Le mouvement de la couverture ne s'arrête pas** : plus de bouton pause ni de choix du levier,
+  la lecture boucle sans fin (exigence WCAG 2.2.2 non satisfaite hors mouvement réduit, LEVERS.md).
 - **La scène des leviers est une illustration**, pas une donnée : liaisons dessinées,
   aucun service existant, aucun opérateur, aucun chiffre (LEVERS.md). Le choix de la
   région et des liaisons est éditorial, à valider.
-- **Les impulsions animées** (carte à plat et schémas) utilisent `offset-path` en CSS :
+- **Les impulsions animées** (carte à plat et tuiles des référentiels) utilisent `offset-path` en CSS :
   vérifié sous Chromium seulement, pas sous Safari ni Firefox.
 - Pas de lecteur d'écran réel (NVDA, VoiceOver) : l'accessibilité est contrôlée par
   axe-core, au clavier et par l'arbre d'accessibilité, pas à l'oreille.
@@ -39,7 +46,7 @@ terrain (CrUX / RUM) ne pourront être lus qu'après la mise en ligne.
 
 ## 1. Tests automatisés (`npm test`)
 
-258 tests dans 19 fichiers, tous réussis. Ils couvrent : parité FR/EN des textes et absence de Cobuild4ward et
+267 tests dans 19 fichiers, tous réussis. Ils couvrent : parité FR/EN des textes et absence de Cobuild4ward et
 des chiffres de la v1 ; typographie française ; état et continuité du parcours
 (jamais « confirmé » ni « contractualisé » dans un cas démonstrateur) ; contact
 (validation, échappement, injection d'en-tête, champ piège, limite) ; blog ; métadonnées
@@ -58,7 +65,7 @@ dépasse 500 km, dont Barcelone → Anvers, leurs jambes chargées étant déjà
 aucun nom de ville) ; cross-dock (au moins six flux entrants, un seul flux sortant bien plus
 épais) ; électrification (plus de soixante bornes, une boucle fermée dont les bornes choisies
 appartiennent au réseau) ; mutualisation (quatre entreprises, une couleur chacune, un train
-Dourges – Poznań) ; présence des textes FR et EN et des cartes, sans chiffre écrit en dur).
+Dourges – Poznań) ; messages réduits au nom de chaque levier, aucun bouton dans les messages de la couverture) ; **planche des référentiels** (huit couches dans l'ordre voulu, tous les lieux existent, tout tient dans le cadre de la tuile, minutages entre 0 et 1, assez d'objets par couche pour se lire comme un référentiel, services distincts du réseau : pointillés fins contre traits pleins épais et animés ; textes FR et EN sans chiffre ni nom d'opérateur).
 
 ## 2. Surface serveur et données reçues par le navigateur
 
@@ -95,9 +102,9 @@ cookies: [{"name":"NEXT_LOCALE","httpOnly":false,"sameSite":"Lax","path":"/"}]
   1 x /images/terrain.svg statuts 200
   1 x /images/globe-poster.svg statuts 200
   1 x /fr statuts 200
-  1 x /fr/approach statuts 200
-  1 x /fr/solutions statuts 200
   1 x /fr/blog statuts 200
+  1 x /fr/solutions statuts 200
+  1 x /fr/approach statuts 200
   1 x /fr/contact statuts 200
   1 x blob: (worker MapLibre) statuts 200
   1 x /geo/borders-110m.json statuts 200
@@ -122,8 +129,8 @@ scan de .next/static (bundles envoyés au navigateur) :
 Poids transféré de la page Référentiels :
 
 ```
-carte à plat (rendu par défaut ici)      total 350 Ko — document 17 · JS 140 · CSS 9 · polices 47 · images 41 · fond géographique 56
-globe 3D (?renderer=globe)               total 683 Ko — document 17 · JS 412 · CSS 19 · polices 47 · images 41 · fond géographique 96
+carte à plat (rendu par défaut ici)      total 348 Ko — document 17 · JS 142 · CSS 8 · polices 47 · images 41 · fond géographique 56
+globe 3D (?renderer=globe)               total 680 Ko — document 17 · JS 414 · CSS 19 · polices 47 · images 41 · fond géographique 96
 ```
 
 Lecture : la page n'émet **aucune requête `/api/*`** ; les seules réponses JSON
@@ -146,7 +153,8 @@ chapitres, pause, liste des liaisons) → contact :
 == FR ==
 PASS accueil : titre de la promesse — Concevoir le transport au plus près du réel.
 PASS accueil : langue du document
-PASS CTA principal → section du parcours
+PASS couverture : l’animation seule, sans bouton ni lien d’appel à l’action
+PASS la section du parcours est sur la page
 PASS étape 2 : scénario modal choisi, niveau « détecté »
 PASS étape 3 : engagements atteints (capacité, service, durée…)
 PASS page de capacité ouverte — /fr/solutions/carrier-search
@@ -168,7 +176,8 @@ PASS aucune autre erreur JavaScript sur tout le parcours
 == EN ==
 PASS accueil : titre de la promesse — Design transport as close to reality as possible.
 PASS accueil : langue du document
-PASS CTA principal → section du parcours
+PASS couverture : l’animation seule, sans bouton ni lien d’appel à l’action
+PASS la section du parcours est sur la page
 PASS étape 2 : scénario modal choisi, niveau « détecté »
 PASS étape 3 : engagements atteints (capacité, service, durée…)
 PASS page de capacité ouverte — /en/solutions/carrier-search
@@ -254,135 +263,117 @@ PASS créneau avancé → « étudiée »
 12/12 comportements vérifiés
 ```
 
-Scène des leviers de la couverture et schémas (FR et EN : six leviers listés,
-titre inchangé, **la carte du levier actif en bas à droite** (un chiffre ou une phrase courte, propre à chaque levier ; contrôlée pour les six leviers, en FR et en EN : dans l'écran, sans toucher les pastilles, sans animation en mouvement réduit ; pleine largeur au-dessus des pastilles sur téléphone), les six pastilles sur toute la largeur du bas, aucun encart, sigle ni texte fixe sur l'image, lecture automatique, **aucun bouton pause**, choix d'un levier (il se joue puis reste
-affiché), reprise de la lecture après vingt secondes sans geste, clavier, mouvement
-réduit, téléphone sans recouvrement ni défilement horizontal, globe 3D forcé, schémas
-décrits et animés à l'entrée dans l'écran, immobiles en mouvement réduit). Le temps d'un
-levier suit l'horloge de l'écran : sur ce poste, sans GPU, il dure un peu plus que ses
-9 s (15 s pour le report modal), et les attentes du script en tiennent compte :
+Couverture et planche des référentiels (FR et EN : titre inchangé, **la couverture est
+l'animation seule** — aucun lien, bouton ni élément interactif, plus de pastilles, de carte de
+texte, de filigrane ni de bandeau ; carte accessible annonçant le levier en cours ; mention
+d'illustration pour les lecteurs d'écran ; lecture automatique d'un levier au suivant, sans geste ;
+mouvement réduit : le premier levier reste affiché, sans impulsion ; téléphone : texte puis carte
+sans recouvrement ni défilement horizontal ; globe 3D forcé. **Planche** : huit tuiles dans l'ordre
+voulu, titre avec un mot en valeur et note d'illustration, rien de monté tant que la planche
+n'approche pas, chaque tuile à l'écran joue sa couche — fond, tracés dessinés, repères posés —
+et annonce sa couche, des impulsions sur les services, une tuile entièrement hors écran se fige,
+la couche est rejouée à intervalles réguliers ; en mouvement réduit : couche terminée, sans
+impulsion). Le temps d'un levier suit l'horloge de l'écran : sur ce poste, sans GPU, il dure un
+peu plus que ses 12 à 16 s, et les attentes du script en tiennent compte :
 
 ```
-== FR · mouvement normal ==
-PASS six leviers listés, dans l’ordre — Report modal rail/fluvial | Shortsea côtier | Boucles | Cross-dock | Électrification | Mutualisation
-PASS le premier levier est le report modal rail/fluvial
+== FR · couverture, mouvement normal ==
 PASS le titre de la couverture est inchangé — Concevoir le transport au plus près du réel.
-PASS la carte du levier est là d’emblée : une seule, celle du report modal
-PASS carte du report modal : le chiffre et la précision, sans sigle ni filigrane — 3 500 |  | services ferroviaires et fluviaux · Europe |  | Illustration : liaisons dessinées pour expliquer, pas des services existants.
-PASS carte : la mention d’illustration reste pour les lecteurs d’écran
-PASS une seule note sur la couverture, aucune légende fixe sous l’image
-PASS la carte porte une description accessible — Carte animée de l’Europe. Levier en cours : Report modal rail/fluvial.
+PASS aucun lien, bouton ni élément interactif dans la couverture (l’animation seule) — 0 trouvés
+PASS plus de pastilles, de carte de texte, de filigrane ni de bandeau du bas
+PASS aucun texte posé sur l’image hors noms de lieux : pas de role=note visible, pas de bulle
+PASS la carte porte une description accessible : l’Europe et le levier en cours — Carte animée de l’Europe. Levier en cours : Report modal rail/fluvial.
+PASS la mention d’illustration reste pour les lecteurs d’écran
 PASS rendu à plat sans WebGL ou en logiciel : aucun canvas
-PASS noms de lieux sur la carte, aucun encart qui empiète sur l’image
-PASS lecture automatique : le levier suivant s’affiche — Shortsea côtier
-PASS la barre de progression du levier en cours avance
-PASS aucun bouton de pause ni de lecture
-PASS un levier choisi s’affiche (électrification)
-PASS la carte change avec le levier choisi
-PASS le levier choisi se joue jusqu’au bout puis reste affiché (pas d’enchaînement immédiat) — progression=1.00
-PASS sans geste, la lecture reprend d’elle-même (levier suivant) — Mutualisation
-PASS clavier : Entrée sur un levier le choisit
-PASS clavier : Espace sur le levier suivant le choisit
+PASS noms de lieux sur la carte
+PASS lecture automatique : le levier suivant s’affiche tout seul — Carte animée de l’Europe. Levier en cours : Shortsea côtier.
+PASS … puis le suivant, sans geste — Carte animée de l’Europe. Levier en cours : Boucles.
+PASS aucun bouton de pause, de lecture ni de choix du levier sur la carte
 PASS aucune erreur JavaScript
 
-== FR · un filigrane par levier ==
-PASS Report modal rail/fluvial : carte propre au levier — 3 500 |  | services ferroviaires et fluviaux · Europe |  | Illustration : liaisons dessinées pour expliquer, pas des services existants.
-PASS Report modal rail/fluvial : la carte est en bas à droite, dans l’écran et sans toucher les pastilles — carte=1048,737 304×135 pastilles touchées=0
-PASS Shortsea côtier : carte propre au levier — 1 500 |  | services shortsea · Europe |  | Illustration : liaisons dessinées pour expliquer, pas des services existants.
-PASS Shortsea côtier : la carte est en bas à droite, dans l’écran et sans toucher les pastilles — carte=1048,752 304×120 pastilles touchées=0
-PASS Boucles : carte propre au levier — Des boucles se cachent |  | dans vos flux paneuropéens |  | Illustration : liaisons dessinées pour expliquer, pas des services existants.
-PASS Boucles : la carte est en bas à droite, dans l’écran et sans toucher les pastilles — carte=1048,752 304×120 pastilles touchées=0
-PASS Cross-dock : carte propre au levier — Consolider |  | de petits flux, un gros flux vers l’usine |  | Illustration : liaisons dessinées pour expliquer, pas des services existants.
-PASS Cross-dock : la carte est en bas à droite, dans l’écran et sans toucher les pastilles — carte=1048,753 304×120 pastilles touchées=0
-PASS Électrification : carte propre au levier — Des bornes partout en Europe |  | un flux bouclé et électrifié |  | Illustration : liaisons dessinées pour expliquer, pas des services existants.
-PASS Électrification : la carte est en bas à droite, dans l’écran et sans toucher les pastilles — carte=1048,757 304×120 pastilles touchées=0
-PASS Mutualisation : carte propre au levier — Des entreprises différentes |  | un même train : Dourges – Poznań |  | Illustration : liaisons dessinées pour expliquer, pas des services existants.
-PASS Mutualisation : la carte est en bas à droite, dans l’écran et sans toucher les pastilles — carte=1048,758 304×120 pastilles touchées=0
-PASS aucun encart de texte sur l’image, pour aucun levier
-
-== FR · mouvement réduit ==
-PASS pas de lecture automatique
-PASS aucun bouton de lecture
-PASS le levier s’affiche terminé (progression pleine)
-PASS mouvement réduit : la carte est là d’emblée, sans animation
-PASS mouvement réduit : chaque levier affiche sa carte d’emblée
+== FR · couverture, mouvement réduit ==
+PASS pas de lecture automatique : le premier levier reste affiché — Carte animée de l’Europe. Levier en cours : Report modal rail/fluvial.
+PASS aucun lien ni bouton dans la couverture
 PASS aucune impulsion ni onde animée — 0 animées
 
-== FR · téléphone ==
+== FR · couverture, téléphone ==
 PASS pas de défilement horizontal
-PASS texte, carte et pastilles s’empilent sans se recouvrir — h1 bas=268 carte=707–1107 bandeau=1259
-PASS la carte du levier s’affiche pleine largeur, au-dessus des pastilles, sans déborder — carte=1123–1243 carte(map)=707–1107 pastilles=1259
-PASS cibles tactiles d’au moins 44 px — 0 trop petites
+PASS le texte puis la carte s’empilent sans se recouvrir, la carte fait au moins 380 px de haut — h1 bas=268 carte=577–977
+PASS aucun lien ni bouton dans la couverture
 
-== EN · mouvement normal ==
-PASS six leviers listés, dans l’ordre — Modal shift rail/waterway | Coastal shortsea | Loops | Cross-dock | Electrification | Pooling
-PASS le premier levier est le report modal rail/fluvial
+== FR · planche des référentiels, mouvement normal ==
+PASS huit tuiles, dans l’ordre : bornes, shortsea, services et réseau ferroviaires, services et réseau fluviaux, parkings, transporteurs — Réseaux de bornes électriques | Services shortsea | Services ferroviaires | Réseau ferroviaire | Services fluviaux | Réseau fluvial | Parkings | Transporteurs
+PASS le titre de la planche met un mot en valeur, avec la note d’illustration
+PASS rien ne se charge avant que la planche approche : aucune carte de tuile montée
+PASS les tuiles à l’écran jouent leur couche : fond, tracés dessinés, repères posés — [[90,15,75],[47,2,45],[33,15,18],[56,23,33]]
+PASS chaque carte annonce sa couche à l’écran (nom de la couche, Europe) — Animation : la couche « Réseaux de bornes électriques » sur la carte de l’Europe. | Animation : la couche « Services shortsea » sur la carte de l’Europe. | Anim
+PASS les services roulent : des impulsions sur au moins une tuile
+PASS tant que la planche est à l’écran, toutes les tuiles jouent — ["false","false","false","false","false","false","false","false"]
+PASS la couche est rejouée à intervalles réguliers tant que la tuile est visible — cycle 0 → 2
+PASS quand la planche sort de l’écran, toutes les tuiles se figent — ["true","true","true","true","true","true","true","true"]
+PASS aucune erreur JavaScript
+
+== FR · planche des référentiels, mouvement réduit ==
+PASS huit tuiles, dans l’ordre : bornes, shortsea, services et réseau ferroviaires, services et réseau fluviaux, parkings, transporteurs — Réseaux de bornes électriques | Services shortsea | Services ferroviaires | Réseau ferroviaire | Services fluviaux | Réseau fluvial | Parkings | Transporteurs
+PASS le titre de la planche met un mot en valeur, avec la note d’illustration
+PASS rien ne se charge avant que la planche approche : aucune carte de tuile montée
+PASS les tuiles à l’écran jouent leur couche : fond, tracés dessinés, repères posés — [[90,15,75],[47,2,45],[33,15,18],[56,23,33]]
+PASS chaque carte annonce sa couche à l’écran (nom de la couche, Europe) — Animation : la couche « Réseaux de bornes électriques » sur la carte de l’Europe. | Animation : la couche « Services shortsea » sur la carte de l’Europe. | Anim
+PASS aucune impulsion sous mouvement réduit, la couche s’affiche terminée — [0,0,0,0]
+PASS aucune erreur JavaScript
+
+== EN · couverture, mouvement normal ==
 PASS le titre de la couverture est inchangé — Design transport as close to reality as possible.
-PASS la carte du levier est là d’emblée : une seule, celle du report modal
-PASS carte du report modal : le chiffre et la précision, sans sigle ni filigrane — 3,500 |  | rail and waterway services · Europe |  | Illustration: links drawn to explain, not existing services.
-PASS carte : la mention d’illustration reste pour les lecteurs d’écran
-PASS une seule note sur la couverture, aucune légende fixe sous l’image
-PASS la carte porte une description accessible — Animated map of Europe. Current lever: Modal shift rail/waterway.
+PASS aucun lien, bouton ni élément interactif dans la couverture (l’animation seule) — 0 trouvés
+PASS plus de pastilles, de carte de texte, de filigrane ni de bandeau du bas
+PASS aucun texte posé sur l’image hors noms de lieux : pas de role=note visible, pas de bulle
+PASS la carte porte une description accessible : l’Europe et le levier en cours — Animated map of Europe. Current lever: Modal shift rail/waterway.
+PASS la mention d’illustration reste pour les lecteurs d’écran
 PASS rendu à plat sans WebGL ou en logiciel : aucun canvas
-PASS noms de lieux sur la carte, aucun encart qui empiète sur l’image
-PASS lecture automatique : le levier suivant s’affiche — Coastal shortsea
-PASS la barre de progression du levier en cours avance
-PASS aucun bouton de pause ni de lecture
-PASS un levier choisi s’affiche (électrification)
-PASS la carte change avec le levier choisi
-PASS le levier choisi se joue jusqu’au bout puis reste affiché (pas d’enchaînement immédiat) — progression=1.00
-PASS sans geste, la lecture reprend d’elle-même (levier suivant) — Pooling
-PASS clavier : Entrée sur un levier le choisit
-PASS clavier : Espace sur le levier suivant le choisit
+PASS noms de lieux sur la carte
+PASS lecture automatique : le levier suivant s’affiche tout seul — Animated map of Europe. Current lever: Coastal shortsea.
+PASS … puis le suivant, sans geste — Animated map of Europe. Current lever: Loops.
+PASS aucun bouton de pause, de lecture ni de choix du levier sur la carte
 PASS aucune erreur JavaScript
 
-== EN · un filigrane par levier ==
-PASS Modal shift rail/waterway : carte propre au levier — 3,500 |  | rail and waterway services · Europe |  | Illustration: links drawn to explain, not existing services.
-PASS Modal shift rail/waterway : la carte est en bas à droite, dans l’écran et sans toucher les pastilles — carte=1048,752 304×120 pastilles touchées=0
-PASS Coastal shortsea : carte propre au levier — 1,500 |  | shortsea services · Europe |  | Illustration: links drawn to explain, not existing services.
-PASS Coastal shortsea : la carte est en bas à droite, dans l’écran et sans toucher les pastilles — carte=1048,752 304×120 pastilles touchées=0
-PASS Loops : carte propre au levier — Loops are hiding |  | in your pan-European flows |  | Illustration: links drawn to explain, not existing services.
-PASS Loops : la carte est en bas à droite, dans l’écran et sans toucher les pastilles — carte=1048,752 304×120 pastilles touchées=0
-PASS Cross-dock : carte propre au levier — Consolidate |  | many small flows, one large flow to the plant |  | Illustration: links drawn to explain, not existing services.
-PASS Cross-dock : la carte est en bas à droite, dans l’écran et sans toucher les pastilles — carte=1048,752 304×120 pastilles touchées=0
-PASS Electrification : carte propre au levier — Chargers across Europe |  | one looped, electrified flow |  | Illustration: links drawn to explain, not existing services.
-PASS Electrification : la carte est en bas à droite, dans l’écran et sans toucher les pastilles — carte=1048,758 304×120 pastilles touchées=0
-PASS Pooling : carte propre au levier — Different companies |  | one shared train: Dourges–Poznań |  | Illustration: links drawn to explain, not existing services.
-PASS Pooling : la carte est en bas à droite, dans l’écran et sans toucher les pastilles — carte=1048,758 304×120 pastilles touchées=0
-PASS aucun encart de texte sur l’image, pour aucun levier
-
-== EN · mouvement réduit ==
-PASS pas de lecture automatique
-PASS aucun bouton de lecture
-PASS le levier s’affiche terminé (progression pleine)
-PASS mouvement réduit : la carte est là d’emblée, sans animation
-PASS mouvement réduit : chaque levier affiche sa carte d’emblée
+== EN · couverture, mouvement réduit ==
+PASS pas de lecture automatique : le premier levier reste affiché — Animated map of Europe. Current lever: Modal shift rail/waterway.
+PASS aucun lien ni bouton dans la couverture
 PASS aucune impulsion ni onde animée — 0 animées
 
-== EN · téléphone ==
+== EN · couverture, téléphone ==
 PASS pas de défilement horizontal
-PASS texte, carte et pastilles s’empilent sans se recouvrir — h1 bas=268 carte=680–1080 bandeau=1232
-PASS la carte du levier s’affiche pleine largeur, au-dessus des pastilles, sans déborder — carte=1096–1216 carte(map)=680–1080 pastilles=1232
-PASS cibles tactiles d’au moins 44 px — 0 trop petites
+PASS le texte puis la carte s’empilent sans se recouvrir, la carte fait au moins 380 px de haut — h1 bas=268 carte=550–950
+PASS aucun lien ni bouton dans la couverture
+
+== EN · planche des référentiels, mouvement normal ==
+PASS huit tuiles, dans l’ordre : bornes, shortsea, services et réseau ferroviaires, services et réseau fluviaux, parkings, transporteurs — Electric charging networks | Shortsea services | Rail services | Rail network | Barge services | Inland waterways | Truck parking | Carriers
+PASS le titre de la planche met un mot en valeur, avec la note d’illustration
+PASS rien ne se charge avant que la planche approche : aucune carte de tuile montée
+PASS les tuiles à l’écran jouent leur couche : fond, tracés dessinés, repères posés — [[90,15,75],[47,2,45],[33,15,18],[56,23,33]]
+PASS chaque carte annonce sa couche à l’écran (nom de la couche, Europe) — Animation: the “Electric charging networks” layer on the map of Europe. | Animation: the “Shortsea services” layer on the map of Europe. | Animation: the “Rail 
+PASS les services roulent : des impulsions sur au moins une tuile
+PASS tant que la planche est à l’écran, toutes les tuiles jouent — ["false","false","false","false","false","false","false","false"]
+PASS la couche est rejouée à intervalles réguliers tant que la tuile est visible — cycle 0 → 2
+PASS quand la planche sort de l’écran, toutes les tuiles se figent — ["true","true","true","true","true","true","true","true"]
+PASS aucune erreur JavaScript
+
+== EN · planche des référentiels, mouvement réduit ==
+PASS huit tuiles, dans l’ordre : bornes, shortsea, services et réseau ferroviaires, services et réseau fluviaux, parkings, transporteurs — Electric charging networks | Shortsea services | Rail services | Rail network | Barge services | Inland waterways | Truck parking | Carriers
+PASS le titre de la planche met un mot en valeur, avec la note d’illustration
+PASS rien ne se charge avant que la planche approche : aucune carte de tuile montée
+PASS les tuiles à l’écran jouent leur couche : fond, tracés dessinés, repères posés — [[90,15,75],[47,2,45],[33,15,18],[56,23,33]]
+PASS chaque carte annonce sa couche à l’écran (nom de la couche, Europe) — Animation: the “Electric charging networks” layer on the map of Europe. | Animation: the “Shortsea services” layer on the map of Europe. | Animation: the “Rail 
+PASS aucune impulsion sous mouvement réduit, la couche s’affiche terminée — [0,0,0,0]
+PASS aucune erreur JavaScript
 
 == globe 3D forcé ==
 PASS le globe 3D se monte (canvas)
-PASS un levier choisi sur le globe
-PASS un levier choisi pendant le chargement se joue (noms de lieux posés sur le globe)
+PASS le globe joue le premier levier (noms de lieux posés sur le globe)
+PASS aucun lien ni bouton dans la couverture avec le globe
 PASS aucune erreur JavaScript avec le globe
 
-== schémas · mouvement normal ==
-PASS six schémas, chacun avec une description
-PASS sous la ligne de flottaison : cartes masquées avant d’entrer à l’écran — 6 masquées
-PASS elles apparaissent en entrant à l’écran — 6 affichées
-PASS les tracés se dessinent (animation CSS) — sch-draw
-
-== schémas · mouvement réduit ==
-PASS six schémas, chacun avec une description
-PASS aucune carte masquée
-PASS aucune impulsion animée — display=none
-
-97/97 comportements vérifiés
+74/74 comportements vérifiés
 ```
 
 Animation du monde (carte à plat, mouvement réduit, globe 3D) :
@@ -407,7 +398,7 @@ PASS mouvement réduit : les puces changent quand même de chapitre
 PASS globe : un canvas WebGL, aucune carte à plat
 PASS globe : zone de carte décrite (role=img, nom du chapitre)
 PASS globe : la légende suit le chapitre à l’échange (pas au clic)
-PASS globe : des étiquettes de sites sont posées sur la carte — 10 étiquettes
+PASS globe : des étiquettes de sites sont posées sur la carte — 7 étiquettes
 PASS aucune erreur JavaScript (globe)
 
 21/21 comportements vérifiés
@@ -427,14 +418,13 @@ Lighthouse accessibilité : voir le tableau ci-dessous. Contrastes : voir DESIGN
 120 pages × largeurs contrôlées, 0 débordement(s)
 
 Contrôle visuel fait sur captures (accueil à 390, 768, 1024, 1366, 1440 et 1920 px,
-chacun des six leviers en carte à plat, le globe en rendu logiciel, les schémas,
-chaque page, FR et EN) : couverture, carte du levier et noms de lieux sans recouvrement du
-texte, bandeau des leviers, repli sans WebGL, mouvement réduit. Corrections issues de
+chacun des six leviers en carte à plat, le globe en rendu logiciel, la planche des référentiels,
+chaque page, FR et EN) : couverture, noms de lieux sans recouvrement du
+texte, planche des référentiels, repli sans WebGL, mouvement réduit. Corrections issues de
 ces contrôles : échelle des ondes de la carte à plat (trop grandes sur une vue large), bulles qui se relaient au lieu de cohabiter sur une petite carte, taille estimée des bulles de la carte à plat (leur sous-titre passe à
 la ligne et cachait un nom de lieu), en-tête passé en menu jusqu'à 1280 px (le
 bouton de contact se coupait en deux à 1024 px), contraste d'un badge du parcours et
-d'une pastille, titre de la couverture réduit pour que le bandeau des leviers tienne
-dans le premier écran à 900 px de haut. Les captures sont un contrôle de la
+d'une pastille, puis, pour la planche, fond de carte séparé des animations (le coût de rendu d'une capture de la planche en pleine lecture est passé de 64 s à 4 s en rendu logiciel). Les captures sont un contrôle de la
 personne qui développe : le jugement sur le style est celui de l'équipe.
 
 ## 7. Performance (Lighthouse 12, build de production local)
@@ -451,15 +441,15 @@ passent.
 
 ```
 approach desktop                         perf 100       a11y 100 bp 100 seo* 58 | LCP 0.4 s | CLS 0.000 | TBT 0 ms
-approach mobile                          perf 100/99/100 a11y 100 bp 100 seo* 58 | LCP 1.8 s · 1.8 s · 2.0 s | CLS 0.000 | TBT 23 ms
+approach mobile                          perf 100/100/100 a11y 100 bp 100 seo* 58 | LCP 1.8 s · 1.8 s · 1.8 s | CLS 0.000 | TBT 16 ms
 contact desktop                          perf 100       a11y 100 bp 100 seo* 58 | LCP 0.5 s | CLS 0.000 | TBT 0 ms
-contact mobile                           perf 99/99/100 a11y 100 bp 100 seo* 58 | LCP 1.8 s · 2.0 s · 2.3 s | CLS 0.000 | TBT 53 ms
+contact mobile                           perf 100/100/100 a11y 100 bp 100 seo* 58 | LCP 1.8 s · 1.8 s · 1.8 s | CLS 0.000 | TBT 18 ms
 datasets desktop                         perf 100       a11y 100 bp 100 seo* 58 | LCP 0.5 s | CLS 0.000 | TBT 0 ms
-datasets mobile                          perf 98/99/99  a11y 100 bp 100 seo* 58 | LCP 2.0 s · 2.0 s · 2.5 s | CLS 0.000 | TBT 27 ms
+datasets mobile                          perf 99/99/99  a11y 100 bp 100 seo* 58 | LCP 2.0 s · 2.0 s · 2.2 s | CLS 0.000 | TBT 74 ms
 home desktop                             perf 100       a11y 100 bp 100 seo* 61 | LCP 0.6 s | CLS 0.000 | TBT 0 ms
-home mobile                              perf 87/98/98  a11y 100 bp 100 seo* 61 | LCP 2.3 s · 2.3 s · 3.0 s | CLS 0.000 | TBT 335 ms
+home mobile                              perf 98/98/97  a11y 100 bp 100 seo* 61 | LCP 2.3 s · 2.3 s · 2.6 s | CLS 0.000 | TBT 34 ms
 solutions-transport-engineering desktop  perf 100       a11y 100 bp 100 seo* 58 | LCP 0.5 s | CLS 0.000 | TBT 0 ms
-solutions-transport-engineering mobile   perf 99/99/99  a11y 100 bp 100 seo* 58 | LCP 2.0 s · 2.1 s · 2.2 s | CLS 0.000 | TBT 55 ms
+solutions-transport-engineering mobile   perf 99/99/98  a11y 100 bp 100 seo* 58 | LCP 2.0 s · 2.0 s · 2.4 s | CLS 0.000 | TBT 62 ms
 ```
 
 Seuils « bons » (CWV) : LCP ≤ 2,5 s, CLS ≤ 0,1, INP ≤ 200 ms (TBT sert de proxy de
@@ -479,34 +469,35 @@ aucune requête de données).
 
 **Le seuil de LCP ≤ 2,5 s n'est pas démontré tenu sur toutes les pages en mobile.** Plages mesurées (trois exécutions chacune, simulation Lighthouse) :
 
-- approach : 1,8 s · 1,8 s · 2,0 s
-- contact : 1,8 s · 2,0 s · 2,3 s
-- datasets : 2,0 s · 2,0 s · 2,5 s
-- home : 2,3 s · 2,3 s · 3,0 s
-- solutions-transport-engineering : 2,0 s · 2,1 s · 2,2 s
+- approach : 1,8 s · 1,8 s · 1,8 s
+- contact : 1,8 s · 1,8 s · 1,8 s
+- datasets : 2,0 s · 2,0 s · 2,2 s
+- home : 2,3 s · 2,3 s · 2,6 s
+- solutions-transport-engineering : 2,0 s · 2,0 s · 2,4 s
 
-Pages dont au moins une exécution dépasse 2,5 s : home. Pages qui restent sous le seuil sur les trois exécutions : approach, contact, datasets, solutions-transport-engineering. L'accueil est le plus loin du seuil (2,3 s · 2,3 s · 3,0 s) ; la plus lente de ces trois exécutions est la première de la série, lancée juste après le démarrage du serveur (note de performance 87, TBT 335 ms) : trois exécutions de contrôle ensuite, dans les mêmes conditions, donnent 2,3 s · 2,3 s · 2,3 s. Éléments d'explication : l'élément LCP de l'accueil est le paragraphe d'accroche (du texte, pas une image) ; sans bridage ni latence réseau (poste local, cinq chargements), FCP et LCP de l'accueil sont à 104–124 ms ; c'est le modèle de simulation (environ 300 Ko chargés avant le LCP, sur une 4G lente, processeur ralenti ×4) qui porte l'estimation à 2,3–3,0 s. La carte de la couverture ne charge rien avant l'événement `load` (carte à plat : deux fonds géographiques, 57 Ko ; globe : MapLibre, voir section 2). Pistes non engagées : réduire le JavaScript de l'accueil (≈ 138 Ko), différer les courbes de niveau du parcours (22 Ko). La valeur de terrain (CrUX / RUM) tranchera après la mise en ligne ; d'ici là, ne pas annoncer « Core Web Vitals bons ».
+Pages dont au moins une exécution dépasse 2,5 s : home. Pages qui restent sous le seuil sur les trois exécutions : approach, contact, datasets, solutions-transport-engineering. L'accueil est le plus loin du seuil (2,3 s · 2,3 s · 2,6 s). Éléments d'explication : depuis que la couverture est réduite à l'animation, l'élément LCP de l'accueil est **l'image d'attente de la carte** (`levers-poster.svg`) et non plus le paragraphe d'accroche ; avec une image de 53 Ko, l'accueil mobile mesurait 2,7–3,0 s (note 84–96) ; après allègement de l'image (23 Ko : tracés et terres simplifiés, plus de flou gaussien, réseau dessiné une seule fois, liaisons maritimes hors du réseau de fond), il mesure 2,3 s · 2,3 s · 2,6 s. C'est le modèle de simulation (processeur ralenti ×4, 4G lente) qui porte l'estimation à ces valeurs : sans bridage, FCP et LCP sont à une fraction de seconde. La carte de la couverture ne charge rien d'autre avant l'événement `load` (carte à plat : deux fonds géographiques, 57 Ko ; globe : MapLibre, voir section 2) ; la planche des référentiels ne charge rien avant d'approcher de l'écran. Pistes non engagées : réduire encore l'image d'attente ou la différer, réduire le JavaScript de l'accueil (≈ 142 Ko), différer les courbes de niveau du parcours (22 Ko). La valeur de terrain (CrUX / RUM) tranchera après la mise en ligne ; d'ici là, ne pas annoncer « Core Web Vitals bons ».
 
 ## 8. Prévisualisation hébergée (Netlify)
 
 Vérifié sur le déploiement de la pull request n° 23 :
 `https://deploy-preview-23--p4wname.netlify.app` (le second site Netlify,
 `https://deploy-preview-23--pool4wardv2.netlify.app`, est servi par le même commit),
-au commit `ff99862`. Les essais partent de ce conteneur, par le proxy de l'environnement
+au commit `1401956`. Les essais partent de ce conteneur, par le proxy de l'environnement
 (la vérification TLS reste active).
 
 - **Contrôles Netlify de la pull request** (« Deploy Preview ») : réussis sur les deux sites
-  pour le commit `ff99862`. Le job GitHub Actions `build` est le gabarit du dépôt (il
+  pour le commit `1401956`. Le job GitHub Actions `build` est le gabarit du dépôt (il
   n'exécute que des `echo`) : il ne démontre rien sur le site.
 - **Redirections** (même script qu'en local) : 27/27 sur l'hébergeur.
 - **Surface de routes** : 14/14 — aucune route de données, la source de la vitrine n'est
   pas servie, `/api/contact` répond 503 « non raccordé ».
-- **Parcours complet FR et EN** : 40 vérifications réussies, formulaire compris (503
+- **Parcours complet FR et EN** : 42 vérifications réussies, formulaire compris (503
   attendu, message honnête).
 - **Comportements de l'animation du monde** : 21/21 (carte à plat, mouvement réduit, globe
   3D forcé en rendu logiciel).
-- **Scène des leviers et schémas** : 97/97, sur l'hébergeur, FR et EN, téléphone, globe 3D
-  forcé compris.
+- **Couverture et planche des référentiels** : 74/74, sur l'hébergeur, FR et EN, téléphone,
+  globe 3D forcé compris (couverture sans lien ni bouton, lecture automatique, huit tuiles de
+  référentiels qui jouent, se figent hors écran et se rejouent).
 - **Inspection réseau** : aucune requête `/api/*`, un seul cookie (`NEXT_LOCALE`), rien dans
   le stockage du navigateur.
 
