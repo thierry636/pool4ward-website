@@ -1,7 +1,7 @@
 /**
  * Les référentiels qui cartographient le physique du transport, montrés couche par couche : chaque
- * tuile de la planche qui suit la couverture joue une couche — des bornes de recharge, des services
- * maritimes, des services et un réseau ferroviaires, des services et un réseau fluviaux, des
+ * entrée de la planche qui suit la couverture joue une couche — des services ferroviaires et
+ * fluviaux, des services maritimes, les réseaux ferroviaire et fluvial, des bornes de recharge, des
  * parkings, des transporteurs.
  *
  * C'est une ILLUSTRATION éditoriale, comme la scène des leviers : les lieux sont réels, les
@@ -13,7 +13,7 @@ import type { LonLat } from "@/lib/showcase/arcs";
 import { AMBER, CHARGER_FRACTIONS, ELEC_NET, FLUVIAL_NET, HAUL, INDIGO, PINK, PORTS, RAIL_NET, ROAD, SEA_ATLANTIC_MED, SEA_OSLO_KIEL, SKY, TEAL, WHITE, type Anchor, type LineEl } from "./data";
 import { buildLine, pointsAlong } from "./scene";
 
-export const LAYER_IDS = ["chargers", "shortsea", "railServices", "railNetwork", "barges", "waterways", "parkings", "carriers"] as const;
+export const LAYER_IDS = ["services", "shortsea", "networks", "chargers", "parkings", "carriers"] as const;
 export type LayerId = (typeof LAYER_IDS)[number];
 
 /** Forme d'un repère : un point, un carré (site), un hub (cercle plein), un port (carré creux). */
@@ -77,12 +77,24 @@ const chargers: Layer = {
   rings: ["lyon", "frankfurt", "milano", "madrid", "paris", "berlin"].map((at, i) => ({ at, color: AMBER, t: 0.72 + i * 0.03 })),
 };
 
-/* Services shortsea : les ports côtiers, puis deux services de port à port. */
+/* Services shortsea : les ports côtiers, deux services de port à port, puis des rotations (boucle, métro bouclé). */
+export const VIOLET = "#a78bfa";
+export const ROSE = "#f43f5e";
+const SEA_LOOPS: readonly { id: string; stops: readonly Anchor[]; color: string }[] = [
+  { id: "northsea", stops: ["rotterdam", "felixstowe", "zeebrugge"], color: VIOLET },
+  { id: "baltic", stops: ["stockholm", "helsinki", "tallinn"], color: ROSE },
+  { id: "tyrrhenian", stops: ["napoli", "palermo", [9.9, 38.85], "cagliari", [9.9, 38.85]], color: ROSE },
+];
 const shortsea: Layer = {
   id: "shortsea",
   frame: FRAME_WIDE,
   seconds: 7,
-  lines: [line("sea-med", SEA_ATLANTIC_MED, TEAL, 3, 0.46, 0.82, { pulses: 2, halo: TEAL }), line("sea-nord", SEA_OSLO_KIEL, TEAL, 3, 0.52, 0.72, { pulses: 1, halo: TEAL })],
+  lines: [
+    line("sea-med", SEA_ATLANTIC_MED, TEAL, 3, 0.46, 0.82, { pulses: 2, halo: TEAL }),
+    line("sea-nord", SEA_OSLO_KIEL, TEAL, 3, 0.52, 0.72, { pulses: 1, halo: TEAL }),
+    /* Des rotations : une boucle (violet), des métros bouclés (rose) ; les points de passage tiennent les tracés dans l'eau. */
+    ...SEA_LOOPS.map(({ id, stops, color }, i) => line(`loop-${id}`, stops, color, 2.6, 0.58 + i * 0.07, 0.7 + i * 0.07, { closed: true, pulses: 1 })),
+  ],
   dots: [
     ...PORTS.map((at, i): LayerDot => ({ at, shape: "dot", color: WHITE, t: spread(i, PORTS.length, 0.03, 0.42) })),
     ...["lehavre", "civitavecchia", "oslo", "kiel"].map((at): LayerDot => ({ at, shape: "port", color: TEAL, t: 0.46 })),
@@ -90,53 +102,45 @@ const shortsea: Layer = {
   rings: [],
 };
 
-/* Services ferroviaires : des terminaux, et les services qui les relient. */
+/* Services ferroviaires et fluviaux : les voies navigables en filigrane, des terminaux et les services qui les relient. */
 const RAIL_SERVICES: readonly (readonly [string, string])[] = [
   ["madrid", "zaragoza"], ["zaragoza", "barcelona"], ["barcelona", "lyon"], ["lyon", "strasbourg"], ["paris", "strasbourg"], ["rotterdam", "koln"],
   ["koln", "berlin"], ["hamburg", "munchen"], ["munchen", "wien"], ["wien", "budapest"], ["milano", "munchen"], ["torino", "milano"], ["milano", "roma"],
   ["berlin", "poznan"], ["poznan", "warszawa"],
 ];
-const railServices: Layer = {
-  id: "railServices",
+const WATERWAYS: readonly (readonly string[])[] = [...FLUVIAL_NET, ["paris", "lehavre"], ["wien", "budapest"], ["hamburg", "dresden"], ["rotterdam", "antwerpen"]];
+const BARGE_SERVICES: readonly (readonly string[])[] = [["rotterdam", "duisburg", "koln", "mannheim", "strasbourg", "basel"], ["marseille", "lyon"], ["paris", "lehavre"], ["wien", "budapest"]];
+const services: Layer = {
+  id: "services",
   frame: FRAME_CORE,
-  seconds: 7,
-  lines: RAIL_SERVICES.map(([a, b], i) => line(`service-${i}`, [a, b], INDIGO, 2.6, spread(i, RAIL_SERVICES.length, 0.08, 0.7), spread(i, RAIL_SERVICES.length, 0.2, 0.84), { pulses: i % 2 === 0 ? 1 : 0 })),
-  dots: uniq(RAIL_SERVICES.flat()).map((at, i, all): LayerDot => ({ at, shape: "square", color: INDIGO, t: spread(i, all.length, 0.04, 0.6) })),
+  seconds: 8,
+  lines: [
+    ...WATERWAYS.map((c, i) => line(`waterway-${i}`, c, SKY, 1.4, 0.02, 0.2, { style: "dashed", opacity: 0.4 })),
+    ...RAIL_SERVICES.map(([a, b], i) => line(`service-${i}`, [a, b], INDIGO, 2.6, spread(i, RAIL_SERVICES.length, 0.12, 0.66), spread(i, RAIL_SERVICES.length, 0.22, 0.8), { pulses: i % 2 === 0 ? 1 : 0 })),
+    ...BARGE_SERVICES.map((c, i) => line(`barge-${i}`, c, SKY, 3.4, spread(i, BARGE_SERVICES.length, 0.3, 0.6), spread(i, BARGE_SERVICES.length, 0.44, 0.8), { pulses: 2, halo: SKY })),
+  ],
+  dots: [
+    ...uniq(RAIL_SERVICES.flat()).map((at, i, all): LayerDot => ({ at, shape: "square", color: INDIGO, t: spread(i, all.length, 0.06, 0.62) })),
+    ...uniq(BARGE_SERVICES.flatMap((c) => [c[0], c[c.length - 1]])).map((at, i, all): LayerDot => ({ at, shape: "square", color: SKY, t: spread(i, all.length, 0.3, 0.6) })),
+  ],
   rings: [],
 };
 
-/* Réseau ferroviaire : les lignes, puis les nœuds. */
+/* Réseaux ferroviaire et fluvial : les lignes et les voies navigables, puis les nœuds et les ports. */
 const RAIL_EXTRA: readonly (readonly string[])[] = [["lisboa", "madrid"], ["paris", "bruxelles", "koln"], ["torino", "milano", "bologna", "roma", "napoli"], ["milano", "munchen", "wien", "budapest"], ["hamburg", "hannover", "frankfurt"], ["praha", "wien"], ["munchen", "praha", "wroclaw"]];
 const RAIL_ALL = [...RAIL_NET, ...RAIL_EXTRA];
-const railNetwork: Layer = {
-  id: "railNetwork",
+const networks: Layer = {
+  id: "networks",
   frame: FRAME_CORE,
-  seconds: 7,
-  lines: RAIL_ALL.map((c, i) => line(`rail-${i}`, c, INDIGO, 1.8, spread(i, RAIL_ALL.length, 0.04, 0.58), spread(i, RAIL_ALL.length, 0.16, 0.7), { opacity: 0.9 })),
-  dots: uniq(RAIL_ALL.flat()).map((at, i, all): LayerDot => ({ at, shape: "dot", color: "#c7d2fe", t: spread(i, all.length, 0.5, 0.9) })),
-  rings: [],
-};
-
-/* Voies navigables, puis services de barges qui y circulent. */
-const WATERWAYS: readonly (readonly string[])[] = [...FLUVIAL_NET, ["paris", "lehavre"], ["wien", "budapest"], ["hamburg", "dresden"], ["rotterdam", "antwerpen"]];
-const waterways: Layer = {
-  id: "waterways",
-  frame: FRAME_CORE,
-  seconds: 7,
-  lines: WATERWAYS.map((c, i) => line(`waterway-${i}`, c, SKY, 2, spread(i, WATERWAYS.length, 0.04, 0.6), spread(i, WATERWAYS.length, 0.16, 0.72), { style: "dashed", opacity: 0.9 })),
-  dots: uniq(WATERWAYS.flat()).map((at, i, all): LayerDot => ({ at, shape: "dot", color: "#bae6fd", t: spread(i, all.length, 0.5, 0.9) })),
-  rings: [],
-};
-const BARGE_SERVICES: readonly (readonly string[])[] = [["rotterdam", "duisburg", "koln", "mannheim", "strasbourg", "basel"], ["marseille", "lyon"], ["paris", "lehavre"], ["wien", "budapest"]];
-const barges: Layer = {
-  id: "barges",
-  frame: FRAME_CORE,
-  seconds: 7,
+  seconds: 8,
   lines: [
-    ...WATERWAYS.map((c, i) => line(`waterway-${i}`, c, SKY, 1.4, 0.02, 0.2, { style: "dashed", opacity: 0.35 })),
-    ...BARGE_SERVICES.map((c, i) => line(`barge-${i}`, c, SKY, 3.4, spread(i, BARGE_SERVICES.length, 0.26, 0.58), spread(i, BARGE_SERVICES.length, 0.42, 0.78), { pulses: 2, halo: SKY })),
+    ...RAIL_ALL.map((c, i) => line(`rail-${i}`, c, INDIGO, 1.8, spread(i, RAIL_ALL.length, 0.04, 0.5), spread(i, RAIL_ALL.length, 0.16, 0.62), { opacity: 0.9 })),
+    ...WATERWAYS.map((c, i) => line(`waterway-${i}`, c, SKY, 2, spread(i, WATERWAYS.length, 0.3, 0.64), spread(i, WATERWAYS.length, 0.42, 0.76), { style: "dashed", opacity: 0.95 })),
   ],
-  dots: uniq(BARGE_SERVICES.flatMap((c) => [c[0], c[c.length - 1]])).map((at, i, all): LayerDot => ({ at, shape: "square", color: SKY, t: spread(i, all.length, 0.26, 0.58) })),
+  dots: [
+    ...uniq(RAIL_ALL.flat()).map((at, i, all): LayerDot => ({ at, shape: "dot", color: "#c7d2fe", t: spread(i, all.length, 0.5, 0.86) })),
+    ...uniq(WATERWAYS.flat()).map((at, i, all): LayerDot => ({ at, shape: "dot", color: "#bae6fd", t: spread(i, all.length, 0.62, 0.9) })),
+  ],
   rings: [],
 };
 
@@ -171,7 +175,8 @@ const carriers: Layer = {
   rings: SPOKES.map(([at], i) => ({ at, color: PINK, t: 0.36 + i * 0.05 })),
 };
 
-export const LAYERS: Record<LayerId, Layer> = { chargers, shortsea, railServices, railNetwork, barges, waterways, parkings, carriers };
+export const LAYERS: Record<LayerId, Layer> = { services, shortsea, networks, chargers, parkings, carriers };
+export { SEA_LOOPS };
 
 /** Une couche prête à dessiner : les chemins des tracés sont calculés une fois. */
 export interface BuiltLayer {

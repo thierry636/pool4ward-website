@@ -59,34 +59,47 @@ accessible de la carte annonce le levier en cours.
 ## La planche des référentiels
 
 La section qui suit la couverture (`Referentials`, id `referentiels`) met en avant la capacité de
-Pool4ward à tenir des **référentiels qui décrivent le physique du transport**. Huit tuiles, une
-couche chacune, jouées sur l'Europe avec le même fond et les mêmes animations que la couverture :
+Pool4ward à tenir des **référentiels qui décrivent le physique du transport**. C'est un **menu à
+gauche et une fiche à droite** (sur mobile : des pastilles au-dessus de la fiche). Six référentiels,
+regroupés en trois séries :
 
-| Couche | Ce qu'elle montre |
-|---|---|
-| Réseaux de bornes électriques | des corridors équipés, des bornes posées le long, des hubs privés qui ressortent |
-| Services shortsea | les ports côtiers, puis deux services de port à port (Le Havre → Civitavecchia, Oslo → Kiel) |
-| Services ferroviaires | des terminaux et les services qui les relient, avec des impulsions |
-| Réseau ferroviaire | les lignes, puis les nœuds |
-| Services fluviaux | les voies navigables en filigrane, puis les services de barges qui y circulent |
-| Réseau fluvial | les voies navigables (pointillés) et les ports intérieurs |
-| Parkings | des aires de stationnement poids lourds le long des grands axes |
-| Transporteurs | des implantations, leurs rayons d'action et les zones qu'elles couvrent |
+| Série | Référentiel | Ce que montre la fiche |
+|---|---|---|
+| Services | Services ferroviaires et fluviaux | 4 chiffres (services, liaisons, pays, opérateurs), la carte animée, les formes de services (sens unique, aller-retour, boucle, métro, métro bouclé, non organisé), une fiche de service (Poti → Batumi → Istanbul → Tekirdag) et ce qu'une fiche contient (horaires, fréquences, opérateur, contacts, terminaux) |
+| Services | Services shortsea | services, continents, services en rotation, types de services (conteneurs, RoRo), la carte (ports, deux services de port à port, des rotations), les formes de services, une rotation dessinée en exemple |
+| Réseaux | Réseaux ferroviaire et fluvial | la carte en pleine largeur (lignes, voies navigables en pointillé, nœuds et ports intérieurs) et ce que décrit le référentiel |
+| Sites et acteurs | Bornes électriques privées | sites, bornes, pays, réseaux ; la carte des corridors et des hubs ; l'état des sites (anneau : en service, en construction, prévu) ; la fiche d'un site (Venlo) |
+| Sites et acteurs | Parkings | la carte en pleine largeur (aires le long des grands axes) et ce que décrit le référentiel |
+| Sites et acteurs | Transporteurs | transporteurs, sites ; la carte ; ce que décrit le référentiel ; la fiche d'un transporteur (note, capacités, contacts) |
 
-Chaque tuile porte un nom et une phrase sur ce que décrit le référentiel (objets, pas chiffres ;
-aucun opérateur nommé). **Aucun chiffre, aucune donnée de référentiel n'est lue** : les lieux sont
-réels, les tracés et les positions des sites sont indicatifs, et la note sous la planche le dit
-(« Les données elles-mêmes ne sont pas publiées sur cette page »). Les types de référentiels
-montrés viennent de ce que le portail contient (services intermodaux et gares, voies navigables
-européennes, réseau de bornes poids lourds) et de la liste donnée par la direction pour les autres
-(shortsea, parkings, transporteurs) : leur périmètre exact est à valider avant toute précision.
+**Les chiffres.** Ils vivent dans `src/content/referentials.ts` (jamais dans un message), avec leur
+provenance en tête de fichier : services (2 500 = 1 978 rail + 522 fluvial, 2 360 liaisons, 36 pays,
+formes de services) et shortsea (1 690, formes de services) lus sur les écrans du portail le
+2026-10-31 — leurs totaux se recoupent (les formes somment au total, testé) ; bornes (111 sites, 337
+bornes, 11 pays, 2 réseaux, 57 / 11 / 43 sites par état) recomptées dans les données du portail ;
+**61 opérateurs, 3 continents, 15 000 sites et 80 000 transporteurs sont donnés par la direction et
+non recoupés** (source et date à fournir avant toute mise en ligne publique). Les services ne sont
+pas décrits « en temps réel » : la pastille dit **« Mise à jour journalière »** (services et
+shortsea seulement).
 
-Comportement : une tuile ne charge rien tant que la planche n'approche pas de l'écran (le fond est
-chargé une fois pour toute la page, `lib/levers/geo.ts`) ; elle joue sa couche quand elle est à
-l'écran, la rejoue toutes les douze secondes environ, se fige quand elle sort de l'écran, et
-s'affiche terminée, sans impulsion, sous « mouvement réduit ». Le fond a son propre calque et les
-impulsions n'ont pas de halo : mesuré ici en rendu logiciel, une capture de la planche en pleine
-lecture est passée de 64 s à 4 s.
+**Les fiches d'exemple** sont des enregistrements réels dont le **nom d'opérateur ou de
+transporteur est masqué** (« nom masqué ») ; celle du shortsea est une rotation **dessinée pour
+l'exemple** (étiquetée « exemple illustratif »). Les cartes, elles, restent des animations : lieux
+réels, tracés et positions indicatifs, et la note sous la planche le dit. **Aucune capture d'écran
+n'est collée** : tout est composé (cartes SVG animées, anneau, barres, frise des arrêts).
+
+**Comportement.** La planche attend d'entrer à l'écran pour jouer (les chiffres comptent, les
+barres et l'anneau se tracent, les arrêts s'allument). Le défilement est automatique (une barre
+de progression sous le référentiel affiché, 9 s) tant que la planche est à l'écran ; il s'arrête au
+survol, quand le focus **clavier** s'y trouve, hors écran, et **définitivement dès qu'on choisit
+soi-même un référentiel** (le bouton lecture/pause, toujours visible, le relance : WCAG 2.2.2).
+Menu au clavier : flèches, Début, Fin (onglets, un seul tabulable). Sous « mouvement réduit » : pas
+de défilement automatique (bouton désactivé), tout s'affiche terminé. Sans JavaScript : le premier
+référentiel est dans le HTML, visible, avec ses chiffres finaux. Les mises en page à deux colonnes
+se décident sur la largeur du panneau (requêtes de conteneur), pas sur celle de l'écran. Chaque
+carte ne charge rien tant que la planche n'approche pas de l'écran (le fond est chargé une fois pour
+toute la page, `lib/levers/geo.ts`), rejoue sa couche toutes les douze à treize secondes tant
+qu'elle est visible et se fige hors écran.
 
 ## Ce que ce n'est pas
 
@@ -110,11 +123,15 @@ indépendante de la vitrine (`showcase.json`) et de la base privée : elle n'en 
 | `src/lib/levers/scene.ts` | Calculs purs : tracé dessiné à l'avancement `u`, emprises, bornes le long d'un tracé (testés) |
 | `src/lib/levers/layout.ts` | Placement sans chevauchement des noms de lieux (testé) |
 | `src/lib/levers/geo.ts` | Projection de Mercator et fond de carte (terres, frontières), chargé une seule fois pour la page |
-| `src/lib/levers/layers.ts` | Les huit couches de la planche des référentiels (tracés, repères, anneaux, cadre) ; construit sur les constantes de `data.ts` |
+| `src/lib/levers/layers.ts` | Les six couches de la planche des référentiels (tracés, repères, anneaux, cadre) ; construit sur les constantes de `data.ts` |
 | `src/components/levers/LeverGlobe.tsx` | Globe MapLibre incliné, sans interaction, piloté image par image ; étiquettes HTML |
 | `src/components/levers/LeverFlat.tsx` | Même scène en SVG (sans WebGL, rendu logiciel, appareil économe) ; animations CSS |
 | `src/components/levers/LeverStage.tsx` | Orchestrateur : choix du rendu, lecture automatique, mesure du texte ; aucun contrôle |
-| `src/components/referentials/Referentials.tsx` · `LayerMap.tsx` | La planche : huit tuiles et leur carte animée (couche `lib/levers/layers.ts`) |
+| `src/content/referentials.ts` | Les chiffres et les fiches d'exemple de la planche, avec leur provenance |
+| `src/components/referentials/Referentials.tsx` | En-tête et note de la planche (serveur) ; fournit les messages `Home.referentials` au client |
+| `src/components/referentials/ReferentialBoard.tsx` | Menu (onglets), défilement automatique, pause, clavier, attente de l'entrée à l'écran |
+| `src/components/referentials/panels.tsx` · `blocks.tsx` | Les six panneaux et leurs blocs (chiffres qui comptent, formes de services, anneau, frise des arrêts, fiches) |
+| `src/components/referentials/LayerMap.tsx` · `referentials.css` | La carte animée d'une couche ; tout le style de la planche (`.rb-*`) |
 | `messages/*/home.json` → `Home.levers`, `Home.referentials` | Tous les textes, FR et EN (clés vérifiées par `levers.test.ts` et `layers.test.ts`) |
 | `scripts/build-levers-poster.ts` | `public/images/levers-poster.svg`, image d'attente de la carte (`npm run poster:levers`) |
 

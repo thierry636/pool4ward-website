@@ -11,15 +11,25 @@
 - Les **positions des sites** de l'exemple : villes et ports réels, arrondis à
   ≈ 1 km. Rien d'autre n'y est réel.
 
-## Deux chiffres retirés, à valider avant de les remettre
+## Les chiffres de la planche des référentiels
 
-La direction avait donné « 3 500 services rail et fluviaux en Europe » et « 1 500 services
-shortsea ». Ils ne figurent plus sur le site (la couverture est l'animation seule ; la planche
-des référentiels n'annonce aucun chiffre). Ils n'avaient **pas été recoupés** avec les données du
-portail consultées (référentiel Appel d'Air 2026 : 2 906 services ferroviaires intermodaux, sans
-le fluvial ni le shortsea, voir `data/referentiels/appeldair-services-2026/README.md` du dépôt du
-portail). Règle 6 ci-dessous : un nombre de lignes n'est pas un nombre de services qualifiés.
-À arbitrer (source, date, périmètre) avant de les remettre.
+`src/content/referentials.ts` porte les nombres affichés et en dit la provenance (en-tête du fichier) :
+
+- **Recoupés** : services rail + fluvial (2 500 = 1 978 + 522 ; 2 360 liaisons ; 36 pays) et shortsea
+  (1 690) avec leurs formes de services, lus sur les écrans du portail le 2026-10-31 (les formes
+  somment au total : testé) ; bornes (111 sites, 337 bornes, 11 pays, 2 réseaux, 57 / 11 / 43 sites
+  par état) recomptées dans les données du portail.
+- **Donnés par la direction, non recoupés** : 61 opérateurs, 3 continents, 15 000 sites et 80 000
+  transporteurs. **À sourcer et dater avant toute mise en ligne publique.**
+- **Remplacés** : les anciens « 3 500 services rail et fluviaux » et « 1 500 services shortsea »
+  ne sont plus affichés ; ils ne recoupaient pas le portail (le référentiel Appel d'Air 2026 compte
+  2 906 services ferroviaires intermodaux, sans le fluvial ni le shortsea). Règle 6 ci-dessous : un
+  nombre de lignes n'est pas un nombre de services qualifiés.
+- Les mises à jour sont dites **journalières** (jamais « temps réel »).
+- Les fiches d'exemple (un service rail, un site de recharge, un transporteur) sont des
+  enregistrements réels **sans le nom de l'opérateur ou du transporteur** (masqué) ; la rotation
+  shortsea est dessinée pour l'exemple. Aucun nom d'opérateur n'est publié : cela demande l'accord
+  de l'équipe.
 
 ## Ce qui est une démonstration (fictif, explicitement signalé)
 

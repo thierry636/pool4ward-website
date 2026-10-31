@@ -137,41 +137,231 @@
     "referentials": {
       "eyebrow": "The physical side of transport",
       "title": "Reference datasets that <em>map</em> the physical side of transport.",
-      "lede": "Networks, services and sites: we describe what actually exists, and the levers build on it.",
+      "lede": "Networks, services and sites: what we describe, and how deep it goes.",
+      "note": "Illustrative animations: indicative routes. Operator and carrier names are masked; the data itself is not published on this page.",
+      "menu": {
+        "label": "Reference datasets",
+        "groups": {
+          "services": "Services",
+          "networks": "Networks",
+          "sites": "Sites and players"
+        }
+      },
+      "controls": {
+        "prev": "Previous dataset",
+        "next": "Next dataset",
+        "pause": "Pause the carousel",
+        "play": "Resume the carousel",
+        "position": "{n} of {total}"
+      },
+      "live": "Updated daily",
       "mapLabel": "Animation: the “{name}” layer on the map of Europe.",
-      "note": "Illustrative animations: indicative positions and routes, no figures. The data itself is not published on this page.",
+      "shapes": {
+        "title": "Service patterns",
+        "unit": "services",
+        "oneWay": "One-way",
+        "roundTrip": "Round trip",
+        "loop": "Loop",
+        "metro": "Metro",
+        "metroLoop": "Looped metro",
+        "free": "Unstructured"
+      },
+      "status": {
+        "title": "Site status",
+        "inService": "In service",
+        "construction": "Under construction",
+        "planned": "Planned",
+        "sites": "sites"
+      },
+      "fiche": {
+        "masked": "name masked",
+        "example": "example",
+        "illustrative": "illustrative example",
+        "terminus": "Terminus",
+        "contains": "Each record holds"
+      },
       "items": {
-        "chargers": {
-          "name": "Electric charging networks",
-          "text": "Private charging networks for heavy trucks: locations, status, chargers."
+        "services": {
+          "name": "Rail and waterway services",
+          "sub": "{n} services",
+          "title": "Rail and waterway services",
+          "lead": "Network of intermodal services",
+          "kpi": {
+            "services": "services",
+            "links": "links",
+            "countries": "countries",
+            "operators": "operators"
+          },
+          "chips": {
+            "rail": "Rail",
+            "waterway": "Waterway"
+          },
+          "legend": {
+            "terminal": "Terminal",
+            "rail": "Rail service",
+            "waterway": "Waterway service"
+          },
+          "ficheTitle": "One record, in detail",
+          "route": {
+            "form": "Metro",
+            "mode": "Rail",
+            "counts": "{services} services · {stops} stops"
+          },
+          "tags": [
+            "Timetables",
+            "Frequencies",
+            "Operator",
+            "Contacts",
+            "Terminals"
+          ]
         },
         "shortsea": {
           "name": "Shortsea services",
-          "text": "Ports and port-to-port lines, as so many short-distance sea services."
+          "sub": "{n} services",
+          "title": "Shortsea services",
+          "lead": "Short-distance sea rotations and lines",
+          "kpi": {
+            "services": "services",
+            "continents": "continents",
+            "rotation": "in rotation: loops and looped metros",
+            "cargo": "containers and RoRo"
+          },
+          "cargoTitle": "Service types",
+          "cargoValue": "Containers · RoRo",
+          "chips": {
+            "shortsea": "Shortsea"
+          },
+          "legend": {
+            "port": "Port",
+            "line": "Line",
+            "loop": "Loop",
+            "metroLoop": "Looped metro"
+          },
+          "ficheTitle": "One rotation, in detail",
+          "route": {
+            "form": "Looped metro",
+            "mode": "Shortsea",
+            "counts": "{calls} calls"
+          },
+          "tags": [
+            "Calls",
+            "Days and frequencies",
+            "Operator",
+            "Contacts"
+          ]
         },
-        "railServices": {
-          "name": "Rail services",
-          "text": "Existing intermodal services, with their terminals and operators."
+        "networks": {
+          "name": "Rail and waterway networks",
+          "sub": "Lines and waterways",
+          "title": "Rail and waterway networks",
+          "lead": "The infrastructure the services run on",
+          "chips": {
+            "rail": "Rail",
+            "waterway": "Waterway"
+          },
+          "legend": {
+            "rail": "Rail line",
+            "waterway": "Waterway"
+          },
+          "ficheTitle": "What the dataset describes",
+          "points": [
+            "The lines and nodes of the rail network",
+            "The waterways and the inland ports",
+            "How they connect to terminals and services"
+          ]
         },
-        "railNetwork": {
-          "name": "Rail network",
-          "text": "The lines and nodes the services run on."
-        },
-        "barges": {
-          "name": "Barge services",
-          "text": "Barge services between inland ports."
-        },
-        "waterways": {
-          "name": "Inland waterways",
-          "text": "The navigable waterways and the inland ports that serve them."
+        "chargers": {
+          "name": "Private charging points",
+          "sub": "{sites} sites · {chargers} chargers",
+          "title": "Private electric charging networks",
+          "lead": "Charging hubs for heavy trucks",
+          "kpi": {
+            "sites": "sites",
+            "chargers": "published chargers",
+            "countries": "countries",
+            "networks": "private networks"
+          },
+          "chips": {
+            "chargers": "Chargers"
+          },
+          "legend": {
+            "corridor": "Equipped corridor",
+            "charger": "Charger"
+          },
+          "ficheTitle": "One site record, in detail",
+          "fields": {
+            "status": "Status",
+            "access": "Access",
+            "places": "Spaces",
+            "bays": "Chargers",
+            "maxPower": "Max. power",
+            "price": "Price",
+            "booking": "Booking",
+            "operator": "Operator"
+          },
+          "values": {
+            "access": "Reserved for heavy trucks",
+            "price": "Not published",
+            "booking": "Unknown"
+          },
+          "link": "Site page at the operator"
         },
         "parkings": {
           "name": "Truck parking",
-          "text": "Heavy-vehicle parking areas along the main corridors."
+          "sub": "Heavy-vehicle areas",
+          "title": "Truck parking",
+          "lead": "Parking areas along the main corridors",
+          "chips": {
+            "parkings": "Parking"
+          },
+          "legend": {
+            "axis": "Main road corridor",
+            "parking": "Parking"
+          },
+          "ficheTitle": "What the dataset describes",
+          "points": [
+            "Heavy-vehicle parking areas",
+            "Where they sit along the main road corridors"
+          ]
         },
         "carriers": {
           "name": "Carriers",
-          "text": "The referenced carriers: sites and modes."
+          "sub": "{carriers} carriers",
+          "title": "Carriers",
+          "lead": "The referenced carriers, their sites and capabilities",
+          "kpi": {
+            "carriers": "carriers",
+            "sites": "sites"
+          },
+          "chips": {
+            "carriers": "Carriers"
+          },
+          "legend": {
+            "site": "Site",
+            "area": "Area covered"
+          },
+          "ficheTitle": "One carrier record, in detail",
+          "country": "Portugal",
+          "reviews": "{n} reviews",
+          "tags": [
+            "Refrigerated trailer",
+            "Asset-based operator (own fleet)",
+            "Temperature-controlled warehousing"
+          ],
+          "moreTags": "+1",
+          "contacts": [
+            "Website",
+            "Location"
+          ],
+          "pointsTitle": "What the referential describes",
+          "capacitiesTitle": "Capabilities",
+          "contactsTitle": "Contacts",
+          "points": [
+            "Each carrier’s sites",
+            "Its equipment and capabilities",
+            "The reviews it received",
+            "Its contacts: website and location"
+          ]
         }
       }
     }

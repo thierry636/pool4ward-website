@@ -34,7 +34,7 @@ palettes `navy`, `brand` et `teal` de `tailwind.config.ts` (celles de la version
 
 L'information ne passe jamais par la couleur seule : tracés (plein, tirets, points),
 formes (carré = terminal, rond = site, anneau = bornes) et libellés doublent chaque
-distinction. Les cartes animées (couverture, tuiles des référentiels) ont toutes une description textuelle (`aria-label`).
+distinction. Les cartes animées (couverture, planche des référentiels) ont toutes une description textuelle (`aria-label`).
 
 ## Typographie
 
@@ -66,9 +66,13 @@ Le mouvement explique, il ne décore. Règles :
   parcourent. **L'animation seule** : aucun encart, bulle, sigle, texte, menu ni bouton sur ou sous
   l'image. Pas de bouton pause ni de choix du levier ; sous « mouvement réduit », pas de lecture,
   ni vol, ni impulsion — le premier levier s'affiche terminé ;
-- **planche des référentiels** : huit tuiles, une couche de référentiel chacune, sur le même fond
-  que la couverture. Une tuile joue sa couche à l'entrée dans l'écran, la rejoue à intervalles
-  réguliers, se fige hors écran ; terminée et sans impulsion en mouvement réduit ;
+- **planche des référentiels** : un menu à gauche (pastilles au-dessus sur mobile) et la fiche du
+  référentiel à droite : chiffres qui comptent, carte animée (même fond que la couverture),
+  barres des formes de services, anneau d'état des sites, frise des arrêts d'un service, fiches
+  d'exemple aux noms masqués. Défilement automatique avec barre de progression ; pause au
+  survol, au focus clavier et hors écran ; arrêt dès qu'on choisit ; bouton lecture/pause toujours
+  visible ; onglets au clavier. Terminée et sans défilement automatique en mouvement réduit ;
+  lisible sans JavaScript. Aucune capture d'écran collée : tout est composé ;
 - apparition au défilement (`data-reveal`, `RevealObserver`) : seuls les blocs sous la
   ligne de flottaison sont masqués puis révélés ; rien n'est caché sans script ni sous
   « mouvement réduit » ;
