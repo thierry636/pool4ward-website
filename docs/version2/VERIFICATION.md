@@ -1,8 +1,8 @@
 # Vérification
 
 Résultats mesurés sur le build de production (`next build` puis `next start`) de la
-branche `version2`, dans un conteneur de recette, puis sur le déploiement Netlify de
-la pull request (section 8). **Ce sont des mesures de laboratoire** — Lighthouse
+branche `version2` **au commit `39e2d80`**, dans un conteneur de recette ; la prévisualisation
+hébergée (section 8) n'a pas été rejouée sur ce commit. **Ce sont des mesures de laboratoire** — Lighthouse
 (simulation d'un mobile moyen sur réseau 4G lent, ou bureau), Chromium sans carte
 graphique — **pas des données de fréquentation réelle**. Les Core Web Vitals de
 terrain (CrUX / RUM) ne pourront être lus qu'après la mise en ligne.
@@ -19,22 +19,29 @@ terrain (CrUX / RUM) ne pourront être lus qu'après la mise en ligne.
   leviers de la couverture) : joués en rendu logiciel (SwiftShader), où ils
   fonctionnent mais saccadent ; les images par seconde ne sont pas mesurées. Le poids
   téléchargé l'est (section 2).
-- **Les chiffres « 3 500 services rail et fluviaux » et « 1 500 services shortsea »** donnés par
-  la direction ne figurent plus sur le site (couverture réduite à l'animation, planche des
-  référentiels sans chiffre). Ils n'avaient été recoupés avec aucune donnée vérifiée (le
-  référentiel Appel d'Air 2026 du portail compte 2 906 services ferroviaires intermodaux, sans le
-  fluvial ni le shortsea) : à valider avant de les remettre (DATA.md).
-- **La planche des référentiels est une illustration** : huit couches (bornes, shortsea, services et
-  réseau ferroviaires, services et réseau fluviaux, parkings, transporteurs) dessinées sur des
-  lieux réels avec des tracés et des positions indicatifs ; aucune donnée de référentiel n'est lue,
-  aucun chiffre ni opérateur n'est annoncé. Le périmètre exact de chaque référentiel (parkings,
-  transporteurs, shortsea) est à valider avant toute précision.
+- **Les chiffres de la planche des référentiels** (`src/content/referentials.ts`, provenance en
+  tête de fichier). **Recoupés** : services intermodaux (2 500 = 1 978 rail + 522 fluvial, 36 pays)
+  et shortsea (1 690), lus sur les écrans du portail le 2026-10-31 (les captures affichées montrent
+  ces mêmes totaux). **Donnés par la direction, non recoupés** : 61 opérateurs, 3 continents,
+  « + 36 000 points » (bornes et parkings) et « + 80 000 transporteurs » — source et date à fournir
+  avant toute mise en ligne publique ; le portail montre, pour les réseaux privés de bornes, 111 sites
+  et 337 bornes, un périmètre plus étroit (ces deux nombres ne sont plus affichés). Les anciens
+  « 3 500 » et « 1 500 » ne sont plus affichés (le référentiel Appel d'Air 2026 compte 2 906 services
+  ferroviaires intermodaux, sans le fluvial ni le shortsea).
+- **Les captures de la planche sont des captures du portail** (`public/images/referentials/`), **noms
+  d'opérateurs et de transporteurs masqués** avant enregistrement (barres grises). Aucun nom n'est
+  publié (accord de l'équipe requis). Les captures des réseaux et des prix manquent : la tuile des
+  réseaux montre la carte animée du site, celle des prix un schéma sans donnée. « Mise à jour
+  journalière » (services) est une indication de la direction, la fréquence réelle est à confirmer.
+- **Le carrousel mobile** est contrôlé au toucher simulé (défilement, accroche, points, flèches) en
+  Chromium, pas sur un téléphone réel ; l'accroche (`scroll-snap`) et les requêtes de conteneur
+  (`@container`, `cqw`) ne sont pas vérifiées sous Safari ni Firefox.
 - **Le mouvement de la couverture ne s'arrête pas** : plus de bouton pause ni de choix du levier,
   la lecture boucle sans fin (exigence WCAG 2.2.2 non satisfaite hors mouvement réduit, LEVERS.md).
 - **La scène des leviers est une illustration**, pas une donnée : liaisons dessinées,
   aucun service existant, aucun opérateur, aucun chiffre (LEVERS.md). Le choix de la
   région et des liaisons est éditorial, à valider.
-- **Les impulsions animées** (carte à plat et tuiles des référentiels) utilisent `offset-path` en CSS :
+- **Les impulsions animées** (carte à plat et carte de la tuile des réseaux) utilisent `offset-path` en CSS :
   vérifié sous Chromium seulement, pas sous Safari ni Firefox.
 - Pas de lecteur d'écran réel (NVDA, VoiceOver) : l'accessibilité est contrôlée par
   axe-core, au clavier et par l'arbre d'accessibilité, pas à l'oreille.
@@ -46,7 +53,7 @@ terrain (CrUX / RUM) ne pourront être lus qu'après la mise en ligne.
 
 ## 1. Tests automatisés (`npm test`)
 
-267 tests dans 19 fichiers, tous réussis. Ils couvrent : parité FR/EN des textes et absence de Cobuild4ward et
+262 tests dans 19 fichiers, tous réussis. Ils couvrent : parité FR/EN des textes et absence de Cobuild4ward et
 des chiffres de la v1 ; typographie française ; état et continuité du parcours
 (jamais « confirmé » ni « contractualisé » dans un cas démonstrateur) ; contact
 (validation, échappement, injection d'en-tête, champ piège, limite) ; blog ; métadonnées
@@ -65,7 +72,7 @@ dépasse 500 km, dont Barcelone → Anvers, leurs jambes chargées étant déjà
 aucun nom de ville) ; cross-dock (au moins six flux entrants, un seul flux sortant bien plus
 épais) ; électrification (plus de soixante bornes, une boucle fermée dont les bornes choisies
 appartiennent au réseau) ; mutualisation (quatre entreprises, une couleur chacune, un train
-Dourges – Poznań) ; messages réduits au nom de chaque levier, aucun bouton dans les messages de la couverture) ; **planche des référentiels** (huit couches dans l'ordre voulu, tous les lieux existent, tout tient dans le cadre de la tuile, minutages entre 0 et 1, assez d'objets par couche pour se lire comme un référentiel, services distincts du réseau : pointillés fins contre traits pleins épais et animés ; textes FR et EN sans chiffre ni nom d'opérateur).
+Dourges – Poznań) ; messages réduits au nom de chaque levier, aucun bouton dans les messages de la couverture) ; **planche des référentiels** (la couche des réseaux : tous les lieux existent, tout tient dans le cadre, minutages entre 0 et 1, assez de lignes et de voies navigables, voies navigables en pointillé plus épaisses que les lignes ; chiffres de la direction cohérents entre eux ; textes FR et EN : six tuiles dans l'ordre, sans nom d'opérateur ni de transporteur, sans nombre écrit dans un message, mise à jour « journalière » et jamais « temps réel », légende « noms masqués »).
 
 ## 2. Surface serveur et données reçues par le navigateur
 
@@ -102,20 +109,20 @@ cookies: [{"name":"NEXT_LOCALE","httpOnly":false,"sameSite":"Lax","path":"/"}]
   1 x /images/terrain.svg statuts 200
   1 x /images/globe-poster.svg statuts 200
   1 x /fr statuts 200
-  1 x /fr/blog statuts 200
-  1 x /fr/solutions statuts 200
   1 x /fr/approach statuts 200
+  1 x /fr/solutions statuts 200
+  1 x /fr/blog statuts 200
   1 x /fr/contact statuts 200
   1 x blob: (worker MapLibre) statuts 200
   1 x /geo/borders-110m.json statuts 200
   1 x /geo/land-110m.json statuts 200
-  1 x /geo/borders-50m-europe.json statuts 200
   1 x /geo/land-50m-europe.json statuts 200
+  1 x /geo/borders-50m-europe.json statuts 200
 
 requêtes /api/* émises par la page Référentiels : aucune
 requêtes vers un autre domaine : aucune
-réponses JSON : uniquement le fond géographique public ? oui (/geo/borders-110m.json, /geo/land-110m.json, /geo/borders-50m-europe.json, /geo/land-50m-europe.json)
-fond public (Natural Earth) : /geo/borders-110m.json 39 Ko, /geo/land-110m.json 75 Ko, /geo/borders-50m-europe.json 66 Ko, /geo/land-50m-europe.json 115 Ko
+réponses JSON : uniquement le fond géographique public ? oui (/geo/borders-110m.json, /geo/land-110m.json, /geo/land-50m-europe.json, /geo/borders-50m-europe.json)
+fond public (Natural Earth) : /geo/borders-110m.json 39 Ko, /geo/land-110m.json 75 Ko, /geo/land-50m-europe.json 115 Ko, /geo/borders-50m-europe.json 66 Ko
 la vitrine n’est pas une URL publique : /data/showcase.json → 404 ; /content/showcase.json → 404 ; /src/content/showcase.json → 404 ; /showcase.json → 404
 HTML /fr/datasets : 121048 octets ; 35/35 noms de sites présents (liste textuelle)
 mots réservés (secret, token, URL de base…) dans le HTML : aucun
@@ -129,8 +136,8 @@ scan de .next/static (bundles envoyés au navigateur) :
 Poids transféré de la page Référentiels :
 
 ```
-carte à plat (rendu par défaut ici)      total 348 Ko — document 17 · JS 142 · CSS 8 · polices 47 · images 41 · fond géographique 56
-globe 3D (?renderer=globe)               total 680 Ko — document 17 · JS 414 · CSS 19 · polices 47 · images 41 · fond géographique 96
+carte à plat (rendu par défaut ici)      total 348 Ko — document 17 · JS 143 · CSS 8 · polices 47 · images 41 · fond géographique 56
+globe 3D (?renderer=globe)               total 681 Ko — document 17 · JS 415 · CSS 19 · polices 47 · images 41 · fond géographique 96
 ```
 
 Lecture : la page n'émet **aucune requête `/api/*`** ; les seules réponses JSON
@@ -268,12 +275,7 @@ l'animation seule** — aucun lien, bouton ni élément interactif, plus de past
 texte, de filigrane ni de bandeau ; carte accessible annonçant le levier en cours ; mention
 d'illustration pour les lecteurs d'écran ; lecture automatique d'un levier au suivant, sans geste ;
 mouvement réduit : le premier levier reste affiché, sans impulsion ; téléphone : texte puis carte
-sans recouvrement ni défilement horizontal ; globe 3D forcé. **Planche** : huit tuiles dans l'ordre
-voulu, titre avec un mot en valeur et note d'illustration, rien de monté tant que la planche
-n'approche pas, chaque tuile à l'écran joue sa couche — fond, tracés dessinés, repères posés —
-et annonce sa couche, des impulsions sur les services, une tuile entièrement hors écran se fige,
-la couche est rejouée à intervalles réguliers ; en mouvement réduit : couche terminée, sans
-impulsion). Le temps d'un levier suit l'horloge de l'écran : sur ce poste, sans GPU, il dure un
+sans recouvrement ni défilement horizontal ; globe 3D forcé. La planche des référentiels est contrôlée dans le paragraphe qui suit la liste ci-dessous). Le temps d'un levier suit l'horloge de l'écran : sur ce poste, sans GPU, il dure un
 peu plus que ses 12 à 16 s, et les attentes du script en tiennent compte :
 
 ```
@@ -301,27 +303,6 @@ PASS pas de défilement horizontal
 PASS le texte puis la carte s’empilent sans se recouvrir, la carte fait au moins 380 px de haut — h1 bas=268 carte=577–977
 PASS aucun lien ni bouton dans la couverture
 
-== FR · planche des référentiels, mouvement normal ==
-PASS huit tuiles, dans l’ordre : bornes, shortsea, services et réseau ferroviaires, services et réseau fluviaux, parkings, transporteurs — Réseaux de bornes électriques | Services shortsea | Services ferroviaires | Réseau ferroviaire | Services fluviaux | Réseau fluvial | Parkings | Transporteurs
-PASS le titre de la planche met un mot en valeur, avec la note d’illustration
-PASS rien ne se charge avant que la planche approche : aucune carte de tuile montée
-PASS les tuiles à l’écran jouent leur couche : fond, tracés dessinés, repères posés — [[90,15,75],[47,2,45],[33,15,18],[56,23,33]]
-PASS chaque carte annonce sa couche à l’écran (nom de la couche, Europe) — Animation : la couche « Réseaux de bornes électriques » sur la carte de l’Europe. | Animation : la couche « Services shortsea » sur la carte de l’Europe. | Anim
-PASS les services roulent : des impulsions sur au moins une tuile
-PASS tant que la planche est à l’écran, toutes les tuiles jouent — ["false","false","false","false","false","false","false","false"]
-PASS la couche est rejouée à intervalles réguliers tant que la tuile est visible — cycle 0 → 2
-PASS quand la planche sort de l’écran, toutes les tuiles se figent — ["true","true","true","true","true","true","true","true"]
-PASS aucune erreur JavaScript
-
-== FR · planche des référentiels, mouvement réduit ==
-PASS huit tuiles, dans l’ordre : bornes, shortsea, services et réseau ferroviaires, services et réseau fluviaux, parkings, transporteurs — Réseaux de bornes électriques | Services shortsea | Services ferroviaires | Réseau ferroviaire | Services fluviaux | Réseau fluvial | Parkings | Transporteurs
-PASS le titre de la planche met un mot en valeur, avec la note d’illustration
-PASS rien ne se charge avant que la planche approche : aucune carte de tuile montée
-PASS les tuiles à l’écran jouent leur couche : fond, tracés dessinés, repères posés — [[90,15,75],[47,2,45],[33,15,18],[56,23,33]]
-PASS chaque carte annonce sa couche à l’écran (nom de la couche, Europe) — Animation : la couche « Réseaux de bornes électriques » sur la carte de l’Europe. | Animation : la couche « Services shortsea » sur la carte de l’Europe. | Anim
-PASS aucune impulsion sous mouvement réduit, la couche s’affiche terminée — [0,0,0,0]
-PASS aucune erreur JavaScript
-
 == EN · couverture, mouvement normal ==
 PASS le titre de la couverture est inchangé — Design transport as close to reality as possible.
 PASS aucun lien, bouton ni élément interactif dans la couverture (l’animation seule) — 0 trouvés
@@ -346,34 +327,47 @@ PASS pas de défilement horizontal
 PASS le texte puis la carte s’empilent sans se recouvrir, la carte fait au moins 380 px de haut — h1 bas=268 carte=550–950
 PASS aucun lien ni bouton dans la couverture
 
-== EN · planche des référentiels, mouvement normal ==
-PASS huit tuiles, dans l’ordre : bornes, shortsea, services et réseau ferroviaires, services et réseau fluviaux, parkings, transporteurs — Electric charging networks | Shortsea services | Rail services | Rail network | Barge services | Inland waterways | Truck parking | Carriers
-PASS le titre de la planche met un mot en valeur, avec la note d’illustration
-PASS rien ne se charge avant que la planche approche : aucune carte de tuile montée
-PASS les tuiles à l’écran jouent leur couche : fond, tracés dessinés, repères posés — [[90,15,75],[47,2,45],[33,15,18],[56,23,33]]
-PASS chaque carte annonce sa couche à l’écran (nom de la couche, Europe) — Animation: the “Electric charging networks” layer on the map of Europe. | Animation: the “Shortsea services” layer on the map of Europe. | Animation: the “Rail 
-PASS les services roulent : des impulsions sur au moins une tuile
-PASS tant que la planche est à l’écran, toutes les tuiles jouent — ["false","false","false","false","false","false","false","false"]
-PASS la couche est rejouée à intervalles réguliers tant que la tuile est visible — cycle 0 → 2
-PASS quand la planche sort de l’écran, toutes les tuiles se figent — ["true","true","true","true","true","true","true","true"]
-PASS aucune erreur JavaScript
-
-== EN · planche des référentiels, mouvement réduit ==
-PASS huit tuiles, dans l’ordre : bornes, shortsea, services et réseau ferroviaires, services et réseau fluviaux, parkings, transporteurs — Electric charging networks | Shortsea services | Rail services | Rail network | Barge services | Inland waterways | Truck parking | Carriers
-PASS le titre de la planche met un mot en valeur, avec la note d’illustration
-PASS rien ne se charge avant que la planche approche : aucune carte de tuile montée
-PASS les tuiles à l’écran jouent leur couche : fond, tracés dessinés, repères posés — [[90,15,75],[47,2,45],[33,15,18],[56,23,33]]
-PASS chaque carte annonce sa couche à l’écran (nom de la couche, Europe) — Animation: the “Electric charging networks” layer on the map of Europe. | Animation: the “Shortsea services” layer on the map of Europe. | Animation: the “Rail 
-PASS aucune impulsion sous mouvement réduit, la couche s’affiche terminée — [0,0,0,0]
-PASS aucune erreur JavaScript
-
 == globe 3D forcé ==
 PASS le globe 3D se monte (canvas)
 PASS le globe joue le premier levier (noms de lieux posés sur le globe)
 PASS aucun lien ni bouton dans la couverture avec le globe
 PASS aucune erreur JavaScript avec le globe
 
-74/74 comportements vérifiés
+40/40 comportements vérifiés
+```
+
+Planche des référentiels, les tuiles (FR et EN) : six tuiles dans la grille, planche armée mais aucune
+tuile jouée avant l'arrivée à l'écran ; un seul grand nombre dans le titre ; points de repère et
+flèches cachés sur ordinateur ; les tuiles à l'écran se jouent en défilant, le nombre compte jusqu'à
+2 500, « + 36 000 » et « + 80 000 » s'affichent, les cinq captures sont chargées et décrites, la
+carte des réseaux joue sa couche, grille 7 + 5 puis 3 + 3 + 3 + 3 sans défilement horizontal ;
+**téléphone** : la piste défile de côté avec accroche et se prend au clavier, seule la première
+tuile est jouée, la deuxième dépasse sur le bord, les flèches, les points et le doigt déplacent la
+tuile courante (centrée, jouée à son arrivée), « précédent » et « suivant » se désactivent aux
+extrémités ; mouvement réduit (planche non armée, tout affiché, nombres à leur valeur) ; sans
+JavaScript (six tuiles et chiffres dans le HTML, écrans visibles) :
+
+```
+OK 62
+```
+
+Accessibilité de la planche (axe-core, balises WCAG 2.0/2.1/2.2 A et AA et bonnes pratiques),
+1440, 1024 et 390 px, FR et EN, avec et sans mouvement réduit :
+
+```
+1440 fr reduce: 0 violation
+1440 fr no-preference: 0 violation
+1440 en reduce: 0 violation
+1440 en no-preference: 0 violation
+1024 fr reduce: 0 violation
+1024 fr no-preference: 0 violation
+1024 en reduce: 0 violation
+1024 en no-preference: 0 violation
+390 fr reduce: 0 violation
+390 fr no-preference: 0 violation
+390 en reduce: 0 violation
+390 en no-preference: 0 violation
+total 0
 ```
 
 Animation du monde (carte à plat, mouvement réduit, globe 3D) :
@@ -398,7 +392,7 @@ PASS mouvement réduit : les puces changent quand même de chapitre
 PASS globe : un canvas WebGL, aucune carte à plat
 PASS globe : zone de carte décrite (role=img, nom du chapitre)
 PASS globe : la légende suit le chapitre à l’échange (pas au clic)
-PASS globe : des étiquettes de sites sont posées sur la carte — 7 étiquettes
+PASS globe : des étiquettes de sites sont posées sur la carte — 3 étiquettes
 PASS aucune erreur JavaScript (globe)
 
 21/21 comportements vérifiés
@@ -424,7 +418,7 @@ texte, planche des référentiels, repli sans WebGL, mouvement réduit. Correcti
 ces contrôles : échelle des ondes de la carte à plat (trop grandes sur une vue large), bulles qui se relaient au lieu de cohabiter sur une petite carte, taille estimée des bulles de la carte à plat (leur sous-titre passe à
 la ligne et cachait un nom de lieu), en-tête passé en menu jusqu'à 1280 px (le
 bouton de contact se coupait en deux à 1024 px), contraste d'un badge du parcours et
-d'une pastille, puis, pour la planche, fond de carte séparé des animations (le coût de rendu d'une capture de la planche en pleine lecture est passé de 64 s à 4 s en rendu logiciel). Les captures sont un contrôle de la
+d'une pastille, puis, pour la planche, passage du menu sombre aux tuiles claires avec les écrans du portail. Les captures sont un contrôle de la
 personne qui développe : le jugement sur le style est celui de l'équipe.
 
 ## 7. Performance (Lighthouse 12, build de production local)
@@ -472,12 +466,18 @@ aucune requête de données).
 - approach : 1,8 s · 1,8 s · 1,8 s
 - contact : 1,8 s · 1,8 s · 1,8 s
 - datasets : 2,0 s · 2,0 s · 2,2 s
-- home : 2,3 s · 2,3 s · 2,6 s
+- home : 2,4 s · 2,5 s · 3,0 s
 - solutions-transport-engineering : 2,0 s · 2,0 s · 2,4 s
 
-Pages dont au moins une exécution dépasse 2,5 s : home. Pages qui restent sous le seuil sur les trois exécutions : approach, contact, datasets, solutions-transport-engineering. L'accueil est le plus loin du seuil (2,3 s · 2,3 s · 2,6 s). Éléments d'explication : depuis que la couverture est réduite à l'animation, l'élément LCP de l'accueil est **l'image d'attente de la carte** (`levers-poster.svg`) et non plus le paragraphe d'accroche ; avec une image de 53 Ko, l'accueil mobile mesurait 2,7–3,0 s (note 84–96) ; après allègement de l'image (23 Ko : tracés et terres simplifiés, plus de flou gaussien, réseau dessiné une seule fois, liaisons maritimes hors du réseau de fond), il mesure 2,3 s · 2,3 s · 2,6 s. C'est le modèle de simulation (processeur ralenti ×4, 4G lente) qui porte l'estimation à ces valeurs : sans bridage, FCP et LCP sont à une fraction de seconde. La carte de la couverture ne charge rien d'autre avant l'événement `load` (carte à plat : deux fonds géographiques, 57 Ko ; globe : MapLibre, voir section 2) ; la planche des référentiels ne charge rien avant d'approcher de l'écran. Pistes non engagées : réduire encore l'image d'attente ou la différer, réduire le JavaScript de l'accueil (≈ 142 Ko), différer les courbes de niveau du parcours (22 Ko). La valeur de terrain (CrUX / RUM) tranchera après la mise en ligne ; d'ici là, ne pas annoncer « Core Web Vitals bons ».
+Seule la page d'accueil a été remesurée pour ce commit (deux séries de trois exécutions sur le même build : 2,5 · 2,7 · 2,9 s puis 2,4 · 2,5 · 3,0 s ; la ligne ci-dessus est la seconde) ; les autres lignes datent de la série précédente, ces pages n'ayant pas changé. L'élément LCP de l'accueil est le paragraphe d'introduction de la couverture (inchangé), dont le rendu attend ≈ 2 s : la dispersion d'une exécution à l'autre (≈ 0,5 s) est de l'ordre de l'écart avec la série précédente (2,3 · 2,3 · 2,6 s), donc **je ne peux pas dire si la planche en tuiles a coûté quelque chose ou non**.
+
+Pages dont au moins une exécution dépasse 2,5 s : home. Pages qui restent sous le seuil sur les trois exécutions : approach, contact, datasets, solutions-transport-engineering. L'accueil est le plus loin du seuil (2,4 s · 2,5 s · 3,0 s). Éléments d'explication : depuis que la couverture est réduite à l'animation, l'élément LCP de l'accueil est **l'image d'attente de la carte** (`levers-poster.svg`) et non plus le paragraphe d'accroche ; avec une image de 53 Ko, l'accueil mobile mesurait 2,7–3,0 s (note 84–96) ; après allègement de l'image (23 Ko : tracés et terres simplifiés, plus de flou gaussien, réseau dessiné une seule fois, liaisons maritimes hors du réseau de fond), il mesure 2,4 s · 2,5 s · 3,0 s. C'est le modèle de simulation (processeur ralenti ×4, 4G lente) qui porte l'estimation à ces valeurs : sans bridage, FCP et LCP sont à une fraction de seconde. La carte de la couverture ne charge rien d'autre avant l'événement `load` (carte à plat : deux fonds géographiques, 57 Ko ; globe : MapLibre, voir section 2) ; la planche des référentiels ne charge rien avant d'approcher de l'écran. Pistes non engagées : réduire encore l'image d'attente ou la différer, réduire le JavaScript de l'accueil (≈ 142 Ko), différer les courbes de niveau du parcours (22 Ko). La valeur de terrain (CrUX / RUM) tranchera après la mise en ligne ; d'ici là, ne pas annoncer « Core Web Vitals bons ».
 
 ## 8. Prévisualisation hébergée (Netlify)
+
+**Section non rejouée pour la planche en tuiles** : les mesures ci-dessous datent d'un commit antérieur
+(`1401956`, avant la refonte de la planche des référentiels). Elles restent valables pour les pages
+qui n'ont pas changé ; elles ne disent rien de la planche actuelle. À refaire sur le déploiement de ce commit.
 
 Vérifié sur le déploiement de la pull request n° 23 :
 `https://deploy-preview-23--p4wname.netlify.app` (le second site Netlify,
