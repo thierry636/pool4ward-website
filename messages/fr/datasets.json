@@ -1,0 +1,162 @@
+{
+  "Datasets": {
+    "meta": {
+      "title": "Référentiels",
+      "description": "Le monde des services de transport tel que nos référentiels le documentent : intermodal ferroviaire, shortsea en Baltique, transporteurs frigorifiques en Allemagne, fluvial rhénan — en animation, sans outil de recherche."
+    },
+    "hero": {
+      "eyebrow": "Référentiels",
+      "title": "Les services de transport, vus du dessus.",
+      "lede": "Intermodal, shortsea, frigorifique, fluvial : nos référentiels documentent des sites géolocalisés et les services qui les relient. Nous les montrons en animation — pas comme un annuaire où chercher."
+    },
+    "world": {
+      "eyebrow": "Le monde des services",
+      "title": "Quatre histoires de terrain, un globe qui tourne.",
+      "lede": "Le globe déroule quatre chapitres : le rail intermodal en Europe, le shortsea en Baltique, les transporteurs frigorifiques en Allemagne, le fluvial sur le Rhin. Rien à saisir, rien à interroger : on regarde, on met en pause, on passe au chapitre suivant."
+    },
+    "read": {
+      "eyebrow": "Comment lire l’animation",
+      "title": "Trois règles de lecture.",
+      "items": [
+        {
+          "name": "Référencé n’est pas disponible.",
+          "body": "Un site ou un service montré ici est référencé : cela ne dit pas qu’une capacité est libre sur votre corridor. La disponibilité se confirme par une réponse écrite."
+        },
+        {
+          "name": "Des sites, pas des itinéraires exacts.",
+          "body": "Les sites sont placés au kilomètre près ; les liaisons sont des arcs qui relient un départ à une arrivée, pas le tracé réel d’un train, d’un navire ou d’un camion. Aucun véhicule n’est suivi."
+        },
+        {
+          "name": "Ce qui est nommé est publié.",
+          "body": "Quand un nom d’opérateur apparaît, il a été validé pour la publication. Sans validation, la liaison s’affiche sans nom : nous ne comblons pas les blancs."
+        }
+      ]
+    },
+    "protection": {
+      "eyebrow": "Ce que nous publions",
+      "title": "Une vitrine statique, une base qui reste privée.",
+      "lede": "Tout ce qu’un site public affiche peut être copié : nous ne prétendons pas l’empêcher. Nous réglons donc la question en amont — la base source n’est jamais en ligne, et le site ne publie que ce qu’il est acceptable de voir copié.",
+      "tiers": [
+        {
+          "name": "Base privée",
+          "body": "Sources, contacts, qualifications, coordonnées précises. Tenue à jour par un administrateur, hors de ce site : il n’en a ni l’accès ni les identifiants."
+        },
+        {
+          "name": "Export validé",
+          "body": "Une publication à la fois, déclenchée par une personne. Colonnes autorisées seulement, volume plafonné, coordonnées arrondies à environ 1 km, noms contrôlés. La différence avec la version précédente est relue avant la mise en ligne."
+        },
+        {
+          "name": "Vitrine statique",
+          "body": "Un fichier unique, intégré au site lors de sa construction. Pas d’API, pas de requête vers la base, rien à interroger : ce qui est publié est ce qui est montré."
+        }
+      ],
+      "limit": "Limite assumée : la vitrine peut être copiée en entier. Elle ne contient que ce que nous acceptons de voir copié — ni volumes, ni tarifs, ni coordonnées précises."
+    },
+    "coverage": {
+      "eyebrow": "Contenu",
+      "title": "Ce que la vitrine contient — et rien d’autre.",
+      "lede": "Le format est fermé : une donnée qui n’est pas prévue n’est pas publiée, elle fait échouer la publication.",
+      "columns": {
+        "item": "Donnée",
+        "content": "Ce qui est publié",
+        "grain": "Précision"
+      },
+      "rows": [
+        {
+          "name": "Sites",
+          "content": "Nom, type (port, terminal rail-route, port fluvial, plateforme, base de transporteur), pays.",
+          "grain": "Position arrondie à environ 1 km."
+        },
+        {
+          "name": "Liaisons",
+          "content": "Mode, site de départ, trois sites de passage au plus, site d’arrivée, chapitre.",
+          "grain": "Un arc entre sites, pas le tracé réel."
+        },
+        {
+          "name": "Opérateur",
+          "content": "Un nom, seulement s’il a été validé pour la publication.",
+          "grain": "Jamais dans un exemple de démonstration."
+        },
+        {
+          "name": "Volume",
+          "content": "250 sites et 400 liaisons au plus, dont 80 par chapitre.",
+          "grain": "Plafonné à la publication et à la construction du site."
+        }
+      ],
+      "legendNote": "Toute autre colonne d’un export — un tarif, un contact, un identifiant interne — bloque la publication au lieu d’être écartée en silence.",
+      "tableLabel": "Contenu de la vitrine"
+    },
+    "cta": {
+      "title": "Besoin du détail ?",
+      "body": "Ce que nous savons d’un corridor précis se partage dans le cadre d’un échange sur votre périmètre.",
+      "button": "Parler de votre périmètre"
+    }
+  },
+  "Showcase": {
+    "mapLabel": "Globe animé des services de transport — {chapter}",
+    "demo": {
+      "tag": "Exemple illustratif",
+      "note": "Liaisons de démonstration entre sites réels. Aucun opérateur n’est cité et aucune de ces liaisons n’est affirmée."
+    },
+    "curated": "Vitrine publiée le {date}",
+    "controls": {
+      "label": "Lecture de l’animation",
+      "pause": "Pause",
+      "play": "Lecture"
+    },
+    "states": {
+      "flat": {
+        "nowebgl": "Votre navigateur n’affiche pas la 3D : voici la carte à plat, avec les mêmes liaisons.",
+        "software": "Votre appareil ne dispose pas d’accélération 3D : voici la carte à plat, avec les mêmes liaisons.",
+        "lightweight": "Pour ménager votre connexion et votre appareil, la carte est à plat : mêmes liaisons, sans 3D.",
+        "lost": "L’affichage 3D s’est interrompu : voici la carte à plat, avec les mêmes liaisons."
+      }
+    },
+    "modes": {
+      "rail": "Rail intermodal",
+      "shortsea": "Shortsea (cabotage maritime court)",
+      "barge": "Fluvial (barge)",
+      "road-reefer": "Route frigorifique"
+    },
+    "kinds": {
+      "port": "Port",
+      "rail-terminal": "Terminal rail-route",
+      "inland-port": "Port fluvial",
+      "hub": "Plateforme",
+      "carrier-base": "Base de transporteur"
+    },
+    "chapters": {
+      "rail-intermodal": {
+        "short": "Rail intermodal",
+        "name": "Le rail intermodal en Europe",
+        "body": "Des terminaux rail-route et des ports de la mer du Nord, reliés par les grands axes : Rhin–Alpes, Europe centrale, Méditerranée."
+      },
+      "baltic-shortsea": {
+        "short": "Shortsea Baltique",
+        "name": "Le shortsea en Baltique",
+        "body": "Des liaisons maritimes courtes entre ports allemands, polonais, baltes, suédois et finlandais : la mer comme maillon d’une chaîne de transport."
+      },
+      "reefer-germany": {
+        "short": "Frigo Allemagne",
+        "name": "Les transporteurs frigorifiques en Allemagne",
+        "body": "Des transporteurs spécialisés en température dirigée, répartis sur le territoire allemand, et les destinations qu’ils desservent."
+      },
+      "barge-rhine": {
+        "short": "Fluvial Rhin",
+        "name": "Le fluvial sur le Rhin",
+        "body": "Des ports fluviaux reliés par barge, des ports de la mer du Nord jusqu’au Rhin supérieur."
+      }
+    },
+    "list": {
+      "summary": "Voir toutes les liaisons sous forme de liste",
+      "intro": "Équivalent texte de l’animation : chaque liaison, chapitre par chapitre.",
+      "columns": {
+        "route": "Liaison",
+        "mode": "Mode",
+        "operator": "Opérateur"
+      },
+      "none": "non publié",
+      "arrow": "vers"
+    }
+  }
+}

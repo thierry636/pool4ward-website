@@ -1,0 +1,369 @@
+{
+  "Home": {
+    "cover": {
+      "eyebrow": "From transport engineering to contracting",
+      "title": "Design transport <em>as close to reality as possible.</em>",
+      "lede": "Faced with the energy transition and pressure on resources, Pool4ward supports companies from engineering to contracting to control their costs, reduce their risks and secure their transport capacity.",
+      "benefits": [
+        "Control costs",
+        "Reduce risks",
+        "Secure capacity"
+      ]
+    },
+    "stakes": {
+      "eyebrow": "Why start from the ground",
+      "title": "Transport is not an interchangeable service.",
+      "lede": "Buying at the best price assumes the offer is the same everywhere. It is not: what you can move, when, with what and by whom depends on six realities on the ground.",
+      "items": {
+        "flows": {
+          "name": "Flows",
+          "body": "Volumes and recurrence: they decide what can be pooled and what is contracted over time."
+        },
+        "slots": {
+          "name": "Time windows",
+          "body": "Dock windows and lead times: they decide which deliveries can be chained."
+        },
+        "drivers": {
+          "name": "Drivers",
+          "body": "Availability and driving time: a scarce resource that bounds rotations."
+        },
+        "equipment": {
+          "name": "Equipment",
+          "body": "Pallets, bulk, containers: what can travel together, and in what."
+        },
+        "energy": {
+          "name": "Infrastructure and energy",
+          "body": "Terminals, charging points, networks: what the territory allows, and at what power."
+        },
+        "commitments": {
+          "name": "Commitments",
+          "body": "Contracts, durations, deadlines: what is already taken, and when another organisation becomes possible again."
+        }
+      },
+      "closing": "That is why we start from the ground, not from the price."
+    },
+    "journey": {
+      "eyebrow": "From ground to commitments",
+      "title": "One case, from the reality on the ground to the contract.",
+      "lede": "A fictitious group, four sites, six flows. Follow it end to end: what we record, the organisations we compare, what we put out to tender and then under contract.",
+      "note": "Demonstration case: sites, volumes and deadlines are fictitious. The diagram is not a route calculation."
+    },
+    "capabilities": {
+      "eyebrow": "Five capabilities",
+      "title": "One continuous line, from the first study to the managed contract.",
+      "lede": "Each capability picks up what the previous one established. Each page says what it covers, and what the software really does."
+    },
+    "datasets": {
+      "eyebrow": "Datasets",
+      "title": "What we know about the ground — and how far.",
+      "lede": "Intermodal, shortsea, refrigerated, barge: our datasets document the sites and the services that link them. We show them as an animation — not as a directory to search.",
+      "ladderTitle": "Referenced is not available.",
+      "ladderBody": "A carrier listed in a dataset does not necessarily have a free truck on your corridor. We distinguish five levels of knowledge, and the animation shows only one of them: what is referenced.",
+      "explore": "See the world of services",
+      "posterLabel": "Preview of the globe of transport services."
+    },
+    "evidence": {
+      "eyebrow": "Verifiable evidence",
+      "title": "What you can verify, and what we do not claim.",
+      "lede": "No client logos or testimonials here: only what can be checked.",
+      "verify": {
+        "title": "To verify today",
+        "items": [
+          {
+            "name": "A navigable case",
+            "body": "The journey above takes two minutes to go through; its limits are written into it."
+          },
+          {
+            "name": "Sourced analyses",
+            "body": "Our articles cite their sources and stop where the figures stop."
+          },
+          {
+            "name": "Displayed coverage",
+            "body": "The datasets showcase says whether it is an example or a publication, and how old it is."
+          },
+          {
+            "name": "Five capabilities, with their limits",
+            "body": "The Solutions pages tell what the software does apart from the method we apply, and say when a function is not covered."
+          }
+        ]
+      },
+      "notClaimed": {
+        "title": "What we do not claim",
+        "items": [
+          "Track your vehicles in real time.",
+          "Guarantee a quantified saving without having read your data.",
+          "Summarise your risk in a single score.",
+          "Treat a listed carrier as an available carrier.",
+          "Cover every country and every mode equally."
+        ]
+      }
+    },
+    "insights": {
+      "eyebrow": "Insights",
+      "title": "Questions shippers have stopped asking.",
+      "all": "All insights"
+    },
+    "contact": {
+      "eyebrow": "Talk to us",
+      "title": "Let’s talk about your transport plan.",
+      "lede": "A first conversation is enough to tell whether your flows, sites and contracts lend themselves to another organisation. You have nothing to prepare.",
+      "diagnostic": "Prefer to start on your own? The diagnostic takes two minutes.",
+      "diagnosticLink": "Take the diagnostic"
+    },
+    "levers": {
+      "note": "Illustration: links drawn to explain, not existing services.",
+      "mapLabel": "Animated map of Europe. Current lever: {lever}.",
+      "items": {
+        "rail": {
+          "name": "Modal shift rail/waterway"
+        },
+        "shortsea": {
+          "name": "Coastal shortsea"
+        },
+        "loops": {
+          "name": "Loops"
+        },
+        "crossdock": {
+          "name": "Cross-dock"
+        },
+        "electric": {
+          "name": "Electrification"
+        },
+        "pooling": {
+          "name": "Pooling"
+        }
+      }
+    },
+    "referentials": {
+      "eyebrow": "The physical side of transport",
+      "title": "Reference datasets that <em>map</em> the physical side of transport.",
+      "lede": "Networks, services and sites: what we describe, and how deep it goes.",
+      "note": "Illustrative animations: indicative routes. Operator and carrier names are masked; the data itself is not published on this page.",
+      "menu": {
+        "label": "Reference datasets",
+        "groups": {
+          "services": "Services",
+          "networks": "Networks",
+          "sites": "Sites and players"
+        }
+      },
+      "controls": {
+        "prev": "Previous dataset",
+        "next": "Next dataset",
+        "pause": "Pause the carousel",
+        "play": "Resume the carousel",
+        "position": "{n} of {total}"
+      },
+      "live": "Updated daily",
+      "mapLabel": "Animation: the “{name}” layer on the map of Europe.",
+      "shapes": {
+        "title": "Service patterns",
+        "unit": "services",
+        "oneWay": "One-way",
+        "roundTrip": "Round trip",
+        "loop": "Loop",
+        "metro": "Metro",
+        "metroLoop": "Looped metro",
+        "free": "Unstructured"
+      },
+      "status": {
+        "title": "Site status",
+        "inService": "In service",
+        "construction": "Under construction",
+        "planned": "Planned",
+        "sites": "sites"
+      },
+      "fiche": {
+        "masked": "name masked",
+        "example": "example",
+        "illustrative": "illustrative example",
+        "terminus": "Terminus",
+        "contains": "Each record holds"
+      },
+      "items": {
+        "services": {
+          "name": "Rail and waterway services",
+          "sub": "{n} services",
+          "title": "Rail and waterway services",
+          "lead": "Network of intermodal services",
+          "kpi": {
+            "services": "services",
+            "links": "links",
+            "countries": "countries",
+            "operators": "operators"
+          },
+          "chips": {
+            "rail": "Rail",
+            "waterway": "Waterway"
+          },
+          "legend": {
+            "terminal": "Terminal",
+            "rail": "Rail service",
+            "waterway": "Waterway service"
+          },
+          "ficheTitle": "One record, in detail",
+          "route": {
+            "form": "Metro",
+            "mode": "Rail",
+            "counts": "{services} services · {stops} stops"
+          },
+          "tags": [
+            "Timetables",
+            "Frequencies",
+            "Operator",
+            "Contacts",
+            "Terminals"
+          ]
+        },
+        "shortsea": {
+          "name": "Shortsea services",
+          "sub": "{n} services",
+          "title": "Shortsea services",
+          "lead": "Short-distance sea rotations and lines",
+          "kpi": {
+            "services": "services",
+            "continents": "continents",
+            "rotation": "in rotation: loops and looped metros",
+            "cargo": "containers and RoRo"
+          },
+          "cargoTitle": "Service types",
+          "cargoValue": "Containers · RoRo",
+          "chips": {
+            "shortsea": "Shortsea"
+          },
+          "legend": {
+            "port": "Port",
+            "line": "Line",
+            "loop": "Loop",
+            "metroLoop": "Looped metro"
+          },
+          "ficheTitle": "One rotation, in detail",
+          "route": {
+            "form": "Looped metro",
+            "mode": "Shortsea",
+            "counts": "{calls} calls"
+          },
+          "tags": [
+            "Calls",
+            "Days and frequencies",
+            "Operator",
+            "Contacts"
+          ]
+        },
+        "networks": {
+          "name": "Rail and waterway networks",
+          "sub": "Lines and waterways",
+          "title": "Rail and waterway networks",
+          "lead": "The infrastructure the services run on",
+          "chips": {
+            "rail": "Rail",
+            "waterway": "Waterway"
+          },
+          "legend": {
+            "rail": "Rail line",
+            "waterway": "Waterway"
+          },
+          "ficheTitle": "What the dataset describes",
+          "points": [
+            "The lines and nodes of the rail network",
+            "The waterways and the inland ports",
+            "How they connect to terminals and services"
+          ]
+        },
+        "chargers": {
+          "name": "Private charging points",
+          "sub": "{sites} sites · {chargers} chargers",
+          "title": "Private electric charging networks",
+          "lead": "Charging hubs for heavy trucks",
+          "kpi": {
+            "sites": "sites",
+            "chargers": "published chargers",
+            "countries": "countries",
+            "networks": "private networks"
+          },
+          "chips": {
+            "chargers": "Chargers"
+          },
+          "legend": {
+            "corridor": "Equipped corridor",
+            "charger": "Charger"
+          },
+          "ficheTitle": "One site record, in detail",
+          "fields": {
+            "status": "Status",
+            "access": "Access",
+            "places": "Spaces",
+            "bays": "Chargers",
+            "maxPower": "Max. power",
+            "price": "Price",
+            "booking": "Booking",
+            "operator": "Operator"
+          },
+          "values": {
+            "access": "Reserved for heavy trucks",
+            "price": "Not published",
+            "booking": "Unknown"
+          },
+          "link": "Site page at the operator"
+        },
+        "parkings": {
+          "name": "Truck parking",
+          "sub": "Heavy-vehicle areas",
+          "title": "Truck parking",
+          "lead": "Parking areas along the main corridors",
+          "chips": {
+            "parkings": "Parking"
+          },
+          "legend": {
+            "axis": "Main road corridor",
+            "parking": "Parking"
+          },
+          "ficheTitle": "What the dataset describes",
+          "points": [
+            "Heavy-vehicle parking areas",
+            "Where they sit along the main road corridors"
+          ]
+        },
+        "carriers": {
+          "name": "Carriers",
+          "sub": "{carriers} carriers",
+          "title": "Carriers",
+          "lead": "The referenced carriers, their sites and capabilities",
+          "kpi": {
+            "carriers": "carriers",
+            "sites": "sites"
+          },
+          "chips": {
+            "carriers": "Carriers"
+          },
+          "legend": {
+            "site": "Site",
+            "area": "Area covered"
+          },
+          "ficheTitle": "One carrier record, in detail",
+          "country": "Portugal",
+          "reviews": "{n} reviews",
+          "tags": [
+            "Refrigerated trailer",
+            "Asset-based operator (own fleet)",
+            "Temperature-controlled warehousing"
+          ],
+          "moreTags": "+1",
+          "contacts": [
+            "Website",
+            "Location"
+          ],
+          "pointsTitle": "What the referential describes",
+          "capacitiesTitle": "Capabilities",
+          "contactsTitle": "Contacts",
+          "points": [
+            "Each carrier’s sites",
+            "Its equipment and capabilities",
+            "The reviews it received",
+            "Its contacts: website and location"
+          ]
+        }
+      }
+    }
+  }
+}

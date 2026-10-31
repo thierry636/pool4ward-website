@@ -1,0 +1,44 @@
+# Déploiement Netlify de la version 2.
+#
+# Le plugin Next.js de Netlify est détecté automatiquement. Le site est statique,
+# sauf une fonction : le formulaire de contact (/api/contact). Il n'y a pas de base
+# de données ni de variable de base : la vitrine est un fichier du dépôt
+# (src/content/showcase.json). Voir docs/version2/DEPLOY.md.
+
+[build]
+  # `npm run build` exécute d'abord `showcase:check` (prebuild) : vitrine valide, et
+  # refus d'un build de production avec une vitrine « demo ».
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Les fichiers de public/ n'ont ni empreinte ni version dans leur nom : ni `immutable`
+# ni cache d'un an. Sans règle, Netlify les sert en `max-age=0` et chaque visite de
+# retour revalide les polices préchargées et le fond cartographique. Les `headers()` de
+# next.config.mjs ne s'appliquent pas aux fichiers statiques sur Netlify : la règle
+# vit donc ici (et dans next.config.mjs pour `next start` et les autres hébergeurs).
+# Même raison pour `X-Content-Type-Options` : Netlify ne l'ajoute qu'aux pages.
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, stale-while-revalidate=604800"
+    X-Content-Type-Options = "nosniff"
+
+[[headers]]
+  for = "/geo/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, stale-while-revalidate=604800"
+    X-Content-Type-Options = "nosniff"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+    X-Content-Type-Options = "nosniff"
+
+[[headers]]
+  for = "/og/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+    X-Content-Type-Options = "nosniff"

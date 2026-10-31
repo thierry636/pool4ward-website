@@ -1,0 +1,146 @@
+/* Plateau « terrain → engagements ». Deux tons : sur fond sombre (couverture)
+   et sur fond clair (parcours). Les couleurs ne portent jamais seules
+   l'information : chaque distinction a aussi un tracé (plein, pointillé,
+   double trait) et un libellé. */
+
+.board {
+  position: relative;
+  aspect-ratio: 900 / 760;
+  width: 100%;
+  isolation: isolate;
+  --halo: var(--bg);
+}
+
+.board-dark {
+  --c-terrain: #4263eb;
+  --terrain-alpha: 0.16;
+  --c-river: #38bdf8;
+  --c-rail: #94a3b8;
+  --c-muted: #64748b;
+  --c-ghost: #64748b;
+  --c-group: #2dd4bf;
+  --c-loop: #2dd4bf;
+  --c-lot1: #fbbf24;
+  --c-lot2: #2dd4bf;
+  --c-electric: #a3e635;
+  --c-node: #f1f5f9;
+  --c-node-ink: #020617;
+  --c-label: #f1f5f9;
+  --c-label-2: #94a3b8;
+  --c-warn: #fb923c;
+  --c-chip: rgb(241 245 249 / 0.08);
+  --c-chip-line: rgb(241 245 249 / 0.4);
+}
+
+.board-light {
+  --c-terrain: #4263eb;
+  --terrain-alpha: 0.12;
+  --c-river: #0284c7;
+  --c-rail: #475569;
+  --c-muted: #64748b;
+  --c-ghost: #94a3b8;
+  --c-group: #4263eb;
+  --c-loop: #0f766e;
+  --c-lot1: #4263eb;
+  --c-lot2: #b45309;
+  --c-electric: #4d7c0f;
+  --c-node: #0f172a;
+  --c-node-ink: #ffffff;
+  --c-label: #0f172a;
+  --c-label-2: #475569;
+  --c-warn: #c2410c;
+  --c-chip: rgb(15 23 42 / 0.06);
+  --c-chip-line: rgb(15 23 42 / 0.4);
+}
+
+.board-terrain {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--c-terrain);
+  opacity: var(--terrain-alpha);
+  -webkit-mask-image: url("/images/terrain.svg");
+  mask-image: url("/images/terrain.svg");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.board svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  font-family: var(--font-sans);
+}
+
+/* Tout ce qui change d'une étape à l'autre le fait en douceur ; le mouvement
+   réduit coupe ces transitions (règle globale dans globals.css). */
+.board .t {
+  transition:
+    opacity 0.6s ease,
+    stroke-dashoffset 1.1s cubic-bezier(0.3, 0.7, 0.2, 1),
+    stroke-dasharray 0.7s ease,
+    stroke-width 0.6s ease,
+    stroke 0.5s ease,
+    fill 0.5s ease,
+    transform 0.7s cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+
+.board .lbl {
+  font-size: 26px;
+  fill: var(--c-label);
+  paint-order: stroke;
+  stroke: var(--halo);
+  stroke-width: 7px;
+  stroke-linejoin: round;
+  letter-spacing: 0.01em;
+}
+.board .lbl-2 {
+  font-size: 22px;
+  fill: var(--c-label-2);
+  paint-order: stroke;
+  stroke: var(--halo);
+  stroke-width: 6px;
+  stroke-linejoin: round;
+}
+.board .site-name {
+  font-family: var(--font-sans);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.board .chip-bg {
+  fill: var(--halo);
+  stroke: var(--c-chip-line);
+  stroke-width: 1.5;
+}
+.board .chip-text {
+  font-size: 21px;
+  fill: var(--c-label);
+}
+
+.board .pulse {
+  animation: board-pulse 2.4s ease-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes board-pulse {
+  0% { transform: scale(0.7); opacity: 0.9; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+
+/* Sens de circulation : les chevrons défilent lentement sur le tracé. Ils
+   indiquent le sens d'une liaison, ils ne figurent aucun véhicule. */
+.board .flow-dir {
+  animation: board-dir 3.2s linear infinite;
+}
+@keyframes board-dir {
+  to { stroke-dashoffset: -60; }
+}
+
+/* Pas de transition quand la scène s'ouvre déjà dans son état final. */
+.board-still .t {
+  transition: none !important;
+}

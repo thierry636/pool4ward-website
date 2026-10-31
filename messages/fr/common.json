@@ -1,0 +1,128 @@
+{
+  "Metadata": {
+    "title": "Pool4ward — Concevoir le transport au plus près du réel",
+    "titleTemplate": "%s · Pool4ward",
+    "description": "Pool4ward accompagne les entreprises de l’ingénierie à la contractualisation du transport : maîtriser les coûts, réduire les risques, sécuriser les capacités."
+  },
+  "Nav": {
+    "home": "Pool4ward — accueil",
+    "primary": "Navigation principale",
+    "approach": "Approche",
+    "solutions": "Solutions",
+    "datasets": "Référentiels",
+    "insights": "Analyses",
+    "portal": "Portail",
+    "cta": "Parler de votre plan transport",
+    "language": "Langue",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "skip": "Aller au contenu"
+  },
+  "Footer": {
+    "statement": "De l’ingénierie à la contractualisation du transport : maîtriser les coûts, réduire les risques, sécuriser les capacités.",
+    "explore": "Explorer",
+    "capabilities": "Cinq capacités",
+    "company": "Pool4ward",
+    "about": "L’entreprise",
+    "rights": "© {year} Pool4ward. Tous droits réservés.",
+    "demoNote": "Les cas et valeurs présentés comme « démonstrateurs » sont fictifs. Tant que la vitrine des référentiels est un exemple, les liaisons du globe sont illustratives : voir la page Référentiels."
+  },
+  "Common": {
+    "learnMore": "En savoir plus",
+    "seeCapability": "Voir cette capacité",
+    "backToSolutions": "Toutes les solutions"
+  },
+  "Capabilities": {
+    "eyebrow": "Cinq capacités",
+    "title": "Une continuité, de la première étude au contrat suivi.",
+    "lede": "Chaque capacité reprend ce que la précédente a établi. La page de chacune dit ce qu’elle couvre, et ce que le logiciel fait réellement.",
+    "decision": "Décision éclairée",
+    "covers": "Ce que couvre cette capacité",
+    "apps": "Applications concernées",
+    "open": "Ouvrir la capacité",
+    "engineering": {
+      "name": "Ingénierie transport",
+      "question": "Quelle organisation de transport votre terrain permet-il réellement ?",
+      "summary": "Partir des flux, des sites, des équipements, des conducteurs et de l’énergie pour comparer des organisations possibles — avant de parler de prix.",
+      "verbs": [
+        "Qualifier les contraintes",
+        "Comparer des organisations",
+        "Étudier la faisabilité"
+      ],
+      "covers": [
+        "Études de flux entre sites : plateformes et cross-dock, report vers le rail, le fluvial ou le maritime, boucles entre sites, tournées régulières, consolidation longue distance, électrification des liaisons.",
+        "Prise en compte des équipements, de la réglementation du temps de conduite, des ressources énergétiques (électricité, bornes de recharge, gazole) et des contrats en cours.",
+        "Chaque scénario est comparé à une situation de référence établie sur vos propres flux."
+      ],
+      "scope": "Les fenêtres de quai et les exigences de service se relèvent avec vous et entrent dans l’analyse de faisabilité ; elles ne sont pas déduites automatiquement."
+    },
+    "tenders": {
+      "name": "Préparation des appels d’offres",
+      "question": "Comment mettre en consultation ce que vous avez conçu ?",
+      "summary": "Transformer le scénario retenu en lots de consultation clairs : flux, mailles géographiques, grilles tarifaires, clauses, prestations annexes.",
+      "verbs": [
+        "Structurer les lots",
+        "Définir les grilles",
+        "Constituer le dossier"
+      ],
+      "covers": [
+        "Un assistant de préparation en plusieurs étapes : sélection des flux, lignes par maille postale, zone ou région, grilles à tranches, clause de révision carburant, prestations annexes, test du scénario.",
+        "Un dossier de consultation au format tableur protégé, avec aperçu.",
+        "La publication des zones et des modèles de grille dans CarrierBridge."
+      ],
+      "scope": "Le périmètre décrit la préparation du dossier de consultation."
+    },
+    "carriers": {
+      "name": "Recherche de transporteurs",
+      "question": "Quels partenaires interroger pour chaque lot ?",
+      "summary": "Cibler les opérateurs et transporteurs dont l’offre correspond au lot — par corridor, mode et équipement — plutôt que d’envoyer le même cahier à tout le monde.",
+      "verbs": [
+        "Cibler",
+        "Qualifier",
+        "Inviter"
+      ],
+      "covers": [
+        "Sélection d’opérateurs intermodaux, classés par corridor, à partir du catalogue de services Modal4ward.",
+        "Rapprochement avec les transporteurs actuels du chargeur.",
+        "Un transporteur référencé n’est pas un transporteur disponible : la disponibilité se confirme par sa réponse."
+      ],
+      "scope": "La couverture dépend des référentiels : la page Référentiels dit ce que la vitrine publie et ce qu’elle ne publie pas."
+    },
+    "comparison": {
+      "name": "Comparaison des offres",
+      "question": "Les offres reçues sont-elles comparables ?",
+      "summary": "Ramener des réponses hétérogènes au même périmètre, aux mêmes hypothèses de volume et aux mêmes conditions avant de comparer des prix.",
+      "verbs": [
+        "Normaliser",
+        "Comparer",
+        "Arbitrer"
+      ],
+      "covers": [
+        "Lecture des offres sur une base commune : périmètre couvert, hypothèse de volume, structure de prix, engagement de capacité, conditions d’ajustement.",
+        "Mise en évidence des écarts d’hypothèses avant tout classement par prix.",
+        "Arbitrage entre offres selon le coût complet, le service et les ressources mobilisées — pas selon le seul prix unitaire."
+      ],
+      "scope": "Cette page décrit la méthode. Les fonctions logicielles précises se présentent en rendez-vous, sur vos propres consultations."
+    },
+    "contracts": {
+      "name": "Gestion des contrats",
+      "question": "Que couvre chaque contrat, jusqu’à quand, et que devient le plan à l’échéance ?",
+      "summary": "Rattacher chaque contrat aux liaisons qu’il couvre, à ses dates et à ses pièces, pour savoir ce qui est engagé et quand une autre organisation redevient possible.",
+      "verbs": [
+        "Rattacher",
+        "Suivre",
+        "Anticiper"
+      ],
+      "covers": [
+        "Un registre de contrats : code, dates de début et de fin, transporteur, pièces jointes, affectation en masse aux liaisons concernées.",
+        "Lecture des contrats dans l’outil d’ingénierie : les liaisons couvertes sont signalées, et les fins de contrat d’une consultation sont relevées.",
+        "Les conditions d’engagement — capacité, service, durée, ajustement, échéances — se définissent avec vous dans le cahier de consultation."
+      ],
+      "scope": "Le périmètre décrit ici est le registre des contrats, leur rattachement aux liaisons, leurs pièces et leurs échéances."
+    }
+  },
+  "Status": {
+    "label": "Cinq niveaux de connaissance",
+    "lede": "Nous ne mélangeons jamais ce que nous avons référencé, ce que nous avons détecté, ce que nous avons étudié, ce qu’un partenaire a confirmé et ce qui est signé."
+  }
+}

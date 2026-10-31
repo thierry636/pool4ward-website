@@ -1,0 +1,132 @@
+/* Noms de lieux de la scène des leviers, posés par-dessus le globe. */
+.lever-overlay > * {
+  position: absolute;
+}
+.lever-overlay > div,
+.lever-overlay > span {
+  left: 0;
+  top: 0;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  will-change: transform;
+}
+
+.lever-place {
+  white-space: nowrap;
+  font-size: 0.74rem;
+  font-weight: 500;
+  line-height: 1;
+  color: #cbd5e1;
+  text-shadow: 0 0 3px #020617, 0 0 7px #020617, 0 1px 0 #020617;
+}
+
+/* ----------------------------------------------------- carte à plat : animations */
+@keyframes lever-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes lever-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes lever-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes lever-move {
+  from { offset-distance: 0%; }
+  to { offset-distance: 100%; }
+}
+@keyframes lever-ping {
+  from { transform: scale(1); opacity: 0.7; }
+  to { transform: scale(var(--s, 3.5)); opacity: 0; }
+}
+
+.lever-flat .lever-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: lever-draw linear forwards;
+}
+.lever-flat .lever-fade {
+  opacity: 0;
+  animation: lever-in 0.5s ease forwards;
+}
+.lever-flat .lever-pulse {
+  opacity: 0;
+  offset-rotate: 0deg;
+  animation: lever-move linear infinite, lever-in 0.2s linear forwards;
+  filter: drop-shadow(0 0 4px #fff);
+}
+.lever-flat .lever-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: lever-ping 2.4s ease-out infinite;
+}
+.lever-flat .lever-in {
+  opacity: 0;
+  animation: lever-in 0.4s ease forwards;
+}
+
+/* ------------------------------------------------------- couverture : la carte */
+.lever-map {
+  /* Pas d'image d'attente : en attendant la carte, un fond marine et un halo bleu, calmes. */
+  background: radial-gradient(60% 70% at 66% 48%, rgb(29 58 138 / 0.4), transparent 70%), #050d1f;
+}
+/* Fondu vers le texte, à gauche, sur grand écran ; vers la section voisine, en bas. */
+.lever-fade-x {
+  background: linear-gradient(90deg, #020617 0%, #020617 20%, rgb(2 6 23 / 0.82) 34%, rgb(2 6 23 / 0.28) 50%, rgb(2 6 23 / 0) 66%);
+}
+.lever-fade-y {
+  background: linear-gradient(180deg, #020617 0%, rgb(2 6 23 / 0) 14%, rgb(2 6 23 / 0) 78%, #020617 100%);
+}
+@media (min-width: 1024px) {
+  .lever-fade-y {
+    background: linear-gradient(180deg, rgb(2 6 23 / 0.9) 0%, rgb(2 6 23 / 0) 16%, rgb(2 6 23 / 0) 82%, #020617 100%);
+  }
+}
+
+/* Un tracé écarté (la liaison directe, une fois le service identifié) s'efface sans disparaître. */
+@keyframes lever-dim {
+  to { opacity: var(--to, 0.28); }
+}
+.lever-flat .lever-dim {
+  animation: lever-dim 0.6s ease forwards;
+}
+
+/* ------------------------------------------------- tuiles des référentiels : une couche sur l'Europe */
+.layer-map {
+  position: relative;
+  aspect-ratio: 400 / 250;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 100% at 80% 0%, rgb(66 99 235 / 0.22), transparent 60%),
+    radial-gradient(rgb(148 163 184 / 0.13) 1px, transparent 1.2px) 0 0 / 18px 18px,
+    #0b1224;
+  border-bottom: 1px solid rgb(15 23 42 / 0.1);
+}
+.layer-map svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.layer-map[data-ready="true"] svg {
+  opacity: 1;
+}
+/* Le fond a son calque : les animations de la couche ne le redessinent pas à chaque image. */
+.layer-map .layer-base {
+  transform: translateZ(0);
+  will-change: transform;
+}
+/* Pas de halo coûteux sur les impulsions des petites cartes. */
+.layer-map .lever-pulse {
+  filter: none;
+}
+/* Une tuile hors écran se fige : ses impulsions et ses ondes ne tournent plus pour rien. */
+.layer-map[data-paused="true"] * {
+  animation-play-state: paused !important;
+}

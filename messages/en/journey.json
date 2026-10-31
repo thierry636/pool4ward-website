@@ -1,0 +1,357 @@
+{
+  "Journey": {
+    "stagesLabel": "Journey stages",
+    "play": "Play",
+    "pause": "Pause",
+    "ladderLabel": "Level of knowledge",
+    "status": {
+      "referenced": {
+        "name": "Referenced",
+        "body": "Known: present in a reference dataset or in your data, not yet analysed."
+      },
+      "detected": {
+        "name": "Detected",
+        "body": "A complementarity or an option appears; it has not been studied yet."
+      },
+      "studied": {
+        "name": "Studied",
+        "body": "Feasibility analysed against real constraints on the ground, subject to validation."
+      },
+      "confirmed": {
+        "name": "Confirmed",
+        "body": "Availability confirmed by a partner’s written reply."
+      },
+      "contracted": {
+        "name": "Contracted",
+        "body": "Commitment signed, with its conditions and milestones."
+      }
+    },
+    "stages": {
+      "1": {
+        "name": "Understand the ground",
+        "short": "Ground",
+        "lede": "A transport organisation is not designed on a price grid. It depends on what the ground actually allows. These are the parameters we record, one by one.",
+        "layersLabel": "What we record",
+        "note": "Here everything is “referenced”: known, not yet analysed. We compute no risk score: there is no honest method to boil these parameters down to a single number.",
+        "next": "Design the plan"
+      },
+      "2": {
+        "name": "Design the plan",
+        "short": "Plan",
+        "lede": "From the same ground, we compare alternative organisations. Each is a working hypothesis: it is qualified, not decreed.",
+        "scenariosLabel": "Organisations compared",
+        "conditionsLabel": "Subject to",
+        "compareCaption": "What has to be compared for this organisation",
+        "noGain": "The board is a diagram: it computes no cost, no saving, no travel time. Figures come from your data, never from an animation.",
+        "back": "The ground",
+        "next": "Contract this scenario",
+        "nextDefault": "Contract (loop)"
+      },
+      "3": {
+        "name": "Contract",
+        "short": "Contract",
+        "lede": "The retained scenario becomes a tender brief, then commitments. Nothing is confirmed until a partner has replied in writing.",
+        "retained": "Retained scenario: {scenario}",
+        "back": "The plan",
+        "cta": "Discuss your transport plan",
+        "closing": "In three steps, the same case went from referenced flows to lots ready for tender. Each level of knowledge is earned; none is assumed. The last two — confirmed, contracted — only exist in the replies and signatures of real partners."
+      }
+    },
+    "layers": {
+      "sites": {
+        "name": "The group’s sites",
+        "body": "Four sites of one group: two plants, a hub, a warehouse. Each has its own hours, docks and constraints.",
+        "change": "Starting point: who ships, who receives, and where complementarities between sites may exist."
+      },
+      "flows": {
+        "name": "The flows to serve",
+        "body": "Six transport links, each organised on its own today — two of them leave the same site for the same hub, for two subsidiaries.",
+        "change": "Each link is handled in isolation. This is the starting point for the comparison, not a flaw."
+      },
+      "volumes": {
+        "name": "Volumes and recurrence",
+        "body": "Line thickness gives relative volume, dots give departures per week. Dashed lines show the return legs, mostly empty.",
+        "change": "Recurrence decides what can be pooled and what is contracted over time."
+      },
+      "slots": {
+        "name": "Time windows and service requirements",
+        "body": "Each dock has its windows. The East warehouse receives from 14:00 to 16:00, the hub from 08:00 to 12:00. These windows are recorded with you: they are not guessed.",
+        "change": "A time window is not a detail: it decides which deliveries can be chained."
+      },
+      "assets": {
+        "name": "Equipment, drivers, energy",
+        "body": "Equipment type per link (P pallets, V bulk, C container), drivers available per site, charging points in place (filled) or to be confirmed (hollow).",
+        "change": "What transport demands in drivers and energy limits the organisations that are really possible."
+      },
+      "contracts": {
+        "name": "Contracts in force",
+        "body": "Some links are under contract until a given date, others run on the spot market.",
+        "change": "A contract in force is both a constraint and a deadline: it says when another organisation becomes possible."
+      }
+    },
+    "scenarios": {
+      "baseline": {
+        "name": "Current situation",
+        "summary": "Six links organised separately, each with its own vehicle and its empty return.",
+        "reserves": [],
+        "cost": "Baseline to be built from your data: price of each link, empty kilometres, standing time.",
+        "service": "Dock windows met link by link.",
+        "resources": "One vehicle and one driver per link.",
+        "conditions": "Contracts in force until the dates shown.",
+        "documented": [
+          "service",
+          "conditions"
+        ]
+      },
+      "loop": {
+        "name": "Loop between sites",
+        "summary": "One vehicle chains the four sites instead of four separate round trips. Empty returns disappear — if the sequence holds.",
+        "reserves": [
+          "Dock windows must follow one another in the right order.",
+          "Equipment must be compatible from one link to the next.",
+          "Volumes must stay close from one week to the next."
+        ],
+        "cost": "To be costed: empty kilometres avoided, dock standing time, rotations needed.",
+        "service": "Depends on the East warehouse window: this is the open point of the scenario.",
+        "resources": "Fewer vehicles, drivers on a longer rotation: to be checked against driving-time rules.",
+        "conditions": "Window validation, shared equipment, end of the contracts concerned.",
+        "documented": [
+          "service"
+        ]
+      },
+      "pooling": {
+        "name": "Pooled volumes",
+        "summary": "Two subsidiaries shipping separately to the same hub share one lot.",
+        "reserves": [
+          "The hub’s windows must accommodate both pick-ups.",
+          "Cost sharing between subsidiaries must be agreed.",
+          "The service requirements of both flows must be compatible."
+        ],
+        "cost": "To be costed: vehicle fill, price of the shared lot, allocation key between subsidiaries.",
+        "service": "One pick-up to organise: do both subsidiaries accept the same window?",
+        "resources": "One vehicle instead of two on the corridor.",
+        "conditions": "Both contracts end at the same date (12/2026): a common renegotiation window.",
+        "documented": [
+          "conditions"
+        ]
+      },
+      "frequency": {
+        "name": "Adjusted frequency",
+        "summary": "Three departures a week, better loaded, instead of five part-loaded departures.",
+        "reserves": [
+          "A buffer stock is needed on the receiving side.",
+          "The accepted service lead time must allow it.",
+          "The consignee must validate the new rhythm."
+        ],
+        "cost": "To be costed: cost of buffer stock against cost of part-loaded departures.",
+        "service": "Fewer daily deliveries: the nature of the service changes.",
+        "resources": "Fewer departures, so fewer drivers needed each week.",
+        "conditions": "Contract in force until 03/2027: the rhythm is negotiated at expiry or by amendment.",
+        "documented": [
+          "conditions"
+        ]
+      },
+      "modal": {
+        "name": "Modal solution",
+        "summary": "The Hub – East warehouse link goes through a rail-road terminal: road to the terminal, rail, road to the site.",
+        "reserves": [
+          "Timetable and capacity of the rail link are to be confirmed.",
+          "End-to-end lead time must be compared with today’s service.",
+          "Terminal slots and the last kilometre are to be organised."
+        ],
+        "cost": "To be costed: pre- and post-haulage, rail traction, handling at terminals.",
+        "service": "Total lead time and reliability depend on the rail offer that is really available.",
+        "resources": "Fewer long-haul drivers, but terminal haulage to cover.",
+        "conditions": "Road contract in force until 03/2027 on this link.",
+        "documented": [
+          "conditions"
+        ]
+      },
+      "electric": {
+        "name": "Electric organisation",
+        "summary": "Links whose two ends can both charge are studied for electric traction; the others stay as they are.",
+        "reserves": [
+          "Available power and charging windows are to be confirmed at each site.",
+          "Useful range depends on the equipment and the load.",
+          "Suitable vehicles and drivers must be available."
+        ],
+        "cost": "To be costed: energy price by site, vehicle, charging infrastructure.",
+        "service": "Charging times must fit within dock windows.",
+        "resources": "Energy: charging confirmed at the hub and the East warehouse, to be confirmed at the North plant.",
+        "conditions": "Availability of vehicles and end of the combustion contracts concerned.",
+        "documented": [
+          "resources"
+        ]
+      }
+    },
+    "compare": {
+      "cost": "Full cost",
+      "service": "Service",
+      "resources": "Resources",
+      "conditions": "Conditions",
+      "documented": "Documented in the case",
+      "todo": "To be documented"
+    },
+    "arbitration": {
+      "eyebrow": "A trade-off",
+      "body": "The East warehouse receives from 14:00 to 16:00. The vehicle that arrived from the hub in late morning cannot leave loaded for the South plant: the loop stays open. Moving the window to 10:00–12:00 closes it — a hypothesis to validate with the warehouse.",
+      "label": "East warehouse window",
+      "late": "Current window · 14:00–16:00",
+      "early": "Earlier window · 10:00–12:00",
+      "result": {
+        "late": "Complementarity detected, not studied: the point stays open.",
+        "early": "Loop closed on the diagram: feasibility studied, subject to the warehouse’s validation."
+      }
+    },
+    "contract": {
+      "lots": {
+        "short": "Lots",
+        "name": "Tender lots",
+        "body": "The scenario is cut into lots that partners can price and commit to: a scope, a rhythm, equipment, conditions."
+      },
+      "partners": {
+        "short": "Partners",
+        "name": "Partners to approach",
+        "body": "We target partner profiles suited to each lot. A carrier listed in a reference dataset is not a carrier that is available: availability is confirmed by its reply.",
+        "caveat": "Profiles, never named companies: this is a demonstration case."
+      },
+      "offers": {
+        "short": "Offers",
+        "name": "Comparing offers",
+        "body": "Heterogeneous replies cannot be compared as they are. They are first brought to the same scope, the same volume assumptions and the same conditions. This is the reading grid.",
+        "caption": "Reading grid for two offers on the same criteria",
+        "criterion": "Criterion",
+        "rows": {
+          "scope": "Scope covered",
+          "volume": "Volume assumption",
+          "price": "Price structure",
+          "capacity": "Capacity commitment",
+          "adjust": "Adjustment conditions"
+        },
+        "cell": {
+          "ok": "matches the lot",
+          "diff": "different assumption",
+          "ask": "to be clarified"
+        },
+        "noReal": "Method grid: no real offer, no price."
+      },
+      "commitments": {
+        "short": "Commitments",
+        "name": "Commitments",
+        "body": "What a commitment must specify for the scenario to exist in the contract too — not only on the diagram.",
+        "template": "What a commitment specifies",
+        "fields": {
+          "capacity": {
+            "name": "Capacity",
+            "body": "Departures and equipment reserved, per link and per period."
+          },
+          "service": {
+            "name": "Service",
+            "body": "Loading and delivery windows, expected reliability."
+          },
+          "duration": {
+            "name": "Duration",
+            "body": "Start, end, renewal conditions."
+          },
+          "adjust": {
+            "name": "Adjustment conditions",
+            "body": "What may vary — volumes, energy, frequency — and within which limits."
+          },
+          "milestones": {
+            "name": "Milestones",
+            "body": "Review points, revision dates, notice periods."
+          }
+        }
+      }
+    },
+    "lots": {
+      "loop": {
+        "1": {
+          "name": "Lot 1 · North – Hub – East – South loop",
+          "scope": "The four links chained together, with the East warehouse window as a condition."
+        },
+        "2": {
+          "name": "Lot 2 · South → Hub corridor",
+          "scope": "The two subsidiaries’ flows to the hub, kept out of the loop."
+        },
+        "partners": [
+          "Regional road carrier able to chain several sites in the same rotation (lot 1).",
+          "Regional road carrier on the South → Hub corridor (lot 2)."
+        ],
+        "offerReading": "Example of reading: an offer assuming three weekly rotations where the lot asks for five is not comparable with another — it is first brought to the same scope."
+      },
+      "pooling": {
+        "1": {
+          "name": "Lot 1 · Pooled South → Hub corridor",
+          "scope": "Both subsidiaries’ flows grouped in a single lot, with an allocation key."
+        },
+        "partners": [
+          "Regional road carrier on the South → Hub corridor.",
+          "Groupage provider, if the shared volume does not fill a vehicle."
+        ],
+        "offerReading": "Example of reading: one offer may price the shared lot only, another each subsidiary separately; they are compared once put on the same basis."
+      },
+      "frequency": {
+        "1": {
+          "name": "Lot 1 · North → Hub, three departures a week",
+          "scope": "A reduced rhythm, with buffer-stock conditions on the receiving side."
+        },
+        "partners": [
+          "Regional road carrier on the North → Hub link."
+        ],
+        "offerReading": "Example of reading: price per departure rises as rhythm drops; the comparison is on the full weekly cost, not the unit price."
+      },
+      "modal": {
+        "1": {
+          "name": "Lot 1 · Hub → East warehouse by rail-road",
+          "scope": "Pre-haulage, rail traction, post-haulage, handling at both terminals."
+        },
+        "partners": [
+          "Rail-road operator on the Hub → East warehouse corridor.",
+          "Road carrier for terminal haulage."
+        ],
+        "offerReading": "Example of reading: one offer may include terminal haulage, another not; they are only comparable once the scope is aligned."
+      },
+      "electric": {
+        "1": {
+          "name": "Lot 1 · North → Hub → East in electric traction",
+          "scope": "The two links with charging confirmed at both ends."
+        },
+        "2": {
+          "name": "Lot 2 · Remaining links",
+          "scope": "The other links, as they are, until charging infrastructure is in place."
+        },
+        "partners": [
+          "Carrier with electric vehicles suited to lot 1.",
+          "Regional road carrier for the remaining links (lot 2)."
+        ],
+        "offerReading": "Example of reading: vehicle availability and charging power are conditions of the offer, not details."
+      }
+    },
+    "board": {
+      "aria": "Demonstration case board, stage “{stage}”. Level of knowledge: {status}.",
+      "demo": "Demonstration case — fictitious sites and values",
+      "perWeek": "{n}/wk",
+      "pooled": "Subsidiaries A + B",
+      "slotOpen": "Open point",
+      "spot": "spot",
+      "terminal": "Terminal",
+      "lot": "Lot {n}",
+      "contract": "contract",
+      "offer": "Offer {x}",
+      "partners": {
+        "roadRegional": "Regional road",
+        "railRoad": "Rail-road operator",
+        "electricFleet": "Electric fleet",
+        "roadSecond": "Regional road (lot 2)",
+        "groupage": "Groupage provider"
+      }
+    },
+    "sites": {
+      "N": "North plant",
+      "C": "Central hub",
+      "E": "East warehouse",
+      "S": "South plant"
+    }
+  }
+}

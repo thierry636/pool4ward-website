@@ -1,0 +1,231 @@
+{
+  "Approach": {
+    "meta": {
+      "title": "Approche",
+      "description": "Le transport n’est pas une prestation interchangeable : il se conçoit à partir de ce que le terrain permet. Notre approche, de l’ingénierie à la contractualisation."
+    },
+    "hero": {
+      "eyebrow": "Approche",
+      "title": "Le transport se conçoit d’abord avec le terrain.",
+      "lede": "Le transport est un poste de coûts, un facteur de risque et une condition de continuité de l’activité. Les transformations énergétiques et les tensions sur les ressources, humaines notamment, obligent à rapprocher les décisions de la réalité physique et des disponibilités mobilisables."
+    },
+    "conviction": {
+      "eyebrow": "Notre conviction",
+      "title": "Une prestation interchangeable, achetée au meilleur prix ?",
+      "body": [
+        "Le transport ne se réduit pas à cela. Les flux, les créneaux, les conducteurs, les équipements, les infrastructures, les ressources énergétiques et les engagements déterminent les organisations réellement possibles.",
+        "Deux offres au même prix ne valent pas la même chose si l’une suppose un quai libre à 6 h et l’autre un retour chargé. Comparer des prix sans comparer ce qu’ils supposent, c’est comparer des étiquettes."
+      ]
+    },
+    "ground": {
+      "eyebrow": "Ce que le terrain détermine",
+      "title": "Six réalités avant le premier prix.",
+      "items": {
+        "flows": {
+          "name": "Les flux",
+          "body": "Combien, à quelle fréquence, avec quelle régularité. Un flux quotidien et un flux mensuel n’appellent pas le même transport, ni le même contrat."
+        },
+        "slots": {
+          "name": "Les créneaux",
+          "body": "Les fenêtres de quai et les délais de service bornent les enchaînements. Un créneau déplacé peut ouvrir une complémentarité — ou en fermer une."
+        },
+        "drivers": {
+          "name": "Les conducteurs",
+          "body": "Une ressource rare, soumise à des temps de conduite et de repos. Une organisation qui l’ignore n’existe que sur le papier."
+        },
+        "equipment": {
+          "name": "Les équipements",
+          "body": "Ce qui peut voyager ensemble, dans quoi, et ce qu’il faut pour charger et décharger."
+        },
+        "energy": {
+          "name": "Les infrastructures et l’énergie",
+          "body": "Terminaux, voies, bornes de recharge, puissance disponible : ce que le territoire permet, là où l’on en a besoin."
+        },
+        "commitments": {
+          "name": "Les engagements",
+          "body": "Contrats en cours, durées, échéances. Ils disent ce qui est possible aujourd’hui et ce qui le devient demain."
+        }
+      }
+    },
+    "levers": {
+      "eyebrow": "Leviers et moyens",
+      "title": "Des leviers pour agir, des moyens pour y arriver.",
+      "lede": "Maîtriser les coûts, réduire les risques, sécuriser les capacités : ce sont les objectifs. Voici ce qui permet de les atteindre.",
+      "items": {
+        "collaboration": {
+          "kind": "Levier",
+          "name": "La collaboration",
+          "body": "D’abord entre les sites et les filiales d’un groupe, où les complémentarités sont les plus directes. Puis avec d’autres chargeurs, lorsqu’elle apporte une valeur supplémentaire. Les transporteurs sont des partenaires avec lesquels construire des engagements réalisables."
+        },
+        "intermodal": {
+          "kind": "Levier",
+          "name": "L’intermodal",
+          "body": "Rail, fluvial, maritime : une option parmi d’autres, à comparer sur le coût complet et le service, pas un parti pris."
+        },
+        "ai": {
+          "kind": "Moyen",
+          "name": "L’intelligence artificielle",
+          "body": "Un moyen d’explorer plus d’organisations et de lire plus vite des informations hétérogènes. Elle aide à préparer la décision ; elle ne la prend pas à votre place."
+        },
+        "datasets": {
+          "kind": "Socle",
+          "name": "Les référentiels",
+          "body": "Services, opérateurs, infrastructures : ils documentent le terrain. Chacun est daté et borné, et ce que nous en montrons est précisé page Référentiels."
+        }
+      }
+    },
+    "ladder": {
+      "eyebrow": "Précision",
+      "title": "Cinq niveaux de connaissance, jamais mélangés.",
+      "lede": "La précision renforce le discours. Chaque objet de nos études — un site, une liaison, un partenaire — se situe sur cette échelle, et chaque niveau s’acquiert différemment."
+    },
+    "cta": {
+      "title": "Votre terrain a ses propres réalités.",
+      "body": "Parlons de vos flux, de vos sites et de vos contrats.",
+      "button": "Parler de votre plan transport"
+    }
+  },
+  "Solutions": {
+    "meta": {
+      "title": "Solutions",
+      "description": "Cinq capacités pour cinq décisions : ingénierie transport, préparation des appels d’offres, recherche de transporteurs, comparaison des offres, gestion des contrats."
+    },
+    "hero": {
+      "eyebrow": "Solutions",
+      "title": "Cinq capacités, pour cinq décisions.",
+      "lede": "Chaque page répond à une décision que vous avez à prendre — pas à un nom de logiciel. Les noms des applications restent accessibles plus bas."
+    },
+    "apps": {
+      "eyebrow": "Applications",
+      "title": "Les applications derrière ces capacités.",
+      "lede": "Vous n’avez pas besoin de les connaître pour comprendre l’offre. Les voici, avec ce que chacune fait.",
+      "items": {
+        "design4ward": {
+          "name": "Design4ward",
+          "body": "Le cockpit du chargeur : cartographie des flux, études d’ingénierie (cross-dock, report modal, boucles, électrification), préparation des appels d’offres."
+        },
+        "compute4ward": {
+          "name": "Compute4ward",
+          "body": "Le modèle de coût et d’émissions que mobilisent les études."
+        },
+        "modal4ward": {
+          "name": "Modal4ward",
+          "body": "Le catalogue des services multimodaux (rail, fluvial, maritime) et son assistant."
+        },
+        "connect4ward": {
+          "name": "Connect4ward",
+          "body": "L’ingestion et la standardisation des données de transport, la publication de jeux partagés, le registre des contrats."
+        },
+        "carrierbridge": {
+          "name": "CarrierBridge",
+          "body": "Les grilles tarifaires et les indices d’énergie échangés avec les transporteurs."
+        }
+      },
+      "serves": "Sert :"
+    },
+    "detail": {
+      "decision": "La décision",
+      "continuity": "Dans la continuité",
+      "previous": "Avant",
+      "next": "Après",
+      "first": "Point d’entrée du parcours.",
+      "last": "Dernière étape du parcours.",
+      "cta": "Parler de cette capacité"
+    }
+  },
+  "Company": {
+    "meta": {
+      "title": "L’entreprise",
+      "description": "Pool4ward accompagne les entreprises de l’ingénierie à la contractualisation du transport. Notre conviction, notre façon de travailler."
+    },
+    "hero": {
+      "eyebrow": "L’entreprise",
+      "title": "Rapprocher une idée d’organisation de sa réalisation.",
+      "lede": "Pool4ward accompagne les entreprises de l’ingénierie à la contractualisation du transport. Nous croyons que les décisions de transport gagnent à se prendre au plus près du terrain."
+    },
+    "beliefs": {
+      "eyebrow": "Ce en quoi nous croyons",
+      "title": "Quatre convictions de travail.",
+      "items": [
+        {
+          "name": "Le prix ne dit pas tout.",
+          "body": "Il dépend de ce que l’offre suppose : créneaux, équipements, conducteurs, énergie, engagements."
+        },
+        {
+          "name": "Une donnée sans structure ne sert à rien.",
+          "body": "Les décisions de transport demandent des données partagées, datées et bornées — pas des fichiers qui circulent."
+        },
+        {
+          "name": "La valeur est entre les sites.",
+          "body": "Les complémentarités les plus directes se trouvent d’abord entre les sites et filiales d’un même groupe."
+        },
+        {
+          "name": "L’exécution compte plus que l’analyse.",
+          "body": "Un plan qui ne se traduit pas en engagements réalisables reste un schéma."
+        }
+      ]
+    },
+    "how": {
+      "eyebrow": "Façon de travailler",
+      "title": "Preuves avant promesses.",
+      "body": [
+        "Nous ne publions pas de logos de clients ni de chiffres de gains qui ne seraient pas vérifiables. Nous décrivons ce que nos outils font, nous disons ce que nos référentiels couvrent, et nous distinguons ce qui est référencé de ce qui est confirmé.",
+        "Nos analyses citent leurs sources. Quand une donnée manque, nous l’écrivons."
+      ]
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Écrivez-nous."
+    }
+  },
+  "Contact": {
+    "meta": {
+      "title": "Parler de votre plan transport",
+      "description": "Échangez avec Pool4ward sur vos flux, vos sites et vos contrats de transport."
+    },
+    "hero": {
+      "eyebrow": "Contact",
+      "title": "Parlons de votre plan transport.",
+      "lede": "Dites-nous en quelques lignes ce que vous cherchez à décider. Nous répondons par un échange court, pour voir si vos flux, vos sites et vos contrats se prêtent à une autre organisation."
+    },
+    "form": {
+      "name": "Nom",
+      "email": "E-mail professionnel",
+      "company": "Entreprise",
+      "topic": "Ce qui vous amène",
+      "topics": {
+        "engineering": "Ingénierie transport",
+        "tenders": "Appel d’offres",
+        "carriers": "Recherche de transporteurs",
+        "comparison": "Comparaison d’offres",
+        "contracts": "Gestion des contrats",
+        "other": "Autre"
+      },
+      "message": "Votre contexte",
+      "messageHelp": "Quelques lignes suffisent : sites concernés, nature des flux, échéance de décision. N’envoyez pas de données confidentielles.",
+      "consent": "Ces informations servent uniquement à répondre à votre demande.",
+      "submit": "Envoyer",
+      "sending": "Envoi en cours…",
+      "required": "Champ obligatoire",
+      "invalidEmail": "Adresse e-mail invalide",
+      "success": "Merci, votre message est parti. Nous revenons vers vous rapidement.",
+      "error": "L’envoi a échoué. Réessayez dans un instant.",
+      "unavailable": "Le formulaire n’est pas raccordé sur cet environnement de prévisualisation. Votre message n’a pas été envoyé.",
+      "tooMany": "Trop de tentatives. Patientez quelques minutes avant de réessayer."
+    },
+    "side": {
+      "title": "Avant de nous écrire",
+      "items": [
+        "Ce formulaire ne collecte que les informations ci-contre.",
+        "N’y joignez pas de données confidentielles : nous conviendrons d’un cadre d’échange adapté.",
+        "Si vous préférez commencer seul, le diagnostic prend deux minutes."
+      ],
+      "diagnostic": "Faire le diagnostic"
+    }
+  },
+  "NotFound": {
+    "title": "Cette page n’existe pas.",
+    "body": "Le lien est peut-être ancien : plusieurs pages du site précédent ont été regroupées. Repartez de l’accueil ou de l’une des quatre rubriques.",
+    "home": "Retour à l’accueil"
+  }
+}

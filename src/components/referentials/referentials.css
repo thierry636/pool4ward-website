@@ -1,0 +1,820 @@
+/* La planche des référentiels : une fenêtre sombre, un menu à gauche, la fiche du référentiel à droite.
+   Les durées et les retards des animations sont portés par des variables ; sous « mouvement réduit »,
+   la règle globale (globals.css) les ramène à zéro : tout s'affiche terminé. */
+
+.rb {
+  --rb-bg: #0b1224;
+  --rb-side: #0a1020;
+  --rb-line: rgb(148 163 184 / 0.16);
+  --rb-soft: rgb(148 163 184 / 0.07);
+  --rb-fg: #f1f5f9;
+  --rb-mut: #94a3b8;
+  --rb-dim: #8a99ae;
+  --rb-ind: #818cf8;
+  --rb-dur: 9s;
+}
+
+/* Avant que la planche n'arrive à l'écran (script actif) : le panneau attend, pour que les chiffres
+   comptent et que les tracés se dessinent sous les yeux de la personne qui lit. */
+.rb[data-pending="true"] .rb-panel {
+  opacity: 0;
+}
+
+.rb-window {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid rgb(148 163 184 / 0.22);
+  border-radius: 1.4rem;
+  background: var(--rb-bg);
+  color: var(--rb-fg);
+  box-shadow: 0 40px 90px -40px rgb(30 41 120 / 0.65), 0 2px 0 0 rgb(255 255 255 / 0.04) inset;
+}
+@media (min-width: 1024px) {
+  .rb-window {
+    grid-template-columns: 18.5rem minmax(0, 1fr);
+    min-height: 48rem;
+  }
+}
+
+/* ---------------------------------------------------------------- menu */
+.rb-menu {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: linear-gradient(180deg, #0d1730, var(--rb-side));
+  border-bottom: 1px solid var(--rb-line);
+}
+@media (min-width: 1024px) {
+  .rb-menu {
+    padding: 1.1rem 0.9rem 0.9rem;
+    border-right: 1px solid var(--rb-line);
+    border-bottom: 0;
+  }
+}
+.rb-list {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.8rem 0.9rem;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+.rb-list::-webkit-scrollbar {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .rb-list {
+    flex-direction: column;
+    gap: 0;
+    overflow: visible;
+    padding: 0;
+  }
+}
+.rb-group {
+  display: none;
+  margin: 0.95rem 0.5rem 0.4rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--rb-dim);
+}
+.rb-entry {
+  display: contents;
+}
+.rb-entry:first-child > .rb-group {
+  margin-top: 0.1rem;
+}
+.rb-stage {
+  min-width: 0;
+  container-type: inline-size;
+}
+@media (min-width: 1024px) {
+  .rb-group {
+    display: block;
+  }
+}
+.rb-item {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.7rem;
+  overflow: hidden;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.9rem 0.5rem 0.55rem;
+  border: 1px solid transparent;
+  border-radius: 0.8rem;
+  background: transparent;
+  color: #cbd5e1;
+  text-align: left;
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+@media (min-width: 1024px) {
+  .rb-item {
+    width: 100%;
+    margin-bottom: 0.2rem;
+    padding: 0.75rem 0.65rem;
+  }
+}
+.rb-item:hover {
+  background: rgb(148 163 184 / 0.08);
+  color: #fff;
+}
+.rb-item:focus-visible {
+  outline: 2px solid #a5b4fc;
+  outline-offset: 2px;
+}
+.rb-item[aria-selected="true"] {
+  border-color: rgb(129 140 248 / 0.7);
+  background: rgb(66 99 235 / 0.2);
+  color: #fff;
+}
+.rb-ic {
+  display: grid;
+  flex: none;
+  width: 2.1rem;
+  height: 2.1rem;
+  place-items: center;
+  border-radius: 0.65rem;
+  background: rgb(148 163 184 / 0.1);
+  color: var(--rb-mut);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.rb-item[aria-selected="true"] .rb-ic {
+  background: rgb(129 140 248 / 0.28);
+  color: #e0e7ff;
+}
+.rb-tx {
+  min-width: 0;
+}
+.rb-tx b {
+  display: block;
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.rb-tx small {
+  display: none;
+  margin-top: 0.15rem;
+  font-size: 0.74rem;
+  color: var(--rb-dim);
+}
+@media (min-width: 1024px) {
+  .rb-tx small {
+    display: block;
+  }
+}
+.rb-item[aria-selected="true"] .rb-tx small {
+  color: #a5b4fc;
+}
+.rb-tx b {
+  white-space: nowrap;
+}
+@media (min-width: 1024px) {
+  .rb-tx b {
+    white-space: normal;
+  }
+}
+/* La barre du référentiel affiché : elle avance pendant la lecture et lance le suivant en finissant. */
+.rb-bar {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 3px;
+  background: var(--rb-ind);
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: rb-progress var(--rb-dur) linear forwards;
+}
+.rb[data-playing="false"] .rb-bar {
+  animation-play-state: paused;
+}
+.rb[data-auto="false"] .rb-bar {
+  animation: none;
+  transform: scaleX(1);
+  opacity: 0.55;
+}
+@keyframes rb-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.rb-ctl {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.9rem 0.8rem;
+}
+@media (min-width: 1024px) {
+  .rb-ctl {
+    margin-top: auto;
+    padding: 0.9rem 0.4rem 0.1rem;
+  }
+}
+.rb-dots {
+  display: flex;
+  gap: 0.3rem;
+}
+.rb-dots i {
+  width: 1rem;
+  height: 4px;
+  border-radius: 3px;
+  background: #1e293b;
+  transition: background 0.2s ease;
+}
+.rb-dots i[data-on="true"] {
+  background: var(--rb-ind);
+}
+.rb-btns {
+  display: flex;
+  gap: 0.35rem;
+}
+.rb-btn {
+  display: grid;
+  width: 1.9rem;
+  height: 1.9rem;
+  place-items: center;
+  border: 1px solid rgb(148 163 184 / 0.28);
+  border-radius: 0.6rem;
+  background: transparent;
+  color: var(--rb-mut);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.rb-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.rb-btn:hover {
+  background: rgb(148 163 184 / 0.12);
+  color: #fff;
+}
+.rb-btn:focus-visible {
+  outline: 2px solid #a5b4fc;
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------- panneau */
+.rb-panel {
+  min-width: 0;
+  padding: 1.25rem 1.1rem 1.4rem;
+  animation: rb-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@media (min-width: 640px) {
+  .rb-panel {
+    padding: 1.5rem 1.7rem 1.7rem;
+  }
+}
+@keyframes rb-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+.rb-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.8rem 1.2rem;
+}
+.rb-head h3 {
+  font-size: clamp(1.3rem, 2.2vw, 1.65rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+.rb-head p {
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  color: var(--rb-mut);
+}
+.rb-live {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid rgb(16 185 129 / 0.4);
+  border-radius: 9999px;
+  background: rgb(16 185 129 / 0.12);
+  color: #6ee7b7;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.rb-live i {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: #34d399;
+  box-shadow: 0 0 0 0 rgb(52 211 153 / 0.5);
+  animation: rb-pulse 2.4s ease-out infinite;
+}
+@keyframes rb-pulse {
+  70% {
+    box-shadow: 0 0 0 7px rgb(52 211 153 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(52 211 153 / 0);
+  }
+}
+
+.rb-kpis {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin-top: 1.1rem;
+}
+@media (min-width: 640px) {
+  .rb-kpis {
+    grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr));
+  }
+}
+.rb-kpi {
+  padding: 0.85rem 1rem 0.8rem;
+  border: 1px solid var(--rb-line);
+  border-radius: 0.9rem;
+  background: var(--rb-soft);
+  animation: rb-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--d, 0s);
+}
+.rb-kpi b {
+  display: block;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+.rb-kpi b.txt {
+  font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  padding-top: 0.15rem;
+}
+.rb-kpi span {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.78rem;
+  line-height: 1.3;
+  color: var(--rb-mut);
+}
+
+.rb-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.9rem;
+  margin-top: 0.9rem;
+}
+/* Deux colonnes dès que le panneau est assez large (sa largeur, pas celle de l'écran : le menu en prend une partie). */
+@container (min-width: 720px) {
+  .rb-body {
+    grid-template-columns: minmax(0, 1.5fr) minmax(16rem, 1fr);
+  }
+}
+.rb-map {
+  position: relative;
+  align-self: start;
+  overflow: hidden;
+  border: 1px solid var(--rb-line);
+  border-radius: 0.9rem;
+  background: #050d1f;
+}
+.rb-map .layer-map {
+  border-bottom: 0;
+}
+.rb-chips {
+  position: absolute;
+  left: 0.7rem;
+  top: 0.7rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.rb-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.25rem 0.65rem;
+  border: 1px solid rgb(148 163 184 / 0.3);
+  border-radius: 9999px;
+  background: rgb(2 6 23 / 0.78);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+.rb-chip i {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 0.18rem;
+}
+.rb-chip em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--rb-mut);
+  font-variant-numeric: tabular-nums;
+}
+.rb-legend {
+  position: absolute;
+  right: 0.7rem;
+  bottom: 0.7rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.9rem;
+  max-width: calc(100% - 1.4rem);
+  padding: 0.35rem 0.75rem;
+  border: 1px solid rgb(148 163 184 / 0.25);
+  border-radius: 0.65rem;
+  background: rgb(2 6 23 / 0.78);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  font-size: 0.7rem;
+  color: #cbd5e1;
+}
+.rb-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.rb-legend i {
+  width: 1rem;
+  height: 3px;
+  border-radius: 2px;
+}
+.rb-legend i.pt {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 9999px;
+}
+.rb-legend i.sq {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 0.15rem;
+}
+
+.rb-side {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.rb-card {
+  padding: 0.95rem 1.05rem 1rem;
+  border: 1px solid var(--rb-line);
+  border-radius: 0.9rem;
+  background: var(--rb-soft);
+  animation: rb-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--d, 0.2s);
+}
+.rb-card h4 {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.7rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+.rb-card h4 small {
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--rb-dim);
+}
+
+/* Formes de services : un glyphe, un libellé, une barre, un nombre. */
+.rb-row {
+  display: grid;
+  grid-template-columns: 1.9rem minmax(0, 1fr) 4.2rem 3.2rem;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+}
+.rb-row:last-child {
+  margin-bottom: 0;
+}
+.rb-track {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: rgb(148 163 184 / 0.14);
+}
+.rb-track i {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  transform-origin: left;
+  animation: rb-grow 0.95s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--d, 0.3s);
+}
+@keyframes rb-grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+.rb-num {
+  text-align: right;
+  font-weight: 700;
+  color: var(--rb-fg);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Un service « métro » : des arrêts reliés, qui se révèlent un à un. */
+.rb-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.85rem;
+}
+.rb-tag {
+  padding: 0.25rem 0.6rem;
+  border: 1px solid rgb(129 140 248 / 0.35);
+  border-radius: 0.5rem;
+  background: rgb(129 140 248 / 0.14);
+  color: #c7d2fe;
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+.rb-pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.7rem;
+  font-size: 0.74rem;
+  color: var(--rb-mut);
+}
+.rb-pill {
+  padding: 0.15rem 0.55rem;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+.rb-stops {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin: 0.3rem 0.1rem 0;
+}
+.rb-stops::before {
+  content: "";
+  position: absolute;
+  left: 0.55rem;
+  right: 0.55rem;
+  top: 0.5rem;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--line, #10b981);
+  transform-origin: left;
+  animation: rb-grow 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.45s both;
+}
+.rb-stop {
+  position: relative;
+  width: 25%;
+  text-align: center;
+  animation: rb-in 0.5s ease both;
+  animation-delay: var(--d, 0.5s);
+}
+.rb-stop u {
+  display: block;
+  width: 1.05rem;
+  height: 1.05rem;
+  margin: 0 auto;
+  border: 3px solid var(--line, #10b981);
+  border-radius: 9999px;
+  background: var(--rb-bg);
+}
+.rb-stop[data-end="true"] u {
+  background: var(--line, #10b981);
+}
+.rb-stop b {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.rb-stop small {
+  display: block;
+  margin-top: 0.1rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.66rem;
+  color: var(--rb-dim);
+}
+
+/* Une fiche (site de recharge) : des champs, un état. */
+.rb-fields {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.4rem 1rem;
+  font-size: 0.8rem;
+}
+.rb-fields dt {
+  color: var(--rb-mut);
+}
+.rb-fields dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--rb-fg);
+}
+.rb-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.rb-state i {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 9999px;
+  background: #34d399;
+}
+.rb-site {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.7rem;
+}
+.rb-site b {
+  font-size: 1rem;
+  font-weight: 700;
+}
+.rb-site span {
+  font-size: 0.74rem;
+  color: var(--rb-dim);
+}
+.rb-link {
+  display: inline-block;
+  margin-top: 0.7rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #a5b4fc;
+}
+
+.rb-mask {
+  display: inline-block;
+  padding: 0.1rem 0.55rem;
+  border: 1px dashed rgb(148 163 184 / 0.45);
+  border-radius: 0.4rem;
+  font-size: 0.72rem;
+  color: var(--rb-mut);
+  letter-spacing: 0.08em;
+}
+.rb-stars {
+  color: #fbbf24;
+  font-weight: 700;
+}
+.rb-list-pts {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.84rem;
+  color: #cbd5e1;
+}
+.rb-list-pts li {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  line-height: 1.4;
+}
+.rb-list-pts li::before {
+  content: "";
+  flex: none;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-top: 0.4rem;
+  border-radius: 9999px;
+  background: var(--rb-ind);
+}
+
+/* Le côté de la carte prend toute la hauteur de la carte ; ses rangées se répartissent. */
+.rb-card[data-grow] {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.rb-rows {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.45rem;
+}
+.rb-rows .rb-row {
+  margin-bottom: 0;
+}
+
+/* La fiche en détail : pleine largeur sous la carte et les chiffres. */
+.rb-card[data-wide] {
+  margin-top: 0.9rem;
+}
+.rb-detail-grid {
+  display: grid;
+  gap: 1.1rem 2rem;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+@container (min-width: 720px) {
+  .rb-detail-grid {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  }
+}
+.rb-contains p {
+  margin: 0;
+  font-size: 0.76rem;
+  color: var(--rb-mut);
+}
+.rb-contains .rb-tags {
+  margin-top: 0.5rem;
+}
+@container (min-width: 720px) {
+  .rb-card[data-wide] .rb-fields {
+    grid-template-columns: auto minmax(0, 1fr) auto minmax(0, 1fr);
+    column-gap: 1.4rem;
+  }
+}
+
+/* Panneaux sans chiffres (réseaux, parkings) : la carte prend toute la largeur, ce qu'elle décrit passe dessous. */
+.rb-body[data-solo] {
+  grid-template-columns: minmax(0, 1fr);
+}
+.rb-body[data-solo] .rb-list-pts {
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.7rem 1.6rem;
+}
+.rb-body[data-solo] .rb-card[data-grow] {
+  flex: none;
+}
+
+/* L'état des sites : un anneau qui se trace, son total au centre. */
+.rb-donut-wrap {
+  position: relative;
+  width: min(100%, 9.5rem);
+  margin: 0.1rem auto 0.9rem;
+}
+.rb-donut {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.rb-donut circle {
+  fill: none;
+  stroke-width: 5;
+}
+.rb-donut-bg {
+  stroke: rgb(148 163 184 / 0.12);
+}
+.rb-donut-arc {
+  animation: rb-sweep 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--d, 0.35s);
+}
+@keyframes rb-sweep {
+  from {
+    stroke-dasharray: 0 100;
+  }
+}
+.rb-donut-c {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+.rb-donut-c b {
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.rb-donut-c span {
+  margin-top: 0.2rem;
+  font-size: 0.74rem;
+  color: var(--rb-mut);
+}
+.rb-dot {
+  display: block;
+  width: 0.6rem;
+  height: 0.6rem;
+  margin: 0 auto;
+  border-radius: 9999px;
+}
+
+.rb-detail-grid .rb-site {
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+.rb-card[data-grow] .rb-list-pts {
+  flex: 1;
+  align-content: space-evenly;
+}
+.rb-body[data-solo] .rb-card[data-grow] .rb-list-pts {
+  flex: none;
+  align-content: start;
+}

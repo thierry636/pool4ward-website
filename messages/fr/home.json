@@ -1,0 +1,369 @@
+{
+  "Home": {
+    "cover": {
+      "eyebrow": "De l’ingénierie à la contractualisation du transport",
+      "title": "Concevoir le transport <em>au plus près du réel.</em>",
+      "lede": "Face aux transformations énergétiques et aux tensions sur les ressources, Pool4ward accompagne les entreprises de l’ingénierie à la contractualisation pour maîtriser leurs coûts, réduire leurs risques et sécuriser leurs capacités de transport.",
+      "benefits": [
+        "Maîtriser les coûts",
+        "Réduire les risques",
+        "Sécuriser les capacités"
+      ]
+    },
+    "stakes": {
+      "eyebrow": "Pourquoi partir du terrain",
+      "title": "Le transport n’est pas une prestation interchangeable.",
+      "lede": "Acheter au meilleur prix suppose que l’offre soit la même partout. Elle ne l’est pas : ce que vous pouvez transporter, quand, avec quoi et par qui dépend de six réalités du terrain.",
+      "items": {
+        "flows": {
+          "name": "Les flux",
+          "body": "Volumes et récurrence : ils décident de ce qui peut se mutualiser et de ce qui se contractualise dans la durée."
+        },
+        "slots": {
+          "name": "Les créneaux",
+          "body": "Fenêtres de quai et délais : ils décident des enchaînements possibles entre deux livraisons."
+        },
+        "drivers": {
+          "name": "Les conducteurs",
+          "body": "Disponibilité et temps de conduite : une ressource rare, qui borne les rotations."
+        },
+        "equipment": {
+          "name": "Les équipements",
+          "body": "Palettes, vrac, conteneurs : ce qui peut voyager ensemble, et sur quoi."
+        },
+        "energy": {
+          "name": "Infrastructures et énergie",
+          "body": "Terminaux, bornes de recharge, réseaux : ce que le territoire permet, et à quelle puissance."
+        },
+        "commitments": {
+          "name": "Les engagements",
+          "body": "Contrats, durées, échéances : ce qui est déjà pris, et quand une autre organisation redevient possible."
+        }
+      },
+      "closing": "C’est pourquoi nous partons du terrain, pas du prix."
+    },
+    "journey": {
+      "eyebrow": "Du terrain aux engagements",
+      "title": "Un même cas, de la réalité du terrain jusqu’au contrat.",
+      "lede": "Un groupe fictif, quatre sites, six flux. Suivez-le de bout en bout : ce que nous relevons, les organisations que nous comparons, ce que nous mettons en consultation puis sous contrat.",
+      "note": "Cas démonstrateur : sites, volumes et échéances sont fictifs. Le schéma n’est pas un calcul d’itinéraire."
+    },
+    "capabilities": {
+      "eyebrow": "Cinq capacités",
+      "title": "Une continuité, de la première étude au contrat suivi.",
+      "lede": "Chaque capacité reprend ce que la précédente a établi. La page de chacune dit ce qu’elle couvre, et ce que le logiciel fait réellement."
+    },
+    "datasets": {
+      "eyebrow": "Référentiels",
+      "title": "Ce que nous savons du terrain — et jusqu’où.",
+      "lede": "Intermodal, shortsea, frigorifique, fluvial : nos référentiels documentent les sites et les services qui les relient. Nous les montrons en animation — pas comme un annuaire où chercher.",
+      "ladderTitle": "Référencé n’est pas disponible.",
+      "ladderBody": "Un transporteur présent dans un référentiel n’a pas pour autant de camion libre sur votre corridor. Nous distinguons cinq niveaux de connaissance, et l’animation n’en montre qu’un : ce qui est référencé.",
+      "explore": "Voir le monde des services",
+      "posterLabel": "Aperçu du globe des services de transport."
+    },
+    "evidence": {
+      "eyebrow": "Preuves vérifiables",
+      "title": "Ce que vous pouvez vérifier, et ce que nous ne prétendons pas.",
+      "lede": "Pas de logos de clients ni de témoignages ici : seulement ce qui se contrôle.",
+      "verify": {
+        "title": "À vérifier aujourd’hui",
+        "items": [
+          {
+            "name": "Un cas navigable",
+            "body": "Le parcours ci-dessus se parcourt en deux minutes ; ses limites y sont écrites."
+          },
+          {
+            "name": "Des analyses sourcées",
+            "body": "Nos articles citent leurs sources et s’arrêtent là où les chiffres s’arrêtent."
+          },
+          {
+            "name": "Une couverture affichée",
+            "body": "La vitrine des référentiels dit si elle est un exemple ou une publication, et de quand elle date."
+          },
+          {
+            "name": "Cinq capacités, avec leurs limites",
+            "body": "Les pages Solutions distinguent ce que le logiciel fait de la méthode que nous appliquons, et disent quand une fonction n’est pas couverte."
+          }
+        ]
+      },
+      "notClaimed": {
+        "title": "Ce que nous ne prétendons pas",
+        "items": [
+          "Suivre vos véhicules en temps réel.",
+          "Garantir un gain chiffré sans avoir lu vos données.",
+          "Résumer votre risque en une note unique.",
+          "Considérer qu’un transporteur référencé est un transporteur disponible.",
+          "Couvrir tous les pays et tous les modes de la même façon."
+        ]
+      }
+    },
+    "insights": {
+      "eyebrow": "Analyses",
+      "title": "Des questions que les chargeurs ne se posent plus.",
+      "all": "Toutes les analyses"
+    },
+    "contact": {
+      "eyebrow": "Échanger",
+      "title": "Parlons de votre plan transport.",
+      "lede": "Un premier échange suffit pour dire si vos flux, vos sites et vos contrats se prêtent à une autre organisation. Vous n’avez rien à préparer.",
+      "diagnostic": "Vous préférez commencer seul ? Le diagnostic prend deux minutes.",
+      "diagnosticLink": "Faire le diagnostic"
+    },
+    "levers": {
+      "note": "Illustration : liaisons dessinées pour expliquer, pas des services existants.",
+      "mapLabel": "Carte animée de l’Europe. Levier en cours : {lever}.",
+      "items": {
+        "rail": {
+          "name": "Report modal rail/fluvial"
+        },
+        "shortsea": {
+          "name": "Shortsea côtier"
+        },
+        "loops": {
+          "name": "Boucles"
+        },
+        "crossdock": {
+          "name": "Cross-dock"
+        },
+        "electric": {
+          "name": "Électrification"
+        },
+        "pooling": {
+          "name": "Mutualisation"
+        }
+      }
+    },
+    "referentials": {
+      "eyebrow": "Le physique du transport",
+      "title": "Des référentiels qui <em>cartographient</em> le physique du transport.",
+      "lede": "Réseaux, services et sites : ce que nous décrivons, et jusqu’où.",
+      "note": "Animations illustratives : tracés indicatifs. Les noms d’opérateurs et de transporteurs sont masqués ; les données elles-mêmes ne sont pas publiées sur cette page.",
+      "menu": {
+        "label": "Les référentiels",
+        "groups": {
+          "services": "Services",
+          "networks": "Réseaux",
+          "sites": "Sites et acteurs"
+        }
+      },
+      "controls": {
+        "prev": "Référentiel précédent",
+        "next": "Référentiel suivant",
+        "pause": "Mettre le défilement en pause",
+        "play": "Relancer le défilement",
+        "position": "{n} sur {total}"
+      },
+      "live": "Mise à jour journalière",
+      "mapLabel": "Animation : la couche « {name} » sur la carte de l’Europe.",
+      "shapes": {
+        "title": "Formes de services",
+        "unit": "services",
+        "oneWay": "Sens unique",
+        "roundTrip": "Aller-retour",
+        "loop": "Boucle",
+        "metro": "Métro",
+        "metroLoop": "Métro bouclé",
+        "free": "Non organisé"
+      },
+      "status": {
+        "title": "État des sites",
+        "inService": "En service",
+        "construction": "En construction",
+        "planned": "Prévu",
+        "sites": "sites"
+      },
+      "fiche": {
+        "masked": "nom masqué",
+        "example": "exemple",
+        "illustrative": "exemple illustratif",
+        "terminus": "Terminus",
+        "contains": "Dans chaque fiche"
+      },
+      "items": {
+        "services": {
+          "name": "Services ferroviaires et fluviaux",
+          "sub": "{n} services",
+          "title": "Services ferroviaires et fluviaux",
+          "lead": "Réseau de services intermodaux",
+          "kpi": {
+            "services": "services",
+            "links": "liaisons",
+            "countries": "pays",
+            "operators": "opérateurs"
+          },
+          "chips": {
+            "rail": "Rail",
+            "waterway": "Fluvial"
+          },
+          "legend": {
+            "terminal": "Terminal",
+            "rail": "Service ferroviaire",
+            "waterway": "Service fluvial"
+          },
+          "ficheTitle": "Une fiche, en détail",
+          "route": {
+            "form": "Métro",
+            "mode": "Rail",
+            "counts": "{services} services · {stops} arrêts"
+          },
+          "tags": [
+            "Horaires",
+            "Fréquences",
+            "Opérateur",
+            "Contacts",
+            "Terminaux"
+          ]
+        },
+        "shortsea": {
+          "name": "Services shortsea",
+          "sub": "{n} services",
+          "title": "Services shortsea",
+          "lead": "Rotations et lignes maritimes à courte distance",
+          "kpi": {
+            "services": "services",
+            "continents": "continents",
+            "rotation": "en rotation : boucles et métros bouclés",
+            "cargo": "conteneurs et RoRo"
+          },
+          "cargoTitle": "Types de services",
+          "cargoValue": "Conteneurs · RoRo",
+          "chips": {
+            "shortsea": "Shortsea"
+          },
+          "legend": {
+            "port": "Port",
+            "line": "Ligne",
+            "loop": "Boucle",
+            "metroLoop": "Métro bouclé"
+          },
+          "ficheTitle": "Une rotation, en détail",
+          "route": {
+            "form": "Métro bouclé",
+            "mode": "Shortsea",
+            "counts": "{calls} escales"
+          },
+          "tags": [
+            "Escales",
+            "Jours et fréquences",
+            "Opérateur",
+            "Contacts"
+          ]
+        },
+        "networks": {
+          "name": "Réseaux ferroviaire et fluvial",
+          "sub": "Lignes et voies navigables",
+          "title": "Réseaux ferroviaire et fluvial",
+          "lead": "Les infrastructures sur lesquelles circulent les services",
+          "chips": {
+            "rail": "Ferroviaire",
+            "waterway": "Fluvial"
+          },
+          "legend": {
+            "rail": "Ligne ferroviaire",
+            "waterway": "Voie navigable"
+          },
+          "ficheTitle": "Ce que décrit le référentiel",
+          "points": [
+            "Les lignes et les nœuds du réseau ferré",
+            "Les voies navigables et les ports intérieurs",
+            "Leur rattachement aux terminaux et aux services"
+          ]
+        },
+        "chargers": {
+          "name": "Bornes électriques privées",
+          "sub": "{sites} sites · {chargers} bornes",
+          "title": "Réseaux privés de bornes électriques",
+          "lead": "Hubs de recharge pour poids lourds",
+          "kpi": {
+            "sites": "sites",
+            "chargers": "bornes publiées",
+            "countries": "pays",
+            "networks": "réseaux privés"
+          },
+          "chips": {
+            "chargers": "Bornes"
+          },
+          "legend": {
+            "corridor": "Corridor équipé",
+            "charger": "Borne"
+          },
+          "ficheTitle": "Une fiche site, en détail",
+          "fields": {
+            "status": "État",
+            "access": "Accès",
+            "places": "Places",
+            "bays": "Bornes",
+            "maxPower": "Puissance max.",
+            "price": "Prix",
+            "booking": "Réservation",
+            "operator": "Opérateur"
+          },
+          "values": {
+            "access": "Réservé aux poids lourds",
+            "price": "Non publié",
+            "booking": "Inconnue"
+          },
+          "link": "Fiche du site chez l’opérateur"
+        },
+        "parkings": {
+          "name": "Parkings",
+          "sub": "Aires poids lourds",
+          "title": "Parkings poids lourds",
+          "lead": "Aires de stationnement le long des grands axes",
+          "chips": {
+            "parkings": "Parkings"
+          },
+          "legend": {
+            "axis": "Grand axe routier",
+            "parking": "Parking"
+          },
+          "ficheTitle": "Ce que décrit le référentiel",
+          "points": [
+            "Les aires de stationnement poids lourds",
+            "Leur position le long des grands axes routiers"
+          ]
+        },
+        "carriers": {
+          "name": "Transporteurs",
+          "sub": "{carriers} transporteurs",
+          "title": "Transporteurs",
+          "lead": "Les transporteurs référencés, leurs implantations et leurs capacités",
+          "kpi": {
+            "carriers": "transporteurs",
+            "sites": "sites"
+          },
+          "chips": {
+            "carriers": "Transporteurs"
+          },
+          "legend": {
+            "site": "Implantation",
+            "area": "Zone couverte"
+          },
+          "ficheTitle": "Une fiche transporteur, en détail",
+          "country": "Portugal",
+          "reviews": "{n} avis",
+          "tags": [
+            "Remorque frigorifique",
+            "Opérateur avec flotte propre",
+            "Entrepôt à température dirigée"
+          ],
+          "moreTags": "+1",
+          "contacts": [
+            "Site web",
+            "Localisation"
+          ],
+          "pointsTitle": "Ce que décrit le référentiel",
+          "capacitiesTitle": "Capacités",
+          "contactsTitle": "Contacts",
+          "points": [
+            "Les implantations de chaque transporteur",
+            "Ses équipements et ses capacités",
+            "Les avis reçus",
+            "Ses contacts : site web et localisation"
+          ]
+        }
+      }
+    }
+  }
+}

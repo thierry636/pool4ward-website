@@ -1,30 +1,21 @@
 /**
- * Le blog est en ligne mais pas encore annoncé : les pages répondent à qui
- * connaît l'URL — pour relire et faire circuler en interne — mais elles ne
- * sont ni indexées, ni liées depuis l'en-tête ou le pied de page.
- *
- * Publier le blog, c'est passer ce booléen à `false`. Rien d'autre.
+ * Version 2 : le blog devient la rubrique « Analyses » de la navigation
+ * principale, donc il n'est plus masqué. L'indexation, elle, dépend de
+ * l'environnement de déploiement (`INDEXABLE`, voir `src/lib/site.ts`) : une
+ * préproduction reste hors des moteurs de recherche.
  */
-export const BLOG_MASQUE = true;
+export const BLOG_MASQUE = false;
 
 /**
- * Le site n'a pas de page `/contact` : le formulaire vit dans la section
- * `#contact` de la page Company, où pointent déjà l'en-tête, le pied de page,
- * `CTABand` et les deux sorties du diagnostic. Les CTA des articles écrivent
- * `/contact` dans le markdown ; c'est ici que l'adresse réelle est décidée.
+ * Les CTA des articles écrivent `/contact` dans le markdown ; c'est ici que
+ * l'adresse réelle est décidée. La version 2 a une vraie page de contact.
  */
-export const CHEMIN_CONTACT = "/company#contact";
+export const CHEMIN_CONTACT = "/contact";
 
 /** Le blog est servi dans les deux langues du site. */
 export const LOCALES_BLOG = ["fr", "en"] as const;
 
-/**
- * Racine des URL absolues — canoniques, Open Graph, JSON-LD. Le site n'avait
- * pas besoin de la connaître jusqu'ici : aucune page ne déclarait d'URL
- * absolue. Surchargeable par `NEXT_PUBLIC_SITE_URL` pour les préproductions.
- */
-export const URL_SITE =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://pool4ward.com";
+export { URL_SITE } from "@/lib/site";
 
 /** Chemin d'un article, et de l'index, dans une locale donnée. */
 export const cheminIndex = (locale: string) => `/${locale}/blog`;

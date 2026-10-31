@@ -1,0 +1,12 @@
+{
+  "Blog": {
+    "metaTitle": "Insights — Pool4ward",
+    "metaDescription": "Analysis on the make-or-buy call, fleet electrification, packaging reuse and pooling between shippers.",
+    "indexTitle": "Insights",
+    "indexLede": "Questions shippers have stopped asking.",
+    "backToIndex": "All insights",
+    "readNext": "Read next",
+    "readingTime": "{minutes} min read",
+    "empty": "No insights yet."
+  }
+}

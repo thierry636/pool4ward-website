@@ -1,0 +1,162 @@
+{
+  "Datasets": {
+    "meta": {
+      "title": "Datasets",
+      "description": "The world of transport services as our datasets document it: intermodal rail, Baltic shortsea, refrigerated carriers in Germany, Rhine barge — as an animation, not a search tool."
+    },
+    "hero": {
+      "eyebrow": "Datasets",
+      "title": "Transport services, seen from above.",
+      "lede": "Intermodal, shortsea, refrigerated, barge: our datasets document geolocated sites and the services that link them. We show them as an animation — not as a directory to search."
+    },
+    "world": {
+      "eyebrow": "The world of services",
+      "title": "Four field stories, one turning globe.",
+      "lede": "The globe plays four chapters: intermodal rail in Europe, shortsea in the Baltic, refrigerated carriers in Germany, barge on the Rhine. Nothing to type, nothing to query: you watch, pause, or move on to the next chapter."
+    },
+    "read": {
+      "eyebrow": "How to read the animation",
+      "title": "Three reading rules.",
+      "items": [
+        {
+          "name": "Referenced is not available.",
+          "body": "A site or service shown here is referenced: that does not mean capacity is free on your corridor. Availability is confirmed by a written answer."
+        },
+        {
+          "name": "Sites, not exact routes.",
+          "body": "Sites are placed to within about a kilometre; links are arcs joining a start to an end, not the actual path of a train, ship or truck. No vehicle is tracked."
+        },
+        {
+          "name": "What is named is published.",
+          "body": "When an operator name appears, it has been cleared for publication. Without clearance, the link appears without a name: we do not fill in the blanks."
+        }
+      ]
+    },
+    "protection": {
+      "eyebrow": "What we publish",
+      "title": "A static showcase; a database that stays private.",
+      "lede": "Anything a public site displays can be copied: we do not pretend to prevent it. So we settle the question upstream — the source database is never online, and the site only publishes what we are comfortable seeing copied.",
+      "tiers": [
+        {
+          "name": "Private database",
+          "body": "Sources, contacts, qualifications, precise coordinates. Maintained by an administrator, outside this site: it has neither access nor credentials."
+        },
+        {
+          "name": "Validated export",
+          "body": "One publication at a time, triggered by a person. Allowed columns only, capped volume, coordinates rounded to about 1 km, names checked. The difference from the previous version is reviewed before release."
+        },
+        {
+          "name": "Static showcase",
+          "body": "A single file, built into the site when it is built. No API, no request to the database, nothing to query: what is published is what is shown."
+        }
+      ],
+      "limit": "Stated limit: the showcase can be copied in full. It contains only what we are comfortable seeing copied — no volumes, no prices, no precise coordinates."
+    },
+    "coverage": {
+      "eyebrow": "Contents",
+      "title": "What the showcase contains — and nothing else.",
+      "lede": "The format is closed: data that is not provided for is not published — it makes the publication fail.",
+      "columns": {
+        "item": "Item",
+        "content": "What is published",
+        "grain": "Precision"
+      },
+      "rows": [
+        {
+          "name": "Sites",
+          "content": "Name, type (port, rail-road terminal, inland port, hub, carrier base), country.",
+          "grain": "Position rounded to about 1 km."
+        },
+        {
+          "name": "Links",
+          "content": "Mode, start site, up to three intermediate sites, end site, chapter.",
+          "grain": "An arc between sites, not the actual path."
+        },
+        {
+          "name": "Operator",
+          "content": "A name, only if it has been cleared for publication.",
+          "grain": "Never in a demonstration example."
+        },
+        {
+          "name": "Volume",
+          "content": "At most 250 sites and 400 links, 80 per chapter.",
+          "grain": "Capped at publication and when the site is built."
+        }
+      ],
+      "legendNote": "Any other column in an export — a price, a contact, an internal identifier — blocks the publication instead of being quietly dropped.",
+      "tableLabel": "Contents of the showcase"
+    },
+    "cta": {
+      "title": "Need the detail?",
+      "body": "What we know about a specific corridor is shared as part of a discussion about your scope.",
+      "button": "Discuss your scope"
+    }
+  },
+  "Showcase": {
+    "mapLabel": "Animated globe of transport services — {chapter}",
+    "demo": {
+      "tag": "Illustrative example",
+      "note": "Demonstration links between real sites. No operator is named and none of these links is asserted."
+    },
+    "curated": "Showcase published on {date}",
+    "controls": {
+      "label": "Animation playback",
+      "pause": "Pause",
+      "play": "Play"
+    },
+    "states": {
+      "flat": {
+        "nowebgl": "Your browser does not display 3D: here is the flat map, with the same links.",
+        "software": "Your device has no 3D acceleration: here is the flat map, with the same links.",
+        "lightweight": "To spare your connection and your device, the map is flat: same links, no 3D.",
+        "lost": "The 3D display was interrupted: here is the flat map, with the same links."
+      }
+    },
+    "modes": {
+      "rail": "Intermodal rail",
+      "shortsea": "Shortsea (short sea shipping)",
+      "barge": "Barge (inland waterway)",
+      "road-reefer": "Refrigerated road"
+    },
+    "kinds": {
+      "port": "Port",
+      "rail-terminal": "Rail-road terminal",
+      "inland-port": "Inland port",
+      "hub": "Hub",
+      "carrier-base": "Carrier base"
+    },
+    "chapters": {
+      "rail-intermodal": {
+        "short": "Intermodal rail",
+        "name": "Intermodal rail in Europe",
+        "body": "Rail-road terminals and North Sea ports, linked by the main axes: Rhine–Alpine, central Europe, the Mediterranean."
+      },
+      "baltic-shortsea": {
+        "short": "Baltic shortsea",
+        "name": "Shortsea in the Baltic",
+        "body": "Short sea links between German, Polish, Baltic, Swedish and Finnish ports: the sea as one link in a transport chain."
+      },
+      "reefer-germany": {
+        "short": "Reefer Germany",
+        "name": "Refrigerated carriers in Germany",
+        "body": "Carriers specialised in temperature-controlled transport, spread across Germany, and the destinations they serve."
+      },
+      "barge-rhine": {
+        "short": "Rhine barge",
+        "name": "Barge on the Rhine",
+        "body": "Inland ports linked by barge, from the North Sea ports up to the Upper Rhine."
+      }
+    },
+    "list": {
+      "summary": "See all the links as a list",
+      "intro": "Text equivalent of the animation: every link, chapter by chapter.",
+      "columns": {
+        "route": "Link",
+        "mode": "Mode",
+        "operator": "Operator"
+      },
+      "none": "not published",
+      "arrow": "to"
+    }
+  }
+}
