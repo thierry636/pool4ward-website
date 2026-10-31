@@ -1,22 +1,21 @@
 /**
- * Génère public/images/levers-poster.svg : l'image qui occupe la carte de la couverture avant
- * que le globe (ou la carte à plat) ne soit prêt, et pour qui n'exécute pas de script. Terres
- * Natural Earth, tracés de tous les leviers très discrets, sites sous forme de points.
- * Aucun nom, aucun chiffre : c'est l'ambiance de la scène, pas son contenu.
+ * Génère public/images/levers-poster.svg : l'image de la carte de la couverture pour qui n'exécute
+ * pas de script (elle n'est servie que dans un `<noscript>`). Une carte calme : les terres de
+ * l'Europe sur un fond marine, sans tracé ni point — pas le contenu de la scène, seulement
+ * son décor. Avec un script, la couverture n'affiche aucune image d'attente : le fond marine
+ * reste vide jusqu'à ce que la carte soit prête, puis elle apparaît en fondu.
  *
- * Usage : npm run poster:levers   (à relancer si la scène ou le fond de carte change)
+ * Usage : npm run poster:levers   (à relancer si le fond de carte change)
  */
 import { readFileSync, writeFileSync } from "node:fs";
-import { LEVER_COLOR, LEVER_ORDER } from "../src/lib/levers/data";
-import { anchorOf, buildScene } from "../src/lib/levers/scene";
 
 const W = 1600;
 const H = 900;
-const LON_C = 4.5;
-const LAT_C = 41.4;
-const PPD = 50; // pixels par degré de longitude
+const LON_C = 8;
+const LAT_C = 47.5;
+const PPD = 28; // pixels par degré de longitude
 const X_C = 1070;
-const Y_C = 440;
+const Y_C = 450;
 
 const merc = (lat: number) => Math.log(Math.tan(Math.PI / 4 + (Math.max(-85, Math.min(85, lat)) * Math.PI) / 360));
 const px = (lon: number, lat: number): [number, number] => [X_C + (lon - LON_C) * PPD, Y_C - (merc(lat) - merc(LAT_C)) * (180 / Math.PI) * PPD];
@@ -101,67 +100,19 @@ function rings(geo: GeoJSON.Feature | GeoJSON.FeatureCollection): Pt[][] {
   return out;
 }
 
-function lines(geo: GeoJSON.Feature | GeoJSON.FeatureCollection): Pt[][] {
-  const out: Pt[][] = [];
-  for (const f of featuresOf(geo)) {
-    const g = f.geometry;
-    const ls = g.type === "LineString" ? [g.coordinates] : g.type === "MultiLineString" ? g.coordinates : [];
-    for (const l of ls) out.push(l.map(([lon, lat]) => px(lon, lat)));
-  }
-  return out;
-}
-
 const land = JSON.parse(readFileSync("public/geo/land-50m-europe.json", "utf8")) as GeoJSON.Feature | GeoJSON.FeatureCollection;
-const borders = JSON.parse(readFileSync("public/geo/borders-50m-europe.json", "utf8")) as GeoJSON.Feature | GeoJSON.FeatureCollection;
-
 const landD = rings(land)
   .map(clipRing)
-  .map((r) => simplifyRing(r, 0.6))
+  .map((r) => simplifyRing(r, 0.9))
   .map(ringPath)
   .join("");
-const inView = (p: Pt) => p[0] > -20 && p[0] < W + 20 && p[1] > -20 && p[1] < H + 20;
-const borderD = lines(borders)
-  .map((l) => {
-    let d = "";
-    let pen = false;
-    l.forEach((p, i) => {
-      const ok = inView(p) || (i > 0 && inView(l[i - 1]));
-      if (ok) {
-        d += `${pen ? "L" : "M"}${fmt(p)}`;
-        pen = true;
-      } else pen = false;
-    });
-    return d;
-  })
-  .join("");
-
-const net: string[] = [];
-const dots = new Set<string>();
-// Le report modal part du sud de l'Espagne vers la Pologne : il sort de cette image, centrée sur la Méditerranée.
-for (const id of LEVER_ORDER.filter((x) => x !== "rail")) {
-  const s = buildScene(id);
-  for (const b of s.lines) {
-    if (b.el.style === "dashed" || b.el.style === "dotted" || b.el.skipBase) continue;
-    net.push(`<path d="M${simplify(b.path.points.map((p) => px(p[0], p[1])), 0.7).map(fmt).join("L")}" stroke="${LEVER_COLOR[id]}" stroke-opacity="0.32" stroke-width="1.6"/>`);
-  }
-  for (const n of s.nodes) {
-    const [lon, lat] = anchorOf(n.at);
-    dots.add(fmt(px(lon, lat)));
-  }
-}
-
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" preserveAspectRatio="xMidYMid slice">
 <defs>
 <radialGradient id="g" cx="66%" cy="48%" r="55%"><stop offset="0" stop-color="#1d3a8a" stop-opacity=".5"/><stop offset="1" stop-color="#050d1f" stop-opacity="0"/></radialGradient>
-<g id="n" fill="none" stroke-linecap="round" stroke-linejoin="round">${net.join("")}</g>
 </defs>
 <rect width="${W}" height="${H}" fill="#050d1f"/>
 <rect width="${W}" height="${H}" fill="url(#g)"/>
 <path d="${landD}" fill="#0d1a35" stroke="#2a4a82" stroke-width="1.2" stroke-linejoin="round"/>
-<path d="${borderD}" fill="none" stroke="#35528a" stroke-opacity=".4" stroke-width="1"/>
-<use href="#n" stroke-width="5" opacity=".35"/>
-<use href="#n"/>
-<g fill="#f1f5f9" stroke="#020617" stroke-width="1.4">${[...dots].map((d) => `<circle cx="${d.split(",")[0]}" cy="${d.split(",")[1]}" r="4"/>`).join("")}</g>
 </svg>
 `;
 writeFileSync("public/images/levers-poster.svg", svg);

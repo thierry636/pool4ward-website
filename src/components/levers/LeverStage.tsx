@@ -108,20 +108,14 @@ export function LeverStage() {
 
   return (
     <div ref={mapEl} className="lever-map relative h-[25rem] overflow-hidden sm:h-[31rem] lg:absolute lg:inset-0 lg:-z-10 lg:h-auto">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/images/levers-poster.svg"
-        alt=""
-        aria-hidden="true"
-        width={1600}
-        height={900}
-        decoding="async"
-        fetchPriority="low"
-        className="absolute inset-0 h-full w-full object-cover object-[62%_50%] transition-opacity duration-700"
-        style={{ opacity: ready ? 0 : 1 }}
-      />
+      {/* Sans script, une carte calme. Avec un script, rien ne s'affiche d'abord (le fond marine) : la carte
+          apparaît en fondu quand elle est prête, au lieu d'une image d'attente qui ne ressemble pas à la scène. */}
+      <noscript>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/levers-poster.svg" alt="" width={1600} height={900} className="absolute inset-0 h-full w-full object-cover object-[62%_50%]" />
+      </noscript>
       {renderer === "globe" && (
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 transition-opacity duration-1000" style={{ opacity: ready ? 1 : 0 }}>
           <LeverGlobe
             levers={LEVER_ORDER}
             active={active}
@@ -141,7 +135,7 @@ export function LeverStage() {
         </div>
       )}
       {renderer === "flat" && (
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 transition-opacity duration-1000" style={{ opacity: ready ? 1 : 0 }}>
           <LeverFlat
             levers={LEVER_ORDER}
             active={active}

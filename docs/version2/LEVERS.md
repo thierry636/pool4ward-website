@@ -125,8 +125,12 @@ indépendante de la vitrine (`showcase.json`) et de la base privée : elle n'en 
   (recette).
 - **Carte à plat** (SVG, projection de Mercator) : sans WebGL, en rendu logiciel, ou sur
   connexion/appareil économe. Mêmes leviers, mêmes tracés.
-- **Image d'attente** (`levers-poster.svg`, ≈ 41 Ko) : affichée tant que la carte n'est pas prête
-  et pour qui n'exécute pas de script.
+- **Pas d'image d'attente avec un script** : la première seconde montre le titre sur un fond marine
+  avec un halo bleu, et la carte apparaît en fondu quand elle est prête (le fond de carte est
+  chargé, ou le globe est monté). Une image d'attente qui ne ressemblait pas à la scène (un
+  zoom sur la Méditerranée et son réseau de tracés) donnait une première seconde brouillonne, et
+  c'était l'élément le plus lent de l'accueil mobile (LCP). Sans script, `levers-poster.svg`
+  (≈ 19 Ko : les terres de l'Europe, sans tracé ni point) s'affiche dans un `<noscript>`.
 
 ## Lecture
 

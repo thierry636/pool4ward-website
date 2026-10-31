@@ -68,7 +68,7 @@ npm run showcase:check     # valide la vitrine (exécuté avant chaque build)
 - `node scripts/build-terrain.mjs` → `public/images/terrain.svg` (courbes de niveau, décor).
 - `node scripts/build-geo.mjs` → `public/geo/*.json` (Natural Earth, domaine public ; polygones découpés à l'antiméridien, extrait Europe à 50 m).
 - `node scripts/build-globe-poster.mjs` → `public/images/globe-poster.svg` (aperçu du globe des services, avec les liaisons de la vitrine ; à relancer après chaque publication).
-- `npm run poster:levers` → `public/images/levers-poster.svg` (image d'attente de la carte de la couverture).
+- `npm run poster:levers` → `public/images/levers-poster.svg` (carte de repli de la couverture, pour qui n'exécute pas de script).
 
 ## Décisions à prendre (hors de ce dépôt)
 
