@@ -1,35 +1,33 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ClientMessages } from "@/lib/client-messages";
-import { ReferentialBoard } from "./ReferentialBoard";
+import { SERVICES } from "@/content/referentials";
+import { TileBoard } from "./TileBoard";
 
 /**
- * La planche qui suit la couverture : ce que Pool4ward sait du physique du transport. Un menu à gauche
- * (services ferroviaires et fluviaux, shortsea, réseaux, bornes, parkings, transporteurs) et, à droite,
- * la fiche du référentiel choisi : ses chiffres, sa carte animée et un enregistrement en détail.
- * Les nombres viennent de `content/referentials.ts` (provenance dans l'en-tête de ce fichier) ; les
- * noms d'opérateurs et de transporteurs sont masqués.
+ * La planche qui suit la couverture : les référentiels de Pool4ward, un par tuile. Un seul grand nombre
+ * dans le titre (les services intermodaux) ; chaque tuile porte le sien, avec l'écran du portail
+ * présenté autour. Les nombres viennent de `content/referentials.ts` (provenance dans l'en-tête de ce fichier).
  */
 export function Referentials() {
   const t = useTranslations("Home.referentials");
+  const locale = useLocale();
+  const n = new Intl.NumberFormat(locale).format(SERVICES.total).replace(/ /g, " ");
 
   return (
     <section id="referentiels" className="tone-light tone-light-2 section-y scroll-mt-16" aria-labelledby="referentials-title">
       <div className="wrap">
-        <div className="max-w-2xl">
-          <p className="eyebrow">{t("eyebrow")}</p>
-          <h2 id="referentials-title" className="h2 mt-4">
-            {t.rich("title", { em: (chunks) => <em>{chunks}</em> })}
-          </h2>
-          <p className="lede mt-5">{t("lede")}</p>
-        </div>
+        <h2 id="referentials-title" className="h2 rt-title max-w-[22ch] sm:max-w-3xl">
+          {t.rich("title", { n, b: (chunks) => <b>{chunks}</b> })}
+        </h2>
+        <p className="lede mt-5">{t("sub")}</p>
 
-        <div className="mt-10">
+        <div className="mt-10 sm:mt-12">
           <ClientMessages namespaces={["Home.referentials"]}>
-            <ReferentialBoard />
+            <TileBoard />
           </ClientMessages>
         </div>
         <p className="mt-6 text-[0.85rem]" style={{ color: "var(--fg-2)" }}>
-          {t("note")}
+          {t("caption")}
         </p>
       </div>
     </section>

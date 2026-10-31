@@ -8,8 +8,8 @@ décision distincte.
 
 - **Une couverture-carte** : un globe qui joue six leviers sur toute l'Europe (report modal
   rail/fluvial, shortsea côtier, boucles, cross-dock, électrification, mutualisation), **seul** —
-  ni texte, ni menu, ni bouton —, suivi d'une planche de six référentiels du physique du transport
-  (services rail et fluviaux, shortsea, réseaux, bornes, parkings, transporteurs ; menu à gauche, fiche à droite) — voir [LEVERS.md](LEVERS.md). C'est une illustration, pas une donnée.
+  ni texte, ni menu, ni bouton —, suivi d'une planche de six tuiles (services intermodaux, shortsea, réseaux, bornes et
+  parkings, transporteurs, prix) avec les écrans du portail ; carrousel au doigt sur mobile — voir [LEVERS.md](LEVERS.md). C'est une illustration, pas une donnée.
 - **Un parcours « du terrain aux engagements »** : un même cas
   démonstrateur (quatre sites, six flux, fictifs) traverse trois étapes —
   comprendre le terrain, concevoir le plan, contractualiser. Le plateau SVG
