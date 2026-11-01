@@ -6,7 +6,7 @@ décision distincte.
 
 ## Ce que contient cette branche
 
-- **Une couverture-carte** : un globe qui joue six leviers sur toute l'Europe (report modal
+- **Une couverture-carte** : une carte de l'Europe à plat qui joue six leviers sur toute l'Europe (report modal
   rail/fluvial, shortsea côtier, boucles, cross-dock, électrification, mutualisation), **seul** —
   ni texte, ni menu, ni bouton —, suivi d'une planche de cinq à six tuiles (services intermodaux, shortsea, réseaux, bornes et
   parkings, transporteurs, prix de marché) avec les écrans du portail ; carrousel au doigt sur mobile — voir [LEVERS.md](LEVERS.md). C'est une illustration, pas une donnée.
@@ -15,9 +15,10 @@ décision distincte.
   code (`src/components/journey/`, `src/content/journey/`) reste dans le dépôt, sans être monté.
 - **Cinq capacités** (ingénierie, appels d'offres, recherche de transporteurs,
   comparaison des offres, gestion des contrats), décrites par leurs fonctions
-  vérifiées dans le code — voir [CAPABILITIES.md](CAPABILITIES.md). Chaque capacité montre une
-  capture du portail (noms masqués) et l'**agent IA de l'étape** (prioriser, relancer, proposer),
-  avec une icône animée.
+  vérifiées dans le code — voir [CAPABILITIES.md](CAPABILITIES.md). Sur l'accueil, la section sombre
+  présente désormais les **référentiels** (services, réseaux, bornes et parkings, transporteurs, prix de marché) avec
+  une carte illustrative et l'**agent IA** qui les collecte et les normalise ; la version « capacités » (captures
+  du portail, agent qui priorise, relance, propose) reste dans le dépôt, non montée.
 - **Un monde qui tourne** (page Référentiels) : un globe animé (MapLibre,
   projection globe) déroule quatre chapitres — rail intermodal en Europe, shortsea
   en Baltique, transporteurs frigorifiques en Allemagne, fluvial sur le Rhin —

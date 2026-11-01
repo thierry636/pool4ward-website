@@ -183,3 +183,98 @@
     background: rgb(255 255 255 / 0.03);
   }
 }
+
+/* Section des référentiels : la carte illustrative remplit la fenêtre, la légende et les chiffres l'accompagnent. */
+.cv-ref {
+  aspect-ratio: auto;
+  padding: 1rem 1rem 0;
+  background: radial-gradient(120% 90% at 20% 0%, #1b2a66 0%, #0e1630 55%, #0b1224 100%);
+}
+.cv-ref .cv-main {
+  position: relative;
+  inset: auto;
+  border-radius: 0.7rem 0.7rem 0 0;
+}
+.cv-ref .cv-main img {
+  aspect-ratio: 1214 / 845;
+  object-fit: cover;
+}
+.cv-ref[data-art="chart"] {
+  padding: 1.1rem 1.1rem 1.4rem;
+}
+.cv-ref[data-art="chart"] .cv-main {
+  border-radius: 0.7rem;
+}
+.cv-chart {
+  padding: 0.8rem 0.9rem 0.5rem;
+  background: #fff;
+}
+.cv-chart .rt-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: inherit;
+}
+.cv-chart .rt-bar-i {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: rt-grow 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  animation-delay: calc(0.4s + var(--k, 0) * 0.05s);
+}
+.cv-chart .rt-est {
+  animation: rt-est 0.45s cubic-bezier(0.2, 0.8, 0.3, 1.3) backwards;
+  animation-delay: calc(1.2s + var(--k, 0) * 0.25s);
+}
+.cv-legend {
+  position: absolute;
+  left: 1.6rem;
+  bottom: 0.7rem;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.9rem;
+  max-width: calc(100% - 3.2rem);
+  margin: 0;
+  padding: 0.35rem 0.7rem;
+  list-style: none;
+  border: 1px solid rgb(148 163 184 / 0.3);
+  border-radius: 0.6rem;
+  background: rgb(2 6 23 / 0.78);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  font-size: 0.7rem;
+  color: #e2e8f0;
+}
+.cv-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.cv-legend i {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 9999px;
+}
+.cv-figs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 2rem;
+  margin-top: 1.2rem;
+}
+.cv-figs span {
+  display: flex;
+  flex-direction: column;
+}
+.cv-figs b {
+  font-size: 2.1rem;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+}
+.cv-figs small {
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--fg-2);
+}

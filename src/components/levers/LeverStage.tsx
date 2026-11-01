@@ -1,23 +1,15 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { usePrefersReducedMotion } from "@/lib/use-reduced-motion";
 import { LEVER_ORDER } from "@/lib/levers/data";
-import { forcesGlobe, isSoftwareRenderer, preferLightweight, supportsWebGL } from "@/components/showcase/support";
-import { LeverFlat } from "./LeverFlat";
-import type { Rect } from "./LeverGlobe";
-
-/** MapLibre pèse ≈ 250 Ko : il n'est téléchargé que si l'appareil sait afficher le globe. */
-const LeverGlobe = dynamic(() => import("./LeverGlobe").then((m) => m.LeverGlobe), { ssr: false });
-
-type Renderer = "pending" | "globe" | "flat";
+import { LeverFlat, type Rect } from "./LeverFlat";
 
 const NO_PAD = { left: 0, right: 0, top: 0, bottom: 0 };
 
 /**
- * La scène des leviers de la page de garde : une carte (globe 3D, ou carte à plat sans WebGL)
+ * La scène des leviers de la page de garde : une carte de l'Europe à plat
  * qui joue les six leviers l'un après l'autre sur toute l'Europe, et rien d'autre — ni texte, ni
  * menu, ni lien. Elle se place dans la section de la couverture, derrière le texte sur grand
  * écran, sous le texte sur téléphone. Fragment : le conteneur parent est un flex en colonne.
@@ -28,12 +20,10 @@ export function LeverStage() {
   const locale = useLocale() === "en" ? "en" : "fr";
   const reduced = usePrefersReducedMotion();
 
-  const [renderer, setRenderer] = useState<Renderer>("pending");
   const [ready, setReady] = useState(false);
   const [active, setActive] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [pad, setPad] = useState(NO_PAD);
-  const [mobile, setMobile] = useState(false);
   const mapEl = useRef<HTMLDivElement>(null);
   const reserved = useRef<Rect[]>([]);
   const progress = useRef(0);
@@ -48,20 +38,32 @@ export function LeverStage() {
       const m = map.getBoundingClientRect();
       if (!text || m.width === 0) return;
       const wide = window.matchMedia("(min-width: 1024px)").matches;
-      setMobile(window.innerWidth < 768);
       if (!wide) {
         reserved.current = [];
-        setPad((p) => (p.left === 8 && p.right === 8 && p.top === 12 && p.bottom === 12 ? p : { left: 8, right: 8, top: 12, bottom: 12 }));
+        setPad((p) =>
+          p.left === 8 && p.right === 8 && p.top === 12 && p.bottom === 12
+            ? p
+            : { left: 8, right: 8, top: 12, bottom: 12 },
+        );
         return;
       }
       const tr = text.getBoundingClientRect();
       const left = Math.round(Math.min(tr.right - m.left + 24, m.width * 0.58));
       const top = 92;
       reserved.current = [
-        { x: tr.left - m.left - 8, y: tr.top - m.top - 8, w: tr.width + 16, h: tr.height + 16 },
+        {
+          x: tr.left - m.left - 8,
+          y: tr.top - m.top - 8,
+          w: tr.width + 16,
+          h: tr.height + 16,
+        },
         { x: 0, y: 0, w: m.width, h: 70 },
       ];
-      setPad((p) => (p.left === left && p.bottom === 40 && p.top === top && p.right === 28 ? p : { left, right: 28, top, bottom: 40 }));
+      setPad((p) =>
+        p.left === left && p.bottom === 40 && p.top === top && p.right === 28
+          ? p
+          : { left, right: 28, top, bottom: 40 },
+      );
     };
     measure();
     const ro = new ResizeObserver(measure);
@@ -71,22 +73,22 @@ export function LeverStage() {
     return () => ro.disconnect();
   }, []);
 
-  /* Le rendu se décide après le chargement de la page, pour ne rien prendre au premier affichage. */
+  /* La lecture démarre après le chargement de la page, pour ne rien prendre au premier affichage. */
   useEffect(() => {
     let timer = 0;
-    const decide = () => {
-      if (forcesGlobe()) setRenderer("globe");
-      else if (!supportsWebGL() || isSoftwareRenderer() || preferLightweight()) setRenderer("flat");
-      else setRenderer("globe");
-      setPlaying(!window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    const start = () => {
+      timer = window.setTimeout(
+        () =>
+          setPlaying(
+            !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+          ),
+        200,
+      );
     };
-    const later = () => {
-      timer = window.setTimeout(decide, 200);
-    };
-    if (document.readyState === "complete") later();
-    else window.addEventListener("load", later, { once: true });
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
     return () => {
-      window.removeEventListener("load", later);
+      window.removeEventListener("load", start);
       window.clearTimeout(timer);
     };
   }, []);
@@ -99,7 +101,6 @@ export function LeverStage() {
     progress.current = 0;
     setActive((a) => (a + 1) % LEVER_ORDER.length);
   }, []);
-  const fatal = useCallback(() => setRenderer("flat"), []);
   const onReady = useCallback(() => setReady(true), []);
   const noop = useCallback(() => {}, []);
 
@@ -107,55 +108,51 @@ export function LeverStage() {
   const label = t("mapLabel", { lever: name });
 
   return (
-    <div ref={mapEl} className="lever-map relative h-[25rem] overflow-hidden sm:h-[31rem] lg:absolute lg:inset-0 lg:-z-10 lg:h-auto">
+    <div
+      ref={mapEl}
+      className="lever-map relative h-[25rem] overflow-hidden sm:h-[31rem] lg:absolute lg:inset-0 lg:-z-10 lg:h-auto"
+    >
       {/* Sans script, une carte calme. Avec un script, rien ne s'affiche d'abord (le fond marine) : la carte
           apparaît en fondu quand elle est prête, au lieu d'une image d'attente qui ne ressemble pas à la scène. */}
       <noscript>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/levers-poster.svg" alt="" width={1600} height={900} className="absolute inset-0 h-full w-full object-cover object-[62%_50%]" />
+        <img
+          src="/images/levers-poster.svg"
+          alt=""
+          width={1600}
+          height={900}
+          className="absolute inset-0 h-full w-full object-cover object-[62%_50%]"
+        />
       </noscript>
-      {renderer === "globe" && (
-        <div className="absolute inset-0 transition-opacity duration-1000" style={{ opacity: ready ? 1 : 0 }}>
-          <LeverGlobe
-            levers={LEVER_ORDER}
-            active={active}
-            playing={playing}
-            reducedMotion={reduced}
-            mobile={mobile}
-            locale={locale}
-            ariaLabel={label}
-            pad={pad}
-            reserved={reserved}
-            progress={progress}
-            onAdvance={advance}
-            onShown={noop}
-            onFatal={fatal}
-            onReady={onReady}
-          />
-        </div>
-      )}
-      {renderer === "flat" && (
-        <div className="absolute inset-0 transition-opacity duration-1000" style={{ opacity: ready ? 1 : 0 }}>
-          <LeverFlat
-            levers={LEVER_ORDER}
-            active={active}
-            playing={playing}
-            reducedMotion={reduced}
-            locale={locale}
-            ariaLabel={label}
-            pad={pad}
-            reserved={reserved}
-            progress={progress}
-            onAdvance={advance}
-            onShown={noop}
-            onReady={onReady}
-          />
-        </div>
-      )}
+      <div
+        className="absolute inset-0 transition-opacity duration-1000"
+        style={{ opacity: ready ? 1 : 0 }}
+      >
+        <LeverFlat
+          levers={LEVER_ORDER}
+          active={active}
+          playing={playing}
+          reducedMotion={reduced}
+          locale={locale}
+          ariaLabel={label}
+          pad={pad}
+          reserved={reserved}
+          progress={progress}
+          onAdvance={advance}
+          onShown={noop}
+          onReady={onReady}
+        />
+      </div>
       <p className="sr-only">{t("note")}</p>
       {/* Fondu vers le texte et vers la section suivante. */}
-      <div aria-hidden="true" className="lever-fade-x pointer-events-none absolute inset-0 hidden lg:block" />
-      <div aria-hidden="true" className="lever-fade-y pointer-events-none absolute inset-0" />
+      <div
+        aria-hidden="true"
+        className="lever-fade-x pointer-events-none absolute inset-0 hidden lg:block"
+      />
+      <div
+        aria-hidden="true"
+        className="lever-fade-y pointer-events-none absolute inset-0"
+      />
     </div>
   );
 }

@@ -206,6 +206,152 @@
           "chart": "Distribution of market prices, with the first quartile and the median, and three estimates positioned against that market."
         }
       }
+    },
+    "referentialExplorer": {
+      "eyebrow": "Reference data",
+      "title": "Reference data that describe transport as it exists",
+      "lede": "We rely on reference data that describe the networks, sites, services and prices of transport. They give every analysis a concrete footing, from the field to implementation.",
+      "listLabel": "The reference datasets",
+      "agent": {
+        "label": "AI agent",
+        "sub": "on this dataset",
+        "collect": "Collect",
+        "normalize": "Normalise",
+        "refresh": "Refresh"
+      },
+      "note": "Illustrative maps: indicative routes. No operator or carrier names.",
+      "items": {
+        "services": {
+          "name": "Transport services",
+          "question": "Which services already exist on this corridor?",
+          "summary": "Intermodal and maritime services described one by one: route, stops, timetables, frequencies, operator and contacts.",
+          "tags": [
+            "Rail",
+            "Waterway",
+            "Shortsea"
+          ],
+          "covers": [
+            "Each service keeps its pattern: one-way, round trip, loop, metro, looped metro.",
+            "Services are updated every day."
+          ],
+          "legend": [
+            "Rail",
+            "Waterway",
+            "Shortsea"
+          ],
+          "mapTitle": "Transport services",
+          "mapAlt": "Illustrative map of Europe: corridors of rail, waterway and sea services, whose thickness shows their density.",
+          "agent": {
+            "collect": "Picks up the services published by operators.",
+            "normalize": "Brings them to a single service record.",
+            "refresh": "Refreshes them every day."
+          }
+        },
+        "networks": {
+          "name": "Waterway and rail networks",
+          "question": "Does a link hold on the routes that exist?",
+          "summary": "Rivers, canals and railway lines, with their dimensions: navigation class, draught, maximum convoy, air draught.",
+          "tags": [
+            "Rivers",
+            "Canals",
+            "Lines"
+          ],
+          "covers": [
+            "Each waterway is tied to its dimension class.",
+            "Nodes and inland ports connect the routes to terminals and services."
+          ],
+          "legend": [
+            "Waterway, by class",
+            "Railway line"
+          ],
+          "mapTitle": "Networks",
+          "mapAlt": "Illustrative map of Europe: the main rivers and canals, coloured by navigation class.",
+          "agent": {
+            "collect": "Gathers waterway and rail line data.",
+            "normalize": "Aligns classes, dimensions and nodes.",
+            "refresh": "Refreshes them regularly."
+          }
+        },
+        "points": {
+          "name": "Charging points and parkings",
+          "question": "Where to charge, where to stop?",
+          "summary": "Truck charging points and parking areas, with the status of each site, power, access, price and booking when known.",
+          "tags": [
+            "Charging points",
+            "Parkings",
+            "Status"
+          ],
+          "covers": [
+            "Each site: in service, under construction or planned.",
+            "Charging points and their power, tied to the equipped corridors."
+          ],
+          "legend": [
+            "In service",
+            "Under construction",
+            "Planned",
+            "Parking"
+          ],
+          "mapTitle": "Charging points and parkings",
+          "mapAlt": "Illustrative map of Europe: charging points and truck parkings along the main corridors.",
+          "agent": {
+            "collect": "Picks up the published charging points and parkings.",
+            "normalize": "Harmonises status, power and access.",
+            "refresh": "Refreshes them regularly."
+          }
+        },
+        "carriers": {
+          "name": "Carriers",
+          "question": "Who can carry out this transport?",
+          "summary": "The listed carriers: their locations, their equipment, the reviews received and their contacts.",
+          "tags": [
+            "Locations",
+            "Equipment",
+            "Reviews"
+          ],
+          "covers": [
+            "Comparable records: equipment, areas covered, contacts.",
+            "Used to build the bid list of each tender."
+          ],
+          "legend": [
+            "Location",
+            "Area covered"
+          ],
+          "mapTitle": "Carriers",
+          "mapAlt": "Illustrative map of Europe: carrier locations and the areas they cover.",
+          "agent": {
+            "collect": "Spots carriers and their equipment.",
+            "normalize": "Normalises records: equipment, locations, contacts.",
+            "refresh": "Refreshes them regularly."
+          }
+        },
+        "prices": {
+          "name": "Market prices",
+          "question": "At what price does the market carry out this transport?",
+          "summary": "Our cost models cross dozens of parameters with market data from contracts and spot databases, to compare every estimate with the prices actually charged.",
+          "tags": [
+            "Contracts",
+            "Spot databases",
+            "Benchmark"
+          ],
+          "covers": [
+            "Each estimate is positioned against the distribution of market prices.",
+            "Choices and decisions rest on that positioning."
+          ],
+          "legend": [],
+          "mapTitle": "Benchmark",
+          "agent": {
+            "collect": "Gathers market data: contracts and spot databases.",
+            "normalize": "Normalises them into comparable prices.",
+            "refresh": "Refreshes them regularly."
+          }
+        }
+      },
+      "figures": {
+        "services": "rail and waterway services",
+        "shortsea": "shortsea services",
+        "points": "points: charging points and parkings",
+        "carriers": "carriers"
+      }
     }
   }
 }

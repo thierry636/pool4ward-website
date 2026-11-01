@@ -121,9 +121,8 @@ indépendante de la vitrine (`showcase.json`) et de la base privée : elle n'en 
 | `src/lib/levers/layout.ts` | Placement sans chevauchement des noms de lieux (testé) |
 | `src/lib/levers/geo.ts` | Projection de Mercator et fond de carte (terres, frontières), chargé une seule fois pour la page |
 | `src/lib/levers/layers.ts` | La couche « réseaux ferroviaire et fluvial » de la planche (tracés, repères, cadre) ; construite sur les constantes de `data.ts` |
-| `src/components/levers/LeverGlobe.tsx` | Globe MapLibre incliné, sans interaction, piloté image par image ; étiquettes HTML |
-| `src/components/levers/LeverFlat.tsx` | Même scène en SVG (sans WebGL, rendu logiciel, appareil économe) ; animations CSS |
-| `src/components/levers/LeverStage.tsx` | Orchestrateur : choix du rendu, lecture automatique, mesure du texte ; aucun contrôle |
+| `src/components/levers/LeverFlat.tsx` | La scène des leviers en SVG, sur une carte de l'Europe à plat ; animations CSS |
+| `src/components/levers/LeverStage.tsx` | Orchestrateur : lecture automatique, mesure du texte ; aucun contrôle |
 | `src/content/referentials.ts` | Les chiffres de la planche, avec leur provenance |
 | `src/components/referentials/Referentials.tsx` | Titre, phrase et légende de la planche (serveur) ; fournit les messages `Home.referentials` au client |
 | `src/components/referentials/TileBoard.tsx` | Les six tuiles, leur mise en scène à l'entrée à l'écran, le carrousel mobile (points, flèches) |
@@ -134,14 +133,13 @@ indépendante de la vitrine (`showcase.json`) et de la base privée : elle n'en 
 
 ## Rendus
 
-- **Globe 3D** (MapLibre, projection globe) : si l'appareil a WebGL accéléré. Chargé après
-  l'événement `load` (≈ 250 Ko), jamais avant le premier affichage ; `?renderer=globe` le force
-  (recette).
-- **Carte à plat** (SVG, projection de Mercator) : sans WebGL, en rendu logiciel, ou sur
-  connexion/appareil économe. Mêmes leviers, mêmes tracés.
+- **Carte à plat** (SVG, projection de Mercator) : toujours. Le globe 3D de la couverture a été retiré à la
+  demande de la direction (il n'était « pas top ») ; `LeverGlobe.tsx` est supprimé, le globe reste utilisé par
+  la page Référentiels (vitrine). Plus de choix de rendu, plus de `?renderer=globe` sur l'accueil : la
+  couverture ne charge plus MapLibre.
 - **Pas d'image d'attente avec un script** : la première seconde montre le titre sur un fond marine
   avec un halo bleu, et la carte apparaît en fondu quand elle est prête (le fond de carte est
-  chargé, ou le globe est monté). Une image d'attente qui ne ressemblait pas à la scène (un
+  chargé). Une image d'attente qui ne ressemblait pas à la scène (un
   zoom sur la Méditerranée et son réseau de tracés) donnait une première seconde brouillonne, et
   c'était l'élément le plus lent de l'accueil mobile (LCP). Sans script, `levers-poster.svg`
   (≈ 19 Ko : les terres de l'Europe, sans tracé ni point) s'affiche dans un `<noscript>`.
@@ -158,7 +156,21 @@ quand la couverture sort de l'écran).
 
 ## Réserves
 
-- Le globe est vérifié ici en rendu logiciel (SwiftShader), donc lentement : la fluidité sur GPU
-  réel n'est pas mesurée.
 - Les régions et les liaisons sont un choix éditorial à valider ; changer d'exemple revient à
   modifier `PLACES` et `SCENES` (le reste suit : cadrage, étiquettes, textes à ajouter).
+
+## La section « Des référentiels pour décrire le transport tel qu'il existe »
+
+Section sombre de l'accueil, après les « enjeux » (`ReferentialsExplorerSection`, `ReferentialExplorer`) : elle
+reprend la mise en page de l'ancienne section des cinq capacités (liste à gauche, fiche à droite). Cinq entrées :
+services de transport (rail, fluvial, shortsea), réseaux fluviaux et ferroviaires, bornes et parkings,
+transporteurs, prix de marché. Chaque fiche : la question à laquelle le référentiel répond, une phrase, les
+chiffres (`content/referentials.ts`), des repères, une **carte illustrative** (`public/images/referentials-art/`,
+fond Esri clair comme le portail, tracés indicatifs, aucun texte dans l'image) ou, pour les prix, le graphique de
+marché (`PriceChart`, sans valeur), l'**agent IA du référentiel** (collecter, normaliser, actualiser) et deux
+points. Les fleuves de la carte des réseaux viennent de **Natural Earth** (domaine public) ; les classes de
+navigation y sont **estimées**, les canaux dessinés à la main. Les corridors de la carte des services ont une
+épaisseur indicative. Aucune capture du portail n'est montrée ici. Seuls les **services** sont dits mis à jour
+« chaque jour » ; les autres référentiels disent « régulièrement » (fréquence réelle à confirmer). L'ancienne
+section des capacités (`Capabilities`, `CapabilityExplorer`, captures de `public/images/capabilities/`) reste dans
+le dépôt, non montée.

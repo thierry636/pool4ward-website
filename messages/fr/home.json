@@ -206,6 +206,152 @@
           "chart": "Distribution des prix de marché, avec le premier quartile et la médiane, et trois estimations positionnées face à ce marché."
         }
       }
+    },
+    "referentialExplorer": {
+      "eyebrow": "Référentiels",
+      "title": "Des référentiels pour décrire le transport tel qu’il existe",
+      "lede": "Nous nous appuyons sur des données de référence qui décrivent les réseaux, les sites, les services et les prix du transport. Elles donnent à chaque analyse un ancrage concret, du terrain jusqu’à sa mise en œuvre.",
+      "listLabel": "Les référentiels",
+      "agent": {
+        "label": "Agent IA",
+        "sub": "sur ce référentiel",
+        "collect": "Collecter",
+        "normalize": "Normaliser",
+        "refresh": "Actualiser"
+      },
+      "note": "Cartes illustratives : tracés indicatifs. Aucun nom d’opérateur ni de transporteur.",
+      "items": {
+        "services": {
+          "name": "Services de transport",
+          "question": "Quels services existent déjà sur ce corridor ?",
+          "summary": "Les services intermodaux et maritimes décrits un à un : trajet, arrêts, horaires, fréquences, opérateur et contacts.",
+          "tags": [
+            "Rail",
+            "Fluvial",
+            "Shortsea"
+          ],
+          "covers": [
+            "Chaque service garde sa forme : sens unique, aller-retour, boucle, métro, métro bouclé.",
+            "Les services sont mis à jour chaque jour."
+          ],
+          "legend": [
+            "Rail",
+            "Fluvial",
+            "Shortsea"
+          ],
+          "mapTitle": "Services de transport",
+          "mapAlt": "Carte illustrative de l’Europe : des corridors de services ferroviaires, fluviaux et maritimes dont l’épaisseur montre la densité.",
+          "agent": {
+            "collect": "Relève les services publiés par les opérateurs.",
+            "normalize": "Les ramène à une même fiche de service.",
+            "refresh": "Les actualise chaque jour."
+          }
+        },
+        "networks": {
+          "name": "Réseaux fluviaux et ferroviaires",
+          "question": "Une liaison tient-elle sur les voies qui existent ?",
+          "summary": "Les fleuves, les canaux et les lignes ferroviaires, avec leurs gabarits : classe de navigation, tirant d’eau, convoi maximal, tirant d’air.",
+          "tags": [
+            "Fleuves",
+            "Canaux",
+            "Lignes"
+          ],
+          "covers": [
+            "Chaque voie d’eau est rattachée à sa classe de gabarit.",
+            "Les nœuds et les ports intérieurs relient les voies aux terminaux et aux services."
+          ],
+          "legend": [
+            "Voie d’eau, par classe",
+            "Ligne ferroviaire"
+          ],
+          "mapTitle": "Réseaux",
+          "mapAlt": "Carte illustrative de l’Europe : les grands fleuves et canaux, colorés par classe de navigation.",
+          "agent": {
+            "collect": "Rassemble les données de voies navigables et de lignes.",
+            "normalize": "Aligne classes, gabarits et nœuds.",
+            "refresh": "Les actualise régulièrement."
+          }
+        },
+        "points": {
+          "name": "Bornes et parkings",
+          "question": "Où recharger, où s’arrêter ?",
+          "summary": "Les bornes de recharge pour poids lourds et les parkings, avec l’état des sites, la puissance, l’accès, le prix et la réservation quand ils sont connus.",
+          "tags": [
+            "Bornes",
+            "Parkings",
+            "États"
+          ],
+          "covers": [
+            "Chaque site : en service, en construction ou prévu.",
+            "Les bornes et leur puissance, rattachées aux corridors équipés."
+          ],
+          "legend": [
+            "En service",
+            "En construction",
+            "Prévu",
+            "Parking"
+          ],
+          "mapTitle": "Bornes et parkings",
+          "mapAlt": "Carte illustrative de l’Europe : des bornes de recharge et des parkings poids lourds le long des grands corridors.",
+          "agent": {
+            "collect": "Relève les bornes et les parkings publiés.",
+            "normalize": "Harmonise état, puissance et accès.",
+            "refresh": "Les actualise régulièrement."
+          }
+        },
+        "carriers": {
+          "name": "Transporteurs",
+          "question": "Qui peut réaliser ce transport ?",
+          "summary": "Les transporteurs référencés : leurs implantations, leurs équipements, les avis reçus et leurs contacts.",
+          "tags": [
+            "Implantations",
+            "Équipements",
+            "Avis"
+          ],
+          "covers": [
+            "Des fiches comparables : équipements, zones couvertes, contacts.",
+            "Utilisé pour construire la bid list de chaque appel d’offres."
+          ],
+          "legend": [
+            "Implantation",
+            "Zone couverte"
+          ],
+          "mapTitle": "Transporteurs",
+          "mapAlt": "Carte illustrative de l’Europe : des implantations de transporteurs et les zones qu’elles couvrent.",
+          "agent": {
+            "collect": "Repère les transporteurs et leurs équipements.",
+            "normalize": "Normalise les fiches : équipements, implantations, contacts.",
+            "refresh": "Les actualise régulièrement."
+          }
+        },
+        "prices": {
+          "name": "Prix de marché",
+          "question": "À quel prix le marché réalise-t-il ce transport ?",
+          "summary": "Nos modèles de coûts croisent des dizaines de paramètres avec les données de marché issues de contrats et de bases spot, pour comparer chaque estimation aux prix réellement pratiqués.",
+          "tags": [
+            "Contrats",
+            "Bases spot",
+            "Benchmark"
+          ],
+          "covers": [
+            "Chaque estimation est positionnée face à la distribution des prix du marché.",
+            "Les choix et les décisions s’appuient sur ce positionnement."
+          ],
+          "legend": [],
+          "mapTitle": "Benchmark",
+          "agent": {
+            "collect": "Rassemble les données de marché : contrats et bases spot.",
+            "normalize": "Les normalise pour des prix comparables.",
+            "refresh": "Les actualise régulièrement."
+          }
+        }
+      },
+      "figures": {
+        "services": "services rail et fluviaux",
+        "shortsea": "services shortsea",
+        "points": "points : bornes et parkings",
+        "carriers": "transporteurs"
+      }
     }
   }
 }

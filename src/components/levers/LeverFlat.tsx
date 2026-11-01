@@ -5,18 +5,38 @@ import { PLACES, leverSeconds, type LeverId } from "@/lib/levers/data";
 import { anchorOf, buildScene, sceneBox } from "@/lib/levers/scene";
 import { PLACE_OFFSETS, placeFirstFree, type Box } from "@/lib/levers/layout";
 import { loadGeo, mx, my } from "@/lib/levers/geo";
-import type { LeverGlobeProps } from "./LeverGlobe";
 import "./levers.css";
 
 /**
- * Carte à plat de la scène des leviers (sans WebGL, rendu logiciel, appareil économe) : mêmes
- * leviers, mêmes tracés, en SVG. Le dessin des tracés, l'apparition des lieux et des bulles et
+ * Carte à plat de la scène des leviers de la couverture, en SVG : les six leviers, leurs tracés, leurs lieux. Le dessin des tracés, l'apparition des lieux et des bulles et
  * les impulsions sont des animations CSS : rien ne tourne en JavaScript image par image.
  */
 
-type FlatProps = Pick<LeverGlobeProps, "levers" | "active" | "playing" | "reducedMotion" | "locale" | "ariaLabel" | "pad" | "reserved" | "onAdvance" | "onShown" | "onReady"> & {
+export interface Rect {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+interface FlatProps {
+  levers: readonly LeverId[];
+  active: number;
+  playing: boolean;
+  reducedMotion: boolean;
+  locale: "fr" | "en";
+  ariaLabel: string;
+  /** Marges de la scène que le texte de la page recouvre : la région se centre dans l'espace libre. */
+  pad: { left: number; right: number; top: number; bottom: number };
+  /** Zones qu'aucune étiquette ne doit recouvrir (colonne de texte, bandeau des leviers). */
+  reserved: MutableRefObject<Rect[]>;
+  /** Avancement (0 → 1) du levier à l'écran, écrit à chaque image pour la barre de progression. */
   progress: MutableRefObject<number>;
-};
+  onAdvance(): void;
+  /** Le levier à l'écran vient de changer (la légende de la page le suit). */
+  onShown(index: number): void;
+  onReady(): void;
+}
 
 export function LeverFlat(props: FlatProps) {
   const { levers, active, playing, reducedMotion, locale, pad, reserved, onAdvance, onShown, onReady, progress } = props;
