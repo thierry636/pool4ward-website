@@ -54,7 +54,18 @@
         "Equipment, driving-time regulation, energy resources (electricity, charging points, diesel) and contracts in force are taken into account.",
         "Each scenario is compared with a baseline built on your own flows."
       ],
-      "scope": "Dock windows and service requirements are recorded with you and enter the feasibility analysis; they are not deduced automatically."
+      "scope": "Dock windows and service requirements are recorded with you and enter the feasibility analysis; they are not deduced automatically.",
+      "shots": [
+        {
+          "title": "Move2Rail",
+          "alt": "Portal screenshot: the list of rail-shift projects, with their route and frequency, on the map of Europe."
+        }
+      ],
+      "agent": {
+        "prioritize": "Ranks the projects by their interest.",
+        "follow": "Follows up with operators to fill in missing data.",
+        "propose": "Proposes the scenarios to look into."
+      }
     },
     "tenders": {
       "name": "Tender preparation",
@@ -70,7 +81,18 @@
         "A tender file in a protected spreadsheet format, with preview.",
         "Publication of zones and grid templates in CarrierBridge."
       ],
-      "scope": "The scope described here is the preparation of the tender file."
+      "scope": "The scope described here is the preparation of the tender file.",
+      "shots": [
+        {
+          "title": "Bid pack",
+          "alt": "Portal screenshot: the lane set-up of a tender, with its rules, criteria and the map of corridors."
+        }
+      ],
+      "agent": {
+        "prioritize": "Ranks the flows to put out to tender.",
+        "follow": "Follows up on missing information before sending.",
+        "propose": "Proposes the lane and lot set-up."
+      }
     },
     "carriers": {
       "name": "Carrier search",
@@ -86,7 +108,22 @@
         "Matching with the shipper’s current carriers.",
         "A listed carrier is not an available carrier: availability is confirmed by its reply."
       ],
-      "scope": "Coverage depends on the datasets: the Datasets page says what the showcase publishes and what it does not."
+      "scope": "Coverage depends on the datasets: the Datasets page says what the showcase publishes and what it does not.",
+      "shots": [
+        {
+          "title": "Carrier search",
+          "alt": "Portal screenshot: searching for a carrier by description and country, with results ranked by relevance."
+        },
+        {
+          "title": "Bid list",
+          "alt": "Portal screenshot: the bid list of a tender, with the selected carriers."
+        }
+      ],
+      "agent": {
+        "prioritize": "Ranks carriers by relevance for each lot.",
+        "follow": "Follows up with the carriers to consult.",
+        "propose": "Proposes the bid list."
+      }
     },
     "comparison": {
       "name": "Offer comparison",
@@ -102,7 +139,18 @@
         "Highlighting differences in assumptions before any ranking by price.",
         "Arbitration between offers on full cost, service and resources used — not on unit price alone."
       ],
-      "scope": "This page describes the method. The precise software functions are shown in a meeting, on your own tenders."
+      "scope": "This page describes the method. The precise software functions are shown in a meeting, on your own tenders.",
+      "shots": [
+        {
+          "title": "Proposals",
+          "alt": "Portal screenshot: the proposals received from the carriers invited to a tender, next to the current carriers on its scope."
+        }
+      ],
+      "agent": {
+        "prioritize": "Ranks the offers received.",
+        "follow": "Follows up with carriers that have not proposed.",
+        "propose": "Proposes the award."
+      }
     },
     "contracts": {
       "name": "Contract management",
@@ -118,8 +166,27 @@
         "Contracts are read in the engineering tool: covered links are flagged, and the end dates of a tender’s contracts are listed.",
         "Commitment terms — capacity, service, duration, adjustment, milestones — are defined with you in the tender brief."
       ],
-      "scope": "The scope described here is the contract register, its link to the shipping links, its documents and its deadlines."
-    }
+      "scope": "The scope described here is the contract register, its link to the shipping links, its documents and its deadlines.",
+      "shots": [
+        {
+          "title": "Rate grid",
+          "alt": "Portal screenshot: a carrier’s active rate grid, with its lanes, weight bands and prices."
+        }
+      ],
+      "agent": {
+        "prioritize": "Ranks the deadlines and gaps to handle.",
+        "follow": "Follows up on renewals and updates.",
+        "propose": "Proposes adjustments to the plan."
+      }
+    },
+    "agent": {
+      "label": "AI agent",
+      "sub": "at every step",
+      "prioritize": "Prioritise",
+      "follow": "Follow up",
+      "propose": "Propose"
+    },
+    "captures": "Screenshots of the Pool4ward portal. Operator and carrier names are masked."
   },
   "Status": {
     "label": "Five levels of knowledge",

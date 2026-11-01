@@ -30,6 +30,21 @@
   cela demande l'accord de l'équipe. Les captures des réseaux et des prix manquent : la tuile des réseaux
   montre la carte animée du site, celle des prix un schéma sans donnée.
 
+## Les captures de la section « cinq capacités »
+
+`public/images/capabilities/*.webp` : six captures du portail fournies par la direction, une par étape
+(Move2Rail pour l'ingénierie, le paramétrage des lignes d'un bid pack, la recherche de transporteurs et la
+bid list, les propositions reçues, la grille tarifaire d'un contrat). **Tous les noms d'opérateurs, de
+transporteurs et de chargeurs ont été masqués avant l'enregistrement** (barres grises ; initiales des
+avatars effacées ; en-tête de la fiche transporteur, avec son nom et son logo, recadré). Rien d'autre n'est
+retouché. Les noms de projets d'exemple (« New Poland France FTL », « Complexe 1 ») et les valeurs
+affichées sont ceux du portail. **Pas de capture pour la planification de capacité** : le site n'en montre
+pas tant qu'elle n'est pas fournie.
+
+Les gestes de l'agent IA de chaque étape (prioriser, relancer, proposer) sont ceux **donnés par la direction** ;
+la formulation par étape est de nous (`Capabilities.<id>.agent`) et est à valider : le site n'a pas vérifié ces
+fonctions dans le code.
+
 ## Ce qui est une démonstration (fictif, explicitement signalé)
 
 - **Le cas du parcours** : « Groupe démonstrateur », quatre sites (Usine Nord,

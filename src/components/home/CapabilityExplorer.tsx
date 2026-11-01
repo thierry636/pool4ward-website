@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
-import { CAPACITES } from "@/content/capabilities";
+import { AGENT_ACTS, CAPACITES, SHOTS } from "@/content/capabilities";
 import { Icon } from "@/components/ui/Icon";
+import "./capability-visuals.css";
 
 /**
  * Les cinq capacités en une ligne continue. À gauche la chaîne, à droite la
@@ -18,6 +19,8 @@ export function CapabilityExplorer() {
     const c = CAPACITES[i];
     const verbs = t.raw(`${c.id}.verbs`) as string[];
     const covers = t.raw(`${c.id}.covers`) as string[];
+    const shots = SHOTS[c.id];
+    const shotTexts = t.raw(`${c.id}.shots`) as { title: string; alt: string }[];
     return (
       <div>
         <p className="eyebrow">{t("decision")}</p>
@@ -31,6 +34,42 @@ export function CapabilityExplorer() {
             </li>
           ))}
         </ul>
+
+        <div className="cv-stage" data-shots={shots.length} role="group" aria-label={t("captures")}>
+          {shots.map((shot, k) => (
+            <div key={shot.file} className={`cv-win ${k === 0 ? "cv-main" : "cv-aside"}`}>
+              <div className="cv-bar" aria-hidden="true">
+                <i />
+                <i />
+                <i />
+                <span>{shotTexts[k]?.title}</span>
+              </div>
+              {/* Captures du portail, déjà en WebP et aux bonnes proportions : le composant d'image de Next n'apporte rien. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`/images/capabilities/${shot.file}.webp`} alt={shotTexts[k]?.alt ?? ""} width={shot.width} height={shot.height} loading="lazy" decoding="async" />
+            </div>
+          ))}
+        </div>
+
+        <div className="cv-agent">
+          <div className="cv-agent-id">
+            <span className="cv-orb" aria-hidden="true">
+              <Icon name="ai" size={18} />
+            </span>
+            <p>
+              <b>{t("agent.label")}</b>
+              <span>{t("agent.sub")}</span>
+            </p>
+          </div>
+          <ol className="cv-acts">
+            {AGENT_ACTS.map((k, n) => (
+              <li key={k} style={{ ["--i" as string]: n } as CSSProperties}>
+                <b>{t(`agent.${k}`)}</b>
+                <span>{t(`${c.id}.agent.${k}`)}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
 
         <ul className="mt-6 space-y-3 text-[0.96rem] leading-relaxed" style={{ color: "var(--fg-2)" }}>
           {covers.slice(0, 2).map((line) => (
@@ -52,7 +91,7 @@ export function CapabilityExplorer() {
 
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-12">
-      <ol className="relative space-y-2">
+      <ol className="relative space-y-2 lg:sticky lg:top-24 lg:self-start">
         <span aria-hidden="true" className="absolute bottom-8 left-[1.9rem] top-8 w-px" style={{ background: "var(--rule-strong)" }} />
         {CAPACITES.map((c, i) => {
           const open = i === active;

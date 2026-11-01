@@ -15,7 +15,9 @@ décision distincte.
   code (`src/components/journey/`, `src/content/journey/`) reste dans le dépôt, sans être monté.
 - **Cinq capacités** (ingénierie, appels d'offres, recherche de transporteurs,
   comparaison des offres, gestion des contrats), décrites par leurs fonctions
-  vérifiées dans le code — voir [CAPABILITIES.md](CAPABILITIES.md).
+  vérifiées dans le code — voir [CAPABILITIES.md](CAPABILITIES.md). Chaque capacité montre une
+  capture du portail (noms masqués) et l'**agent IA de l'étape** (prioriser, relancer, proposer),
+  avec une icône animée.
 - **Un monde qui tourne** (page Référentiels) : un globe animé (MapLibre,
   projection globe) déroule quatre chapitres — rail intermodal en Europe, shortsea
   en Baltique, transporteurs frigorifiques en Allemagne, fluvial sur le Rhin —

@@ -1,0 +1,185 @@
+/* Les captures du portail et l'agent IA de chaque capacité (section « cinq capacités », fond sombre). */
+
+.cv-stage {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  margin-top: 1.5rem;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: 1.1rem;
+  background: radial-gradient(120% 90% at 20% 0%, #1b2a66 0%, #0e1630 55%, #0b1224 100%);
+}
+.cv-win {
+  position: absolute;
+  overflow: hidden;
+  border: 1px solid rgb(15 23 42 / 0.14);
+  border-radius: 0.7rem 0.7rem 0 0;
+  background: #fff;
+  box-shadow: 0 22px 44px -14px rgb(0 0 0 / 0.55);
+}
+.cv-main {
+  left: 4%;
+  right: 4%;
+  top: 8%;
+  bottom: 0;
+}
+.cv-stage[data-shots="2"] .cv-main {
+  right: 30%;
+}
+.cv-aside {
+  right: 4%;
+  top: 16%;
+  bottom: 0;
+  width: 25%;
+  box-shadow: 0 22px 44px -10px rgb(0 0 0 / 0.65);
+}
+.cv-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.28rem;
+  height: 1.5rem;
+  padding: 0 0.6rem;
+  border-bottom: 1px solid rgb(15 23 42 / 0.1);
+  background: #f1f5f9;
+}
+.cv-bar i {
+  width: 0.46rem;
+  height: 0.46rem;
+  border-radius: 9999px;
+  background: #cbd5e1;
+}
+.cv-bar span {
+  margin-left: 0.4rem;
+  overflow: hidden;
+  font-size: 0.66rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #475569;
+}
+.cv-win img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* L'agent IA de l'étape : une icône qui vit, et ses trois gestes qui s'allument tour à tour. */
+.cv-agent {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 1rem;
+  padding: 0.95rem 1.05rem 1rem;
+  border: 1px solid rgb(116 143 252 / 0.35);
+  border-radius: 1rem;
+  background: linear-gradient(160deg, rgb(66 99 235 / 0.16), rgb(66 99 235 / 0.04));
+}
+.cv-agent-id {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.cv-agent-id p {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+.cv-agent-id b {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--fg);
+}
+.cv-agent-id span {
+  font-size: 0.78rem;
+  color: var(--fg-2);
+}
+.cv-orb {
+  position: relative;
+  display: grid;
+  flex: none;
+  width: 2.3rem;
+  height: 2.3rem;
+  place-items: center;
+  border-radius: 9999px;
+  background: #4263eb;
+  color: #fff;
+}
+.cv-orb::before,
+.cv-orb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 2px solid #748ffc;
+  opacity: 0;
+  animation: cv-ring 2.8s ease-out infinite;
+}
+.cv-orb::after {
+  animation-delay: 1.4s;
+}
+.cv-orb svg {
+  animation: cv-spark 2.8s ease-in-out infinite;
+}
+@keyframes cv-ring {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}
+@keyframes cv-spark {
+  0%,
+  100% {
+    transform: scale(1) rotate(0);
+  }
+  50% {
+    transform: scale(1.18) rotate(18deg);
+  }
+}
+.cv-acts {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 1280px) {
+  .cv-acts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.cv-acts li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.6rem 0.75rem 0.65rem;
+  border: 1px solid var(--rule);
+  border-radius: 0.75rem;
+  background: rgb(255 255 255 / 0.03);
+  animation: cv-act 7.2s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 2.4s);
+}
+.cv-acts b {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #c7d2fe;
+}
+.cv-acts span {
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--fg-2);
+}
+@keyframes cv-act {
+  0%,
+  30% {
+    border-color: rgb(116 143 252 / 0.75);
+    background: rgb(66 99 235 / 0.22);
+  }
+  36%,
+  100% {
+    border-color: var(--rule);
+    background: rgb(255 255 255 / 0.03);
+  }
+}

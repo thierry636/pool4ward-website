@@ -31,3 +31,29 @@ export const CAPACITES: Capacite[] = [
 ];
 
 export const capaciteParSlug = (slug: string) => CAPACITES.find((c) => c.slug === slug);
+
+/**
+ * Les captures du portail montrées pour chaque capacité (`public/images/capabilities/`). Les noms
+ * d'opérateurs et de transporteurs y sont masqués avant enregistrement ; les titres de fenêtre et les
+ * textes alternatifs sont dans les messages (`Capabilities.<id>.shots`, même ordre).
+ */
+export interface Shot {
+  /** Nom du fichier WebP, sans extension. */
+  file: string;
+  width: number;
+  height: number;
+}
+
+export const SHOTS: Record<CapaciteId, readonly Shot[]> = {
+  engineering: [{ file: "move2rail", width: 821, height: 341 }],
+  tenders: [{ file: "bid-pack", width: 1100, height: 738 }],
+  carriers: [
+    { file: "carrier-search", width: 847, height: 580 },
+    { file: "bid-list", width: 272, height: 455 },
+  ],
+  comparison: [{ file: "proposals", width: 939, height: 747 }],
+  contracts: [{ file: "contract-grid", width: 1100, height: 671 }],
+};
+
+/** Les trois gestes de l'agent IA de chaque étape, dans l'ordre où ils s'animent. */
+export const AGENT_ACTS = ["prioritize", "follow", "propose"] as const;
