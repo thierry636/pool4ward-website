@@ -41,7 +41,9 @@ export async function generateMetadata({
     // Le surtitre nomme le sujet, le titre pose la question. C'est le sujet
     // qui part dans l'onglet et dans les résultats de recherche ; la question
     // reste au H1 et dans le partage social, où elle fait son travail.
-    title: `${article.kicker ?? article.title} — Pool4ward`,
+    // `absolute` : le layout racine ajoute déjà « · Pool4ward » à tout titre
+    // texte, il serait écrit deux fois dans l'onglet.
+    title: { absolute: `${article.kicker ?? article.title} — Pool4ward` },
     description: article.description,
     keywords: article.tags,
     alternates: {
@@ -62,11 +64,17 @@ export async function generateMetadata({
       publishedTime: article.date,
       section: article.category,
       tags: article.tags,
+      // L'illustration sert de visuel de partage : sans elle, le lien partagé
+      // s'afficherait sans image.
+      ...(article.image
+        ? { images: [{ url: article.image, width: 1280, height: 720, alt: article.imageAlt }] }
+        : {}),
     },
     twitter: {
-      card: "summary",
+      card: article.image ? "summary_large_image" : "summary",
       title: article.title,
       description: article.description,
+      ...(article.image ? { images: [article.image] } : {}),
     },
   };
 }
@@ -94,6 +102,7 @@ export default async function ArticlePage({
     inLanguage: locale,
     articleSection: article.category,
     keywords: article.tags.join(", "),
+    ...(article.image ? { image: `${URL_SITE}${article.image}` } : {}),
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `${URL_SITE}${cheminArticle(locale, slug)}`,
@@ -135,6 +144,21 @@ export default async function ArticlePage({
       </header>
 
       <div className="p4w-wrap">
+        {article.image && (
+          <figure className="p4w-art">
+            {/* Illustration déjà optimisée en WebP : pas besoin du composant d'image de Next. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={article.image}
+              alt={article.imageAlt}
+              width={1280}
+              height={720}
+              decoding="async"
+              fetchPriority="high"
+            />
+          </figure>
+        )}
+
         {/* Le corps est rendu au build par le pipeline markdown : du HTML issu
             des fichiers du repo, pas d'une saisie extérieure. */}
         <div

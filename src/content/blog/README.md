@@ -16,13 +16,32 @@ readingTime: 3            # en minutes, jamais calculé — on l'écrit
 category: "Stratégie transport"
 tags: ["make or buy", "électrification"]
 order: 1                  # croissant, départage deux articles de même date
+image: "/images/blog/mon-article.webp"                   # facultatif — voir « Illustration »
+imageAlt: "Croquis au crayon : …"                        # obligatoire dès qu'il y a une image
 ---
 ```
 
-Tout est obligatoire sauf `kicker` : un champ manquant arrête le build plutôt
-que de publier un article amputé. Le `slug` fait l'URL, `/fr/blog/<slug>`, et
+Tout est obligatoire sauf `kicker`, `image` et `imageAlt` : un champ manquant
+arrête le build plutôt que de publier un article amputé. Le `slug` fait l'URL, `/fr/blog/<slug>`, et
 doit être **identique dans les deux langues** — le sélecteur de langue rejoue
 le même chemin, un slug traduit ferait un 404.
+
+## Illustration
+
+L'illustration d'un article est un croquis au crayon en **16/9** déposé dans
+`public/images/blog/`, en WebP, nommé comme le `slug` (`<slug>.webp`) —
+1280 × 720 px suffit. Elle sert à trois endroits : la ligne de l'index, l'ouverture
+de l'article et le visuel de partage (Open Graph). Les deux langues partagent
+le même fichier, mais chacune écrit son `imageAlt`.
+
+Sans `image`, l'article est listé sur l'index sans illustration (le texte garde
+sa colonne) et s'ouvre directement sur son titre. Une `image` sans `imageAlt` —
+ou l'inverse — arrête le build.
+
+Le panorama en tête de l'index est `public/images/blog/hero-boite-de-chocolats.webp` ;
+son texte alternatif et les titres de la page sont dans `messages/*/blog.json`.
+
+## Visibilité
 
 Le blog est masqué tant que `BLOG_MASQUE` vaut `true` dans
 `src/lib/blog/config.ts` : les pages répondent, mais ne sont ni indexées ni
@@ -38,6 +57,7 @@ liées depuis la navigation.
 | `::: note` … `:::` | Encadré discret, filet gris |
 | citation `>` contenant une liste `1.` | Encadré « questions », filet accent |
 | `::: cta` … `:::` | Bloc d'appel à l'action |
+| liste `- …` | Puces en trait accent |
 
 Les marqueurs `COMPONENT` sont reconnus en français comme en anglais
 (`numbered list`, `three columns`). Dans un bloc `::: cta`, écrire le lien

@@ -20,6 +20,13 @@ export interface ArticleFrontMatter {
   tags: string[];
   /** Départage deux articles publiés le même jour. Croissant. */
   order: number;
+  /**
+   * Illustration de l'article : chemin sous `public/`, en 16/9. Affichée sur la
+   * carte d'index et en tête de l'article. Facultative, mais toujours avec son
+   * `imageAlt` — une illustration sans description n'est pas publiée.
+   */
+  image?: string;
+  imageAlt?: string;
 }
 
 /** Un article prêt à afficher : front-matter + corps rendu en HTML. */
