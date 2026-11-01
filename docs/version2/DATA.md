@@ -47,8 +47,8 @@ FTL », « Complexe 1 »), les corridors Pologne → France et les codes postaux
 pour la planification de capacité** : le site n'en montre pas tant qu'elle n'est pas fournie.
 
 Un premier jet publié (commit `0a204e5`) n'avait masqué que les noms ; les montants et tarifs réels étaient
-encore lisibles. Ce premier jet reste dans l'historique git de `origin/version2`, dépôt public (voir la
-note dans VERIFICATION.md).
+encore lisibles. Ce premier jet reste dans l'historique git de `origin/version2` (dépôt `thierry636/pool4ward-website`,
+visible publiquement au 2026-11-01) : le passer en privé, ou purger l'historique, est une décision du propriétaire.
 
 Les gestes de l'agent IA de chaque étape (prioriser, relancer, proposer) sont ceux **donnés par la direction** ;
 la formulation par étape est de nous (`Capabilities.<id>.agent`) et est à valider : le site n'a pas vérifié ces
