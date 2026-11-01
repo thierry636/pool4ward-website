@@ -34,12 +34,21 @@
 
 `public/images/capabilities/*.webp` : six captures du portail fournies par la direction, une par étape
 (Move2Rail pour l'ingénierie, le paramétrage des lignes d'un bid pack, la recherche de transporteurs et la
-bid list, les propositions reçues, la grille tarifaire d'un contrat). **Tous les noms d'opérateurs, de
-transporteurs et de chargeurs ont été masqués avant l'enregistrement** (barres grises ; initiales des
-avatars effacées ; en-tête de la fiche transporteur, avec son nom et son logo, recadré). Rien d'autre n'est
-retouché. Les noms de projets d'exemple (« New Poland France FTL », « Complexe 1 ») et les valeurs
-affichées sont ceux du portail. **Pas de capture pour la planification de capacité** : le site n'en montre
-pas tant qu'elle n'est pas fournie.
+bid list, les propositions reçues, la grille tarifaire d'un contrat). Données masquées avant l'enregistrement
+(barres grises) :
+
+- **les noms** d'opérateurs, de transporteurs et de chargeurs, les initiales des avatars, l'en-tête de la fiche
+  transporteur (nom et logo, recadré), et les deux extrémités du trajet d'un flux de chargeur (Move2Rail) ;
+- **les montants et les tarifs** : les dépenses et parts de dépense du bid pack, les budgets par transporteur,
+  le nombre d'ordres, les prix de la grille tarifaire et la surtaxe énergie.
+
+Restent visibles : la structure des écrans, les libellés, les noms de projets d'exemple (« New Poland France
+FTL », « Complexe 1 »), les corridors Pologne → France et les codes postaux de la grille. **Pas de capture
+pour la planification de capacité** : le site n'en montre pas tant qu'elle n'est pas fournie.
+
+Un premier jet publié (commit `0a204e5`) n'avait masqué que les noms ; les montants et tarifs réels étaient
+encore lisibles. Ce premier jet reste dans l'historique git de `origin/version2`, dépôt public (voir la
+note dans VERIFICATION.md).
 
 Les gestes de l'agent IA de chaque étape (prioriser, relancer, proposer) sont ceux **donnés par la direction** ;
 la formulation par étape est de nous (`Capabilities.<id>.agent`) et est à valider : le site n'a pas vérifié ces
