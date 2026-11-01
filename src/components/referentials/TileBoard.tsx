@@ -17,6 +17,11 @@ import "./referentials.css";
  * en place, bulles l'une après l'autre. Sans script, ou sous « mouvement réduit », tout est affiché terminé.
  */
 
+/** La forme d'un marché de prix : la distribution des prix de flux comparables (illustration, sans valeur). */
+const PRICE_BARS = [2, 4, 7, 11, 15, 17, 16, 13, 10, 7, 5, 3, 2, 1] as const;
+/** Trois estimations face au marché : au-dessus, dans la fourchette, en dessous. */
+const PRICE_DOTS = [[270, "#f59e0b"], [150, "#16a34a"], [62, "#0891b2"]] as const;
+
 type TileId = "services" | "shortsea" | "networks" | "points" | "carriers" | "prices";
 const ORDER: readonly TileId[] = ["services", "shortsea", "networks", "points", "carriers", "prices"];
 const ICON: Record<TileId, IconName> = { services: "intermodal", shortsea: "ship", networks: "rails", points: "energy", carriers: "truck", prices: "comparison" };
@@ -207,20 +212,25 @@ function TileBody({ id, armed, shown }: { id: TileId; armed: boolean; shown: boo
           {head(t("tiles.prices.figure"))}
           <p className="rt-line">{t("tiles.prices.line")}</p>
           <div className="rt-asset">
-            <div className="rt-dg" role="img" aria-label={t("tiles.prices.diagram")}>
-              <svg viewBox="0 0 280 200" aria-hidden="true" focusable="false">
-                <path className="rt-dg-path" d="M112 52C152 52 152 100 188 100M126 148C160 148 154 100 188 100" fill="none" stroke="#10b981" strokeWidth="2" strokeDasharray="5 5" />
+            <Win title={t("tiles.prices.chartTitle")} className="rt-w-chart">
+              <svg className="rt-chart" viewBox="0 0 320 150" role="img" aria-label={t("tiles.prices.chart")} focusable="false">
+                {PRICE_BARS.map((h, i) => (
+                  <rect key={i} className="rt-bar-i" x={10 + i * 21} y={116 - h * 5.2} width={18} height={h * 5.2} rx={3} fill={i >= 4 && i <= 8 ? "#86efac" : "#cbd5e1"} style={{ ["--k" as string]: i } as CSSProperties} />
+                ))}
+                <line x1={93} x2={93} y1={26} y2={116} stroke="#16a34a" strokeWidth={1.5} strokeDasharray="4 3" />
+                <line x1={145} x2={145} y1={14} y2={116} stroke="#0f172a" strokeWidth={2} />
+                <text x={89} y={22} textAnchor="end" fontSize={10} fontWeight={600} fill="#15803d">
+                  P25
+                </text>
+                <text x={151} y={14} fontSize={10} fontWeight={700} fill="#0f172a">
+                  {t("tiles.prices.median")}
+                </text>
+                <line x1={10} x2={304} y1={116} y2={116} stroke="#94a3b8" />
+                {PRICE_DOTS.map(([x, c], i) => (
+                  <circle key={c} className="rt-est" cx={x} cy={134} r={7} fill={c} stroke="#fff" strokeWidth={2} style={{ ["--k" as string]: i } as CSSProperties} />
+                ))}
               </svg>
-              <b className="rt-n rt-n1" style={{ ["--k" as string]: 0 } as CSSProperties}>
-                {t("tiles.prices.cost")}
-              </b>
-              <b className="rt-n rt-n2" style={{ ["--k" as string]: 1 } as CSSProperties}>
-                {t("tiles.prices.market")}
-              </b>
-              <b className="rt-n rt-n3" style={{ ["--k" as string]: 2 } as CSSProperties}>
-                {t("tiles.prices.bench")}
-              </b>
-            </div>
+            </Win>
           </div>
         </>
       );

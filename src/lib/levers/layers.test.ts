@@ -75,6 +75,12 @@ describe("textes de la planche (FR et EN)", () => {
   const TILES = ["services", "shortsea", "networks", "points", "carriers", "prices"];
   const OPERATORS = /milence|engie|hexafret|euris|novatrans|ctl logistics|hupac|contargo|tsm|fresh/i;
 
+  it.each(["fr", "en"])("%s : la tuile des prix parle de prix de marché et de benchmark, sans chiffre", (loc) => {
+    const prices = load(loc).Home.referentials.tiles.prices;
+    expect(`${prices.name} ${prices.figure} ${prices.line}`, `${loc}`).toMatch(loc === "fr" ? /prix de marché[\s\S]*benchmark|benchmark[\s\S]*prix de marché/i : /market prices[\s\S]*benchmark|benchmark[\s\S]*market prices/i);
+    expect(prices.line, `${loc} : les contrats et les bases spot`).toMatch(loc === "fr" ? /contrats[\s\S]*spot/i : /contracts[\s\S]*spot/i);
+  });
+
   it.each(["fr", "en"])("%s : six tuiles, chacune avec un nom et une phrase, sans nom d'opérateur ni de transporteur", (loc) => {
     const r = load(loc).Home.referentials;
     expect(Object.keys(r.tiles), `${loc} : les six tuiles, dans l'ordre`).toEqual(TILES);
@@ -91,12 +97,13 @@ describe("textes de la planche (FR et EN)", () => {
     for (const x of texts) expect(x.replace(/pool4ward/gi, ""), `${loc} : « ${x} »`).not.toMatch(/\d/);
   });
 
-  it.each(["fr", "en"])("%s : un seul grand nombre dans le titre, la mise à jour est dite journalière (jamais en temps réel), la légende dit que les noms sont masqués", (loc) => {
+  it.each(["fr", "en"])("%s : un titre sans chiffre, un sous-titre qui nomme les prix de marché, la mise à jour est dite journalière (jamais en temps réel), la légende dit que les noms sont masqués", (loc) => {
     const r = load(loc).Home.referentials;
-    expect(r.title, `${loc} : le nombre est en gras`).toMatch(/<b>\{n\}<\/b>/);
+    expect(r.title.length, `${loc} : un titre court`).toBeLessThan(60);
+    expect(r.sub, `${loc} : le sous-titre couvre les prix de marché`).toMatch(loc === "fr" ? /prix de marché/i : /market prices/i);
     expect(r.live, `${loc} : journalière`).toMatch(loc === "fr" ? /journali/i : /daily/i);
     expect(r.live, `${loc} : jamais « temps réel »`).not.toMatch(/temps r[ée]el|real[- ]time/i);
     expect(r.caption, `${loc} : noms masqués`).toMatch(loc === "fr" ? /masqu/i : /masked/i);
-    expect(r.sub.length, `${loc} : une phrase`).toBeLessThan(120);
+    expect(r.sub.length, `${loc} : une phrase`).toBeLessThan(200);
   });
 });

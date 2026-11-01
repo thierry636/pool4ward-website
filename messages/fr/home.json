@@ -135,8 +135,8 @@
       }
     },
     "referentials": {
-      "title": "<b>{n}</b> services intermodaux, décrits un à un.",
-      "sub": "Et les réseaux, les bornes, les parkings, les transporteurs et les prix qui vont avec.",
+      "title": "L’optimisation au contact du terrain",
+      "sub": "Nos référentiels relient chaque décision aux réalités physiques et économiques du transport : réseaux, sites, services, capacités et prix de marché.",
       "caption": "Captures du portail Pool4ward. Les noms d’opérateurs et de transporteurs sont masqués.",
       "controls": {
         "label": "Les référentiels",
@@ -198,13 +198,12 @@
           "alt": "Capture du portail : des fiches de transporteurs, aux noms masqués."
         },
         "prices": {
-          "name": "Prix",
-          "figure": "Prix",
-          "line": "Cost model et accès aux prix de marché, pour le benchmark.",
-          "cost": "Cost model",
-          "market": "Prix de marché",
-          "bench": "Benchmark",
-          "diagram": "Le cost model et les prix de marché alimentent le benchmark."
+          "name": "Prix de marché",
+          "figure": "Benchmarks",
+          "line": "Nos modèles de coûts croisent des dizaines de paramètres avec les données de marché issues de contrats et de bases spot, pour comparer chaque estimation aux prix réellement pratiqués.",
+          "chartTitle": "Benchmark",
+          "median": "médiane",
+          "chart": "Distribution des prix de marché, avec le premier quartile et la médiane, et trois estimations positionnées face à ce marché."
         }
       }
     }

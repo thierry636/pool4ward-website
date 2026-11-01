@@ -60,8 +60,9 @@ accessible de la carte annonce le levier en cours.
 
 La section qui suit la couverture (`Referentials`, id `referentiels`) met en avant ce que Pool4ward
 décrit du physique du transport. **Six tuiles claires**, une par référentiel, chacune avec **son chiffre,
-une phrase et l'écran du portail présenté autour** (fenêtre, bulles, repère). Le titre ne porte qu'un
-seul grand nombre : « **2 500** services intermodaux, décrits un à un ».
+une phrase et l'écran du portail présenté autour** (fenêtre, bulles, repère). Titre : « L'optimisation au contact du terrain » ; sous-titre : « Nos référentiels relient chaque
+décision aux réalités physiques et économiques du transport : réseaux, sites, services, capacités et
+prix de marché. » (aucun chiffre dans le titre).
 
 | Tuile | Chiffre | L'écran présenté |
 |---|---|---|
@@ -70,7 +71,7 @@ seul grand nombre : « **2 500** services intermodaux, décrits un à un ».
 | Réseaux ferroviaire et fluvial | — (« Réseaux ») | **la carte animée du site** (couche `networks`), en attendant une capture du portail |
 | Bornes et parkings | « + 36 000 » points | capture de la fiche d'un site de recharge (opérateur masqué) |
 | Transporteurs | « + 80 000 » | capture de fiches de transporteurs (noms masqués) |
-| Prix | — (« Prix ») | un schéma : le cost model et les prix de marché alimentent le benchmark (aucune donnée) |
+| Prix de marché | — (« Benchmarks ») | un graphique d'illustration : la distribution des prix de marché, son premier quartile et sa médiane, et trois estimations positionnées face à ce marché (aucune valeur). Texte : les modèles de coûts croisent des dizaines de paramètres avec les données de marché (contrats, bases spot) pour comparer chaque estimation aux prix réellement pratiqués |
 
 **Les chiffres** vivent dans `src/content/referentials.ts` (jamais dans un message), avec leur provenance :
 services (2 500, 36 pays) et shortsea (1 690) lus sur les écrans du portail le 2026-10-31 ; **61

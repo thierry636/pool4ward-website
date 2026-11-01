@@ -3,7 +3,6 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Cover } from "@/components/home/Cover";
 import { Referentials } from "@/components/referentials/Referentials";
 import { Stakes } from "@/components/home/Stakes";
-import { JourneySection } from "@/components/home/JourneySection";
 import { Capabilities } from "@/components/home/Capabilities";
 import { DatasetsTeaser } from "@/components/home/DatasetsTeaser";
 import { Evidence } from "@/components/home/Evidence";
@@ -45,9 +44,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </ClientMessages>
       <Referentials />
       <Stakes />
-      <ClientMessages namespaces={["Journey"]}>
-        <JourneySection />
-      </ClientMessages>
       <ClientMessages namespaces={["Capabilities"]}>
         <Capabilities />
       </ClientMessages>

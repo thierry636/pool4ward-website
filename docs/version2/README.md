@@ -8,13 +8,11 @@ décision distincte.
 
 - **Une couverture-carte** : un globe qui joue six leviers sur toute l'Europe (report modal
   rail/fluvial, shortsea côtier, boucles, cross-dock, électrification, mutualisation), **seul** —
-  ni texte, ni menu, ni bouton —, suivi d'une planche de six tuiles (services intermodaux, shortsea, réseaux, bornes et
-  parkings, transporteurs, prix) avec les écrans du portail ; carrousel au doigt sur mobile — voir [LEVERS.md](LEVERS.md). C'est une illustration, pas une donnée.
-- **Un parcours « du terrain aux engagements »** : un même cas
-  démonstrateur (quatre sites, six flux, fictifs) traverse trois étapes —
-  comprendre le terrain, concevoir le plan, contractualiser. Le plateau SVG
-  (`src/components/journey/Board.tsx`) est animé par transitions CSS seulement,
-  fixe sous « mouvement réduit », et ne calcule ni coût ni gain.
+  ni texte, ni menu, ni bouton —, suivi d'une planche de cinq à six tuiles (services intermodaux, shortsea, réseaux, bornes et
+  parkings, transporteurs, prix de marché) avec les écrans du portail ; carrousel au doigt sur mobile — voir [LEVERS.md](LEVERS.md). C'est une illustration, pas une donnée.
+- **Un parcours « du terrain aux engagements »** : un même cas démonstrateur (quatre sites, six flux,
+  fictifs) traversait trois étapes. **Retiré de la page d'accueil** à la demande de la direction ; le
+  code (`src/components/journey/`, `src/content/journey/`) reste dans le dépôt, sans être monté.
 - **Cinq capacités** (ingénierie, appels d'offres, recherche de transporteurs,
   comparaison des offres, gestion des contrats), décrites par leurs fonctions
   vérifiées dans le code — voir [CAPABILITIES.md](CAPABILITIES.md).

@@ -135,8 +135,8 @@
       }
     },
     "referentials": {
-      "title": "<b>{n}</b> intermodal services, described one by one.",
-      "sub": "And the networks, charging points, parkings, carriers and prices that go with them.",
+      "title": "Optimisation in touch with the field",
+      "sub": "Our reference data tie every decision to the physical and economic realities of transport: networks, sites, services, capacities and market prices.",
       "caption": "Screenshots of the Pool4ward portal. Operator and carrier names are masked.",
       "controls": {
         "label": "The datasets",
@@ -198,13 +198,12 @@
           "alt": "Portal screenshot: carrier records, names masked."
         },
         "prices": {
-          "name": "Prices",
-          "figure": "Prices",
-          "line": "Cost model and market-price access, for benchmarking.",
-          "cost": "Cost model",
-          "market": "Market prices",
-          "bench": "Benchmark",
-          "diagram": "The cost model and market prices feed the benchmark."
+          "name": "Market prices",
+          "figure": "Benchmarks",
+          "line": "Our cost models cross dozens of parameters with market data from contracts and spot databases, to compare every estimate with the prices actually charged.",
+          "chartTitle": "Benchmark",
+          "median": "median",
+          "chart": "Distribution of market prices, with the first quartile and the median, and three estimates positioned against that market."
         }
       }
     }
