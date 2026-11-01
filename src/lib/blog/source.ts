@@ -41,6 +41,25 @@ function lireFrontMatter(donnees: Record<string, unknown>, source: string): Arti
 
   const texte = (v: unknown) => typeof v === "string" && v.trim().length > 0;
 
+  // `image` et `imageAlt` vont ensemble : l'un sans l'autre arrête le build,
+  // comme un champ obligatoire manquant.
+  const image = typeof donnees.image === "string" ? donnees.image : undefined;
+  const imageAlt = typeof donnees.imageAlt === "string" ? donnees.imageAlt : undefined;
+  if (image !== undefined) {
+    if (!/^\/images\/blog\/[\w.-]+\.(webp|jpe?g|png|avif)$/.test(image)) {
+      throw new Error(
+        `Article « ${source} » : « image » doit être un fichier de public/images/blog/ (ex. /images/blog/mon-article.webp).`,
+      );
+    }
+    if (!imageAlt || imageAlt.trim().length === 0) {
+      throw new Error(
+        `Article « ${source} » : « imageAlt » est obligatoire quand « image » est renseigné.`,
+      );
+    }
+  } else if (imageAlt !== undefined) {
+    throw new Error(`Article « ${source} » : « imageAlt » sans « image ».`);
+  }
+
   return {
     title: exiger<string>("title", texte),
     kicker: typeof donnees.kicker === "string" ? donnees.kicker : undefined,
@@ -51,6 +70,8 @@ function lireFrontMatter(donnees: Record<string, unknown>, source: string): Arti
     category: exiger<string>("category", texte),
     tags: Array.isArray(donnees.tags) ? (donnees.tags as string[]) : [],
     order: typeof donnees.order === "number" ? donnees.order : Number.MAX_SAFE_INTEGER,
+    image,
+    imageAlt,
   };
 }
 
@@ -76,7 +97,8 @@ function normaliserDate(valeur: unknown, source: string): string {
  * point d'interrogation resterait collé dans le H1, dans le `<title>` et dans
  * la carte d'index, alors qu'il est correct dans le corps de l'article.
  *
- * Le slug et la date sont épargnés : ce sont des identifiants, pas du texte.
+ * Le slug, la date et le chemin de l'image sont épargnés : ce sont des
+ * identifiants, pas du texte.
  */
 function typographier(
   frontMatter: ArticleFrontMatter,
@@ -92,6 +114,7 @@ function typographier(
     kicker: frontMatter.kicker ? f(frontMatter.kicker) : undefined,
     description: f(frontMatter.description),
     category: f(frontMatter.category),
+    imageAlt: frontMatter.imageAlt ? f(frontMatter.imageAlt) : undefined,
   };
 }
 

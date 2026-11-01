@@ -22,7 +22,9 @@ export async function generateMetadata({
 
   return {
     metadataBase: new URL(URL_SITE),
-    title: t("metaTitle"),
+    // `absolute` : « — Pool4ward » est déjà dans le message, et le layout racine
+    // ajouterait « · Pool4ward » une seconde fois.
+    title: { absolute: t("metaTitle") },
     description: t("metaDescription"),
     alternates: {
       canonical: cheminIndex(locale),
@@ -69,6 +71,7 @@ export default async function BlogIndexPage({
       description: article.description,
       datePublished: article.date,
       url: `${URL_SITE}${cheminArticle(locale, article.slug)}`,
+      ...(article.image ? { image: `${URL_SITE}${article.image}` } : {}),
     })),
   };
 
@@ -76,32 +79,82 @@ export default async function BlogIndexPage({
     <div className="p4w-page">
       <JsonLd data={donnees} />
 
-      <header className="p4w-wrap p4w-index-head">
-        <h1 className="p4w-index-title">{t("indexTitle")}</h1>
-        <p className="p4w-index-lede">{t("indexLede")}</p>
+      <header className="p4w-hero">
+        <h1 className="p4w-hero-title">{t("heroTitle")}</h1>
+        <p className="p4w-hero-sub">{t("heroSubtitle")}</p>
+        <div className="p4w-hero-art">
+          {/* Plein cadre dès le premier rendu : c'est l'image qui porte la page,
+              donc chargée en priorité, et ses dimensions réservent la place.
+              Déjà optimisée en WebP : pas besoin du composant d'image de Next. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/blog/hero-boite-de-chocolats.webp"
+            alt={t("heroAlt")}
+            width={1942}
+            height={809}
+            decoding="async"
+            fetchPriority="high"
+          />
+        </div>
       </header>
 
-      <div className="p4w-wrap p4w-list">
+      <section className="p4w-journal" aria-labelledby="blog-eclairages">
+        <div className="p4w-section-head">
+          <h2 id="blog-eclairages" className="p4w-section-title">
+            <span>{t("sectionTitle")}</span>
+          </h2>
+          <span className="p4w-section-bar" aria-hidden="true" />
+        </div>
+
         {articles.length === 0 ? (
           <p className="p4w-empty">{t("empty")}</p>
         ) : (
-          articles.map((article) => (
-            <article key={article.slug}>
-              <Link
-                href={`/blog/${article.slug}` as "/"}
-                className="p4w-card"
+          <ul className="p4w-rows">
+            {articles.map((article, index) => (
+              <li
+                key={article.slug}
+                className={article.image ? "p4w-row" : "p4w-row p4w-row--text"}
               >
-                <p className="p4w-meta">{article.category}</p>
-                <h2 className="p4w-card-title">{article.title}</h2>
-                <p className="p4w-card-desc">{article.description}</p>
-                <p className="p4w-meta">
-                  {t("readingTime", { minutes: article.readingTime })}
-                </p>
-              </Link>
-            </article>
-          ))
+                {article.image && (
+                  <div className="p4w-row-art">
+                    {/* Décorative : le titre du lien dit déjà de quoi parle la
+                        carte. Le texte alternatif est sur la page de l'article. */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={article.image}
+                      alt=""
+                      width={1280}
+                      height={720}
+                      loading={index < 2 ? "eager" : "lazy"}
+                      decoding="async"
+                    />
+                  </div>
+                )}
+
+                <div className="p4w-row-body">
+                  <p className="p4w-label">{article.category}</p>
+                  <h3 className="p4w-row-title">
+                    {/* Le lien porte le titre ; sa pastille ::after recouvre la
+                        carte entière, qui devient cliquable sans que le lecteur
+                        d'écran n'annonce tout le texte comme un seul lien. */}
+                    <Link
+                      href={`/blog/${article.slug}` as "/"}
+                      className="p4w-row-link"
+                    >
+                      {article.title}
+                    </Link>
+                  </h3>
+                  <p className="p4w-row-desc">{article.description}</p>
+                  <p className="p4w-more" aria-hidden="true">
+                    {t("readArticle")}
+                    <span className="p4w-more-arrow">→</span>
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
         )}
-      </div>
+      </section>
     </div>
   );
 }
