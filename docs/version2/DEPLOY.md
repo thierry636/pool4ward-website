@@ -40,10 +40,10 @@ configuration → Build & deploy → Branches.
 ```bash
 npm run showcase:publish -- --from export.json --mode curated --date 2026-11-02
 # affiche : sites, liaisons, opérateurs nommés, liaisons ajoutées / retirées
-git add src/content/showcase.json public/images/globe-poster.svg
+git add src/content/showcase.json public/images/globe-poster.svg public/images/services-flat-poster.svg
 ```
 
-Régénérer le visuel de l'accueil (`node scripts/build-globe-poster.mjs`), ouvrir la
+Régénérer les visuels de l'accueil (`node scripts/build-globe-poster.mjs` et `node scripts/build-flat-poster.mjs`), ouvrir la
 pull request, relire l'écart, fusionner : Netlify reconstruit. `npm run showcase:check`
 vérifie le fichier (c'est aussi le `prebuild`).
 

@@ -6,7 +6,7 @@ décision distincte.
 
 ## Ce que contient cette branche
 
-- **Une couverture-carte** : une carte de l'Europe à plat qui joue six leviers sur toute l'Europe (report modal
+- **Une couverture-carte** : un globe qui joue six leviers sur toute l'Europe (report modal
   rail/fluvial, shortsea côtier, boucles, cross-dock, électrification, mutualisation), **seul** —
   ni texte, ni menu, ni bouton —, suivi d'une planche de cinq à six tuiles (services intermodaux, shortsea, réseaux, bornes et
   parkings, transporteurs, prix de marché) avec les écrans du portail ; carrousel au doigt sur mobile — voir [LEVERS.md](LEVERS.md). C'est une illustration, pas une donnée.
@@ -69,6 +69,7 @@ npm run showcase:check     # valide la vitrine (exécuté avant chaque build)
 - `node scripts/build-terrain.mjs` → `public/images/terrain.svg` (courbes de niveau, décor).
 - `node scripts/build-geo.mjs` → `public/geo/*.json` (Natural Earth, domaine public ; polygones découpés à l'antiméridien, extrait Europe à 50 m).
 - `node scripts/build-globe-poster.mjs` → `public/images/globe-poster.svg` (aperçu du globe des services, avec les liaisons de la vitrine ; à relancer après chaque publication).
+- `node scripts/build-flat-poster.mjs` → `public/images/services-flat-poster.svg` (la carte à plat de l'accueil, mêmes liaisons ; à relancer après chaque publication).
 - `npm run poster:levers` → `public/images/levers-poster.svg` (carte de repli de la couverture, pour qui n'exécute pas de script).
 
 ## Décisions à prendre (hors de ce dépôt)
